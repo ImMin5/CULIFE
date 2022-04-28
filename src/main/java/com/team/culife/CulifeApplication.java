@@ -8,6 +8,7 @@ public class CulifeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CulifeApplication.class, args);
+		
 	}
 
 }
