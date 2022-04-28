@@ -28,8 +28,8 @@ public class ServletInitializer extends SpringBootServletInitializer {
                 jspPropertyGroup.addUrlPattern("*.jspf");
                 jspPropertyGroup.setPageEncoding("UTF-8");
                 jspPropertyGroup.setScriptingInvalid("true");
-                jspPropertyGroup.addIncludePrelude("/WEB-INF/inc/top.jsp");
-                jspPropertyGroup.addIncludeCoda("/WEB-INF/inc/bottom.jsp");
+                jspPropertyGroup.addIncludePrelude("/WEB-INF/inc/top.jspf");
+                jspPropertyGroup.addIncludeCoda("/WEB-INF/inc/bottom.jspf");
                 jspPropertyGroup.setTrimWhitespace("true");
                 jspPropertyGroup.setDefaultContentType("text/html");
                 JspPropertyGroupDescriptorImpl jspPropertyGroupDescriptor = new JspPropertyGroupDescriptorImpl(jspPropertyGroup);
