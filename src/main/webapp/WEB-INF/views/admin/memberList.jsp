@@ -31,10 +31,10 @@
 			<li>관리자</li>
 			</c:if>			
 			<li>${vo.create_date}</li>
-			<c:if test="${vo.status == 0}">
+			<c:if test="${vo.status eq 'False'}">
 			<li>정상</li>
 			</c:if>
-			<c:if test="${vo.status == 1}">
+			<c:if test="${vo.status eq 'True'}">
 			<li>정지</li>
 			</c:if>	
 			<li>
