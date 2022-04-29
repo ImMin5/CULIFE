@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class MemberVO {
 	private int no;
-	private String kakao_id;
+	private long kakao_id;
 	private String email;
 	private String nickname;
 	private int grade;

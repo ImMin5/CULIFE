@@ -96,15 +96,14 @@ public class LoginService {
 	}
 	
 	//로그아웃
-	public void logout(String kakao_id, String Token) {
+	public void logout(long kakao_id, String Token) {
 		StringBuilder urlBuilder = new StringBuilder("https://kapi.kakao.com/v1/user/logout");
 		BufferedReader br = null;
 		StringBuilder sb = new StringBuilder();
 		
 		try {
-			// header 설정
 			if(Token == null) {
-				urlBuilder.append("?" + URLEncoder.encode("target_id","UTF-8") + "="+Long.parseLong(kakao_id));
+				urlBuilder.append("?" + URLEncoder.encode("target_id","UTF-8") + "="+kakao_id);
 				urlBuilder.append("&" + URLEncoder.encode("target_id_type","UTF-8") + "="+"userid");
 			}
 			
@@ -147,23 +146,34 @@ public class LoginService {
 		
 	}
 	
-	//카카오 로그아웃
-	public void logoutKakao() {
-		StringBuilder urlBuilder = new StringBuilder("https://kauth.kakao.com/oauth/logout");
+	//카카오 서비스 연결 끊기
+	public JSONObject unlinkKaKao(long kakao_id, String Token) {
+		StringBuilder urlBuilder = new StringBuilder("https://kapi.kakao.com/v1/user/unlink");
 		BufferedReader br = null;
 		StringBuilder sb = new StringBuilder();
+		JSONObject json = null;
+		
 		
 		try {
-			urlBuilder.append("?" + URLEncoder.encode("client_id","UTF-8") + "="+REST_API_KEY);
-			urlBuilder.append("&" + URLEncoder.encode("logout_redirect_uri","UTF-8") + "="+"http://localhost:8080/logout/kakao");
+			if(Token == null) {
+				urlBuilder.append("?" + URLEncoder.encode("target_id","UTF-8") + "="+kakao_id);
+				urlBuilder.append("&" + URLEncoder.encode("target_id_type","UTF-8") + "="+"userid");
+			}
 		
 			
 			URL url = new URL(urlBuilder.toString());
-			System.out.println("url --- > " + url);
-			
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
+			conn.setRequestMethod("POST");
+			
 			//header 설정
+			if(Token == null) {
+				conn.setRequestProperty("Authorization", "KakaoAK " + AdminKey);
+				conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			}
+			else {
+				conn.setRequestProperty("Authorization", "Bearer " + Token);
+			}
+			
 			
 			int responseCode = conn.getResponseCode();
 			System.out.println("responseCode : " + responseCode);
@@ -178,12 +188,14 @@ public class LoginService {
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
-            
-            System.out.println("status : " + sb.toString() + "카카오 로그아웃");
+            json = new JSONObject(sb.toString());
+            System.out.println("탈퇴한 회원 id : " + json.getLong("id") + " 카카오 서비스 연결 끊기");
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		return json;
 		
 	}
 

@@ -23,4 +23,8 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO memberSelectByNo(int no) {
 		return dao.memberSelectByNo(no);
 	}
+	@Override
+	public int memberDelete(long kakao_id) {
+		return dao.memberDelete(kakao_id);
+	}
 }
