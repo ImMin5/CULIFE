@@ -11,8 +11,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <style>
+
+
+#mypage_container{
+	position :relative;
+	top:20%;
+}
 #mypage_member_thumbnail_container{
 	margin : 0 auto;
+	margin-bottom : 20px;
 	border-radius : 70%;
 	width:150px;
 	height:150px;
@@ -56,7 +63,42 @@
 	background-color: gray;
 
 }
-
+#mypage_sidebar{
+	background-color : #7F7F7F;
+	color:white;
+	text-align:center;
+	height:100vh;
+}
+#mypage_sidebar >div> ul{
+	list-style:none;
+}
+#mypage_sidebar >div> ul >li{
+	margin-top:10px;
+	margin-bottom:25px;
+}
+#mypage_sidebar > div>hr{
+	margin : 0 auto;
+	width:60%;
+}
+#mypage_sidebar>#mypage_sidebar_container{
+	position:relative;
+	top:20%;
+}
+#mypage_notification{
+	margin-left:5px;
+	width:40px;
+	height:40px;
+}
+#mypage_sidebar_container ul a:hover{
+	color:#ADD7D6;
+}
+a{
+	color:white;
+	text-decoration: none;
+}
+a:visited{
+	text-decoration: none;
+}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -120,60 +162,70 @@
 <body>
 <main id="mypage_member" class="container-fluid">
 	<div class="row">
-		<div class="col-8">
-			<form id="memberForm">
-			<div id="mypage_member_thumbnail_group" class="row">
-				<div class="col">
-					<!-- 회원 대표 사진 -->
-					<div id="mypage_member_thumbnail_container">
-					<c:if test="${mvo.thumbnail == Null}">
-						<img id="thumbnail_member" src="${url}/img/member/default_thumbnail.png"/>
-					</c:if>
-					<c:if test="${mvo.thumbnail != Null}">
-						<img id="thumbnail_member" src="${url}/upload/${mvo.no}/thumbnail/${mvo.thumbnail}"/>
-					</c:if>
-						<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
+		<div class="col-9">
+			<div id="mypage_container">
+				<form id="memberForm">
+				<div id="mypage_member_thumbnail_group" class="row">
+					<div class="col">
+						<!-- 회원 대표 사진 -->
+						<div id="mypage_member_thumbnail_container">
+						<c:if test="${mvo.thumbnail == Null}">
+							<img id="thumbnail_member" src="${url}/img/member/default_thumbnail.png"/>
+						</c:if>
+						<c:if test="${mvo.thumbnail != Null}">
+							<img id="thumbnail_member" src="${url}/upload/${mvo.no}/thumbnail/${mvo.thumbnail}"/>
+						</c:if>
+							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
+						</div>
+						<div class="mb-3" style="display:none;">
+							<label for="formFile" class="form-label">회원 사진</label>
+							<input type="text" name="thumbnail">
+							<input class="form-control" type="file" multiple="multiple" name="file" id="formFile_member">
+						</div>
+						<div class="form-floating mb-3" style="margin:0 auto; width:50%;" >
+						  	<input type="email" class="form-control" value="${mvo.email}" placeholder="name@example.com" readonly>
+						  	<label>이메일</label>
+						</div>
+						<div class="form-floating mb-3" style="margin:0 auto; width:50%;">
+	  						<input type="text" class="form-control" id="" value="${mvo.nickname}" placeholder="닉네임" readonly>
+						  	<label >닉네임</label>
+						  	
+						</div>
+						<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center;">
+						  <button id="memberForm_member_edit_btn" class="btn btn-outline-secondary" type="button">수정</button>
+						  <button id="memberForm_member_delete_btn" class="btn btn-outline-secondary" type="button">회원 탈퇴</button>
+						</div>
 					</div>
-					<div class="mb-3" style="display:none;">
-						<label for="formFile" class="form-label">회원 사진</label>
-						<input type="text" name="thumbnail">
-						<input class="form-control" type="file" multiple="multiple" name="file" id="formFile_member">
-					</div>
-					<div class="form-floating mb-3" style="margin:0 auto; width:50%;" >
-					  	<input type="email" class="form-control" value="${mvo.email}" placeholder="name@example.com" readonly>
-					  	<label>이메일</label>
-					</div>
-					<div class="form-floating mb-3" style="margin:0 auto; width:50%;">
-  						<input type="text" class="form-control" id="" value="${mvo.nickname}" placeholder="닉네임" readonly>
-					  	<label >닉네임</label>
-					  	
-					</div>
-					<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center;">
-					  <button id="memberForm_member_edit_btn" class="btn btn-outline-secondary" type="button">수정</button>
-					  <button id="memberForm_member_delete_btn" class="btn btn-outline-secondary" type="button">회원 탈퇴</button>
-					</div>
+					
+					
+					
 				</div>
 				
-				
-				
+				</form>
+			</div> <!-- mypage_container end -->
+		</div>
+		<div class="col-3" id="mypage_sidebar">
+			<div class="container" id="mypage_sidebar_container">
+				<h4 class="h4">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h4>
+				<hr/>
+				<ul>
+					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
+					<li><a href="${url}/mypage/review">감상평</a></li>
+					<li><a href="${url}/mypage/board">작성글</a></li>
+					<li><a href="${url}/mypage/fan">팔로잉 작가</a></li>
+					<li><a href="${url}/mypage">작가등록 신청</a></li>
+					<li><a href="${url}/mypage/author">작가 정보</a></li>
+					
+				</ul>
+				<hr/>
+				<ul>
+					<li><strong><a href="${url}/mypage/member" style="color:#9DC3E6">내정보</a></strong></li>
+					<li><a href="${url}/logout/kakao">로그아웃</a></li>
+					
+				</ul>
 			</div>
 			
-			</form>
-		</div>
-		<div class="col-4">
-			${mvo.nickname} 님 반갑습니다.
-			<hr/>
-			<ul>
-				<li>리뷰</li>
-				<li>감상평</li>
-				
-				<li>작성글</li>
-				
-				<li>팔로잉 작가</li>
-				<li>작가등록 신청</li>
-				<li>작가 정보</li>
-				
-			</ul>
+			
 		</div>
 		
 	</div>
