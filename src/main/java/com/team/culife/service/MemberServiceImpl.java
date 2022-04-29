@@ -1,5 +1,7 @@
 package com.team.culife.service;
 
+import java.io.File;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -27,4 +29,20 @@ public class MemberServiceImpl implements MemberService {
 	public int memberDelete(long kakao_id) {
 		return dao.memberDelete(kakao_id);
 	}
+	@Override
+	public int memberUpdate(MemberVO vo) {
+		return dao.memberUpdate(vo);
+	}
+	@Override
+	public boolean deleteFileAll(File rootFile) {
+		File[] allFiles = rootFile.listFiles();
+		if(allFiles != null) {
+			for(File file : allFiles) {
+				deleteFileAll(file);
+			}
+		}
+		 return rootFile.delete();
+	}
+	
+	
 }
