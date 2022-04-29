@@ -17,5 +17,8 @@
   		from member
   		where no=${param1}
   	</select>
+  	<delete id="memberDelete">
+  		delete from member where kakao_id=${param1}
+  	</delete>
 
   </mapper>

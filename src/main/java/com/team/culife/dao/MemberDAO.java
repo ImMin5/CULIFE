@@ -8,4 +8,5 @@ public interface MemberDAO {
 	public MemberVO memberSelectByEmail(String email);
 	public int memberInsert(MemberVO vo);
 	public MemberVO memberSelectByNo(int no);
+	public int memberDelete(long kakao_id);
 }
