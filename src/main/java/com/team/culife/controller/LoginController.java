@@ -85,7 +85,7 @@ public class LoginController {
 				mvo.setGrade(0);
 				
 				memberService.memberInsert(mvo);
-				session.setAttribute("logId", mvo.getNo());
+				session.setAttribute("logNo", mvo.getNo());
 				session.setAttribute("logNickname", mvo.getNickname());
 				session.setAttribute("Token", token);
 				session.setAttribute("grade",mvo.getGrade());
