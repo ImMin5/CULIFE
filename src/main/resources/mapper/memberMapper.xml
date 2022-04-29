@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.team.culife.dao.MemberDAO" >
+  	<insert id="memberInsert" useGeneratedKeys="true" keyProperty="no">
+  		insert into member(kakao_id, email, nickname) 
+  		values(#{kakao_id}, #{email}, #{nickname})
+  	</insert>
+  	<select id="memberSelectByEmail" resultType="com.team.culife.vo.MemberVO">
+  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, author, author_thumbnail, sns_link, status, create_date 
+  		from member
+  		where email=#{param1}
+  	</select>
+  	  <select id="memberSelectByNo" resultType="com.team.culife.vo.MemberVO">
+  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, author, author_thumbnail, sns_link, status, create_date 
+  		from member
+  		where no=${param1}
+  	</select>
+
+  </mapper>
