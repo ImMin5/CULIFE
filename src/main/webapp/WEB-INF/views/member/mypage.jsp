@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <c:set var="url" value="<%=request.getContextPath()%>"/>
+<c:set var="servletUrl" value="<%=request.getServletContext()%>"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,11 +99,10 @@
 		//프로필 이지미 바꾸기 요청
 		$("#memberForm_member_edit_btn").on("click",function(){
 			var url = "${url}/mypage/member/thumbnail";
-			var data = $("#memberForm").serialize();
+			var data = new FormData($("#memberForm")[0]);
 			console.log(data.thumbnail);
 			$.ajax({
 				url : url,
-				enctype: 'multipart/form-data',
 				processData: false,
 				contentType: false,
 				type : "POST",
@@ -126,7 +126,12 @@
 				<div class="col">
 					<!-- 회원 대표 사진 -->
 					<div id="mypage_member_thumbnail_container">
+					<c:if test="${mvo.thumbnail == Null}">
 						<img id="thumbnail_member" src="${url}/img/member/default_thumbnail.png"/>
+					</c:if>
+					<c:if test="${mvo.thumbnail != Null}">
+						<img id="thumbnail_member" src="${url}/upload/${mvo.no}/thumbnail/${mvo.thumbnail}"/>
+					</c:if>
 						<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
 					</div>
 					<div class="mb-3" style="display:none;">

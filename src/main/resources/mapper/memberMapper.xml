@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.team.culife.dao.MemberDAO" >
   	<insert id="memberInsert" useGeneratedKeys="true" keyProperty="no">
-  		insert into member(kakao_id, email, nickname) 
-  		values(#{kakao_id}, #{email}, #{nickname})
+  		insert into member(kakao_id, email, nickname, grade) 
+  		values(#{kakao_id}, #{email}, #{nickname} ,${grade})
   	</insert>
   	<select id="memberSelectByEmail" resultType="com.team.culife.vo.MemberVO">
   		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, author, author_thumbnail, sns_link, status, create_date 
@@ -20,5 +20,8 @@
   	<delete id="memberDelete">
   		delete from member where kakao_id=${param1}
   	</delete>
+  	<update id="memberUpdate">
+  		update member set thumbnail=#{thumbnail}, warning_count=${warning_count}, status=${status} where no=${no}
+  	</update>
 
   </mapper>

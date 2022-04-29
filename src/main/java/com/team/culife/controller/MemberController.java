@@ -39,9 +39,9 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
 		try {
-			if(memberNo != null) {
+			
+			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				System.out.println(mvo.getEmail());
 				mav.addObject("mvo", mvo);
 				mav.setViewName("member/mypage");
 			}
@@ -74,49 +74,43 @@ public class MemberController {
 	
 	//회원 썸네일 업로드
 	@PostMapping("/mypage/member/thumbnail")
-	public ResponseEntity<HashMap<String,String>> memberThumbnailEdit(MultipartFile file, String thumbnail, HttpServletRequest request ,HttpSession session){
+	public ResponseEntity<HashMap<String,String>> memberThumbnailEdit(MemberVO mvo, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/thumbnail/"+memberNo);
+		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/thumbnail");
 		System.out.println("path --> " +path);
 		
 		try {
+			System.out.println("th "+ mvo.getThumbnail());
+			
 			MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
 			MultipartFile newFile = (MultipartFile) mr.getFile("file");
-			System.out.println("file -->" + newFile .getName());
-			System.out.println("filename -->" + thumbnail);
 			
-			if(file != null) { //새로업로드된 파일이 있으면
+			if(newFile != null) { //새로업로드된 파일이 있으면
 				String newUploadFilename = newFile.getOriginalFilename();	
 					if(newUploadFilename!=null && !newUploadFilename.equals("")) {
 						File f = new File(path, newUploadFilename);
-						//폴더가 존재하지 않을 경우
+						//폴더가 존재하지 않을 경우 폴더 생성
 						if(!f.exists()) {
 							try {
-								f.mkdir();
+								System.out.println(f.mkdirs());
 							}catch(Exception e) {e.printStackTrace();}
 						}
-							
-						if(f.exists()) {
-							//rename
-							for(int n=1;;n++) {
-								int point = newUploadFilename.lastIndexOf(".");
-								String fileNameNoExt = newUploadFilename.substring(0,point);
-								String ext = newUploadFilename.substring(point+1);
-								//새로운 파일명 만들어 존재유무 확인
-								String nf = fileNameNoExt + " (" + n + ")." + ext;
-								f = new File(path, nf);
-								if(!f.exists()) {
-									newUploadFilename = nf;
-									break;
-								}
-							}//for
-						}
+
 						// 업로드
 						try {
+							//기존에 있던 썸네일 파일 삭제
+							
+							mvo = memberService.memberSelectByNo(memberNo);
+							if(mvo.getThumbnail() != null) {
+								File deleteFile = new File(path,mvo.getThumbnail());
+								deleteFile.delete();
+							}
+							mvo.setThumbnail(newUploadFilename);
+							System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
 							newFile.transferTo(f);
-						} catch(Exception ee) {}
+						} catch(Exception ee) {ee.printStackTrace();}
 							
 					}
 			} // if
@@ -137,7 +131,7 @@ public class MemberController {
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		String Token = (String)session.getAttribute("Token");
-		
+		String rootPath = session.getServletContext().getRealPath("/upload/"+memberNo);
 		try {
 			result.put("status","200");
 			if(memberNo != null) {
@@ -147,6 +141,7 @@ public class MemberController {
 				if(mvo != null) {
 					JSONObject jsonObj = loginService.unlinkKaKao(mvo.getKakao_id(), Token);
 					memberService.memberDelete(jsonObj.getLong("id"));
+					memberService.deleteFileAll(new File(rootPath));
 					session.invalidate();
 					result.put("msg","회원탈퇴 성공");
 					result.put("redirect","/");
