@@ -146,5 +146,45 @@ public class LoginService {
 		}
 		
 	}
+	
+	//카카오 로그아웃
+	public void logoutKakao() {
+		StringBuilder urlBuilder = new StringBuilder("https://kauth.kakao.com/oauth/logout");
+		BufferedReader br = null;
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			urlBuilder.append("?" + URLEncoder.encode("client_id","UTF-8") + "="+REST_API_KEY);
+			urlBuilder.append("&" + URLEncoder.encode("logout_redirect_uri","UTF-8") + "="+"http://localhost:8080/logout/kakao");
+		
+			
+			URL url = new URL(urlBuilder.toString());
+			System.out.println("url --- > " + url);
+			
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			//header 설정
+			
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+
+              
+			String line;
+            if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+           	 br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+            } else {
+           	 br = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
+            }
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("status : " + sb.toString() + "카카오 로그아웃");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mysql.cj.Session;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
 import com.team.culife.vo.MemberVO;
@@ -49,32 +48,6 @@ public class LoginController {
 		return mav;
 	}
 	
-	//로그아웃 
-	@GetMapping("/logout")
-	public ModelAndView logout(HttpSession session){
-		ModelAndView mav = new ModelAndView();
-		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String Token = (String)session.getAttribute("Token");
-		
-		try {
-			if(memberNo != null) {
-				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				System.out.println(mvo.getNickname());
-				if(mvo != null) {
-					loginService.logout(mvo.getKakao_id(),Token);
-				}else {
-					//탈퇴한 사용자
-				}
-				session.invalidate();
-			}
-			mav.setViewName("redirect:/");
-			
-		}catch(Exception e) {
-			
-		}
-		
-		return mav;
-	}
 	//code가 redirect되는 주소
 	@GetMapping("/login/oauth")
 	public void loginOauth(@RequestParam(value = "code", required = false) String code) {
@@ -140,5 +113,39 @@ public class LoginController {
 		}
 		
 		return entity;
+	}
+	
+	//로그아웃 버튼 주소 
+	//https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao
+	//로그아웃 
+	@GetMapping("/logout")
+	public ModelAndView logout(HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		String Token = (String)session.getAttribute("Token");
+		
+		try {
+			if(memberNo != null) {
+				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				System.out.println(mvo.getNickname());
+				if(mvo != null) {
+					loginService.logout(mvo.getKakao_id(),Token);
+				}
+				session.invalidate();
+			}
+			mav.setViewName("redirect:/");
+			
+		}catch(Exception e) {
+			
+		}
+		
+		return mav;
+	}
+	
+	//카카오 로그아웃 redirect 주소
+	@GetMapping("/logout/kakao")
+	public ModelAndView logoutKakao(HttpSession session, @RequestParam(value = "state", required = false)String state) {
+		System.out.println("state : " + state);
+		return logout(session);
 	}
 }
