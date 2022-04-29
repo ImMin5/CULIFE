@@ -17,5 +17,5 @@ public class MemberVO {
 	private String author_thumbnail;
 	private String sns_link;
 	private boolean status;
-	private String create_date;
+	private String create_date;	
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.culife.dao.AdminDAO">
+	<!-- 회원목록 불러오기 -->
+  	<select id='memberList' resultType="com.team.culife.vo.MemberVO">
+  	 select no, kakao_id, email, nickname, grade, status, date_format(create_date,'%Y-%m-%d') create_date  
+  	 from member
+  	 <if test="searchWord != null" >
+			where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex} 
+  	</select>
+  	
+  	<!-- 회원목록 전체 인원 카운트 -->
+  	<select id='totalRecord' resultType='int'>
+  	select count(no) cnt from member 
+	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	</select>
+  	
+  	<!-- 회원정보 상태 변경 -->
+  	<!-- 회원상태: 탈퇴 -->
+  	<delete id='memberDel'>
+  	delete from member where no = #{no}
+  	</delete>
+  	<!-- 회원상태: 정상 -->
+  	<update id='memberNor'>
+  	update member set status = 0 where no = #{no}
+  	</update>
+  	<!-- 회원상태: 정지 -->
+  	<update id='memberBan'>
+  	update member set status = 1 where no = #{no}
+  	</update>
+  	<!-- 회원상태: @일정지 -->
+  	<!-- date_add(now(), 7) // spring scheduler --> 
+  	<insert id='memberBanDate'>
+  	insert into member_ban(member_no, end_date) values (#{no}, date_add(now(), interval #{add_date} day));
+  	</insert>
+  	<!-- 회원상태: member_ban에서 삭제 -->
+  	<delete id='memberBanDel'>
+  	delete from member_ban where member_no = #{member_no}
+  	</delete>
+  	
+</mapper>
+  

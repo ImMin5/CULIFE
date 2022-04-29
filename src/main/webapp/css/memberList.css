@@ -1,0 +1,48 @@
+@charset "UTF-8";
+/* 공통 */
+.container{
+	width: 1200px;
+	margin: 0px auto;
+	padding: 0px;
+	background-color: yellow;
+}
+
+li{
+	list-style-type: none;
+}
+
+/* 멤버리스트 */
+.memberList{
+	width: 1200px;
+}
+.memberList li{
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid black;
+	width: 14%;
+}
+.memberList li:nth-child(7n){
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid black;
+	width: 12%;
+}
+
+/* 페이징 */
+.paging{
+	margin: 30px 0px; 
+	height: 30px; 
+	overflow: auto;
+	background-color: pink;	
+}
+.paging li{
+	float:left; 
+	padding-right: 30px;
+	background-color: coral;
+}
+/* 검색 */
+#searchFrm{
+	padding: 20px 200px; text-align: center;
+}
