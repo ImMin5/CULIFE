@@ -65,7 +65,6 @@ public class LoginController {
 		MemberVO mvo = null;
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String, String>();
-		
 		try {
 			if(jsonObj == null) {
 				System.out.println("잘못된 접근입니다.");
@@ -88,6 +87,7 @@ public class LoginController {
 				session.setAttribute("logId", mvo.getNo());
 				session.setAttribute("logNickname", mvo.getNickname());
 				session.setAttribute("Token", token);
+				session.setAttribute("grade",mvo.getGrade());
 				
 				result.put("msg","회원가입 성공");
 				result.put("status", "200");
@@ -99,6 +99,7 @@ public class LoginController {
 				session.setAttribute("logNo", mvo.getNo());
 				session.setAttribute("logNickname", mvo.getNickname());
 				session.setAttribute("Token", token);
+				session.setAttribute("grade",mvo.getGrade());
 				
 				result.put("msg","로그인 성공");
 				result.put("status", "200");
@@ -124,7 +125,6 @@ public class LoginController {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		String Token = (String)session.getAttribute("Token");
-		
 		try {
 			if(memberNo != null) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
@@ -137,7 +137,8 @@ public class LoginController {
 			mav.setViewName("redirect:/");
 			
 		}catch(Exception e) {
-			
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
 		}
 		
 		return mav;

@@ -22,6 +22,7 @@ public class LoginService {
     
     @Value("${open-api.ADMIN_KEY}")
     private String AdminKey;
+    
 	//코드를 이용해서 로그인 access 코드를 받아옴
 	public void getKakaoToken(String code) {
 		StringBuilder urlBuilder = new StringBuilder("https://kauth.kakao.com/oauth/token");
