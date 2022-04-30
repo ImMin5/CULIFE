@@ -1,0 +1,98 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+	<link rel="stylesheet" href="/css/top_bottom.css">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <title>CULIFE | 복합문화공간</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-32x32.ico">
+
+	<script>
+		$(document).ready(function(){
+			$("#gnb_movie_video").on('mouseover',function(){
+				$(this).trigger('play');
+			})
+			$("#gnb_movie_video").on('mouseleave',function(){
+				$(this).trigger('pause');
+			})
+			
+			$("#gnb_musical_video").on('mouseover',function(){
+				$(this).trigger('play');
+			})
+			$("#gnb_musical_video").on('mouseleave',function(){
+				$(this).trigger('pause');
+			})
+		})
+	</script>
+</head>
+<body>
+	<header>
+		<a href="/"><img id="main_logo" src="/img/logo_w.png" alt="logo"></a>
+		<nav>
+        	<ul id="nav_section1">
+        		<li><a href="">HOME</a></li>
+        		<li>
+        			<a href="">문화생활</a>
+        			<ul>
+        				<li id="gnb_movie">
+        					<a href="">
+        						<em>영화</em>
+        						<video src="/img/gnb_movie_video.mp4" id="gnb_movie_video" muted loop></video>
+        						<span id="gnb_movie_line1"></span>
+        						<span id="gnb_movie_line2"></span>
+        						<span id="gnb_movie_line3"></span>
+        						<span id="gnb_movie_line4"></span>
+        					</a>
+        					<div>
+        						<p>다양한 영화 정보도 얻고</p>
+								<p>원하는 영화로 즐거운 시간을 보내세요</p>
+        					</div>
+        				</li>
+        				<li id="gnb_musical">
+        					<a href="">
+        						<em>연극 / 뮤지컬</em>
+        						<video src="/img/gnb_musical_video.mp4" id="gnb_musical_video" muted loop></video>
+        						<span id="gnb_musical_line1"></span>
+        						<span id="gnb_musical_line2"></span>
+        						<span id="gnb_musical_line3"></span>
+        						<span id="gnb_musical_line4"></span>
+        					</a>
+        					<div>
+        						<p>원하는 정보만 쏙쏙 골라보세요</p>
+        					</div>
+        				</li>
+        			</ul>
+        		</li>
+        	</ul>
+        	<ul id="nav_section2">
+        		<li><a href="">온라인 전시회</a></li>
+        		<li id="gnb_commu">
+        			<a href="">커뮤니티</a>
+        			<ul>
+        				<li><a href="">자유게시판</a></li>
+        				<li><a href="">문의사항</a></li>
+        			</ul>
+        		</li>
+        	</ul>
+        	<div id="rnb">
+	            <c:if test="${grade != '' }">
+	            </c:if>
+	            <c:if test="${grade == '0' && grade == '1'}"> <!-- 일반회원 : 0, 작가 : 1 -->
+	            	<p><a href="">mypage</a></p>
+	            </c:if>
+	            <c:if test="${grade == '2'}"> <!-- 관리자 : 2 -->
+	            	<p><a href="">mypage</a></p> 
+	            	<style>
+	            	
+	            	</style>
+	            </c:if>
+        	</div>
+        </nav>
+	</header>
+	
