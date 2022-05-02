@@ -15,13 +15,29 @@
 	section{
 		width:100vw; height:100vh;
 		display:block;
-		background-size:100vw 100vh;
+		position:relative
 	}
 </style>
 	
 	<main id="home_main_container">
+		<h1 class="hidden">본문보기</h1>
 		<section id="home_visual">
 			<div id="three-container"></div>
     		<button class="fun-btn">JOIN US</button>
+		</section>
+		<section id="home_entertain">
+			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
+			<ul>
+				<li>
+					<a href=""><em>영화</em></a>
+					<span class="skew_box1"></span>
+					<span class="skew_box2"></span>
+				</li>
+				<li>
+					<a href=""><em>연극 / 뮤지컬</em></a>
+					<span class="skew_box1"></span>
+					<span class="skew_box2"></span>
+				</li>
+			</ul>
 		</section>
 	</main>
