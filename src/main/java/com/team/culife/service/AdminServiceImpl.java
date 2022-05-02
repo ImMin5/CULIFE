@@ -44,5 +44,13 @@ public class AdminServiceImpl implements AdminService{
 	public int memberBanDate(MemberBanVO mbVO) {
 		return dao.memberBanDate(mbVO);
 	}
+	@Override
+	public void scheduleUpdate() {
+		dao.scheduleUpdate();
+	}
+	@Override
+	public void scheduleDelete() {
+		dao.scheduleDelete();
+	}
 	
 }

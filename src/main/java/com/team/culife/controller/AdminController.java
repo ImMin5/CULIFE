@@ -63,4 +63,12 @@ public class AdminController {
 		mav.setViewName("redirect:/admin/memberList");
 		return mav;
 	}
+	
+	//choi0502-작가리스트 페이지로 이동
+		@GetMapping("/authorList")
+		public ModelAndView authorList() {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("/admin/authorList");
+			return mav;
+		}
 }

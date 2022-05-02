@@ -22,4 +22,9 @@ public interface AdminService {
 	public int memberBanDate(MemberBanVO mbVO);	
 	//회원상태: member_ban에서 삭제
 	public int memberBanDel(MemberBanVO mbVO);
+	
+	//스케줄러 실행: member테이블 회원상태: 정상
+	public void scheduleUpdate();
+	//스케줄러 실행: member_ban테이블 회원정보 삭제
+	public void scheduleDelete();
 }

@@ -37,7 +37,7 @@
   	update member set status = 1 where no = #{no}
   	</update>
   	<!-- 회원상태: @일정지 -->
-  	<!-- date_add(now(), 7) // spring scheduler --> 
+  	<!-- date_add(now(), 7) --> 
   	<insert id='memberBanDate'>
   	insert into member_ban(member_no, end_date) values (#{no}, date_add(now(), interval #{add_date} day));
   	</insert>
@@ -46,5 +46,17 @@
   	delete from member_ban where member_no = #{member_no}
   	</delete>
   	
+  	<!-- spring scheduler -->
+  	<!-- 오늘>end_date일 경우 회원상태: 정상 -->
+  	<update id='scheduleUpdate'>
+  	update member m 
+	inner join member_ban b on m.no = b.member_no 
+	set m.status = 0 
+	where b.end_date <![CDATA[ < ]]> now();
+  	</update>
+  	<!-- 오늘>end_date일 경우 회원 밴목록에서 제거 -->
+  	<delete id="scheduleDelete">
+  	delete from member_ban where end_date <![CDATA[ < ]]> now();
+  	</delete>
 </mapper>
   
