@@ -2,6 +2,7 @@ package com.team.culife.service;
 
 import java.io.File;
 
+import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.MemberVO;
 
 
@@ -12,4 +13,7 @@ public interface MemberService {
 	public int memberDelete(long kakao_id);
 	public int memberUpdate(MemberVO vo);
 	public boolean deleteFileAll(File rootFile);
+	
+	public int authorFanInsert(AuthorFanVO vo);
+	public AuthorFanVO authorFanCheck(String author, int member_no);
 }

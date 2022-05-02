@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
+import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.MemberVO;
 
 @RestController
@@ -82,38 +83,44 @@ public class MemberController {
 		System.out.println("path --> " +path);
 		
 		try {
-			System.out.println("th "+ mvo.getThumbnail());
-			
-			MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-			MultipartFile newFile = (MultipartFile) mr.getFile("file");
-			
-			if(newFile != null) { //새로업로드된 파일이 있으면
-				String newUploadFilename = newFile.getOriginalFilename();	
-					if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-						File f = new File(path, newUploadFilename);
-						//폴더가 존재하지 않을 경우 폴더 생성
-						if(!f.exists()) {
-							try {
-								System.out.println(f.mkdirs());
-							}catch(Exception e) {e.printStackTrace();}
-						}
-
-						// 업로드
-						try {
-							//기존에 있던 썸네일 파일 삭제
-							
-							mvo = memberService.memberSelectByNo(memberNo);
-							if(mvo.getThumbnail() != null) {
-								File deleteFile = new File(path,mvo.getThumbnail());
-								deleteFile.delete();
+			if(memberNo != null) {
+				System.out.println("th "+ mvo.getThumbnail());
+				
+				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
+				MultipartFile newFile = (MultipartFile) mr.getFile("file");
+				
+				if(newFile != null) { //새로업로드된 파일이 있으면
+					String newUploadFilename = newFile.getOriginalFilename();	
+						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
+							File f = new File(path, newUploadFilename);
+							//폴더가 존재하지 않을 경우 폴더 생성
+							if(!f.exists()) {
+								try {
+									System.out.println(f.mkdirs());
+								}catch(Exception e) {e.printStackTrace();}
 							}
-							mvo.setThumbnail(newUploadFilename);
-							System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
-							newFile.transferTo(f);
-						} catch(Exception ee) {ee.printStackTrace();}
-							
-					}
-			} // if
+
+							// 업로드
+							try {
+								//기존에 있던 썸네일 파일 삭제
+								
+								mvo = memberService.memberSelectByNo(memberNo);
+								if(mvo.getThumbnail() != null) {
+									File deleteFile = new File(path,mvo.getThumbnail());
+									deleteFile.delete();
+								}
+								mvo.setThumbnail(newUploadFilename);
+								System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
+								newFile.transferTo(f);
+							} catch(Exception ee) {ee.printStackTrace();}
+								
+						}
+				} // if newFile != null
+			}
+			else {
+				result.put("msg","로그인 후 이용해 주세요");
+			}
+			
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -159,4 +166,74 @@ public class MemberController {
 		
 		return entity;
 	}
+	
+	//회원 가입
+	@PostMapping("/member")
+	public ResponseEntity<HashMap<String,String>> adminSignup(MemberVO mvo , HttpSession session){
+		ResponseEntity<HashMap<String,String>> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+				
+		try {
+			System.out.println("sss");
+			memberService.memberInsert(mvo);
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+		}
+					
+		return entity;
+	}
+	
+	//작가 팔로우 요청
+	@PostMapping("/author/follow")
+	public ResponseEntity<HashMap<String,String>> authorFlow(HttpSession session, String author){
+
+		ResponseEntity<HashMap<String,String>> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		System.out.println("ss");
+		try {
+			result.put("status", "200");
+			//로그인 확인
+			if(memberNo == null) {
+				result.put("msg", "로그인 후 이용해 주세요.");
+			}
+			else {
+				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				if(mvo != null) {
+					if(mvo.getGrade() >= 1 && mvo.getAuthor().equals(author)) {
+						result.put("msg", "본인을 팔로우 할 수 없습니다.");
+					}
+					else if(memberService.authorFanCheck(author, memberNo) != null) {
+						result.put("msg", "이미 팔로우 하고 있습니다.");
+					}
+					else {
+						//팔로잉
+						System.out.println("author ---> " + author);
+						System.out.println("member no " + memberNo);
+						AuthorFanVO afvo = new AuthorFanVO();
+						afvo.setAuthor(author);
+						afvo.setMember_no(memberNo);
+						memberService.authorFanInsert(afvo);
+						result.put("mgs", "팔로우 성공");
+					}
+				}
+				else {
+					//탈퇴했는데 세션에 값이 남아있을 경우
+					result.put("msg", "회원가입 후 이용해 주세요.");
+				}
+			}
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			result.put("status", "400");
+			result.put("msg", "팔로잉 에러...관리자에게 문의해 주세요.");
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	
 }
