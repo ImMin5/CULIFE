@@ -1,0 +1,107 @@
+@charset "UTF-8";
+/* 공통 */
+header{
+	display: none;
+}
+.admin_container{
+	width: 1200px;
+	margin: 0px auto;
+	background-color: yellow;
+	overflow: auto;
+	padding-bottom: 100px;
+}
+li{
+	list-style-type: none;
+}
+a:link, a:visited{
+	color: black;
+}
+
+/* 회원목록 */
+.memberList{
+	width: 1200px;
+	overflow: auto;
+}
+.memberList li{
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid black;
+	width: 14%;
+}
+.memberList li:nth-child(7n){
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid black;
+	width: 12%;
+}
+
+/* 작가목록 */
+.authorList{
+	width: 1200px;
+	overflow: auto;
+}
+.authorList li{
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid black;
+	width: 14%;
+}
+.authorList li:nth-child(7n+4){
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.authorList li:nth-child(7n){
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid black;
+	width: 12%;	
+}
+.authorList input{
+	float: left;
+}
+
+/* 자유게시판 목록*/
+.adminBoardList{
+	width: 1200px;
+	overflow: auto;
+}
+.adminBoardList li{
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid black;
+	width: 14%;
+}
+.adminBoardList li:nth-child(6n+2){
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 30%;
+}
+.adminBoardList li:last-child{
+	border-bottom: 0px;
+	float: right;
+}
+
+/* 페이징 */
+.paging{
+	margin: 30px 0px; 
+	height: 30px; 
+	overflow: auto;
+	background-color: pink;	
+}
+.paging li{
+	float:left; 
+	padding-right: 30px;
+	background-color: coral;
+}
+/* 검색 */
+.memberList_searchFrm{
+	overflow: auto;
+}
+#searchFrm{
+	padding: 20px 200px; text-align: center;
+}

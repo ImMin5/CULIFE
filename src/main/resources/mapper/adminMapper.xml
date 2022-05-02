@@ -5,10 +5,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.culife.dao.AdminDAO">
 	<!-- 회원목록 불러오기 -->
+	<!-- 우선 임의로 썸네일은 빼겠습니다. -->
   	<select id='memberList' resultType="com.team.culife.vo.MemberVO">
   	 select no, kakao_id, email, nickname, grade, status, date_format(create_date,'%Y-%m-%d') create_date  
   	 from member
-  	 <if test="searchWord != null" >
+  	<if test="searchWord != null" >
 			where ${searchKey} like '%${searchWord}%' 
 	</if>
   	 order by no desc 
@@ -58,5 +59,58 @@
   	<delete id="scheduleDelete">
   	delete from member_ban where end_date <![CDATA[ < ]]> now();
   	</delete>
+  	
+  	<!-- 작가목록 불러오기 -->
+  	<!-- 우선 임의로 썸네일은 빼겠습니다. 저장경로 설정되면 생각해보기 -->
+  	<select id='authorList' resultType="com.team.culife.vo.AuthorVO">
+  	 select no, member_no, author, sns_link, author_status, date_format(create_date,'%Y-%m-%d') create_date  
+  	 from author_apply 
+  	<if test="searchWord != null" >
+			where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex} 
+  	</select>
+  	
+  	<!-- 작가목록 전체 인원 카운트 -->
+  	<select id='author_totalRecord' resultType='int'>
+  	select count(no) cnt from author_apply 
+	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	</select>
+  	
+  	<!-- 작가승인 -->
+  	<update id='authorUpgrade'>
+  	update author_apply set author_status = 1 where no = #{no}
+  	</update>
+  	<!-- 작가삭제 -->
+  	<delete id='authorDelete'>
+  	delete from author_apply where no = #{no}
+  	</delete>
+  	
+  	<!-- 자유게시판 목록 불러오기 -->
+  	<select id='adminBoardList' resultType="com.team.culife.vo.BoardVO">
+  	 select b.no, b.subject, b.content, b.view, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname   
+  	 from board b inner join member m
+  	 on b.member_no = m.no
+  	 where b.category='free'
+  	<if test="searchWord != null" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}  
+  	 </select>
+  	 
+  	 <!-- 자유게시판 목록 카운트 -->
+  	<select id='board_totalRecord' resultType='int'>
+  	select count(b.no) cnt 
+  	from board b inner join member m 
+  	on b.member_no = m.no 
+  	where category='free' 
+	<if test="searchWord != null" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+  	</select>
 </mapper>
   

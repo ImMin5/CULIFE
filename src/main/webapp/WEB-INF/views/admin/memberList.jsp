@@ -1,12 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/inc/adminTop.jspf" %>
-<link rel="stylesheet" href="/css/memberList.css" type="text/css" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
 <script>
-
+	$("#searchFrm").submit(function(){
+		if(searchKey)
+	});
 </script>
-
-<div class="container">
+</head>
+<body>
+<div class="admin_container">
 	<h1>회원관리</h1>
 	<ul class='memberList'>
 		<li>번호</li>
@@ -38,7 +46,7 @@
 			<li>정지</li>
 			</c:if>	
 			<li>
-				<form method="get" action="/admin/memberStatus" id='statusFrm'>
+				<form method="get" action="/admin/memberStatus" class='statusFrm'>
 					<input type="hidden" name="no" value="${vo.no}"/>
 					<select name="memberStatus">
 						<option value="ok">정상</option>
@@ -83,7 +91,7 @@
 	</ul>
 	
 	<!-- 검색 -->
-	<div>
+	<div class='adminList_searchFrm'>
 		<form method="get" action="/admin/memberList" id='searchFrm'>
 			<select name="searchKey">
 				<option value='kakao_id'>카카오ID</option>
@@ -96,7 +104,6 @@
 		</form>
 	</div>
 	
-	
-</div><!-- class='container' -->
+</div><!-- class='memberList_container' -->
 </body>
 </html>
