@@ -255,11 +255,11 @@ nav > ul > li:nth-child(2) > ul a {
 	transition:all 0.5s;
 }
 #gnb_commu > ul li:nth-child(1) a {
-	background:url(../img/gnb_commu_bg2.gif) 0 -500px;
+	background:url(../img/gnb_commu_bg.gif) 0 -500px;
 	background-size:100%
 } 
 #gnb_commu > ul li:nth-child(2) a {
-	background:url(../img/gnb_commu_bg2.gif) 0 -200px;
+	background:url(../img/gnb_commu_bg.gif) 0 -200px;
 	background-size:100%
 } 
 /* 커뮤니티 - end */
