@@ -58,7 +58,7 @@ a:visited {color:#fff}
 /* top - start */
 
 html {font-size:62.5%; font-family: 'Noto Sans KR';}
-body {font-size:1.6rem; overflow-x:hidden}
+body {font-size:1.6rem; overflow-x:hidden; position:relative}
 header {
 	width:100vw; height:100px;
 	background-color:rgba(0,0,0,0.5);
@@ -298,7 +298,27 @@ nav > ul > li > a:hover {color:red}
 
 /* ***************************************************** */
 /* bottom - start */
-
+footer {
+	width:100vw; height:100px;
+	text-align:center;
+	color:#fff;
+	background-color:rgba(0,0,0,0.8);
+	font-size:1.6rem;
+}
+#footer_wrap {
+	width:50%;
+	margin:0 auto;
+}
+footer ul {
+	display:inline-block;
+	height:30px;
+}
+footer ul li {
+	float:left;
+	margin:0 30px;
+	line-height:30px
+}
+.f_menu {padding-top:20px}
 /* bottom - end */
 /* ***************************************************** */
 
