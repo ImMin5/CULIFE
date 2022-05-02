@@ -1,18 +1,9 @@
-@charset "EUC-KR";
-ul{
-	list-style:none;
-	float:left;
-	padding:20px;
-}
-
-ul>li{
-	color:white;
-	width:200px;
-}
-
-#aaa{
-	background-color:black;	
-	margin:0 auto;
+@charset "UTF-8";
+/*0502 - 권지연*/
+#theater_container{
+	text-align: center;
+	background-color:black;
+	height:5000px;
 	background-image:url(/img/theater/theBack.jpg);
 	background-repeat: no-repeat;
 	background-size:1200px;
@@ -20,41 +11,88 @@ ul>li{
 	background-attachment:fixed;
 }
 
-#theaterMenu{
-	padding-top:300px;
+#theaterMenu{ 
+	text-align: center;
+	padding-top:370px;
+	margin:0 auto;
 	width:1200px;
 }
 
-#theaterMain>li{
+#theaterMain>li{	/*연극/뮤지컬*/
+	margin:0 auto;
 	width:1200px;
+	float:left;
 	text-align:center;
 	height:200px;
 	font-size:35px;
+	color:white;
 }
-#theaterSub{
-	width:1200px;
+#theaterSub{	/*연극*/ /*뮤지컬*/
+	text-align: center;
 	margin:0 auto;
 	padding:0;
 }
-#theaterSub li{
+#theaterSub>li{
+	width:600px;
 	list-style:none;
 	float:left;
-	width:550px;
+	text-align:center;
+	color:white;
+	margin-bottom:50px;
+}
+
+#list{
+	margin:0 auto;
+	width:1200px;
+}
+
+/*연극리스트*/
+#play{	
+	margin-right:10px;
+	width: 590px;
+	float: left;
+	box-sizing: border-box;
+	text-overflow:ellipsis;
+}
+
+#play>ul{
+	float:left;
+	margin:0;
+	width:290px;
+}
+
+#play>li{
+	margin:0;
+	float:left;
+	text-align:center;
+	text-overflow:ellipsis;
+}
+
+/*뮤지컬리스트*/
+#musical{
+	margin-left:10px;
+	text-align: center;
+	width:590px;
+	float:right;	
+}
+
+#musical>ul{
+	float:left;
+	margin:0;
+	width:290px;
+}
+
+#musical>li{
+	margin:0;
+	float:left;
 	text-align:center;
 }
 
-#play{
-	width: 600px;
-	float: left;
-	box-sizing: border-box;
-}
-
-#musical{
-	width:600px;
-	float:right;
-	box-sizing:border-box;
-}
-
+/*포스터 크기*/
 #thePoster{
 	width:200px;
+}
+
+#box{
+	padding-bottom:25px;
 }

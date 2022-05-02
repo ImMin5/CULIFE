@@ -1,1 +1,12 @@
-@charset "EUC-KR";
+@charset "UTF-8";
+
+#detail_container{
+	text-align: center;
+	background-color:black;
+	height:5000px;
+	background-image:url(/img/theater/theBack.jpg);
+	background-repeat: no-repeat;
+	background-size:1200px;
+	background-position:center center;
+	background-attachment:fixed;
+}

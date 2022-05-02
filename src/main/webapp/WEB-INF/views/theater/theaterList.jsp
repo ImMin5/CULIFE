@@ -39,19 +39,18 @@ $(document).ready(function () {
 			if(genre=='연극'){
 				//alert(genre);
 				playList += `
-					<ul><a href='/theater/theaterView?seq=`+seq+`'>						
-						<li><img src="`+thumb+`" id="thePoster"/></li>
-						<li>`+title+`</li>
-					
-					</a></ul>
+					<ul id="box">										
+						<li><a href='/theater/theaterView?seq=`+seq+`'><img src="`+thumb+`" id="thePoster"/></a></li>
+						<li style="width:200px; text-align:center; margin:0 auto; padding-top:5px;"><a href='/theater/theaterView?seq=`+seq+`'>`+title+`</a></li>						
+					</ul>
 				`;			
 				$('#play').empty().append(playList);	
 			}else if(genre=='음악'){
 				console.log(title);
 				musicalList += `
-					<ul>						
-						<li><img src="`+thumb+`" id="thePoster"/></li>
-						<li>`+title+`</li>
+					<ul id="box">					
+						<li><a href='/theater/theaterView?seq=`+seq+`'>	<img src="`+thumb+`" id="thePoster"/></a></li>
+						<li style="width:200px; text-align:center; margin:0 auto; padding-top:5px;"><a href='/theater/theaterView?seq=`+seq+`'>	`+title+`</a></li>					
 					</ul>
 				`;			
 				$('#musical').empty().append(musicalList);
@@ -61,7 +60,7 @@ $(document).ready(function () {
 });
 
 </script>
-<div id="aaa">
+<div id="theater_container">
 	<div id="theaterMenu">
 		<ul id="theaterMain">
 			<li>연극/뮤지컬</li>
@@ -71,12 +70,10 @@ $(document).ready(function () {
 			<li>뮤지컬</li>
 		</ul>
 	</div>
-		<div id="play">
-	
+	<div id="list">
+		<div id="play">	
 		</div>
-		<div id="musical">
-	
+		<div id="musical">	
 		</div>
-	
 	</div>
 </div>
