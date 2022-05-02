@@ -321,15 +321,3 @@ footer ul li {
 .f_menu {padding-top:20px}
 /* bottom - end */
 /* ***************************************************** */
-
-/* ***************************************************** */
-/* main - article 1 - start */
-
-article {
-	display:block;
-	width:100vw; height:1080px;
-	background:url(../img/main_visual_1.jpg);
-	background-color:black
-}
-/* main - article 1 - end */
-/* ***************************************************** */
