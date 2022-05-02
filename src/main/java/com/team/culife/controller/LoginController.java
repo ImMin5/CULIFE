@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,7 +65,6 @@ public class LoginController {
 		MemberVO mvo = null;
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String, String>();
-		
 		try {
 			if(jsonObj == null) {
 				System.out.println("잘못된 접근입니다.");
@@ -79,14 +79,16 @@ public class LoginController {
 			if(mvo == null) {
 				//회원이 아닐 경우
 				mvo = new MemberVO();
-				mvo.setKakao_id(Long.toString(jsonObj.getLong("id")));
+				mvo.setKakao_id(jsonObj.getLong("id"));
 				mvo.setNickname(jsonObj.getJSONObject("kakao_account").getJSONObject("profile").getString("nickname"));
 				mvo.setEmail(jsonObj.getJSONObject("kakao_account").getString("email"));
+				mvo.setGrade(0);
 				
 				memberService.memberInsert(mvo);
-				session.setAttribute("logId", mvo.getNo());
+				session.setAttribute("logNo", mvo.getNo());
 				session.setAttribute("logNickname", mvo.getNickname());
 				session.setAttribute("Token", token);
+				session.setAttribute("grade",mvo.getGrade());
 				
 				result.put("msg","회원가입 성공");
 				result.put("status", "200");
@@ -98,6 +100,7 @@ public class LoginController {
 				session.setAttribute("logNo", mvo.getNo());
 				session.setAttribute("logNickname", mvo.getNickname());
 				session.setAttribute("Token", token);
+				session.setAttribute("grade",mvo.getGrade());
 				
 				result.put("msg","로그인 성공");
 				result.put("status", "200");
@@ -123,20 +126,24 @@ public class LoginController {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		String Token = (String)session.getAttribute("Token");
+		String logNickname = (String)session.getAttribute("logNickname");
+		Integer grade = (Integer)session.getAttribute("grade");
 		
 		try {
-			if(memberNo != null) {
+			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
 				System.out.println(mvo.getNickname());
 				if(mvo != null) {
 					loginService.logout(mvo.getKakao_id(),Token);
 				}
-				session.invalidate();
 			}
+			session.invalidate();
 			mav.setViewName("redirect:/");
 			
 		}catch(Exception e) {
-			
+			e.printStackTrace();
+			session.invalidate();
+			mav.setViewName("redirect:/");
 		}
 		
 		return mav;
@@ -147,5 +154,29 @@ public class LoginController {
 	public ModelAndView logoutKakao(HttpSession session, @RequestParam(value = "state", required = false)String state) {
 		System.out.println("state : " + state);
 		return logout(session);
+	}
+	
+	//로그인ㄸㄸㄸㄸㄸㄸㄸㄸㄸㄸㄸㄸ
+	@PostMapping("/login")
+	public ResponseEntity<HashMap<String,String>> adminSignup(MemberVO mvo , HttpSession session){
+		ResponseEntity<HashMap<String,String>> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		
+		try {
+			
+			MemberVO Orimvo = memberService.memberSelectByEmail(mvo.getEmail());
+			if(Orimvo.getEmail().equals(mvo.getEmail())){
+				session.setAttribute("logNo", Orimvo.getNo());
+				session.setAttribute("logNickname", Orimvo.getNickname());
+				session.setAttribute("grade",Orimvo.getGrade());
+				System.out.println("로그인 성공 ---> "+ Orimvo.getNickname());
+			
+				
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return entity;
 	}
 }

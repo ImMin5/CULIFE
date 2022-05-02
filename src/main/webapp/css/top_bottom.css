@@ -1,0 +1,335 @@
+@charset "UTF-8";
+
+/* ***************************************************** */
+/* 리셋 */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.hidden {
+	text-indent: -9999px;
+	display:none;
+}
+a:link {color:#fff; text-decoration: none;}
+a:visited {color:#fff}
+/* 리셋 */
+/* ***************************************************** */
+
+/* ***************************************************** */
+/* top - start */
+
+html {font-size:62.5%; font-family: 'Noto Sans KR';}
+body {font-size:1.6rem; overflow-x:hidden; position:relative}
+header {
+	width:100vw; height:100px;
+	background-color:rgba(0,0,0,0.5);
+	position:fixed; z-index:999;
+	text-align:center;
+}
+#main_logo {
+	width:260px; height:80px;
+	display:block;
+	margin: 10px auto 0 auto;
+}
+header > a::after {
+	content:"";
+	background:url(../img/logo_b.png);
+	width:260px; height:80px;
+	position:absolute; left:50%; top:10px;
+	transform:translateX(-130px);
+	background-size:260px 80px;
+	opacity:0;
+	transition:all 0.5s;
+}
+nav {width:100vw; height:100px; margin-top:-90px;}
+nav > ul {width:22.6%; height:100px;}
+nav #nav_section1 {float:left;margin-left:13.5%}
+nav #nav_section2 {float:right;margin-right:13.5%}
+nav > ul > li {
+	float:left;
+	width:50%; height:100px;
+}
+nav > ul > li:nth-child(2) {float:right}
+nav > ul > li > a {
+	font-size : 2.4rem;
+	line-height:30px; font-weight:bold;
+	display:inline-block;
+	margin:35px 0;
+	transition:all 0.5s;
+}
+
+nav > ul > li > ul{
+	width:100vw; height:0px;
+	background-color:rgba(255,255,255,0.8);
+	position: absolute; left:0; top:103px;
+	overflow:hidden;
+	transition:all 0.5s;
+}
+nav > ul > li:nth-child(2) > ul a {
+	color:#222; font-size: 2rem;
+}
+
+/* 문화생활 - 영화 - start */
+#gnb_movie {
+	width:1200px;
+	margin:0 auto;
+	position:relative;
+}
+#gnb_movie a {
+	display:block;
+	position:absolute; 
+	left:0; top:50px;
+}
+#gnb_movie a::after {
+	content:"";
+	width:450px; height:300px;
+	display:block;
+	background: radial-gradient(transparent 50px, black);
+	position:absolute; left:0; top:0;
+	transition:all 0.5s;
+}
+#gnb_movie a em {
+	width:100px; height:40px;
+	display:block;
+	position:absolute; 
+	left:175px; top:130px;
+	color:#fff; font-size:2.4rem;	
+	line-height:40px; font-weight:bold;
+	letter-spacing:10px
+}
+#gnb_movie video {
+	width:450px; height:300px;
+}
+#gnb_movie a > span {
+	display:block;
+	background-color:#fff;
+	transition:all 0.5s;
+}
+#gnb_movie #gnb_movie_line1 {
+	width:0px; height:1px;
+	position:absolute; left:30px; top:30px;
+}
+#gnb_movie #gnb_movie_line2 {
+	width:1px; height:0px;
+	position:absolute; left:30px; top:30px;
+}
+#gnb_movie #gnb_movie_line3 {
+	width:1px; height:0px;
+	position:absolute; left:420px; top:30px;
+	transition-delay:0.5s
+}
+#gnb_movie #gnb_movie_line4 {
+	width:0px; height:1px;
+	position:absolute; left:30px; top:270px;
+	transition-delay:0.5s
+}
+#gnb_movie div {
+	position:absolute;
+	left:480px; top:60px;
+}
+#gnb_movie div p {
+	height:30px;
+	font-size:2rem; font-weight:600;
+	line-height:30px; text-align:left;
+}
+/* 문화생활 - 영화 - end */
+
+/* 문화생활 - 연극/뮤지컬 - start */
+#gnb_musical {
+	width:1200px;
+	margin:0 auto;
+	position:relative;
+}
+#gnb_musical a {
+	display:block;
+	position:absolute; 
+	right:0; top:150px;
+}
+#gnb_musical a::after {
+	content:"";
+	width:450px; height:300px;
+	display:block;
+	background: radial-gradient(transparent 50px, black);
+	position:absolute; left:0; top:0;
+	transition:all 0.5s;
+}
+#gnb_musical a em {
+	width:300px; height:40px;
+	display:block;
+	position:absolute; 
+	left:75px; top:130px;
+	color:#fff; font-size:2.4rem;	
+	line-height:40px; font-weight:bold;
+	letter-spacing:10px
+}
+#gnb_musical video {
+	width:450px; height:300px;
+}
+#gnb_musical a > span {
+	display:block;
+	background-color:#fff;
+	transition:all 0.5s;
+}
+#gnb_musical #gnb_musical_line1 {
+	width:0px; height:1px;
+	position:absolute; left:30px; top:30px;
+}
+#gnb_musical #gnb_musical_line2 {
+	width:1px; height:0px;
+	position:absolute; left:30px; top:30px;
+}
+#gnb_musical #gnb_musical_line3 {
+	width:1px; height:0px;
+	position:absolute; left:420px; top:30px;
+	transition-delay:0.5s
+}
+#gnb_musical #gnb_musical_line4 {
+	width:0px; height:1px;
+	position:absolute; left:30px; top:270px;
+	transition-delay:0.5s
+}
+
+#gnb_musical div {
+	position:absolute;
+	right:480px; top:400px;
+}
+#gnb_musical div p {
+	height:30px;
+	font-size:2rem; font-weight:600;
+	line-height:30px; text-align:right;
+}
+/* 문화생활 - 연극/뮤지컬 - end */
+
+/* 커뮤니티 - start */
+#gnb_commu > ul li {
+	width:40%; height:100px;
+	margin:50px 0 0 5%;
+	border:1px solid #222;
+	float:left;
+}
+#gnb_commu > ul li+li {float:right; margin-right:5%}
+#gnb_commu > ul li a {
+	line-height:100px;
+	display:block;
+	width:100%; height:0px;
+	color:#222;
+	transition:all 0.5s;
+}
+#gnb_commu > ul li:nth-child(1) a {
+	background:url(../img/gnb_commu_bg.gif) 0 -500px;
+	background-size:100%
+} 
+#gnb_commu > ul li:nth-child(2) a {
+	background:url(../img/gnb_commu_bg.gif) 0 -200px;
+	background-size:100%
+} 
+/* 커뮤니티 - end */
+
+/* hover */
+header:hover {
+	background-color:rgba(255,255,255,0.8);
+	border-bottom:3px solid #000;
+}
+header:hover a::after {opacity:1;}
+header:hover #main_logo {opacity:0;}
+header:hover nav a {color:#222}
+nav > ul > li > a:hover {color:red}
+
+#gnb_movie a:hover #gnb_movie_line1{width:390px;}
+#gnb_movie a:hover #gnb_movie_line2{height:240px;}
+#gnb_movie a:hover #gnb_movie_line3{height:240px;}
+#gnb_movie a:hover #gnb_movie_line4{width:390px;}
+#gnb_movie a:hover::after {display:none}
+
+#gnb_musical a:hover #gnb_musical_line1{width:390px;}
+#gnb_musical a:hover #gnb_musical_line2{height:240px;}
+#gnb_musical a:hover #gnb_musical_line3{height:240px;}
+#gnb_musical a:hover #gnb_musical_line4{width:390px;}
+#gnb_musical a:hover::after {display:none}
+
+#nav_section1 li:nth-child(2):hover ul {height:500px}
+#nav_section1 li:nth-child(2) ul:hover {height:500px}
+
+#nav_section2 li:nth-child(2):hover ul {height:200px}
+#nav_section2 li:nth-child(2) ul:hover {height:200px}
+
+#gnb_commu > ul li:hover a {height:100px; color:#fff}
+/* top - end */
+/* ***************************************************** */
+
+/* ***************************************************** */
+/* bottom - start */
+footer {
+	width:100vw; height:100px;
+	text-align:center;
+	color:#fff;
+	background-color:rgba(0,0,0,0.8);
+	font-size:1.6rem;
+}
+#footer_wrap {
+	width:50%;
+	margin:0 auto;
+}
+footer ul {
+	display:inline-block;
+	height:30px;
+}
+footer ul li {
+	float:left;
+	margin:0 30px;
+	line-height:30px
+}
+.f_menu {padding-top:20px}
+/* bottom - end */
+/* ***************************************************** */
+
+/* ***************************************************** */
+/* main - article 1 - start */
+
+article {
+	display:block;
+	width:100vw; height:1080px;
+	background:url(../img/main_visual_1.jpg);
+	background-color:black
+}
+/* main - article 1 - end */
+/* ***************************************************** */
