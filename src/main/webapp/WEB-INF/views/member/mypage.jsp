@@ -1,28 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <c:set var="url" value="<%=request.getContextPath()%>"/>
-<c:set var="servletUrl" value="<%=request.getServletContext()%>"/>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <style>
-
-
-#mypage_container{
-	position :relative;
-	top:20%;
+#mypage_member{
+	height: 100vh;
 }
+
+#memberForm{
+ 	height:50%;
+}
+
 #mypage_member_thumbnail_container{
 	margin : 0 auto;
 	margin-bottom : 20px;
 	border-radius : 70%;
-	width:150px;
-	height:150px;
+	width:170px;
+	height:170px;
 	border: 1px solid black;
 	z-index : -20;
 	text-align:center;
@@ -60,20 +54,22 @@
 	border-radius : 70%;
 	width:150px;
 	height:150px;
-	background-color: gray;
+	background-color:rgba(0,0,0,0.5);
 
 }
 #mypage_sidebar{
-	background-color : #7F7F7F;
+	background-color:rgba(0,0,0,0.5);
 	color:white;
 	text-align:center;
-	height:100vh;
+	margin-top:100px;
+	margin-bottom:100px;
+	font-size:2.4rem;
 }
 #mypage_sidebar >div> ul{
 	list-style:none;
 }
 #mypage_sidebar >div> ul >li{
-	margin-top:10px;
+	margin-top:20px;
 	margin-bottom:25px;
 }
 #mypage_sidebar > div>hr{
@@ -99,9 +95,8 @@ a{
 a:visited{
 	text-decoration: none;
 }
+
 </style>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <script>
 	$(function(){
 		$("#thumbnail_member_btn").on("click",function(){
@@ -158,12 +153,10 @@ a:visited{
 		});
 	});
 </script>
-</head>
-<body>
 <main id="mypage_member" class="container-fluid">
-	<div class="row">
-		<div class="col-9">
-			<div id="mypage_container">
+	<div class="row" style="height:100%;">
+		<div class="col-9" style="margin-top:15%;">
+			<div id="mypage_container" >
 				<form id="memberForm">
 				<div id="mypage_member_thumbnail_group" class="row">
 					<div class="col">
@@ -180,20 +173,20 @@ a:visited{
 						<div class="mb-3" style="display:none;">
 							<label for="formFile" class="form-label">회원 사진</label>
 							<input type="text" name="thumbnail">
-							<input class="form-control" type="file" multiple="multiple" name="file" id="formFile_member">
+							<input class="form-control" type="file" multiple="multiple" name="file" id="formFile_member" >
 						</div>
-						<div class="form-floating mb-3" style="margin:0 auto; width:50%;" >
-						  	<input type="email" class="form-control" value="${mvo.email}" placeholder="name@example.com" readonly>
-						  	<label>이메일</label>
+						<div class="form-floating mb-3" style="margin:0 auto; width:50%; font-size:2.1rem;" >
+						  	<input type="email" class="form-control" value="${mvo.email}" placeholder="name@example.com" style=" font-size:2.4rem; height:75px;" readonly>
+						  	<label >이메일</label>
 						</div>
-						<div class="form-floating mb-3" style="margin:0 auto; width:50%;">
-	  						<input type="text" class="form-control" id="" value="${mvo.nickname}" placeholder="닉네임" readonly>
+						<div class="form-floating mb-3" style="margin:0 auto; width:50%; font-size:2.1rem;">
+	  						<input type="text" class="form-control" id="" value="${mvo.nickname}" placeholder="닉네임" readonly style=" font-size:2.4rem; height:75px;">
 						  	<label >닉네임</label>
 						  	
 						</div>
-						<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center;">
-						  <button id="memberForm_member_edit_btn" class="btn btn-outline-secondary" type="button">수정</button>
-						  <button id="memberForm_member_delete_btn" class="btn btn-outline-secondary" type="button">회원 탈퇴</button>
+						<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center; font-size:2.1rem;">
+						  <button id="memberForm_member_edit_btn" class="btn btn-outline-secondary"  style="font-size:2.1rem;" type="button">수정</button>
+						  <button id="memberForm_member_delete_btn" class="btn btn-outline-secondary" style="font-size:2.1rem;"  type="button">회원 탈퇴</button>
 						</div>
 					</div>
 					
@@ -206,7 +199,7 @@ a:visited{
 		</div>
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
-				<h4 class="h4">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h4>
+				<h1 class="h1">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
@@ -230,6 +223,3 @@ a:visited{
 		
 	</div>
 </main>
-
-</body>
-</html>
