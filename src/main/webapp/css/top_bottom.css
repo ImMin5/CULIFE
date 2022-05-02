@@ -250,15 +250,16 @@ nav > ul > li:nth-child(2) > ul a {
 #gnb_commu > ul li a {
 	line-height:100px;
 	display:block;
-	width:100%; height:100px;
-	color:#fff;
+	width:100%; height:0px;
+	color:#222;
+	transition:all 0.5s;
 }
 #gnb_commu > ul li:nth-child(1) a {
-	background:url(../img/gnb_commu_bg1.gif) 0 -200px;
+	background:url(../img/gnb_commu_bg.gif) 0 -500px;
 	background-size:100%
 } 
 #gnb_commu > ul li:nth-child(2) a {
-	background:url(../img/gnb_commu_bg2.gif);
+	background:url(../img/gnb_commu_bg.gif) 0 -200px;
 	background-size:100%
 } 
 /* 커뮤니티 - end */
@@ -290,6 +291,8 @@ nav > ul > li > a:hover {color:red}
 
 #nav_section2 li:nth-child(2):hover ul {height:200px}
 #nav_section2 li:nth-child(2) ul:hover {height:200px}
+
+#gnb_commu > ul li:hover a {height:100px; color:#fff}
 /* top - end */
 /* ***************************************************** */
 
