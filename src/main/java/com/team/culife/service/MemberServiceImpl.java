@@ -52,6 +52,10 @@ public class MemberServiceImpl implements MemberService {
 	public AuthorFanVO authorFanCheck(int author_no, int member_no) {
 		return dao.authorFanCheck(author_no, member_no);
 	}
+	@Override
+	public int authorFanDelete(int author_no, int member_no) {
+		return dao.authorFanDelete(author_no, member_no);
+	}
 	
 	
 }

@@ -240,5 +240,44 @@ public class MemberController {
 		return entity;
 	}
 	
+	//작가 팔로우 취소
+	@DeleteMapping("/author/follow")
+	public ResponseEntity<HashMap<String,String>> authorFlowDelete(HttpSession session, String author){
+		ResponseEntity<HashMap<String,String>> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		
+		try {
+			result.put("status", "200");
+			System.out.println("MemberNo --->" + memberNo);
+			//로그인 확인
+			if(memberNo == null) {
+				result.put("msg", "로그인 후 이용해 주세요.");
+			}
+			else {
+				AuthorVO avo = authorService.authorSelectByName(author);
+				//팔로일 하고 있는 지 확인
+				if(avo != null && memberService.authorFanCheck(avo.getNo(), memberNo)!= null) {
+					//팔로잉
+					System.out.println("author ---> " + author);
+					System.out.println("member no " + memberNo);
+					memberService.authorFanDelete(avo.getNo(), memberNo);
+					result.put("mgs", "언팔로우 성공");
+				}
+				else {
+					result.put("msg", "팔로우 하고 있지 않은 작가입니다.");
+				}
+			}
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			result.put("status", "400");
+			result.put("msg", "팔로우 취소 에러...관리자에게 문의해 주세요.");
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	
 }

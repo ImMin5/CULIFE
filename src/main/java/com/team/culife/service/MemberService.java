@@ -16,4 +16,5 @@ public interface MemberService {
 	
 	public int authorFanInsert(AuthorFanVO vo);
 	public AuthorFanVO authorFanCheck(int author_no, int member_no);
+	public int authorFanDelete(int author_no, int member_no);
 }

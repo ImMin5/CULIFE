@@ -30,4 +30,7 @@
   		select author_no, member_no, create_date from author_fan
   		where author_no=${param1} and member_no=${param2}
   	</select>
+  	<delete id="authorFanDelete">
+  		delete from author_fan where author_no=${param1} and member_no=${param2}
+  	</delete>
   </mapper>
