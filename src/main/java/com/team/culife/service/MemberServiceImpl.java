@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import com.team.culife.dao.MemberDAO;
+import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.MemberVO;
 
 
@@ -42,6 +43,18 @@ public class MemberServiceImpl implements MemberService {
 			}
 		}
 		 return rootFile.delete();
+	}
+	@Override
+	public int authorFanInsert(AuthorFanVO vo) {
+		return dao.authorFanInsert(vo);
+	}
+	@Override
+	public AuthorFanVO authorFanCheck(int author_no, int member_no) {
+		return dao.authorFanCheck(author_no, member_no);
+	}
+	@Override
+	public int authorFanDelete(int author_no, int member_no) {
+		return dao.authorFanDelete(author_no, member_no);
 	}
 	
 	
