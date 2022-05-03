@@ -131,7 +131,7 @@
 			<li class="hidden">페이지네이션</li>
 			<li>
 				<h3 class="hidden">첫번째 페이지</h3>
-				<span id="home_tab1"></span>
+				<span id="home_tab1" class="home_tab_filled"></span>
 			</li>
 			<li>
 				<h3 class="hidden">두번째 페이지</h3>
