@@ -14,5 +14,5 @@ public interface MemberDAO {
 	public int memberUpdate(MemberVO vo);
 	
 	public int authorFanInsert(AuthorFanVO vo);
-	public AuthorFanVO authorFanCheck(String author, int member_no);
+	public AuthorFanVO authorFanCheck(int author_no, int member_no);
 }

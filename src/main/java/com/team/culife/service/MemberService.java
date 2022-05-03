@@ -15,5 +15,5 @@ public interface MemberService {
 	public boolean deleteFileAll(File rootFile);
 	
 	public int authorFanInsert(AuthorFanVO vo);
-	public AuthorFanVO authorFanCheck(String author, int member_no);
+	public AuthorFanVO authorFanCheck(int author_no, int member_no);
 }

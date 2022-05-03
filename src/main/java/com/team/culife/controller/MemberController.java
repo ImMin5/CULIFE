@@ -20,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.AuthorService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
 import com.team.culife.vo.AuthorFanVO;
+import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.MemberVO;
 
 @RestController
@@ -32,6 +34,9 @@ public class MemberController {
 	
 	@Inject
 	MemberService memberService;
+	
+	@Inject
+	AuthorService authorService;
 	
 	//마이페이지 내정보 뷰
 	@GetMapping("/mypage/member")
@@ -192,20 +197,20 @@ public class MemberController {
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		System.out.println("ss");
 		try {
 			result.put("status", "200");
+			System.out.println("MemberNo --->" + memberNo);
 			//로그인 확인
 			if(memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요.");
 			}
 			else {
-				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				if(mvo != null) {
-					if(mvo.getGrade() >= 1 && mvo.getAuthor().equals(author)) {
+				AuthorVO avo = authorService.authorSelectByName(author);
+				if(avo != null) {
+					if(avo.getMember_no() == memberNo) {
 						result.put("msg", "본인을 팔로우 할 수 없습니다.");
 					}
-					else if(memberService.authorFanCheck(author, memberNo) != null) {
+					else if(memberService.authorFanCheck(avo.getNo(), memberNo) != null) {
 						result.put("msg", "이미 팔로우 하고 있습니다.");
 					}
 					else {
@@ -213,7 +218,7 @@ public class MemberController {
 						System.out.println("author ---> " + author);
 						System.out.println("member no " + memberNo);
 						AuthorFanVO afvo = new AuthorFanVO();
-						afvo.setAuthor(author);
+						afvo.setAuthor_no(avo.getNo());
 						afvo.setMember_no(memberNo);
 						memberService.authorFanInsert(afvo);
 						result.put("mgs", "팔로우 성공");

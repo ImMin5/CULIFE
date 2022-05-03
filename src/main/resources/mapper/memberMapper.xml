@@ -8,12 +8,12 @@
   		values(#{kakao_id}, #{email}, #{nickname} ,${grade})
   	</insert>
   	<select id="memberSelectByEmail" resultType="com.team.culife.vo.MemberVO">
-  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, author, author_thumbnail, sns_link, status, create_date 
+  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, status, create_date 
   		from member
   		where email=#{param1}
   	</select>
   	  <select id="memberSelectByNo" resultType="com.team.culife.vo.MemberVO">
-  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, author, author_thumbnail, sns_link, status, create_date 
+  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, status, create_date 
   		from member
   		where no=${param1}
   	</select>
@@ -24,11 +24,10 @@
   		update member set thumbnail=#{thumbnail}, warning_count=${warning_count}, status=${status} where no=${no}
   	</update>
   	<insert id="authorFanInsert">
-  		insert into author_fan(author, member_no) values(#{author},${member_no})
+  		insert into author_fan(author_no, member_no) values(${author_no},${member_no})
   	</insert>
   	<select id="authorFanCheck" resultType="com.team.culife.vo.AuthorFanVO">
-  		select author, member_no, create_date from author_fan
-  		where author=#{param1} and member_no=${param2}
+  		select author_no, member_no, create_date from author_fan
+  		where author_no=${param1} and member_no=${param2}
   	</select>
-
   </mapper>
