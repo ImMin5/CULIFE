@@ -1,102 +1,7 @@
 <c:set var="url" value="<%=request.getContextPath()%>"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<style>
-#mypage_member{
-	height: 100vh;
-}
-
-#memberForm{
- 	height:50%;
-}
-
-#mypage_member_thumbnail_container{
-	margin : 0 auto;
-	margin-bottom : 20px;
-	border-radius : 70%;
-	width:170px;
-	height:170px;
-	border: 1px solid black;
-	z-index : -20;
-	text-align:center;
-}
-
-#mypage_author_thumbnail_container> img{
-	object-fit: contain;
-	width:100%;
-	height: 100%;
-	top: 60%;
-}
-
-
-#mypage_member_thumbnail_container> #thumbnail_member{
-	border-radius : 70%;
-	object-fit: contain;
-	width:100%;
-	height: 100%;
-	top: 60%;
-}
-
-#mypage_member_thumbnail_container> .thumbnail_btn{
-	position : relative;
-	top: -18%;
-	left : 36%;
-	width:15%;
-	height: 15%;
-	z-index : 20;
-	border-radius : 20%;
-	background-color:white;
-}
-
-#mypage_author_thumbnail_container > #thumbnail_member{
-	margin : 0 auto;
-	border-radius : 70%;
-	width:150px;
-	height:150px;
-	background-color:rgba(0,0,0,0.5);
-
-}
-#mypage_sidebar{
-	background-color:rgba(0,0,0,0.5);
-	color:white;
-	text-align:center;
-	margin-top:100px;
-	margin-bottom:100px;
-	font-size:2.4rem;
-}
-#mypage_sidebar >div> ul{
-	list-style:none;
-}
-#mypage_sidebar >div> ul >li{
-	margin-top:20px;
-	margin-bottom:25px;
-}
-#mypage_sidebar > div>hr{
-	margin : 0 auto;
-	width:60%;
-}
-#mypage_sidebar>#mypage_sidebar_container{
-	position:relative;
-	top:20%;
-}
-#mypage_notification{
-	margin-left:5px;
-	width:40px;
-	height:40px;
-}
-#mypage_sidebar_container ul a:hover{
-	color:#ADD7D6;
-}
-a{
-	color:white;
-	text-decoration: none;
-}
-a:visited{
-	text-decoration: none;
-}
-
-</style>
 <script>
 	$(function(){
 		$("#thumbnail_member_btn").on("click",function(){
@@ -155,7 +60,7 @@ a:visited{
 </script>
 <main id="mypage_member" class="container-fluid">
 	<div class="row" style="height:100%;">
-		<div class="col-9" style="margin-top:15%;">
+		<div class="col-9" id="mypage_col">
 			<div id="mypage_container" >
 				<form id="memberForm">
 				<div id="mypage_member_thumbnail_group" class="row">

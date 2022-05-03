@@ -38,7 +38,7 @@ public class MemberController {
 	@Inject
 	AuthorService authorService;
 	
-	//마이페이지 내정보 뷰
+	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
 	public ModelAndView mypage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -49,7 +49,7 @@ public class MemberController {
 			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
 				mav.addObject("mvo", mvo);
-				mav.setViewName("member/mypage");
+				mav.setViewName("mypage/mypage");
 			}
 			else {
 				mav.setViewName("redirect:/");
@@ -61,8 +61,17 @@ public class MemberController {
 		
 		return mav; 
 	}
+	//마이페이지 - 
 	
-	//회원 정보 수정
+	//회원 정보 작가 정보 뷰 
+	@GetMapping("/mypage/author")
+	public ModelAndView mypageAuthor(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("mypage/my_author");
+		return mav;
+		
+	}
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
