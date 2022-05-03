@@ -103,7 +103,7 @@
 		<section id="home_visual">
 			<h2 class="hidden">share your cultural life</h2>
 			<div id="three-container"></div>
-    		<button class="fun-btn">JOIN US</button>
+    		<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
     		<img class="home_scrolldown" id="home_scrolldown1" src="/img/scrolldown.png">
 		</section>
 		<section id="home_entertain">
