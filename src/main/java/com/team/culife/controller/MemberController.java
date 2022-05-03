@@ -20,8 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.AuthorService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
+import com.team.culife.vo.AuthorFanVO;
+import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.MemberVO;
 
 @RestController
@@ -32,18 +35,21 @@ public class MemberController {
 	@Inject
 	MemberService memberService;
 	
-	//마이페이지 내정보 뷰
+	@Inject
+	AuthorService authorService;
+	
+	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
 	public ModelAndView mypage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
 		try {
-			if(memberNo != null) {
+			
+			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				System.out.println(mvo.getEmail());
 				mav.addObject("mvo", mvo);
-				mav.setViewName("member/mypage");
+				mav.setViewName("mypage/mypage");
 			}
 			else {
 				mav.setViewName("redirect:/");
@@ -55,8 +61,17 @@ public class MemberController {
 		
 		return mav; 
 	}
+	//마이페이지 - 
 	
-	//회원 정보 수정
+	//회원 정보 작가 정보 뷰 
+	@GetMapping("/mypage/author")
+	public ModelAndView mypageAuthor(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("mypage/my_author");
+		return mav;
+		
+	}
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
@@ -74,52 +89,52 @@ public class MemberController {
 	
 	//회원 썸네일 업로드
 	@PostMapping("/mypage/member/thumbnail")
-	public ResponseEntity<HashMap<String,String>> memberThumbnailEdit(MultipartFile file, String thumbnail, HttpServletRequest request ,HttpSession session){
+	public ResponseEntity<HashMap<String,String>> memberThumbnailEdit(MemberVO mvo, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/thumbnail/"+memberNo);
+		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/thumbnail");
 		System.out.println("path --> " +path);
 		
 		try {
-			MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-			MultipartFile newFile = (MultipartFile) mr.getFile("file");
-			System.out.println("file -->" + newFile .getName());
-			System.out.println("filename -->" + thumbnail);
-			
-			if(file != null) { //새로업로드된 파일이 있으면
-				String newUploadFilename = newFile.getOriginalFilename();	
-					if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-						File f = new File(path, newUploadFilename);
-						//폴더가 존재하지 않을 경우
-						if(!f.exists()) {
+			if(memberNo != null) {
+				System.out.println("th "+ mvo.getThumbnail());
+				
+				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
+				MultipartFile newFile = (MultipartFile) mr.getFile("file");
+				
+				if(newFile != null) { //새로업로드된 파일이 있으면
+					String newUploadFilename = newFile.getOriginalFilename();	
+						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
+							File f = new File(path, newUploadFilename);
+							//폴더가 존재하지 않을 경우 폴더 생성
+							if(!f.exists()) {
+								try {
+									System.out.println(f.mkdirs());
+								}catch(Exception e) {e.printStackTrace();}
+							}
+
+							// 업로드
 							try {
-								f.mkdir();
-							}catch(Exception e) {e.printStackTrace();}
-						}
-							
-						if(f.exists()) {
-							//rename
-							for(int n=1;;n++) {
-								int point = newUploadFilename.lastIndexOf(".");
-								String fileNameNoExt = newUploadFilename.substring(0,point);
-								String ext = newUploadFilename.substring(point+1);
-								//새로운 파일명 만들어 존재유무 확인
-								String nf = fileNameNoExt + " (" + n + ")." + ext;
-								f = new File(path, nf);
-								if(!f.exists()) {
-									newUploadFilename = nf;
-									break;
+								//기존에 있던 썸네일 파일 삭제
+								
+								mvo = memberService.memberSelectByNo(memberNo);
+								if(mvo.getThumbnail() != null) {
+									File deleteFile = new File(path,mvo.getThumbnail());
+									deleteFile.delete();
 								}
-							}//for
+								mvo.setThumbnail(newUploadFilename);
+								System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
+								newFile.transferTo(f);
+							} catch(Exception ee) {ee.printStackTrace();}
+								
 						}
-						// 업로드
-						try {
-							newFile.transferTo(f);
-						} catch(Exception ee) {}
-							
-					}
-			} // if
+				} // if newFile != null
+			}
+			else {
+				result.put("msg","로그인 후 이용해 주세요");
+			}
+			
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -137,7 +152,7 @@ public class MemberController {
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		String Token = (String)session.getAttribute("Token");
-		
+		String rootPath = session.getServletContext().getRealPath("/upload/"+memberNo);
 		try {
 			result.put("status","200");
 			if(memberNo != null) {
@@ -147,6 +162,7 @@ public class MemberController {
 				if(mvo != null) {
 					JSONObject jsonObj = loginService.unlinkKaKao(mvo.getKakao_id(), Token);
 					memberService.memberDelete(jsonObj.getLong("id"));
+					memberService.deleteFileAll(new File(rootPath));
 					session.invalidate();
 					result.put("msg","회원탈퇴 성공");
 					result.put("redirect","/");
@@ -164,4 +180,113 @@ public class MemberController {
 		
 		return entity;
 	}
+	
+	//회원 가입
+	@PostMapping("/member")
+	public ResponseEntity<HashMap<String,String>> adminSignup(MemberVO mvo , HttpSession session){
+		ResponseEntity<HashMap<String,String>> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+				
+		try {
+			System.out.println("sss");
+			memberService.memberInsert(mvo);
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+		}
+					
+		return entity;
+	}
+	
+	//작가 팔로우 요청
+	@PostMapping("/author/follow")
+	public ResponseEntity<HashMap<String,String>> authorFlow(HttpSession session, String author){
+
+		ResponseEntity<HashMap<String,String>> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		try {
+			result.put("status", "200");
+			System.out.println("MemberNo --->" + memberNo);
+			//로그인 확인
+			if(memberNo == null) {
+				result.put("msg", "로그인 후 이용해 주세요.");
+			}
+			else {
+				AuthorVO avo = authorService.authorSelectByName(author);
+				if(avo != null) {
+					if(avo.getMember_no() == memberNo) {
+						result.put("msg", "본인을 팔로우 할 수 없습니다.");
+					}
+					else if(memberService.authorFanCheck(avo.getNo(), memberNo) != null) {
+						result.put("msg", "이미 팔로우 하고 있습니다.");
+					}
+					else {
+						//팔로잉
+						System.out.println("author ---> " + author);
+						System.out.println("member no " + memberNo);
+						AuthorFanVO afvo = new AuthorFanVO();
+						afvo.setAuthor_no(avo.getNo());
+						afvo.setMember_no(memberNo);
+						memberService.authorFanInsert(afvo);
+						result.put("mgs", "팔로우 성공");
+					}
+				}
+				else {
+					//탈퇴했는데 세션에 값이 남아있을 경우
+					result.put("msg", "회원가입 후 이용해 주세요.");
+				}
+			}
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			result.put("status", "400");
+			result.put("msg", "팔로잉 에러...관리자에게 문의해 주세요.");
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	//작가 팔로우 취소
+	@DeleteMapping("/author/follow")
+	public ResponseEntity<HashMap<String,String>> authorFlowDelete(HttpSession session, String author){
+		ResponseEntity<HashMap<String,String>> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		
+		try {
+			result.put("status", "200");
+			System.out.println("MemberNo --->" + memberNo);
+			//로그인 확인
+			if(memberNo == null) {
+				result.put("msg", "로그인 후 이용해 주세요.");
+			}
+			else {
+				AuthorVO avo = authorService.authorSelectByName(author);
+				//팔로일 하고 있는 지 확인
+				if(avo != null && memberService.authorFanCheck(avo.getNo(), memberNo)!= null) {
+					//팔로잉
+					System.out.println("author ---> " + author);
+					System.out.println("member no " + memberNo);
+					memberService.authorFanDelete(avo.getNo(), memberNo);
+					result.put("mgs", "언팔로우 성공");
+				}
+				else {
+					result.put("msg", "팔로우 하고 있지 않은 작가입니다.");
+				}
+			}
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			result.put("status", "400");
+			result.put("msg", "팔로우 취소 에러...관리자에게 문의해 주세요.");
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	
 }
