@@ -24,7 +24,7 @@ section .home_scrolldown {
 	margin:calc(100vh/38.4) 0;
 	position:fixed; right:5%;
 	z-index:5;
-	cursor:pointer
+	cursor:pointer;
 }
 #home_pagination li:nth-child(2) span {top:35vh}
 #home_pagination li:nth-child(3) span {top:45vh}
