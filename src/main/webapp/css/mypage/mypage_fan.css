@@ -11,7 +11,7 @@
 	border : solid 1.5px gray;
 	border-radius : 7px;
 }
-#search_container > #search_keyword{
+#search_container > #search_word{
 	border:none;
 }
 #search_container >img{
@@ -26,6 +26,12 @@
 	min-width:300px;
 	height:74vh;
 	font-size:2rem;
+	scrollbar-width:none;
+	 -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.table-responsive::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
 .table_author_thumbnail{
 	height:150px;

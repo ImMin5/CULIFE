@@ -4,7 +4,11 @@
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage_fan.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
+let pageNo = 1;
+let totalPage = 1;
+let is_paging= true;
 	$(function(){
+		
 		$("#thumbnail_member_btn").on("click",function(){
 			$("#formFile_member").trigger("click");
 		})
@@ -60,7 +64,6 @@
 		
 		//팔로우
 		$(document).on("click","button[name=unfollow]",function(){
-			console.log("ddd");
 			var author = $(this).attr("data-author");
 			var url ="${url}/author/follow";
 			var button = $(this);
@@ -88,7 +91,6 @@
 		});
 		//언팔로우
 		$(document).on("click","button[name=follow]",function(){
-			console.log("kkk");
 			var author = $(this).attr("data-author");
 			var url ="${url}/author/follow";
 			var button = $(this);
@@ -116,44 +118,94 @@
 				}
 			})
 		});
+		//스크롤 위치 파악
+		$(".table-responsive").scroll(function(){
+			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+	        var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+	        var contentH = $(".table").height(); //문서 전체 내용을 갖는 div의 높이
+	        if(scrollT + scrollH +1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
+	        	pagination();
+	        }
+		});
+		search();
+		//페이지 네이션
+		function pagination(){
+			is_paging = true;
+			var searchWord = $("#search_word").val();
+			if(!is_loading){
+				is_loading = true;
+				search(searchWord);
+			}
+		}
+		//검색
+		$(document).on("keyup","#search_word",function(){
+			var searchWord = $(this).val();
+			is_paging = false;
+			pageNo = 1;
+			search(searchWord);
+		})
+		
+		// 검색 함수
+		function search(searchWord){
+			if(pageNo != 1 && parseInt(totalPage) < parseInt(pageNo)){
+				is_loading=false;
+				return;
+			}
+			
+			var url = "${url}/mypage/fan/search";
+			var table = $("#myapge_table_body");
+			$.ajax({
+				url : url,
+				type : "GET",
+				dataType:"JSON",
+				data : {
+					pageNo : pageNo,
+					searchWord : searchWord,
+				},
+				success : function(data){
+					if(!is_paging)table.empty();
+					if(data.items == null) return;
+					data.items.forEach(function(element, index){
+						$("#myapge_table_body").append(`
+									<tr>
+				  					<td style="width:20%; min-width:150px;"><img class="table_author_thumbnail" src="${url}/img/member/default_thumbnail.png"/></td>
+				  					<td style="width:40%;">${'${element.author}'}</td>
+				  					<td style="width:20%;">${'${element.debut_year}'}</td>
+				  					<td style="width:20%; text-align:center;"><button type="button" name="unfollow" data-author="${'${element.author}'}" class="btn btn-secondary">팔로잉</button></td>
+				  				</tr>
+						`);
+					});
+					if(is_paging){
+						pageNo = parseInt(data.vo.pageNo)+1;
+						totalPage = data.vo.totalPage;
+					}
+					else{
+						pageNo = 2;
+						totalPage = data.vo.totalPage;
+					}
+					is_loading = false;
+				},
+				error : function(error){
+					console.log(error);
+					is_loading = false;
+				}
+			});
+			
+		}
+		
+		
 	});
 </script>
 <main id="mypage_member" class="container-fluid">
 	<div class="row" style="height:100%;">
 		<div class="col-9" id="mypage_col">
 			<div class="input-group mb-3" id="search_container">
-				<img src="${url}/img/member/search.png">
-	  			<input type="text" class="form-control" id="search_keyword" placeholder="검색" style=" font-size:2.3rem;">
+				<img id="search_btn" src="${url}/img/member/search.png">
+	  			<input type="text" class="form-control" id="search_word" placeholder="검색" style=" font-size:2.3rem;">
 			</div>
 			<div class="table-responsive" style=" overflow: scroll;">
 		  		<table class="table">
 		  			<tbody id="myapge_table_body">
-			  			<c:forEach var="vo" items="${followList}">
-			  				<tr>
-			  					<td style="width:20%; min-width:150px;"><img class="table_author_thumbnail" src="${url}/img/member/default_thumbnail.png"/></td>
-			  					<td>${vo.author}</td>
-			  					<td>${vo.debut_year}</td>
-			  					<td><button type="button" name="unfollow" data-author="${vo.author}" class="btn btn-secondary">팔로잉</button></td>
-			  				</tr>
-			  			</c:forEach>
-			  			<tr>
-			  					<td><img class="table_author_thumbnail" src="${url}/img/member/default_thumbnail.png"/></td>
-			  					<td>${vo.author}</td>
-			  					<td>${vo.debut_year}</td>
-			  					<td><button class="btn">팔로우</button></td>
-			  				</tr>
-			  				<tr>
-			  					<td><img class="table_author_thumbnail" src="${url}/img/member/default_thumbnail.png"/></td>
-			  					<td>${vo.author}</td>
-			  					<td>${vo.debut_year}</td>
-			  					<td><button class="btn">팔로우</button></td>
-			  				</tr>
-			  				<tr>
-			  					<td><img class="table_author_thumbnail" src="${url}/img/member/default_thumbnail.png"/></td>
-			  					<td>${vo.author}</td>
-			  					<td>${vo.debut_year}</td>
-			  					<td><button class="btn">팔로우</button></td>
-			  				</tr>
 		  			</tbody>
 		  			
 		   		</table>
