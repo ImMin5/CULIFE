@@ -2,7 +2,7 @@
 
 /* ***************************************************** */
 /* 리셋 */
-html, body, div, span, applet, object, iframe,
+html, body,div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -58,7 +58,10 @@ a:visited {color:#fff}
 /* top - start */
 
 html {font-size:62.5%; font-family: 'Noto Sans KR';}
-body {font-size:1.6rem; overflow-x:hidden}
+body {
+	font-size:1.6rem; overflow-x:hidden; 
+	position:relative; z-index:-1;
+}
 header {
 	width:100vw; height:100px;
 	background-color:rgba(0,0,0,0.5);
@@ -250,18 +253,38 @@ nav > ul > li:nth-child(2) > ul a {
 #gnb_commu > ul li a {
 	line-height:100px;
 	display:block;
-	width:100%; height:100px;
-	color:#fff;
+	width:100%; height:0px;
+	color:#222;
+	transition:all 0.5s;
 }
 #gnb_commu > ul li:nth-child(1) a {
-	background:url(../img/gnb_commu_bg1.gif) 0 -200px;
+	background:url(../img/gnb_commu_bg.gif) 0 -500px;
 	background-size:100%
 } 
 #gnb_commu > ul li:nth-child(2) a {
-	background:url(../img/gnb_commu_bg2.gif);
+	background:url(../img/gnb_commu_bg.gif) 0 -200px;
 	background-size:100%
 } 
 /* 커뮤니티 - end */
+
+/* rnb - 마이페이지 - start */
+#rnb {text-indent:-9999px;}
+#rnb a {
+	display:block;
+	width:30px; height:30px;
+	background:url(../img/mypage_icon_b.png);
+	background-size:30px 30px;
+	position:absolute; right:150px; top:35px;
+}
+#rnb a::after {
+	content:"";
+	display:block;
+	width:30px; height:30px;
+	background:url(../img/mypage_icon_w.png);
+	background-size:30px 30px;
+	position:absolute; right:0px; top:0px;
+}
+/* rnb - 마이페이지 - end */
 
 /* hover */
 header:hover {
@@ -272,6 +295,7 @@ header:hover a::after {opacity:1;}
 header:hover #main_logo {opacity:0;}
 header:hover nav a {color:#222}
 nav > ul > li > a:hover {color:red}
+header:hover #rnb a::after {display:none}
 
 #gnb_movie a:hover #gnb_movie_line1{width:390px;}
 #gnb_movie a:hover #gnb_movie_line2{height:240px;}
@@ -290,23 +314,35 @@ nav > ul > li > a:hover {color:red}
 
 #nav_section2 li:nth-child(2):hover ul {height:200px}
 #nav_section2 li:nth-child(2) ul:hover {height:200px}
+
+#gnb_commu > ul li:hover a {height:100px; color:#fff}
+
+
 /* top - end */
 /* ***************************************************** */
 
 /* ***************************************************** */
 /* bottom - start */
-
-/* bottom - end */
-/* ***************************************************** */
-
-/* ***************************************************** */
-/* main - article 1 - start */
-
-article {
-	display:block;
-	width:100vw; height:1080px;
-	background:url(../img/main_visual_1.jpg);
-	background-color:black
+footer {
+	width:100vw; height:100px;
+	text-align:center;
+	color:#fff;
+	background-color:rgba(0,0,0,0.8);
+	font-size:1.6rem;
 }
-/* main - article 1 - end */
+#footer_wrap {
+	width:50%;
+	margin:0 auto;
+}
+footer ul {
+	display:inline-block;
+	height:30px;
+}
+footer ul li {
+	float:left;
+	margin:0 30px;
+	line-height:30px
+}
+.f_menu {padding-top:20px}
+/* bottom - end */
 /* ***************************************************** */

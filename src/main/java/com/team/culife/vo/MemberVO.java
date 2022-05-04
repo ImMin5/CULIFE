@@ -13,9 +13,6 @@ public class MemberVO {
 	private int grade;
 	private int warning_count;
 	private String thumbnail;
-	private String author;
-	private String author_thumbnail;
-	private String sns_link;
 	private boolean status;
 	private String create_date;	
 }
