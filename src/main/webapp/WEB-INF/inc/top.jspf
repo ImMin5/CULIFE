@@ -73,10 +73,10 @@
         	<ul id="nav_section2">
         		<li><a href="">온라인 전시회</a></li>
         		<li id="gnb_commu">
-        			<a href="">커뮤니티</a>
+        			<a href="/freeboard/">커뮤니티</a>
         			<ul>
-        				<li><a href="">자유게시판</a></li>
-        				<li><a href="">문의사항</a></li>
+        				<li><a href="/freeboard/">자유게시판</a></li>
+        				<li><a href="/helpboard/">문의사항</a></li>
         			</ul>
         		</li>
         	</ul>

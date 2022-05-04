@@ -16,14 +16,13 @@ public interface BoardDAO {
 	public int boardInsert(BoardVO vo); 
 	
 	// 글 리스트 보이기
-	public List<BoardVO> selectList(PagingVO pvo, BoardVO vo, String keyword);
-	
-	// 게시판의 레코드 개수 가져오기(페이징)
-	public int selectTotalRecord(PagingVO pvo, BoardVO vo, String keyword);
-
-	// 상세페이지(뷰)
-	public BoardVO selectView(int no);
-	
-	// 조회수 증가
-	public void updateViews(int no);
+	public List<BoardVO> selectList(PagingVO pvo, BoardVO vo);
+	/*
+	 * // 게시판의 레코드 개수 가져오기(페이징) public int selectTotalRecord(PagingVO pvo, BoardVO
+	 * vo);
+	 * 
+	 * // 상세페이지(뷰) public BoardVO selectView(int no);
+	 * 
+	 * // 조회수 증가 public void updateViews(int no);
+	 */
 }

@@ -22,70 +22,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> selectList(PagingVO pvo, BoardVO vo, String keyword) {
-		return dao.selectList(pvo, vo, keyword);
-	}
-	
-	@Override
-	public int selectTotalRecord(PagingVO pvo, BoardVO vo, String keyword ) {
-		return dao.selectTotalRecord(pvo, vo, keyword);
+	public List<BoardVO> selectList(PagingVO pvo, BoardVO vo) {
+		return dao.selectList(pvo, vo);
 	}
 
-	@Override
-	public BoardVO selectView(int no) {
-		return dao.selectView(no);
-	}
-
-	@Override
-	public void updateViews(int no) {
-		dao.updateViews(no);
-	}
-
-	@Override
-	public BoardVO getFileName(int no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BoardVO selectEditView(int no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateEditView(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteView(int no, String userid) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int insertPick(int no, String userid) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int plusBoardPick(int no) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deletePick(int no, String userid) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int minusBoardPick(int no) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
