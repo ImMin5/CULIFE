@@ -1,0 +1,42 @@
+.btn{
+	font-size:2rem;
+}
+
+/*          검색창                */
+#search_container{
+	margin:0 auto; 
+	width:50%; 
+	font-size:1.7rem;
+	margin-top:40px;
+	border : solid 1.5px gray;
+	border-radius : 7px;
+}
+#search_container > #search_word{
+	border:none;
+}
+#search_container >img{
+	position:relative;
+}
+
+/*          테이블                */
+.table-responsive{
+	margin:0 auto;
+	text-align:left;
+	width:50%;
+	min-width:300px;
+	height:74vh;
+	font-size:2rem;
+	scrollbar-width:none;
+	 -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.table-responsive::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+.table_author_thumbnail{
+	height:150px;
+	width:150px;
+}
+#myapge_table_body{
+	
+}

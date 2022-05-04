@@ -123,7 +123,7 @@
 				<hr/>
 				<ul>
 					<li><strong><a href="${url}/mypage/member" style="color:#9DC3E6">내정보</a></strong></li>
-					<li><a href="${url}/logout/kakao">로그아웃</a></li>
+					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
 					
 				</ul>
 			</div>
