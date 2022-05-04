@@ -1,11 +1,11 @@
 <c:set var="url" value="<%=request.getContextPath()%>"/>
-
-
 <style>
 
 body{
+	width:100wv;
+	height:100vh;
 	background-image : url("${url}/img/main_visual_1.png");
-	background-size: 100wv 100vh;
+	background-size: 100vw 100vh;
 	background-position: center;
 	}
 main{
@@ -19,7 +19,7 @@ main{
 	width:180px;
 	height:180px;
 	text-align:center;
-	margin-top : 35vh;
+	margin-top : 43vh;
 }
 #login_logo_container> #login_logo{
 	object-fit: contain;
@@ -27,7 +27,7 @@ main{
 	height: 100%;
 }
 #login_btn_container{
-	margin-top:20px;
+	margin-top:40px;
 }
 #login_btn_img{
 	text-align:center;
