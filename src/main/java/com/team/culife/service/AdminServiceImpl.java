@@ -58,12 +58,16 @@ public class AdminServiceImpl implements AdminService{
 		return dao.author_totalRecord(pVO);
 	}
 	@Override
+	public int author_cnt(AuthorVO aVO) {
+		return dao.author_cnt(aVO);
+	}
+	@Override
 	public int authorUpgrade(AuthorVO aVO) {
 		return dao.authorUpgrade(aVO);
 	}
 	@Override
-	public int authorDelete(AuthorVO aVO) {
-		return dao.authorDelete(aVO);
+	public int authorDown(AuthorVO aVO) {
+		return dao.authorDown(aVO);
 	}
 	
 	//스케줄러
@@ -82,9 +86,15 @@ public class AdminServiceImpl implements AdminService{
 		return dao.adminBoardList(pVO);
 	}
 	@Override
-	public int board_totalRecord(AdminPagingVO pVO) {
-		return dao.board_totalRecord(pVO);
+	public int adminboard_totalRecord(AdminPagingVO pVO) {
+		return dao.adminboard_totalRecord(pVO);
 	}
+	@Override
+	public int adminBoardDel(BoardVO bVO) {
+		return dao.adminBoardDel(bVO);
+	}
+	
+	
 	
 	
 	

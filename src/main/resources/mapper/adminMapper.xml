@@ -63,18 +63,30 @@
   	<!-- 작가목록 불러오기 -->
   	<!-- 우선 임의로 썸네일은 빼겠습니다. 저장경로 설정되면 생각해보기 -->
   	<select id='authorList' resultType="com.team.culife.vo.AuthorVO">
-  	 select no, member_no, author, sns_link, author_status, date_format(create_date,'%Y-%m-%d') create_date  
-  	 from author_apply 
+  	 select no, member_no, author, debut_year, sns_link, author_status, date_format(create_date,'%Y-%m-%d') create_date, msg  
+  	 from author
   	<if test="searchWord != null" >
 			where ${searchKey} like '%${searchWord}%' 
 	</if>
   	 order by no desc 
   	 limit ${onePageRecord} offset ${offsetIndex} 
   	</select>
+  	<!-- <select id='authorList' resultType="com.team.culife.vo.AuthorVO">
+  	 select a.msg, a.no,a.member_no, a.author, a.debut_year, a.sns_link, a.author_status, a.create_date, b.cnt 
+  	 from (select msg, no, member_no, author, debut_year, sns_link, author_status, date_format(create_date,'%Y-%m-%d') create_date 
+  	 from author 
+  	<if test="searchWord != null" >
+	  where ${searchKey} like '%${searchWord}%' 
+	</if>
+	 ) a 
+  	 join (select member_no, count(member_no) cnt from author group by member_no) b on a.member_no=b.member_no 
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex} 
+  	</select> -->
   	
   	<!-- 작가목록 전체 인원 카운트 -->
   	<select id='author_totalRecord' resultType='int'>
-  	select count(no) cnt from author_apply 
+  	select count(no) cnt from author 
 	<if test="searchWord != null" >
 		where ${searchKey} like '%${searchWord}%' 
 	</if>
@@ -82,12 +94,18 @@
   	
   	<!-- 작가승인 -->
   	<update id='authorUpgrade'>
-  	update author_apply set author_status = 1 where no = #{no}
+  	update author a 
+	right join member m on (m.no = a.member_no)  
+	set a.author_status = '1', m.grade = '1'  
+	where a.no = #{no} 
   	</update>
-  	<!-- 작가삭제 -->
-  	<delete id='authorDelete'>
-  	delete from author_apply where no = #{no}
-  	</delete>
+  	<!-- 작가취소 -->
+  	<update id='authorDown'>
+  	update author a 
+	right join member m on (m.no = a.member_no)  
+	set a.author_status = '2', m.grade = '0', a.msg = #{msg}   
+	where a.no = #{no} 
+  	</update>
   	
   	<!-- 자유게시판 목록 불러오기 -->
   	<select id='adminBoardList' resultType="com.team.culife.vo.BoardVO">
@@ -103,7 +121,7 @@
   	 </select>
   	 
   	 <!-- 자유게시판 목록 카운트 -->
-  	<select id='board_totalRecord' resultType='int'>
+  	<select id='adminboard_totalRecord' resultType='int'>
   	select count(b.no) cnt 
   	from board b inner join member m 
   	on b.member_no = m.no 
@@ -112,5 +130,17 @@
 		and ${searchKey} like '%${searchWord}%' 
 	</if>
   	</select>
+  	
+  	<!-- 자유게시판 게시글 삭제 -->
+  	<delete id='adminBoardDel'>
+  	delete from board
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
+  	
 </mapper>
   

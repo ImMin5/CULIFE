@@ -1,17 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ include file="adminTop.jspf" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
-</head>
-<body>
+<script>
+$(function () {	
+	$("#allCheck").click(function () {
+		if($("#allCheck").is(":checked")){
+			$(".chk").prop("checked", true);
+		}else{
+			$(".chk").prop("checked", false);
+		}
+	});
+	
+	$("#multiDel").click(function () {
+		var cnt = 0;
+		//체크한 갯수를 구한다.
+		$(".chk").each(function (i,obj) {
+			if(obj.checked){
+				cnt++;
+			}
+		});
+		//체크한게 없다면 삭제할 필요없음.
+		if(cnt<1){
+			alert("선택된 목록이 없습니다.");
+			return false;
+		}
+		//cnt>0면, submit이벤트 발생시켜버림
+		$("#listFrm").submit();
+		
+	});
+});
+</script>
 <div class="admin_container">
 <h1>자유게시판관리</h1>
-	<form method="get" action="" id='listFrm'>
+	<form method="get" action="/admin/adminBoardDel" id='listFrm'>
 	<ul class='adminBoardList'>
 		<li>번호</li>
 		<li>제목</li>
@@ -28,7 +52,7 @@
 			<li>${vo.write_date }</li>
 			<li><input type="checkbox" name="noList" value="${vo.no}" class="chk"/></li>
 		</c:forEach>
-		<li><input type="submit" value="삭제"/></li>
+		<li><input type="submit" value="삭제" id="multiDel"/></li>
 	</ul>
 	</form>
 	
@@ -75,5 +99,3 @@
 		</form>
 	</div>
 </div> <!-- div:admin_container -->
-</body>
-</html>

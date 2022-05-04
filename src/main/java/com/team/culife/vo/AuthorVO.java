@@ -8,6 +8,8 @@ public class AuthorVO {
 	private String author_thumbnail;
 	private int author_status;
 	private String create_date;
+	private int debut_year;
+	private String msg;
 	
 	public int getNo() {
 		return no;
@@ -50,6 +52,18 @@ public class AuthorVO {
 	}
 	public void setCreate_date(String create_date) {
 		this.create_date = create_date;
+	}
+	public int getDebut_year() {
+		return debut_year;
+	}
+	public void setDebut_year(int debut_year) {
+		this.debut_year = debut_year;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 

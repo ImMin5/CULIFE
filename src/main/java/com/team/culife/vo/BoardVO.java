@@ -1,5 +1,7 @@
 package com.team.culife.vo;
 
+import java.util.List;
+
 public class BoardVO {
 	private int no;
 	private String subject;
@@ -9,6 +11,9 @@ public class BoardVO {
 	private int member_no;
 	private String category;
 	private String nickname;
+	
+	//adminBoardList: 다중삭제
+	private List<Integer> noList;
 	
 	public int getNo() {
 		return no;
@@ -58,6 +63,11 @@ public class BoardVO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	
-	
+	//adminBoardList: 다중삭제
+	public List<Integer> getNoList() {
+		return noList;
+	}
+	public void setNoList(List<Integer> noList) {
+		this.noList = noList;
+	}
 }

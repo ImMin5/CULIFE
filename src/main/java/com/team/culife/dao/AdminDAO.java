@@ -34,10 +34,12 @@ public interface AdminDAO {
 	public List<AuthorVO> authorList(AdminPagingVO pVO);
 	//작가 카운트
 	public int author_totalRecord(AdminPagingVO pVO);
+	//작가 신청 카운트
+	public int author_cnt(AuthorVO aVO);
 	//작가 승인
 	public int authorUpgrade(AuthorVO aVO);
 	//작가 취소
-	public int authorDelete(AuthorVO mVO);
+	public int authorDown(AuthorVO aVO);
 	
 	//스케줄러 실행: member테이블 회원상태: 정상
 	public void scheduleUpdate();
@@ -47,7 +49,8 @@ public interface AdminDAO {
 	//자유게시판목록 불러오기
 	public List<BoardVO> adminBoardList(AdminPagingVO pVO);
 	//자유게시판 카운트
-	public int board_totalRecord(AdminPagingVO pVO);
-	
+	public int adminboard_totalRecord(AdminPagingVO pVO);
+	//자유게시판: 게시글 삭제
+	public int adminBoardDel(BoardVO bVO);
 	
 }

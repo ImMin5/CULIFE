@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.team.culife.service.AdminService;
 import com.team.culife.vo.AdminPagingVO;
 import com.team.culife.vo.AuthorVO;
+import com.team.culife.vo.BoardVO;
 import com.team.culife.vo.MemberBanVO;
 import com.team.culife.vo.MemberVO;
 
@@ -92,21 +93,31 @@ public class AdminController {
 	@GetMapping("/authorDelete")
 	public ModelAndView authorDelete(AuthorVO aVO) {
 		ModelAndView mav = new ModelAndView();
-		service.authorDelete(aVO);
+		service.authorDown(aVO);
 		mav.setViewName("redirect:/admin/authorList");
 		return mav;
 	}
 	
+	//choi0502-자유게시판 불러오기
 	@GetMapping("/adminBoardList")
 	public ModelAndView adminBoardList(AdminPagingVO pVO) {
 		ModelAndView mav = new ModelAndView();
 		//작가목록목록페이징
-		pVO.setTotalRecord(service.board_totalRecord(pVO));
+		pVO.setTotalRecord(service.adminboard_totalRecord(pVO));
 		mav.addObject("pVO", pVO);
 		//자유게시판목록 불러오기
 		mav.addObject("adminBoardList", service.adminBoardList(pVO));
 		
 		mav.setViewName("/admin/adminBoardList");
+		return mav;
+	}
+	
+	//choi0504-자유게시판 게시글삭제
+	@GetMapping("/adminBoardDel")
+	public ModelAndView adminBoardDel(BoardVO bVO) {
+		ModelAndView mav = new ModelAndView();
+		service.adminBoardDel(bVO);
+		mav.setViewName("redirect:/admin/adminBoardList");
 		return mav;
 	}
 }
