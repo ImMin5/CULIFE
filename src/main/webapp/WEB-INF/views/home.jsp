@@ -9,31 +9,8 @@
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/bas.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/home_main_visual.js"></script>
+<script src="/js/home.js"></script>
 <script>
-	var tab1 = function() {
-		$("#home_tab1").addClass('home_tab_filled');
-		$("#home_tab2").removeClass('home_tab_filled');
-		$("#home_tab3").removeClass('home_tab_filled');
-		$("#home_tab4").removeClass('home_tab_filled');
-	}
-	var tab2 = function() {
-		$("#home_tab2").addClass('home_tab_filled');
-		$("#home_tab1").removeClass('home_tab_filled');
-		$("#home_tab3").removeClass('home_tab_filled');
-		$("#home_tab4").removeClass('home_tab_filled');
-	}
-	var tab3 = function() {
-		$("#home_tab3").addClass('home_tab_filled');
-		$("#home_tab1").removeClass('home_tab_filled');
-		$("#home_tab2").removeClass('home_tab_filled');
-		$("#home_tab4").removeClass('home_tab_filled');
-	}
-	var tab4 = function() {
-		$("#home_tab4").addClass('home_tab_filled');
-		$("#home_tab1").removeClass('home_tab_filled');
-		$("#home_tab3").removeClass('home_tab_filled');
-		$("#home_tab2").removeClass('home_tab_filled');
-	}
 	/*스크롤 무빙*/
 
 	var html = $('html');
@@ -51,44 +28,8 @@
 	    var posTop =(page-1) * $(window).height();
 	    html.animate({scrollTop : posTop});
 	});
-	
-	/* 중앙 하단 화살표 버튼 */
-	$(document).ready(function(){
-			$("#home_scrolldown1").on('click', function(){
-				$('html').animate({scrollTop : $(window).height()});
-			})
-			$("#home_scrolldown2").on('click', function(){
-				$('html').animate({scrollTop : $(window).height()*2});
-			});
-	});	
-	
-	/* 오른쪽 pagination 버튼 기능 */
-	$(window).scroll(function () {
-		var height = $(document).scrollTop();
-		var wHeight = $(window).height();
-		$(document).ready(function(){
-			if(height < wHeight*1){$(document).ready(tab1);}
-			else if(height < wHeight*2){$(document).ready(tab2);}
-			else if(height < wHeight*3){$(document).ready(tab3);}
-			else if(height < wHeight*4){$(document).ready(tab4);}
-		});
-	});
-	
-	$(document).ready(function(){
-		$("#home_tab1").click(tab1,function(){
-			$('html').animate({scrollTop : $(window).height()*0});
-		});
-		$("#home_tab2").click(tab2,function(){
-			$('html').animate({scrollTop : $(window).height()*1});
-		});
-		$("#home_tab3").click(tab3,function(){
-			$('html').animate({scrollTop : $(window).height()*2});
-		});
-		$("#home_tab4").click(tab4,function(){
-			$('html').animate({scrollTop : $(window).height()*3});
-		});
-	});
 </script>
+
 <style>
 	main {width:100vw; height:400vh;}
 	section{
@@ -121,8 +62,19 @@
 			</ul>
 			<img class="home_scrolldown" id="home_scrolldown2" src="/img/scrolldown.png">
 		</section>
-		<section>
-		
+		<section id="home_exhibition">
+			<h2>온라인에서 만나는 전시회 작품</h2>
+			<button class="fun-btn" id="home_author_regi">전시하기</button>
+			<button class="fun-btn" id="home_online_ex">작품보기</button>
+			<ul>
+				<li id="home_sec3_img1"></li>
+				<li id="home_sec3_img2"></li>
+				<li id="home_sec3_img3"></li>
+				<li id="home_sec3_img4"></li>
+				<li id="home_sec3_img5"></li>
+				<li id="home_sec3_img6"></li>
+			</ul>
+			<img class="home_scrolldown" id="home_scrolldown3" src="/img/scrolldown.png">
 		</section>
 		<section>
 		

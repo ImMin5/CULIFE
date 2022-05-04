@@ -1,14 +1,21 @@
 @charset "UTF-8";
 
-#home_main_container {position:relative; z-index:-1;}
+#home_main_container {
+	position:relative; z-index:-1;
+	text-align:center;
+}
 section .home_scrolldown {
 	width:50px; height:50px;
 	position:absolute; left:50%; top:85vh;
 	transform:translateX(-25px);
-	z-index:2;
+	z-index:5;
 	cursor:pointer;
 }
-
+h2 {
+	font-size:5rem; font-weight:500;
+	line-height:250px; color:#fff;
+	padding-top:100px
+}
 /* ***************************************************** */
 /* pagination- start */
 
@@ -108,7 +115,6 @@ section .home_scrolldown {
 	background:url(../img/home_visual2.png);
 	background-size:100vw 100vh;
 	z-index:-2;
-	text-align:center
 }
 #home_entertain::after {
     content:"";
@@ -116,11 +122,6 @@ section .home_scrolldown {
     position:absolute; left:0; top:0;
     background-color:rgba(0,0,0,0.6);
     z-index:-1
-}
-#home_entertain h2 {
-	font-size:5rem; font-weight:500;
-	line-height:250px; color:#fff;
-	padding-top:100px
 }
 #home_entertain ul {
 	width:calc(100vw/1.6);
@@ -184,5 +185,50 @@ section .home_scrolldown {
 #home_entertain ul li:hover::after {z-index:1}
 
 /* main - section 2 - end */
+/* ***************************************************** */
+
+/* ***************************************************** */
+/* main - section 3 - start */
+
+#home_exhibition {
+	background:url(../img/home_exhibition_bg.png);
+	background-size:100vw 100vh;
+	position:relative;
+	overflow:hidden
+}
+#home_exhibition h2 {padding-top:50px}
+#home_exhibition ul li {
+	display:block;
+	width:100vw; height:100vh;
+}
+#home_sec3_img1{
+	background:url(../img/home_exhibition_img1.png);
+	background-size:100vw 100vh;
+}
+#home_exhibition ul li:nth-child(2){
+	background:url(../img/home_exhibition_img2.png);
+	background-size:100vw 100vh;
+	z-index:3;
+	transition-delay:0.5s;
+}
+#home_exhibition ul li:nth-child(3){
+	background:url(../img/home_exhibition_img3.png);
+	background-size:100vw 100vh;
+	z-index:2;
+}
+#home_exhibition ul li:nth-child(4){
+	background:url(../img/home_exhibition_img4.png);
+	background-size:100vw 100vh;
+}
+#home_exhibition ul li:nth-child(5){
+	background:url(../img/home_exhibition_img5.png);
+	background-size:100vw 100vh;
+}
+#home_exhibition ul li:nth-child(6){
+	background:url(../img/home_exhibition_img6.png);
+	background-size:100vw 100vh;
+}
+#home_exhibition button {z-index:4;}
+/* main - section 3 - end */
 /* ***************************************************** */
 
