@@ -51,11 +51,14 @@
 			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
 			<ul>
 				<li>
-					<a href=""><em>영화</em></a>
+					<a href="">영화</a>
+					<em></em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
-				</li>				<li>
-					<a href=""><em>연극 / 뮤지컬</em></a>
+				</li>				
+				<li>
+					<a href="">연극 / 뮤지컬</a>
+					<em></em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
 				</li>
@@ -77,13 +80,14 @@
 			<img class="home_scrolldown" id="home_scrolldown3" src="/img/scrolldown.png">
 		</section>
 		<section>
-		
+			<h2>커뮤니티</h2>
+			<h3>작가찾기</h3>
 		</section>
 		<ul id="home_pagination">
 			<li class="hidden">페이지네이션</li>
 			<li>
 				<h3 class="hidden">첫번째 페이지</h3>
-				<span id="home_tab1"></span>
+				<span id="home_tab1" class="home_tab_filled"></span>
 			</li>
 			<li>
 				<h3 class="hidden">두번째 페이지</h3>
