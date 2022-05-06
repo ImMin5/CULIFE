@@ -77,8 +77,6 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
-				PagingVO pvo = new PagingVO();
-				//전체 리스트 업데이트
 				mav.setViewName("mypage/my_fan");
 			}
 			
@@ -356,11 +354,14 @@ public class MemberController {
 				System.out.println("member_ no --->" + memberNo);
 				System.out.println("pageCount --->" + pageCount);
 				pvo.setRecordPerPage(pageCount);
+				pvo.setCurrentPage(pageNo);
+				System.out.println("pvo offset -->" + pvo.getOffsetIndex());
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
-				pvo.setCurrentPage(pageNo);
+				
 				List<AuthorVO> list = memberService.authorFanSelectAll(pvo);
+				
 				entity = new PageResponseBody<AuthorVO>();
 				entity.setItems(list);
 				entity.setVo(pvo);

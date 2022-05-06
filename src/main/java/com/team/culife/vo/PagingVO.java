@@ -9,7 +9,7 @@ public class PagingVO {
 	private int currentPage = 1;  //현재 페이지
 	private int startPage = 1;
 	private int endPage = 0;
-	private int recordPerPage = 6;
+	private int recordPerPage = 10;
 	private int onePageCount = 5;
 	private int totalRecord;
 	private int totalPage; 
@@ -19,12 +19,12 @@ public class PagingVO {
 	private int member_no;
 	private String searchWord;
 	
-	public void setPageNo(int currentPage) {
+	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 		
 		offsetIndex = (currentPage-1)*recordPerPage;
 		
-		startPage = ((currentPage-1)/onePageCount*onePageCount)+1;
+		startPage = ((currentPage-1)/recordPerPage*recordPerPage)+1;
 	}
 	public void setTotalRecord(int totalRecord) {
 		this.totalRecord = totalRecord;	
@@ -38,6 +38,5 @@ public class PagingVO {
 	 public void setEndPage(int endPage) {
 	        this.endPage = (int)Math.ceil(this.currentPage*0.1)*10;
 	} 
-
 }
 
