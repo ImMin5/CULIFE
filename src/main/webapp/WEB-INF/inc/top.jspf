@@ -8,9 +8,11 @@
 
 	<link rel="stylesheet" href="/css/top_bottom.css">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
 
     <title>CULIFE | 복합문화공간</title>
-
+	<!-- 폰트어썸 cdb 장현주 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-32x32.ico">
 
 	<script>
