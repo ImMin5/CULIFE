@@ -537,7 +537,39 @@ body {
 		
 			});
 		
-
+	      function movieCredits (event) {
+	          fetch("https://api.themoviedb.org/3/movie/"+movieId+"/credits?api_key="+key+"&language=ko-KR")
+	             .then((res) => res.json())
+	             .then((data) => {
+	                  const movies = data.cast;
+	                // console.log(movies.length)
+	                 movies.map(function(credits){
+	                    // console.log(credits);
+	                       let imgTag;              
+	                     // console.log(credits.profile_path);
+	      
+	                         if (credits.profile_path != null ) {
+	                            div = document.createElement("div");
+	                    
+	                            imgTag = document.createElement("img");// <img class="item" src="경로"></img>
+	                            textTag = document.createElement("p");
+	                            
+	                            div.className = "itemDiv";
+	                          
+	                           imgTag.className = "item";
+	                          imgTag.src = base_url + credits.profile_path;
+	                          // imgTag.title = "";
+	                            textTag.innerText = credits.name;
+	                            textTag.className = "textTag"
+	                            
+	                       movieCredits_container.appendChild(div);
+	                   
+	                       div.appendChild(imgTag);
+	                       div.appendChild(textTag);
+	                          }        
+	                     });                
+	                });
+	         }
 		
 	      const slides = document.querySelectorAll(".item");
 
