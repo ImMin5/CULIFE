@@ -22,6 +22,7 @@ $(document).ready(function () {
 	
 		 function xmlParsing(data){
 			var detail = '';
+			var topDetail = '';
 			$(data).find('perforInfo').each(function(index, item){
 				title=$(this).find('title').text()
 				thumb=$(this).find('imgUrl').text()
@@ -36,16 +37,41 @@ $(document).ready(function () {
 				url=$(this).find('url').text()
 				phone=$(this).find('phone').text()
 				
-					detail += `
+					topDetail += `						
 						<ul>						
 							<li><img src="`+thumb+`" id="thePoster"/></li>
+						</ul>
+						<ul>						
+						<li>`+area+`</li>
+					</ul>
+					`;
+				
+					detail += `
+						
+						<ul>
 							<li>`+title+`</li>
+							<li>`+subTitle+`</li>
+						</ul>
+						<ul>
 							<li>`+start+`</li>
 							<li>`+end+`</li>
+						</ul>
+						<ul>
+						<li>`+url+`</li>
+						<li>`+phone+`</li>
+						</ul>
+						<ul>
+						<li>`+price+`</li>
+						</ul>
+						<ul>
+							<li>`+contents1+`</li>
+							<li>`+contents2+`</li>
+						</ul>
+						<ul>
 							<li>`+place+`</li>
 						</ul>
 					`;			
-					
+					$('#topDetail').empty().append(topDetail);
 					$('#detail').empty().append(detail);
 				
 			});
@@ -53,7 +79,10 @@ $(document).ready(function () {
 });
 </script>
 <div id="detail_container">
-<div id="detail">
-
-</div>
+	<div id="topDetail">
+	
+	</div>
+	<div id="detail">
+	
+	</div>
 </div>

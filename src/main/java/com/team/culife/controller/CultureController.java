@@ -17,13 +17,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class CultureController {	
+	
+	//연극리스트
 	@GetMapping("/theater/theaterList")
 	public ModelAndView theaterListAll() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/theater/theaterList");
 		return mav;
 	}
-	//연극리스트
+	
+	//연극리스트(연극)
 	@PostMapping(value="/theater/theaterList", produces = "application/xml")
 	public String theaterList() throws IOException{
 		StringBuilder result = new StringBuilder();
@@ -51,7 +54,8 @@ public class CultureController {
 		return result.toString();
 	}
 	
-	//뮤지컬리스트
+
+	//연극리스트(뮤지컬)
 	@PostMapping(value="/theater/theaterList2", produces = "application/xml")
 	public String theaterList2() throws IOException{
 		StringBuilder result = new StringBuilder();
@@ -79,8 +83,9 @@ public class CultureController {
 			br.close();
 			
 		return result.toString();
-	}
+	}	
 	
+	// 연극&뮤지컬 상세 페이지(view)
 	@GetMapping("/theater/theaterView")
 	public ModelAndView theaterViewAll() {
 		ModelAndView mav = new ModelAndView();
