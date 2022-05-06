@@ -81,7 +81,11 @@
 		</section>
 		<section>
 			<h2>커뮤니티</h2>
-			<h3>작가찾기</h3>
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+			<h2>작가 검색</h2>
 		</section>
 		<ul id="home_pagination">
 			<li class="hidden">페이지네이션</li>
