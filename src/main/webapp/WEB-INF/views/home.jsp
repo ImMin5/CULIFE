@@ -50,17 +50,19 @@
 		<section id="home_entertain">
 			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
 			<ul>
-				<li>
+				<li onmouseover="movieplay('/img/Reality - From La Boum_cut.mp3')" onmouseleave="movieplay('')">
 					<a href="">영화</a>
 					<em></em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
+					<audio id='movie_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>				
-				<li>
+				<li onmouseover="musicalplay('/img/웃는남자_일단와_cut.mp3')" onmouseleave="musicalplay('')">
 					<a href="">연극 / 뮤지컬</a>
 					<em></em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
+					<audio id='musical_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>
 			</ul>
 			<img class="home_scrolldown" id="home_scrolldown2" src="/img/scrolldown.png">

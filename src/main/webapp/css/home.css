@@ -25,7 +25,7 @@ h2 {
 .home_tab_filled {background-color:#fff}
 #home_pagination span {
 	display:block;
-	width:calc(100vw/64); height:calc(100vh/36);
+	width:calc(100vw/128); height:calc(100vh/72);
 	border:1px solid #fff;
 	border-radius:50%;	
 	margin:calc(100vh/38.4) 0;
@@ -180,6 +180,8 @@ h2 {
 }
 #home_entertain ul li .skew_box1 {left:-59.5%; top:0;}
 #home_entertain ul li .skew_box2 {right:-59.5%; top:0;}
+
+#home_entertain audio {display:none}
 
 #home_entertain ul li:hover span {
 	transform:skew(0deg);
