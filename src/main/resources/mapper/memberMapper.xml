@@ -60,6 +60,6 @@
   			where b.author like '%${searchWord}%'
   		</if>
   		order by b.author
-  		limit ${onePageCount} offset ${offsetIndex}
+  		limit ${recordPerPage} offset ${offsetIndex}
   	</select>
   </mapper>

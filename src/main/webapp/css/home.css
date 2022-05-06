@@ -149,6 +149,7 @@ h2 {
 	display:block;
 	width:calc(100vw/3.84); height:calc(100vh/2.7);
 	transition:all 2s;
+	text-indent:-9999px;
 }
 #home_entertain ul li:nth-child(1) em{
 	background:url(../img/home_entertain_movie.jpg);
@@ -238,3 +239,37 @@ h2 {
 /* main - section 3 - end */
 /* ***************************************************** */
 
+/* ***************************************************** */
+/* main - section 4 - start */
+
+#home_notice {background-color:gray}
+#home_notice .home_scrolldown {
+	transform:translateX(-25px) rotate(180deg);
+	top:80vh;
+}
+#home_notice div {
+	width:50%; height:100%;
+	float:left
+}
+#home_commu ul {
+	display:block;
+	width:80%; background-color:red;
+	margin:0 auto;
+}
+#home_commu ul li {
+	display:block; 
+	width:100%; height:100px;
+	background-color:blue;
+}
+#home_commu ul li >* {float:left}
+
+#home_author img {
+	width:300px; height:300px;
+	display:block;
+	border-radius:50%;
+	background-color:blue;
+	margin:0 auto;
+}
+
+/* main - section 4 - end */
+/* ***************************************************** */
