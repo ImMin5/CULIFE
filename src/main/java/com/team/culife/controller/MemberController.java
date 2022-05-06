@@ -113,7 +113,21 @@ public class MemberController {
 	@GetMapping("/mypage/review/movie")
 	public ModelAndView mypageReviewMovie(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("mypage/my_movie");
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		try {
+			if(memberNo == null) {
+				mav.setViewName("redirect:/");
+			}
+			else {
+				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
+				mav.setViewName("mypage/my_movie");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
+		}
+		
 		return mav;
 	}
 	@PutMapping("/mypage/member")
