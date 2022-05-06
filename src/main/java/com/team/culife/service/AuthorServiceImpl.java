@@ -27,7 +27,6 @@ public class AuthorServiceImpl implements AuthorService{
 	}
 
 	@Override
-	@Autowired
 	public void authorWriteOk(Map<String, Object> map) {
 	}
 
