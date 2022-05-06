@@ -10,7 +10,32 @@
 <div class="admin_container">
 <!-- 불러오는 매퍼는 설정했음. 이제 다시 게시판 하듯이? 하면됨 -->
 <h1>문의사항관리</h1>
-	<ul>
+	<ul class="adminHelpList">
+		<li>번호</li>
+		<li>제목</li>
+		<li>닉네임</li>
+		<li>날짜</li>
+		<li>상태</li>
+		<li><input type="checkbox" id="allCheck"/></li>
+		
+		<li>번호</li>
+		<li>제목</li>
+		<li>닉네임</li>
+		<li>날짜</li>
+		<li>상태</li>
+		<li><input type="checkbox" id="allCheck"/></li>
+		<li>번호</li>
+		<li>제목</li>
+		<li>닉네임</li>
+		<li>날짜</li>
+		<li>상태</li>
+		<li><input type="checkbox" id="allCheck"/></li>
+		<li>번호</li>
+		<li>제목</li>
+		<li>닉네임</li>
+		<li>날짜</li>
+		<li>상태</li>
+		<li><input type="checkbox" id="allCheck"/></li>
 		<li>번호</li>
 		<li>제목</li>
 		<li>닉네임</li>
