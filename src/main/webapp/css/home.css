@@ -85,7 +85,8 @@ h2 {
   align-self: center;
   cursor: pointer;
   font-weight: bold;
-  position: absolute; left:46%; bottom:300px;
+  position: absolute; left:50%; bottom:300px;
+  transform:translateX(-75px);
   z-index:2
 }
 .fun-btn:hover {
@@ -116,6 +117,7 @@ h2 {
 	background-size:100vw 100vh;
 	z-index:-2;
 }
+#home_entertain h2 {padding-top:7%}
 #home_entertain::after {
     content:"";
     width:100vw; height:100vh;
@@ -132,7 +134,7 @@ h2 {
 	background-color:black;
 	float:left;	
 	position:relative; z-index:2;
-	overflow:hidden
+	overflow:hidden;
 }
 #home_entertain ul li::after{
 	content:"";

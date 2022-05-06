@@ -114,14 +114,14 @@ $(window).scroll(function () {
 				$("#home_sec3_img6").css({"transition-delay" : "3s"})
 				$("#home_author_regi").css({
 					"position" : "absolute",
-			   		"left" : "60%",
+			   		"left" : "65%",
 			   		"bottom" : "200px",
 			   		"opacity" : "1",
 			 		"transition-delay" : "3.5s"
 				})
 				$("#home_online_ex").css({
 					"position" : "absolute",
-			   		"left" : "55%",
+			   		"left" : "60%",
 			   		"bottom" : "100px",
 			   		"opacity" : "1",
 			 		"transition-delay" : "4s"
