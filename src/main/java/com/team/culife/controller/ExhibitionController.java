@@ -32,7 +32,7 @@ public class ExhibitionController {
 	@Inject
 	AuthorService authorService;
 	
-	@GetMapping("authorWrite")
+	@GetMapping("mypage/authorWrite")
 	public ModelAndView authorWrite(HttpSession session,ExhibitionVO vo) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");

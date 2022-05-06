@@ -146,12 +146,12 @@ let is_paging= true;
 				<h1 class="h1">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
 				<hr/>
 				<ul>
-					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
+					<li><a class="selected_menu" style="color:#9DC3E6"  href="${url}/mypage/review/movie">리뷰</a></li>
 					<li><a href="${url}/mypage/review">감상평</a></li>
 					<li><a href="${url}/mypage/board">작성글</a></li>
-					<li class="selected_menu"><a href="${url}/mypage/fan" style="color:#9DC3E6" >팔로잉 작가</a></li>
+					<li><a href="${url}/mypage/fan" >팔로잉 작가</a></li>
 					<c:if test="${grade == 0}">
-						<li><a href="${url}/mypage">작가등록 신청</a></li>
+						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
 						<li><a href="${url}/mypage/author">작가 정보</a></li>
