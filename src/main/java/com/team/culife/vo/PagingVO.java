@@ -6,31 +6,38 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PagingVO {
-	private int pageNo = 1; 
+	private int currentPage = 1;  //현재 페이지
+	private int startPage = 1;
+	private int endPage = 0;
+	private int recordPerPage = 6;
+	private int onePageCount = 5;
 	private int totalRecord;
 	private int totalPage; 
 	private int offsetIndex = 0;
-	private int onePageCount = 5;
-	private int startPage = 1;
 	
+
 	private int member_no;
 	private String searchWord;
 	
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
+	public void setPageNo(int currentPage) {
+		this.currentPage = currentPage;
 		
-		offsetIndex = (pageNo-1)*onePageCount;
+		offsetIndex = (currentPage-1)*recordPerPage;
 		
-		startPage = ((pageNo-1)/onePageCount*onePageCount)+1;
+		startPage = ((currentPage-1)/onePageCount*onePageCount)+1;
 	}
 	public void setTotalRecord(int totalRecord) {
 		this.totalRecord = totalRecord;	
 		
-		if(totalRecord%onePageCount==0) {
-			totalPage = totalRecord/onePageCount;
+		if(totalRecord%recordPerPage==0) {
+			totalPage = totalRecord/recordPerPage;
 		}else {
-			totalPage = totalRecord/onePageCount+1;
+			totalPage = totalRecord/recordPerPage+1;
 		}
 	}
+	 public void setEndPage(int endPage) {
+	        this.endPage = (int)Math.ceil(this.currentPage*0.1)*10;
+	} 
+
 }
 

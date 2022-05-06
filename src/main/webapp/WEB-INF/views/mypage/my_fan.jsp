@@ -163,6 +163,7 @@ let is_paging= true;
 					searchWord : searchWord,
 				},
 				success : function(data){
+					console.log(data);
 					if(!is_paging)table.empty();
 					if(data.items == null) return;
 					data.items.forEach(function(element, index){
@@ -176,7 +177,7 @@ let is_paging= true;
 						`);
 					});
 					if(is_paging){
-						pageNo = parseInt(data.vo.pageNo)+1;
+						pageNo = parseInt(data.vo.currentPage)+1;
 						totalPage = data.vo.totalPage;
 					}
 					else{

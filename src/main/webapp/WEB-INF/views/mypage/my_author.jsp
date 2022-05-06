@@ -50,7 +50,7 @@
 					<div class="col">
 						<!-- 작가 대표 사진 -->
 						<div id="mypage_member_thumbnail_container">
-							<img id="thumbnail_member" src="${url}/upload/${logNo}/thumbnail/${avo.thumbnail}"/>
+							<img id="thumbnail_member" src="${url}/upload/${logNo}/author/thumbnail/${avo.thumbnail}"/>
 							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
 						</div>
 						<div class="mb-3" style="display:none;">
