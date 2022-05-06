@@ -1,61 +1,75 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="/css/board/board.css" type="text/css" />
+
 <div class="container">
-	<br/>
-		<h1 id="rentBrd">자유 게시판</h1>
-		<br/>
-		<a href="/board/freeBoardWrite" class="btn" id="freeBoardWrite">글 작성하기</a>
-		<div class="row">
-				<ul class="boardList">
-		<li><input type="checkbox" id="checkAll"></li>
+	<h1>자유게시판</h1>
+	<br><br><br><br>
+	<ul class='freeboardList'>
 		<li>번호</li>
 		<li>제목</li>
-		<li>글쓴이</li>
+		<li>닉네임</li>
 		<li>조회수</li>
-		<li>등록일</li>
-		<c:set var="url" value="<%=request.getContextPath()%>"/>
-		<form method="post" action="${url}/board/freeBoardDel" id="checkFrm">
-			<c:forEach var="vo" items="${list}">
-				<li><input type="checkbox" name="noList" value="${vo.no}"></li>
-				<li>&nbsp;${vo.no }</li>
-				<li><a href="/board/boardView?no=${vo.no}">${vo.subject}</a></li>
-				<li>${vo.userid }</li>
-				<li>&nbsp;&nbsp;&nbsp;${vo.hit }</li>
-				<li>${vo.writedate }</li>
-			</c:forEach>
-		</form>
+		<li>작성일</li>
+		<!-- 지워도되는부분 ↓↓↓ -->
+		<li>01</li>
+		<li><a href="#">제목쓸공간입니다1.</a></li>
+		<li>닉네임입니다.</li>
+		<li>1 회</li>
+		<li>22-05-06</li>
+		<li>02</li>
+		<li><a href="#">제목쓸공간입니다2.</a></li>
+		<li>닉네임입니다.</li>
+		<li>2 회</li>
+		<li>22-05-06</li>
+		<li>03</li>
+		<li><a href="#">제목쓸공간입니다3.</a></li>
+		<li>닉네임입니다.</li>
+		<li>3 회</li>
+		<li>22-05-06</li>
+		<li>04</li>
+		<li><a href="#">제목쓸공간입니다4.</a></li>
+		<li>닉네임입니다.</li>
+		<li>4 회</li>
+		<li>22-05-06</li>
+		<li>05</li>
+		<li><a href="#">제목쓸공간입니다5.</a></li>
+		<li>닉네임입니다.</li>
+		<li>5 회</li>
+		<li>22-05-06</li>
+		<li>06</li>
+		<li><a href="#">제목쓸공간입니다5.</a></li>
+		<li>닉네임입니다.</li>
+		<li>6 회</li>
+		<li>22-05-06</li>
+		<li>07</li>
+		<li><a href="#">제목쓸공간입니다5.</a></li>
+		<li>닉네임입니다.</li>
+		<li>7 회</li>
+		<li>22-05-06</li>
+		<li>08</li>
+		<li><a href="#">제목쓸공간입니다5.</a></li>
+		<li>닉네임입니다.</li>
+		<li>8 회</li>
+		<li>22-05-06</li>
+		<li>09</li>
+		<li><a href="#">제목쓸공간입니다5.</a></li>
+		<li>닉네임입니다.</li>
+		<li>9 회</li>
+		<li>22-05-06</li>
+		<li>10</li>
+		<li><a href="#">제목쓸공간입니다5.</a></li>
+		<li>닉네임입니다.</li>
+		<li>10 회</li>
+		<li>22-05-06</li>
+		<!-- 지워도되는부분 ↑↑↑ -->
+		<input id="search" type="text" placeholder="검색" style="float:left">
+		<button id="write" style='float:right'><a href="freeBoardWrite">글쓰기</a></button>
+		<ol><a href="#"> ◀ </a></ol>
+		<ol><a href="#"> 1 </a></ol>
+		<ol><a href="#"> 2 </a></ol>
+		<ol><a href="#"> 3 </a></ol>
+		<ol><a href="#"> 4 </a></ol>
+		<ol><a href="#"> 5 </a></ol>
+		<ol><a href="#"> ▶ </a></ol>
 	</ul>
-		</div>
-		<div class="row">
-			<ul class="pagination justify-content-center" id="paging">
-				<c:if test="${pvo.currentPage==1}">
-					<li class="page-item disabled"><a class="page-link" id="prevBtn"><i class="fa fa-angle-left"></i></a></li>
-				</c:if>
-				<c:if test="${pvo.currentPage>1}">
-					<li class="page-item"><a class="page-link" href="javascript:void(0);" id="prevBtn" 
-							onclick="goPrev(${pvo.currentPage})"><i class="fa fa-angle-left"></i></a></li>
-				</c:if>
-				<c:forEach var="p" begin="${pvo.startPage}" end="${pvo.totalPage}">
-					<c:if test="${p<=pvo.totalPage}">
-						<c:choose>
-							<c:when test="${p==pvo.currentPage}">
-								<li class="page-item disabled"><a class="page-link">${p}</a></li>
-							</c:when>
-							<c:when test="${p!=pvo.currentPage}">
-								<li class="page-item"><a class="page-link"href="javascript:void(0);"
-										onclick="goPage(${p})">${p}</a></li>
-							</c:when>
-						</c:choose>
-					</c:if>
-				</c:forEach>
-				<c:if test="${pvo.currentPage==pvo.totalPage}">
-					<li class="page-item disabled"><a class="page-link" id="nextBtn"><i class="fa fa-angle-right"></i></a></li>
-				</c:if>
-				<c:if test="${pvo.currentPage<pvo.totalPage}">
-					<li class="page-item"><a class="page-link" href="javascript:void(0);" id="nextBtn"
-							onclick="goNext(${pvo.currentPage})"><i class="fa fa-angle-right"></i></a></li>
-				</c:if>
-			</ul>
-		</div>	
-	<br/>
 </div>
