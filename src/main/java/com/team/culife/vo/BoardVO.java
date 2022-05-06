@@ -3,6 +3,7 @@ package com.team.culife.vo;
 import java.util.List;
 
 public class BoardVO {
+
 	private int no;
 	private String subject;
 	private String content;
@@ -77,6 +78,5 @@ public class BoardVO {
 	}
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
-	}
-	
+	}	
 }

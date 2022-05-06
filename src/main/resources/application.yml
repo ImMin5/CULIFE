@@ -4,8 +4,6 @@ server:
 spring:
     profiles:
         default : dev
-    main:
-        allow-circular-references: true
       
     # 서버 자동시작 
     mvc:
@@ -20,12 +18,12 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url : jdbc:mysql://127.0.0.1/culife?characterEncoding=utf-8
         username : root
-        password : root
+        password : root1234
 
 mybatis:
     type-aliases-package: com.team.culife.vo  #mybatis 에서 패키지 생략 할 수ㅡ 있도록 설정
     mapper-locations: mapper/*Mapper.xml
-  
+    
 open-api : 
     REST_API_KEY : bGFsMgfetTesJMZeNF1L5u09m2jGU6Mb7aGHayrsC3xvl9nPNmiAMjSNF4Z5ORdBpygtVN1rdtd5iANyX0A1Kg%3D%3D
     ADMIN_KEY : 2ab06edefb73f2388c9cdf6dd90b35b8

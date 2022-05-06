@@ -1,0 +1,47 @@
+@charset "UTF-8";
+#tbBody{
+	display:flex;	
+}
+.table td, .table th{
+	border:none !important;
+}
+.container{/* 본문 */
+	width: 1200px;
+	height:100%;
+	margin: 0px auto;
+	padding:120px 0 202px 0;
+	text-align:center;
+}
+body{
+	background-color:black;
+}
+h1{
+	color:white;
+	font-size:5rem;
+	text-align:center;
+	padding-bottom:10px;
+}
+#freeForm h1{
+	text-align:center;
+	font-weight:700;
+	color:rgb(72, 97, 86);
+} 
+#freeForm table{
+	text-align:center;
+}
+#freeBoardTitle{
+	margin-right:10px;
+}
+#writeBtn{
+	background-color: rgb(72, 97, 86);
+	color:white;
+	padding:10px 30px;
+}
+#resetBtn, #backList {
+	background-color: gray;
+	color:white;
+	padding:10px 30px;
+}
+#writeok{
+	display:inline-block;
+}

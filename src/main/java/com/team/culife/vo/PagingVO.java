@@ -24,8 +24,7 @@ public class PagingVO {
 		startPage = ((pageNo-1)/onePageCount*onePageCount)+1;
 	}
 	public void setTotalRecord(int totalRecord) {
-		this.totalRecord = totalRecord;
-		
+		this.totalRecord = totalRecord;	
 		
 		if(totalRecord%onePageCount==0) {
 			totalPage = totalRecord/onePageCount;
@@ -33,5 +32,5 @@ public class PagingVO {
 			totalPage = totalRecord/onePageCount+1;
 		}
 	}
-
 }
+
