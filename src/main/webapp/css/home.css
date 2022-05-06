@@ -149,6 +149,7 @@ h2 {
 	display:block;
 	width:calc(100vw/3.84); height:calc(100vh/2.7);
 	transition:all 2s;
+	text-indent:-9999px;
 }
 #home_entertain ul li:nth-child(1) em{
 	background:url(../img/home_entertain_movie.jpg);
