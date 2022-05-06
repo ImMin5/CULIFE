@@ -56,28 +56,29 @@ $(function(){
 			alert("데뷔년도를 입력해 주세요")
 		} else {
 		
-		$.ajax({
-			url: '/authorWriteOk',
-			type: 'POST', 
-			dataType: 'json',
-			enctype: 'multipart/form-data',
-			data : {
-				nickName: '${mvo.nickname}',
-				member_no: '${mvo.no}',
-				author: $("#authorWriteName").val(),
-				sns_link: $("#authorWriteSNS").val(),
-				author_thumbnail: $("#authorThumbnail").val(),
-				debut_year: $("#authorDebutYear").val()
-			},
-			success: function(result) {
-				if (result) {
-					alert("작가 신청 완료되었습니다.");
-				} else {
-					alert("작가 신청 실패");
+			$.ajax({
+				url: '/authorWriteOk',
+				type: 'POST', 
+				dataType: 'json',
+				enctype: 'multipart/form-data',
+				data : {
+					nickName: '${mvo.nickname}',
+					member_no: '${mvo.no}',
+					author: $("#authorWriteName").val(),
+					sns_link: $("#authorWriteSNS").val(),
+					author_thumbnail: $("#authorThumbnail").val(),
+					debut_year: $("#authorDebutYear").val()
+				},
+				success: function(result) {
+					if (result) {
+						alert("작가 신청 완료되었습니다.");
+					} else {
+						alert("작가 신청 실패");
+					}
+						
 				}
-					
-			}
-		});
+			});
+		}
 	}
 });
 </script>
