@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/css/board/freeBoardWrite.css" type="text/css"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="//cdn.ckeditor.com/4.18.0/full/ckeditor.js"></script>
 
 <div class="container">
 <h1>글쓰기폼</h1>
+<input type="text" class="form-control" id="shareBoardTitle" placeholder="글 제목을 입력하세요." name="title"/>
 <textarea name="content" id="editor"></textarea>
     <script>
     ClassicEditor

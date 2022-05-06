@@ -1,9 +1,14 @@
 @charset "UTF-8";
-#tbBody{
-	display:flex;	
+
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    border-color: var(--ck-color-base-border);
+    height: 450px;
 }
-.table td, .table th{
-	border:none !important;
+#shareBoardTitle{
+	margin-right:10px;
+	width:100%;
+	font-size:2.3rem;
+	margin-bottom:15px;
 }
 .container{/* 본문 */
 	width: 1200px;
