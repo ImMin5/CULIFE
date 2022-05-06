@@ -120,4 +120,15 @@ public class AdminController {
 		mav.setViewName("redirect:/admin/adminBoardList");
 		return mav;
 	}
+	
+	//choi0506-문의게시판 페이지로 이동
+		@GetMapping("/adminHelpList")
+		public ModelAndView adminHelpList() {
+			ModelAndView mav = new ModelAndView();
+			//문의사항목록 불러오기
+			//mav.addObject("adminHelpList", service.authorList(pVO));
+				
+			mav.setViewName("/admin/adminHelpList");
+			return mav;
+		}
 }

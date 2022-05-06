@@ -3,17 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.team.culife.dao.MemberDAO" >
+  	<select id="authorFanTotalRecord" resultType="int">
+  		select count(a.author_no) cnt from author_fan a
+  		join author b
+  		on a.member_no=${member_no} and a.author_no = b.no and  b.author_status = 1
+  		<if test='searchWord != null'>
+  			where b.author like '%${searchWord}%'
+  		</if>
+  	</select>
   	<insert id="memberInsert" useGeneratedKeys="true" keyProperty="no">
   		insert into member(kakao_id, email, nickname, grade) 
   		values(#{kakao_id}, #{email}, #{nickname} ,${grade})
   	</insert>
   	<select id="memberSelectByEmail" resultType="com.team.culife.vo.MemberVO">
-  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, author, author_thumbnail, sns_link, status, create_date 
+  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, status, create_date 
   		from member
   		where email=#{param1}
   	</select>
   	  <select id="memberSelectByNo" resultType="com.team.culife.vo.MemberVO">
-  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, author, author_thumbnail, sns_link, status, create_date 
+  		select no, kakao_id, email, nickname , grade, warning_count, thumbnail, status, create_date 
   		from member
   		where no=${param1}
   	</select>
@@ -23,5 +31,35 @@
   	<update id="memberUpdate">
   		update member set thumbnail=#{thumbnail}, warning_count=${warning_count}, status=${status} where no=${no}
   	</update>
-
+  	<insert id="authorFanInsert">
+  		insert into author_fan(author_no, member_no) values(${author_no},${member_no})
+  	</insert>
+  	<select id="authorFanCheck" resultType="com.team.culife.vo.AuthorFanVO">
+  		select author_no, member_no, create_date from author_fan
+  		where author_no=${param1} and member_no=${param2}
+  	</select>
+  	<delete id="authorFanDelete">
+  		delete from author_fan where author_no=${param1} and member_no=${param2}
+  	</delete>
+  	
+  	<resultMap type="com.team.culife.vo.AuthorVO" id="authorMap">
+  		<id property="no" column="no"/>
+  		<id property="author" column="author"/>
+  		<id property="sns_link" column="sns_link"/>
+  		<id property="author_thumbnail" column="author_thumbnail"/>
+  		<id property="debut_year" column="debut_year"/>
+  		<id property="create_date" column="create_date"/>
+  	</resultMap>
+  	
+  	<select id="authorFanSelectAll" resultMap="authorMap">
+  		select b.no no, b.author author, b.sns_link sns_link, b.author_thumbnail author_thumbnail, b.debut_year debut_year, b.create_date create_date
+  		from author_fan a
+  		join author b
+  		on a.member_no=${member_no} and a.author_no	= b.no  and b.author_status = 1
+  		<if test='searchWord != null'>
+  			where b.author like '%${searchWord}%'
+  		</if>
+  		order by b.author
+  		limit ${onePageCount} offset ${offsetIndex}
+  	</select>
   </mapper>

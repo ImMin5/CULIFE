@@ -171,6 +171,23 @@ li{
 	float: right;
 }
 
+/* 문의사항게시판 목록*/
+.adminHelpList{
+	width: 1200px;
+	overflow: auto;
+}
+.adminHelpList li{
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid black;
+	width: 14%;
+}
+.adminHelpList li:nth-child(6n+2){
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 30%;
+}
 /* 페이징 */
 .paging{
 	margin: 30px 0px; 
