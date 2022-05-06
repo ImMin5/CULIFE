@@ -1,0 +1,64 @@
+.btn{
+	font-size:2rem;
+}
+/* 선택창*/
+
+#type_select_container{
+	position:relative;
+	margin-top:40px;
+	height:100%;
+	font-size:1.7rem;
+	
+}
+/*          검색창                */
+#search_container{
+	margin:0 auto; 
+	width:50%; 
+	font-size:1.7rem;
+	margin-top:40px;
+	border : solid 1.5px gray;
+	border-radius : 7px;
+}
+#search_container > #search_word{
+	border:none;
+}
+#search_container >img{
+	position:relative;
+}
+
+#review_contatiner{
+	margin:0 auto;
+	text-align:left;
+	width:85%;
+	min-width:300px;
+	height:74vh;
+	font-size:2rem;
+	scrollbar-width:none;
+
+}
+
+#review_contatiner, .card-text{
+	 -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+	
+}
+.card-body::-webkit-scrollbar, #review_contatiner::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+.table_author_thumbnail{
+	height:150px;
+	width:150px;
+}
+.card{
+	margin-bottom:15px;
+}
+.card-title{
+	font-size:2rem;
+}
+.card-body{
+}
+.card-text{
+	position:relative;
+	overflow: scroll;
+	height:5vh;
+}

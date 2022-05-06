@@ -79,16 +79,6 @@ public class MemberController {
 			else {
 				PagingVO pvo = new PagingVO();
 				//전체 리스트 업데이트
-		        System.out.println("member_ no --->" + memberNo);
-				pvo.setOnePageCount(pageCount);
-		        pvo.setPageNo(pageNo);
-		        pvo.setMember_no(memberNo);
-		        pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
-				
-		        List<AuthorVO> list =memberService.authorFanSelectAll(pvo);
-		        
-		        System.out.println("list size -->" + list.size());
-				//mav.addObject("followList", memberService.authorFanSelectAll(pvo));
 				mav.setViewName("mypage/my_fan");
 			}
 			
@@ -119,6 +109,14 @@ public class MemberController {
 		
 		return mav;
 		
+	}
+	
+	//마이페이지 - 영화 리뷰 뷰
+	@GetMapping("/mypage/review/movie")
+	public ModelAndView mypageReviewMovie(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("mypage/my_movie");
+		return mav;
 	}
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
@@ -357,11 +355,11 @@ public class MemberController {
 				// 전체 리스트 업데이트
 				System.out.println("member_ no --->" + memberNo);
 				System.out.println("pageCount --->" + pageCount);
-				pvo.setOnePageCount(pageCount);
+				pvo.setRecordPerPage(pageCount);
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
-				pvo.setPageNo(pageNo);
+				pvo.setCurrentPage(pageNo);
 				List<AuthorVO> list = memberService.authorFanSelectAll(pvo);
 				entity = new PageResponseBody<AuthorVO>();
 				entity.setItems(list);
