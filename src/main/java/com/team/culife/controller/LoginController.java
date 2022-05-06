@@ -156,35 +156,25 @@ public class LoginController {
 		return logout(session);
 	}
 	
-	//로그인
+	//로그인ㄸㄸㄸㄸㄸㄸㄸㄸㄸㄸㄸㄸ
 	@PostMapping("/login")
 	public ResponseEntity<HashMap<String,String>> adminSignup(MemberVO mvo , HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		
 		try {
-			result.put("status", "200");
+			
 			MemberVO Orimvo = memberService.memberSelectByEmail(mvo.getEmail());
-			if(Orimvo == null) {
-				result.put("msg", "존재하지 않는 아이디 입니다.");
-				
-			}
-			else if(Orimvo.getEmail().equals(mvo.getEmail())){
-				
+			if(Orimvo.getEmail().equals(mvo.getEmail())){
 				session.setAttribute("logNo", Orimvo.getNo());
 				session.setAttribute("logNickname", Orimvo.getNickname());
 				session.setAttribute("grade",Orimvo.getGrade());
-				result.put("msg", "로그인 성공");
 				System.out.println("로그인 성공 ---> "+ Orimvo.getNickname());
 			
 				
 			}
-			entity = new ResponseEntity<HashMap<String,String>>(result,HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
-			result.put("status", "400");
-			result.put("msg", "로그인 에러...관리자에게 문의해 주세요.");
-			entity = new ResponseEntity<HashMap<String,String>>(result,HttpStatus.BAD_REQUEST);
 		}
 		
 		return entity;
