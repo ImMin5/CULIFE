@@ -76,4 +76,5 @@ public class AdminPagingVO {
 		public void setSearchWord(String searchWord) {
 			this.searchWord = searchWord;
 		}
+		
 }
