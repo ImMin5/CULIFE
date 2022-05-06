@@ -5,10 +5,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.culife.dao.AdminDAO">
 	<!-- 회원목록 불러오기 -->
+	<!-- 우선 임의로 썸네일은 빼겠습니다. -->
   	<select id='memberList' resultType="com.team.culife.vo.MemberVO">
   	 select no, kakao_id, email, nickname, grade, status, date_format(create_date,'%Y-%m-%d') create_date  
   	 from member
-  	 <if test="searchWord != null" >
+  	<if test="searchWord != null" >
 			where ${searchKey} like '%${searchWord}%' 
 	</if>
   	 order by no desc 
@@ -37,7 +38,7 @@
   	update member set status = 1 where no = #{no}
   	</update>
   	<!-- 회원상태: @일정지 -->
-  	<!-- date_add(now(), 7) // spring scheduler --> 
+  	<!-- date_add(now(), 7) --> 
   	<insert id='memberBanDate'>
   	insert into member_ban(member_no, end_date) values (#{no}, date_add(now(), interval #{add_date} day));
   	</insert>
@@ -45,6 +46,109 @@
   	<delete id='memberBanDel'>
   	delete from member_ban where member_no = #{member_no}
   	</delete>
+  	
+  	<!-- spring scheduler -->
+  	<!-- 오늘>end_date일 경우 회원상태: 정상 -->
+  	<update id='scheduleUpdate'>
+  	update member m 
+	inner join member_ban b on m.no = b.member_no 
+	set m.status = 0 
+	where b.end_date <![CDATA[ < ]]> now();
+  	</update>
+  	<!-- 오늘>end_date일 경우 회원 밴목록에서 제거 -->
+  	<delete id="scheduleDelete">
+  	delete from member_ban where end_date <![CDATA[ < ]]> now();
+  	</delete>
+  	
+  	<!-- 작가목록 불러오기 -->
+  	<!-- 우선 임의로 썸네일은 빼겠습니다. 저장경로 설정되면 생각해보기 -->
+  	<select id='authorList' resultType="com.team.culife.vo.AuthorVO">
+  	 select no, member_no, author, debut_year, sns_link, author_status, date_format(create_date,'%Y-%m-%d') create_date, msg  
+  	 from author
+  	<if test="searchWord != null" >
+			where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex} 
+  	</select>
+  	<!-- <select id='authorList' resultType="com.team.culife.vo.AuthorVO">
+  	 select a.msg, a.no,a.member_no, a.author, a.debut_year, a.sns_link, a.author_status, a.create_date, b.cnt 
+  	 from (select msg, no, member_no, author, debut_year, sns_link, author_status, date_format(create_date,'%Y-%m-%d') create_date 
+  	 from author 
+  	<if test="searchWord != null" >
+	  where ${searchKey} like '%${searchWord}%' 
+	</if>
+	 ) a 
+  	 join (select member_no, count(member_no) cnt from author group by member_no) b on a.member_no=b.member_no 
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex} 
+  	</select> -->
+  	
+  	<!-- 작가목록 전체 인원 카운트 -->
+  	<select id='author_totalRecord' resultType='int'>
+  	select count(no) cnt from author 
+	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	</select>
+  	
+  	<!-- 작가승인 -->
+  	<update id='authorUpgrade'>
+  	update author a 
+	right join member m on (m.no = a.member_no)  
+	set a.author_status = '1', m.grade = '1'  
+	where a.no = #{no} 
+  	</update>
+  	<!-- 작가취소 -->
+  	<update id='authorDown'>
+  	update author a 
+	right join member m on (m.no = a.member_no)  
+	set a.author_status = '2', m.grade = '0', a.msg = #{msg}   
+	where a.no = #{no} 
+  	</update>
+  	
+  	<!-- 자유게시판 목록 불러오기 -->
+  	<select id='adminBoardList' resultType="com.team.culife.vo.BoardVO">
+  	 select b.no, b.subject, b.content, b.view, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname   
+  	 from board b inner join member m
+  	 on b.member_no = m.no
+  	 where b.category='free'
+  	<if test="searchWord != null" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}  
+  	 </select>
+  	 
+  	 <!-- 자유게시판 목록 카운트 -->
+  	<select id='adminboard_totalRecord' resultType='int'>
+  	select count(b.no) cnt 
+  	from board b inner join member m 
+  	on b.member_no = m.no 
+  	where category='free' 
+	<if test="searchWord != null" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+  	</select>
+  	
+  	<!-- 자유게시판 게시글 삭제 -->
+  	<delete id='adminBoardDel'>
+  	delete from board
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
+  	
+  	<!-- 문의게시판목록 불러오기 -->
+  	<select id="adminHelpList">
+  	select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
+  	from board b left join member m on b.member_no = m.no 
+				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no 
+  	 where b.category='help' 
+  	</select>
   	
 </mapper>
   

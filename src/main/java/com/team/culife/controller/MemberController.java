@@ -2,6 +2,7 @@ package com.team.culife.controller;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,8 @@ import com.team.culife.service.MemberService;
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.MemberVO;
+import com.team.culife.vo.PageResponseBody;
+import com.team.culife.vo.PagingVO;
 
 @RestController
 public class MemberController {
@@ -61,14 +64,59 @@ public class MemberController {
 		
 		return mav; 
 	}
-	//마이페이지 - 
+	//마이페이지 - 팔로잉 작가
+	@GetMapping("/mypage/fan")
+	public ModelAndView mypageFan(HttpSession session,  @RequestParam(value="pageNo",required = false, defaultValue = "1")int pageNo,
+			@RequestParam(value="pageCount",required = false, defaultValue = "10")int pageCount, 
+			@RequestParam(value="searchWord",required = false, defaultValue = "")String searchWord) {
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		ModelAndView mav = new ModelAndView();
+		
+		try {
+			if(memberNo == null) {
+				mav.setViewName("redirect:/");
+			}
+			else {
+				PagingVO pvo = new PagingVO();
+				//전체 리스트 업데이트
+		        System.out.println("member_ no --->" + memberNo);
+				pvo.setOnePageCount(pageCount);
+		        pvo.setPageNo(pageNo);
+		        pvo.setMember_no(memberNo);
+		        pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
+				
+		        List<AuthorVO> list =memberService.authorFanSelectAll(pvo);
+		        
+		        System.out.println("list size -->" + list.size());
+				//mav.addObject("followList", memberService.authorFanSelectAll(pvo));
+				mav.setViewName("mypage/my_fan");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 	
-	//회원 정보 작가 정보 뷰 
+	//마이페이지 - 작가 정보 뷰 
 	@GetMapping("/mypage/author")
 	public ModelAndView mypageAuthor(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		try {
+			if(memberNo == null) {
+				mav.setViewName("redirect:/");
+			}
+			else {
+				//작가 정보 넣기
+				mav.setViewName("mypage/my_author");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
+		}
 		
-		mav.setViewName("mypage/my_author");
 		return mav;
 		
 	}
@@ -217,9 +265,11 @@ public class MemberController {
 				AuthorVO avo = authorService.authorSelectByName(author);
 				if(avo != null) {
 					if(avo.getMember_no() == memberNo) {
+						result.put("status","201");
 						result.put("msg", "본인을 팔로우 할 수 없습니다.");
 					}
 					else if(memberService.authorFanCheck(avo.getNo(), memberNo) != null) {
+						result.put("status","201");
 						result.put("msg", "이미 팔로우 하고 있습니다.");
 					}
 					else {
@@ -235,6 +285,7 @@ public class MemberController {
 				}
 				else {
 					//탈퇴했는데 세션에 값이 남아있을 경우
+					result.put("status","201");
 					result.put("msg", "회원가입 후 이용해 주세요.");
 				}
 			}
@@ -288,5 +339,40 @@ public class MemberController {
 		return entity;
 	}
 	
-	
+	//마이페이지 - 팔로잉 작가 검색
+	@GetMapping("/mypage/fan/search")
+	public PageResponseBody<AuthorVO> mypageFanSearch(HttpSession session,  @RequestParam(value="pageNo",required = false, defaultValue = "1")int pageNo,
+				@RequestParam(value="pageCount",required = false, defaultValue = "6")int pageCount, 
+				@RequestParam(value="searchWord",required = false, defaultValue = "")String searchWord) {
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		PageResponseBody<AuthorVO> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		System.out.println("search --> " + searchWord);
+		try {
+			if (memberNo == null) {
+				result.put("msg", "로그인 후 이용해 주세요");
+				result.put("redirect", "/");
+			} else {
+				PagingVO pvo = new PagingVO();
+				// 전체 리스트 업데이트
+				System.out.println("member_ no --->" + memberNo);
+				System.out.println("pageCount --->" + pageCount);
+				pvo.setOnePageCount(pageCount);
+				pvo.setMember_no(memberNo);
+				if(searchWord != null)pvo.setSearchWord(searchWord);
+				pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
+				pvo.setPageNo(pageNo);
+				List<AuthorVO> list = memberService.authorFanSelectAll(pvo);
+				entity = new PageResponseBody<AuthorVO>();
+				entity.setItems(list);
+				entity.setVo(pvo);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new PageResponseBody<AuthorVO>();
+
+		}
+		return entity;
+	}
 }

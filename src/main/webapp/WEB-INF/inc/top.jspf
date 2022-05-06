@@ -8,9 +8,11 @@
 
 	<link rel="stylesheet" href="/css/top_bottom.css">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
 
     <title>CULIFE | 복합문화공간</title>
-
+	<!-- 폰트어썸 cdb 장현주 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-32x32.ico">
 
 	<script>
@@ -30,6 +32,15 @@
 			})
 		})
 	</script>
+	<c:if test="${grade == '2'}"> <!-- 관리자 : 2 -->
+		<style>
+	    	header {background-color:rgba(255,255,255,0.8)}
+	    	header > a::after {opacity:1}
+	    	header a:link {color:#222}
+	    	header a:visited {color:#222}
+	    	#rnb a::after {display:none}
+	    </style>
+	</c:if>
 </head>
 <body>
 	<header>
@@ -83,14 +94,11 @@
         	<div id="rnb">
 	            <c:if test="${grade != '' }">
 	            </c:if>
-	            <c:if test="${grade == '0' && grade == '1'}"> <!-- 일반회원 : 0, 작가 : 1 -->
+	            <c:if test="${grade == '0' || grade == '1'}"> <!-- 일반회원 : 0, 작가 : 1 -->
 	            	<p><a href="">mypage</a></p>
 	            </c:if>
 	            <c:if test="${grade == '2'}"> <!-- 관리자 : 2 -->
 	            	<p><a href="">mypage</a></p> 
-	            	<style>
-	            	
-	            	</style>
 	            </c:if>
         	</div>
         </nav>
