@@ -1,6 +1,6 @@
 package com.team.culife.vo;
 
-public class MemberListPagingVO {
+public class AdminPagingVO {
 	//페이징
 		private int onePageRecord = 2;//한페이지당 출력할 레코드 수
 		private int pageNum = 1;//현재페이지
