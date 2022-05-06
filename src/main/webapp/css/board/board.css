@@ -1,0 +1,53 @@
+@charset "UTF-8";
+h1{
+	text-align:center;
+	font-size:5rem;
+}
+.freeboardList{
+	overflow:hidden;
+	text-align:center;
+}
+.freeboardList li{
+	float:left;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ddd;
+	width:20%;
+	text-align:center;
+	color:white;
+}
+.freeboardList ol{
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	width:5%;
+	display:inline-block;
+	margin:10px 0 0 -35px;
+}
+/* .freeboardList li a{ 본문 제목
+	color:black;
+}*/
+.freeboardList button a{ /*글쓰기 버튼*/
+	color:black;
+}
+/*
+.freeboardList ol a{ 페이징 버튼 부트스트랩쓰면 사라질 얘들입니다.
+	color:black;
+} */
+.container{/* 본문 */
+	width: 1200px;
+	height:100%;
+	margin: 0px auto;
+	padding:120px 0 202px 0;
+}
+body{
+	background-color: black;
+	}
+#search{ /* 검색 */
+	margin:20px 0 0 10px;
+	color:white;
+	background:gray;
+}
+#write{ /* 글쓰기 */
+	margin:20px 10px 0 0;
+}

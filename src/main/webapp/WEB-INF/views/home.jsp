@@ -50,17 +50,19 @@
 		<section id="home_entertain">
 			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
 			<ul>
-				<li>
+				<li onmouseover="movieplay('/img/Reality - From La Boum_cut.mp3')" onmouseleave="movieplay('')">
 					<a href="">영화</a>
-					<em></em>
+					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
+					<audio id='movie_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>				
-				<li>
+				<li onmouseover="musicalplay('/img/웃는남자_일단와_cut.mp3')" onmouseleave="musicalplay('')">
 					<a href="">연극 / 뮤지컬</a>
-					<em></em>
+					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
+					<audio id='musical_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>
 			</ul>
 			<img class="home_scrolldown" id="home_scrolldown2" src="/img/scrolldown.png">
@@ -80,12 +82,35 @@
 			<img class="home_scrolldown" id="home_scrolldown3" src="/img/scrolldown.png">
 		</section>
 		<section>
-			<h2>커뮤니티</h2>
-			<ul>
-				<li></li>
-				<li></li>
-			</ul>
-			<h2>작가 검색</h2>
+			<div id="home_commu">
+				<h2>커뮤니티</h2>
+				<ul>
+					<li>
+						<p>제목</p>
+						<span>날짜</span>
+						<a href=""></a>
+					</li>
+					<li>
+						<p>제목</p>
+						<span>날짜</span>
+						<a href=""></a>
+					</li>
+					<li>
+						<p>제목</p>
+						<span>날짜</span>
+						<a href=""></a>
+					</li>
+					<li>
+						<p>제목</p>
+						<span>날짜</span>
+						<a href=""></a>
+					</li>
+				</ul>
+				<a href="">+ 더보기</a>
+			</div>
+			<div id="home_author">
+				
+			</div>
 		</section>
 		<ul id="home_pagination">
 			<li class="hidden">페이지네이션</li>

@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+main {
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 30px;
+    background: #dddddd;
+    width: 100%;
+}
+.container {
+	padding-top: 130px;
+	max-width: 900px;
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+	height: 1000px;
+	
+}
+.containerWrap {
+	min-height: 400px;
+	height: auto;
+	background: white;
+	padding: 9vh 10vw;
+	margin: 0 auto;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
+		rgba(0, 0, 0, 0.24);
+}
+.authorWriteTitle {
+	font-size: 2rem;
+}

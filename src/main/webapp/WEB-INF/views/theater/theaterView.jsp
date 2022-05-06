@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="${url}/css/theater/theaterView.css" type="text/css"/>
-
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="${url}/css/theater/theaterView.css"
+	type="text/css" />
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c6a67ea9b7a46ee55b3b3ccaaf230569"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c6a67ea9b7a46ee55b3b3ccaaf230569&libraries=services,clusterer,drawing"></script>
 <script>
 $(document).ready(function () {
 	$.ajax({
@@ -21,7 +25,7 @@ $(document).ready(function () {
 	});
 	
 		 function xmlParsing(data){
-			var detail = '';
+			var midDetail = '';
 			var topDetail = '';
 			$(data).find('perforInfo').each(function(index, item){
 				title=$(this).find('title').text()
@@ -36,6 +40,11 @@ $(document).ready(function () {
 				contents2=$(this).find('contents2').text()
 				url=$(this).find('url').text()
 				phone=$(this).find('phone').text()
+				gpsX=$(this).find('gpsX').text()
+				gpsY=$(this).find('gpsY').text()
+							
+		
+		
 				
 					topDetail += `						
 						<ul>						
@@ -45,8 +54,8 @@ $(document).ready(function () {
 						<li>`+area+`</li>
 					</ul>
 					`;
-				
-					detail += `
+	
+					midDetail += `
 						
 						<ul>
 							<li>`+title+`</li>
@@ -70,19 +79,36 @@ $(document).ready(function () {
 						<ul>
 							<li>`+place+`</li>
 						</ul>
-					`;			
+						<ul>
+							<li id='map'></li>
+						</ul>
+					`;		
+					var container=$('#map')[0];
+					var options = {
+							center: new kakao.maps.LatLng(gpsY, gpsX),
+							level: 3
+						};
+					
+
+					// 마커를 생성합니다
+					var marker = new kakao.maps.Marker({
+					    position: markerPosition
+					});
+					var markerPosition  = new kakao.maps.LatLng(gpsY, gpsX); 
+					var map = new kakao.maps.Map(container, options);
 					$('#topDetail').empty().append(topDetail);
-					$('#detail').empty().append(detail);
+					$('#midDetail').empty().append(midDetail);
 				
 			});
 		}
 });
 </script>
+
 <div id="detail_container">
-	<div id="topDetail">
-	
-	</div>
+	<div id="topDetail"></div>
 	<div id="detail">
-	
+		<div id="midDetail"></div>
+		<div id="map" style="width: 500px; height: 400px;"></div>
 	</div>
+	
 </div>
