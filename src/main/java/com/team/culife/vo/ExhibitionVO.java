@@ -5,10 +5,12 @@ public class ExhibitionVO {
 	private int member_no;
 	private String author;
 	private String sns_link;
-	private String suthor_thumbnail;
+	private String author_thumbnail;
 	private String create_date;
 	private String nickname;
-	
+	private String debut_year;
+	private String auhor_status;
+	private String msg;
 	
 	public int getNo() {
 		return no;
@@ -34,11 +36,11 @@ public class ExhibitionVO {
 	public void setSns_link(String sns_link) {
 		this.sns_link = sns_link;
 	}
-	public String getSuthor_thumbnail() {
-		return suthor_thumbnail;
+	public String getAuthor_thumbnail() {
+		return author_thumbnail;
 	}
-	public void setSuthor_thumbnail(String suthor_thumbnail) {
-		this.suthor_thumbnail = suthor_thumbnail;
+	public void setAuthor_thumbnail(String author_thumbnail) {
+		this.author_thumbnail = author_thumbnail;
 	}
 	public String getCreate_date() {
 		return create_date;
@@ -51,6 +53,24 @@ public class ExhibitionVO {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public String getDebut_year() {
+		return debut_year;
+	}
+	public void setDebut_year(String debut_year) {
+		this.debut_year = debut_year;
+	}
+	public String getAuhor_status() {
+		return auhor_status;
+	}
+	public void setAuhor_status(String auhor_status) {
+		this.auhor_status = auhor_status;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 	
