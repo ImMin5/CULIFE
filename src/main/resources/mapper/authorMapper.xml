@@ -9,4 +9,16 @@
   		where author=#{param1}
   	</select>
 
+	<insert id="authorWrite" >
+		insert into author(member_no, author, sns_link, author_thumbnail, debut_year)
+		values(#{member_no}, #{author}, #{sns_link}, #{author_thumbnail}, #{debut_year})
+	</insert>
+	<select id="authorSelect" resultType="com.team.culife.vo.ExhibitionVO">
+  		select no, member_no, author, sns_link, author_thumbnail, debut_year, create_date
+  		from author 
+  	</select>
+  	<select id="authorCheck" resultType="string">
+  		select author from author
+  		where author=#{author}
+  	</select>
   </mapper>

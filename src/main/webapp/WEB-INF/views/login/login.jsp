@@ -1,11 +1,11 @@
 <c:set var="url" value="<%=request.getContextPath()%>"/>
-
-
 <style>
 
 body{
-	background-image : url("${url}/img/login/login_background.jpg");
-	background-size: cover;
+	width:100wv;
+	height:100vh;
+	background-image : url("${url}/img/main_visual_1.png");
+	background-size: 100vw 100vh;
 	background-position: center;
 	}
 main{
@@ -13,21 +13,21 @@ main{
 	height:100vh;
 } 
 #login_logo_container{
-	margin : 45% auto;
+	margin : 0 auto;
 	background-color: black;
 	border-radius : 70%;
 	width:180px;
 	height:180px;
+	text-align:center;
+	margin-top : 43vh;
 }
 #login_logo_container> #login_logo{
-	text-align:center;
 	object-fit: contain;
 	width:100%;
 	height: 100%;
-	top: 60%;
 }
 #login_btn_container{
-	margin : 0 auto;
+	margin-top:40px;
 }
 #login_btn_img{
 	text-align:center;
@@ -44,12 +44,12 @@ main{
     <div class="col">
       Column
     </div>
-    <div class="col">
+    <div class="col" style="text-align:center;">
     	<div id="login_logo_container">
     		<img id="login_logo" src="${url}/img/login/culife_logo.png"  onclick="location.href='${url}/'">
     	</div>
-    	<div id="login_btn_container">
-	    	<a href="#0" id="kakaoLogin"><img  id="login_btn_img" src="${url}/img/login/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 100px;"/></a>
+    	<div id="login_btn_container" >
+	    	<a href="#0" id="kakaoLogin"><img  id="login_btn_img" src="${url}/img/login/kakao_login_medium_narrow.png" alt="카카오계정 로그인"/></a>
 	    	
 	    	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	    	<script>

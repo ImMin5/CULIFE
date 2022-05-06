@@ -10,7 +10,16 @@
 	height:100%;
 	margin: 0px auto;
 	padding:120px 0 202px 0;
-	background-color: yellow;
+	text-align:center;
+}
+body{
+	background-color:black;
+}
+h1{
+	color:white;
+	font-size:5rem;
+	text-align:center;
+	padding-bottom:10px;
 }
 #freeForm h1{
 	text-align:center;
@@ -32,4 +41,7 @@
 	background-color: gray;
 	color:white;
 	padding:10px 30px;
+}
+#writeok{
+	display:inline-block;
 }

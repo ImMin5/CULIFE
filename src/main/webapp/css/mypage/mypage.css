@@ -1,5 +1,12 @@
+.selected_menu{
+	font-weight: bold; 
+}
+
+#mypage_container{
+	margin-top:20vh;
+}
 #mypage_col{
-	margin-top:10%;
+	margin-top:100px;
 }
 
 #mypage_member{
@@ -94,3 +101,4 @@ a{
 a:visited{
 	text-decoration: none;
 }
+

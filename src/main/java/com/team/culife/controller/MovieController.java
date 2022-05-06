@@ -16,19 +16,21 @@ public class MovieController {
 	
 	@Inject
 	MovieService service;
-	
-	//¿µÈ­ ¸ŞÀÎÆäÀÌÁöÀÌµ¿
+
+	//ì˜í™” ë©”ì¸í˜ì´ì§€ì´ë™
 	@GetMapping("movieList")
 	public ModelAndView movieList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("movie/movieList");
 		return mav;
 	}
-	
-	//¿µÈ­ ¼¼ºÎÆäÀÌÁöÀÌµ¿
+
+	//ì˜í™” ì„¸ë¶€í˜ì´ì§€ì´ë™
+
 	@GetMapping("movieView")
-	public ModelAndView movieView(int movie_id) {
+	public ModelAndView movieView(int movieId) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("movieId",movieId);
 		mav.setViewName("movie/movieView");
 		return mav;
 	}
