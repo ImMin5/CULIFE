@@ -10,10 +10,11 @@ public class BoardVO {
 	private int view;
 	private int member_no;
 	private String category;
-	private String nickname;
-	
+	private String nickname;	
 	//adminBoardList: 다중삭제
 	private List<Integer> noList;
+	//문의사항(help)불러올때 댓글 카운트
+	private int cnt;
 	
 	public int getNo() {
 		return no;
@@ -70,4 +71,12 @@ public class BoardVO {
 	public void setNoList(List<Integer> noList) {
 		this.noList = noList;
 	}
+	//문의사항(help)불러올때 댓글 카운트
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	
 }

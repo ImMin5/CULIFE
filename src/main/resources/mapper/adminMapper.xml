@@ -142,5 +142,13 @@
   	</where>
   	</delete>
   	
+  	<!-- 문의게시판목록 불러오기 -->
+  	<select id="adminHelpList">
+  	select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
+  	from board b left join member m on b.member_no = m.no 
+				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no 
+  	 where b.category='help' 
+  	</select>
+  	
 </mapper>
   
