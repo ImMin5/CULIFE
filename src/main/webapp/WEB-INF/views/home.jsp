@@ -81,9 +81,9 @@
 			</ul>
 			<img class="home_scrolldown" id="home_scrolldown3" src="/img/scrolldown.png">
 		</section>
-		<section>
+		<section id="home_notice">
 			<div id="home_commu">
-				<h2>커뮤니티</h2>
+				<h2>자유게시판</h2>
 				<ul>
 					<li>
 						<p>제목</p>
@@ -109,8 +109,11 @@
 				<a href="">+ 더보기</a>
 			</div>
 			<div id="home_author">
-				
+				<img src="" alt="작가프로필">
+				<button>팔로우</button>
+				<button>작품보기</button>
 			</div>
+			<img class="home_scrolldown" id="home_scrolldown4" src="/img/scrolldown.png">
 		</section>
 		<ul id="home_pagination">
 			<li class="hidden">페이지네이션</li>
