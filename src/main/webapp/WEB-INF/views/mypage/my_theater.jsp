@@ -50,10 +50,10 @@ let is_paging= true;
 				<div class="col">
 					<div class="input-group mb-3" id="search_container">
 						<img id="search_btn" src="${url}/img/member/search.png">
-				  		<input type="text" class="form-control" id="search_word" placeholder="검색" style=" font-size:2.3rem;">
-				  		<select id="select_container">
-							<option value="movie" selected>영화</option>
-						 	<option value="theater">연극/뮤지컬</option>
+			  			<input type="text" class="form-control" id="search_word" placeholder="검색" style=" font-size:2.3rem;">
+			  			<select id="select_container">
+							<option value="movie" >영화</option>
+						 	<option value="theater" selected>연극/뮤지컬</option>
 						</select>
 					</div>
 				</div>
