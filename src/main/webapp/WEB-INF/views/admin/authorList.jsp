@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
-<%@ include file="adminTop.jspf" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
 <script>
 $(function () {
@@ -47,22 +46,44 @@ $(function () {
 			$(this).val($(this).val().substring(0,100));
 		};
 	});
-
+	
+	$("#searchFrm").submit(function(){
+		if($("#searchWord").val()==""){
+			alert("검색어를 입력해주세요.");
+			return false;
+		}
+	});	
 });
 </script>
-</head>
-<body>
+<div class="wrap">
+<%@ include file="adminTop.jspf" %>
 <div class="admin_container">
-	<h1>작가관리</h1>
+	<ul class='mini_top'>
+		<li>작가관리</li>
+		<li>
+			<!-- 검색 -->
+			<div class='adminList_searchFrm'>
+				<form method="get" action="/admin/memberList" id='searchFrm'>
+					<select name="searchKey" id="searchkey">
+						<option value='member_no'>회원번호</option>
+						<option value='author'>작가명</option>
+						<option value='author_status'>상태</option>
+					</select>
+					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
+					<input type="submit" value="검색" id="searchBtn"/>
+				</form>
+			</div>
+		</li>
+	</ul>
 	<ul class='authorList'>
-		<li>번호</li>
-		<li>회원번호</li>
-		<li>작가명</li>
-		<li>데뷔년도</li>
-		<li>SNS주소</li>
-		<li>신청날짜</li>
-		<li>상태</li>
-		<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+		<li class='list_title'>번호</li>
+		<li class='list_title'>회원번호</li>
+		<li class='list_title'>작가명</li>
+		<li class='list_title'>데뷔년도</li>
+		<li class='list_title'>SNS주소</li>
+		<li class='list_title'>신청날짜</li>
+		<li class='list_title'>상태</li>
+		<li class='list_title'>설정</li>
 		
 		<c:forEach var="vo" items="${authorList}">
 		<li>${vo.no}</li>
@@ -81,7 +102,7 @@ $(function () {
 			<c:if test="${vo.author_status == 0}">
 			<form method="get" action="/admin/authorUpgrade" class='author_upgrade'>
 				<input type="hidden" name="no" value="${vo.no}"/>
-				<input type="submit" value="승인"/>
+				<input type="submit" value="승인" class="author_ok"/>
 			</form>
 			</c:if>
 			<!-- <form method="get" action="/admin/authorDelete" class='author_delete'>
@@ -102,10 +123,10 @@ $(function () {
 	<ul class="paging">
 	<!--  이전페이지 -->
 	<c:if test="${pVO.pageNum == 1 }">
-		<li>prev</li>
+		<li>◀</li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/authorList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">prev</a></li>
+		<li><a href="/admin/authorList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
@@ -120,27 +141,15 @@ $(function () {
 	</c:forEach>
 	<!--  다음페이지 -->
 	<c:if test="${pVO.pageNum == pVO.totalPage }">
-		<li>next</li>
+		<li>▶</li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/authorList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">next</a></li>
-	</c:if>	
-		
+		<li><a href="/admin/authorList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+	</c:if>
+		<li><input type="button" value="목록" id="resetList" onclick="location.href='/admin/authorList'"/></li>
 	</ul>
-	
-	<!-- 검색 -->
-	<div class='adminList_searchFrm'>
-		<form method="get" action="/admin/authorList" id='searchFrm'>
-			<select name="searchKey">
-				<option value='member_no'>회원번호</option>
-				<option value='author'>작가명</option>
-				<option value='author_status'>상태</option>
-			</select>
-			<input type="text" name="searchWord" id='searchWord'/>
-			<input type="submit" value="검색"/>
-		</form>
-	</div>
 </div> <!-- div:admin_container -->
+</div>
 
 <!--  div:modal -->	
 <div class="modal">

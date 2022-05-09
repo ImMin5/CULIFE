@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
-<%@ include file="adminTop.jspf" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
 <script>
 $(function () {	
@@ -32,6 +31,12 @@ $(function () {
 	});
 	
 	 $("#searchFrm").submit(function(){
+
+		if($("#searchWord").val()==""){
+			alert("검색어를 입력해주세요.");
+			return false;
+		}
+
 		if($("#searchKey").val() == "cnt"){
 			if($("#searchWord").val() == "답변완료"){
 				$("#searchWord").val(1);
@@ -46,8 +51,27 @@ $(function () {
 	}); 
 });
 </script>
+<div class="wrap">
+<%@ include file="adminTop.jspf" %>
 <div class="admin_container">
-<h1>문의사항관리</h1>
+	<ul class='mini_top'>
+		<li>문의사항관리</li>
+		<li>
+			<!-- 검색 -->
+			<div class='adminList_searchFrm'>
+				<form method="get" action="/admin/memberList" id='searchFrm'>
+					<select name="searchKey" id="searchkey">
+						<option value='b.no'>게시글번호</option>
+						<option value='subject'>제목</option>
+						<option value='m.nickname'>닉네임</option>
+						<option value='cnt'>상태</option>
+					</select>
+					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
+					<input type="submit" value="검색" id="searchBtn"/>
+				</form>
+			</div>
+		</li>
+	</ul>
 	<form method="get" action="/admin/adminHelpDel" id='listFrm'>
 	<ul class="adminHelpList">
 		<li>번호</li>
@@ -55,7 +79,7 @@ $(function () {
 		<li>닉네임</li>
 		<li>날짜</li>
 		<li>상태</li>
-		<li><input type="checkbox" id="allCheck"/></li>
+		<li>전체선택<input type="checkbox" id="allCheck"/></li>
 		
 		<c:forEach var="vo" items="${adminHelpList}">
 			<li>${vo.no }</li>
@@ -71,8 +95,7 @@ $(function () {
 				</c:if>
 			</li>
 			<li><input type="checkbox" name="noList" value="${vo.no}" class="chk"/></li>
-		</c:forEach>
-		<li><input type="submit" value="삭제" id="multiDel"/></li>
+		</c:forEach>		
 	</ul>
 	</form>
 	
@@ -80,10 +103,10 @@ $(function () {
 	<ul class="paging">
 	<!--  이전페이지 -->
 	<c:if test="${pVO.pageNum == 1 }">
-		<li>prev</li>
+		<li>◀</li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/adminHelpList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">prev</a></li>
+		<li><a href="/admin/authorList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
@@ -93,30 +116,20 @@ $(function () {
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
 			</c:if>
-			<a href="/admin/adminHelpList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
+			<a href="/admin/authorList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
 		</c:if>
 	</c:forEach>
 	<!--  다음페이지 -->
 	<c:if test="${pVO.pageNum == pVO.totalPage }">
-		<li>next</li>
+		<li>▶</li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/adminHelpList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">next</a></li>
-	</c:if>	
-		
+		<li><a href="/admin/authorList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+	</c:if>
+		<li>	
+			<input type="button" value="삭제" id="multiDel"/>
+			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminBoardList'"/>		
+		</li>
 	</ul>
-	
-	<!-- 검색 -->
-	<div class='adminList_searchFrm'>
-		<form method="get" action="/admin/adminHelpList" id='searchFrm'>
-			<select name="searchKey" id="searchKey">
-				<option value='b.no'>게시글번호</option>
-				<option value='subject'>제목</option>
-				<option value='m.nickname'>닉네임</option>
-				<option value='cnt'>상태</option>
-			</select>
-			<input type="text" name="searchWord" id='searchWord'/>
-			<input type="submit" value="검색"/>
-		</form>
-	</div>
 </div><!-- class='memberList_container' -->
+</div>

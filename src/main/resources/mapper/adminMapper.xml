@@ -7,8 +7,9 @@
 	<!-- 회원목록 불러오기 -->
 	<!-- 우선 임의로 썸네일은 빼겠습니다. -->
   	<select id='memberList' resultType="com.team.culife.vo.MemberVO">
-  	 select no, kakao_id, email, nickname, grade, status, date_format(create_date,'%Y-%m-%d') create_date  
-  	 from member
+  	 select m.no, m.kakao_id, m.email, m.nickname, m.grade, m.status, date_format(m.create_date,'%Y-%m-%d') create_date, date_format(mb.end_date,'%Y-%m-%d') end_date 
+	from member m left outer join member_ban mb 
+	on m.no = mb.member_no 
   	<if test="searchWord != null" >
 			where ${searchKey} like '%${searchWord}%' 
 	</if>

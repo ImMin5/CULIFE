@@ -2,12 +2,12 @@ package com.team.culife.vo;
 
 public class AdminPagingVO {
 	//페이징
-		private int onePageRecord = 2;//한페이지당 출력할 레코드 수
+		private int onePageRecord = 12;//한페이지당 출력할 레코드 수
 		private int pageNum = 1;//현재페이지
 		private int totalRecord = 0;//총 레코드의 수
 		private int totalPage = 0;//총 페이지 수
 		private int offsetIndex = 0;
-		private int onePageCount = 3;//한번에 표시할 페이지 수
+		private int onePageCount = 5;//한번에 표시할 페이지 수
 		private int startPage = 1;
 		//검색
 		private String searchKey;
