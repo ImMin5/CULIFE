@@ -130,6 +130,31 @@ public class MemberController {
 		
 		return mav;
 	}
+	
+	//마이페이지 -연극.뮤지컬 리뷰 뷰
+	@GetMapping("/mypage/review/theater")
+	public ModelAndView mypageReviewTheater(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		try {
+			if(memberNo == null) {
+				mav.setViewName("redirect:/");
+			}
+			else {
+				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
+				mav.setViewName("mypage/my_theater");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
+		}
+		
+		return mav;
+	}
+	
+	
+	
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
