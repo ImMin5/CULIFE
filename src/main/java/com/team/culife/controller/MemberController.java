@@ -153,7 +153,27 @@ public class MemberController {
 		return mav;
 	}
 	
-	
+	//마이페이지 - 작성글
+	@GetMapping("/mypage/board")
+	public ModelAndView mypageBoard(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		try {
+			if(memberNo == null) {
+				mav.setViewName("redirect:/");
+			}
+			else {
+				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
+				mav.setViewName("mypage/my_board");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
+		}
+		
+		return mav;
+	}
 	
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
