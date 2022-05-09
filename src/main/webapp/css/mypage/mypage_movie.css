@@ -2,6 +2,29 @@
 	font-size:2rem;
 }
 
+/*선택창*/
+#select_container{
+	width:130px;
+	font-size:2rem; 
+	margin:5px; 
+	text-align:center;
+}
+/*          검색창                */
+#search_container{
+	width:50%; 
+	margin:0 auto;
+	font-size:1.7rem;
+	margin-top:40px;
+	border : solid 1.5px gray;
+	border-radius : 7px;
+}
+#search_container > #search_word{
+	border:none;
+}
+#search_container >img{
+	position:relative;
+}
+
 #review_contatiner{
 	margin:0 auto;
 	text-align:left;
