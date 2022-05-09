@@ -20,7 +20,7 @@
 	margin:0 auto;
 	background-color:white;
 	width:800px;
-	height:800px;
+	height:1000px;
 	padding:5px;
 	border: 1px solid white;
 	background-clip: content-box;
@@ -38,4 +38,14 @@
 #map{
 	margin:0 auto;
 	padding-top:100px;
+}
+
+#review{
+	margin:0 auto;
+	padding-top:50px;
+}
+
+.input_review{
+	width:600px;
+	height:100px;
 }
