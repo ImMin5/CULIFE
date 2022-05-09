@@ -51,6 +51,9 @@ $(document).ready(function(){
 	$("#home_scrolldown3").on('click', function(){
 		$('html').animate({scrollTop : $(window).height()*3});
 	});
+	$("#home_scrolldown4").on('click', function(){
+		$('html').animate({scrollTop : $(window).height()*0});
+	});
 });	
 
 /* 오른쪽 pagination 버튼 기능 */
