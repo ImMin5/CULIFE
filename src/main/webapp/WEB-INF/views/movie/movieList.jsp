@@ -4,12 +4,12 @@
 
   <style>
 @font-face {
-	font-family: 'RixYeoljeongdo_Regular';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+   font-family: 'RixYeoljeongdo_Regular';
+   src:
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff')
+      format('woff');
+   font-weight: normal;
+   font-style: normal;
 }
 
 * {
@@ -34,38 +34,73 @@ header {
     text-align: center;
     top: 0;
 }
-    
-    .movie_container {
-    	margin: 100px auto 0 auto;
-    	width: 1500px;
-    	height: 4000px;
-   
-    }
+ 
+ .movie_container {
+    margin: 100px auto 0 auto;
+    width: 1500px;
+    height: 4000px;
+
+ }
+ 
+  .mainBox_slider {
+     width: 100%;
+     height: 700px;
+     background-image: url(/img/movie/bg.png);
+     background-repeat: no-repeat;
+     background-size:100vw 700px;
+     margin: auto;
+     margin-top: 100px;
+     overflow: hidden;
+     position: relative;
+     
+   }
+
+   .mainBox_slider .boxSlides {
+     display: flex;
+   }
+   .mainBox_slider .boxSlides_slide {
+     width: 258px;
+   }
+
+   .boxSlides_slide {
+     margin: 80px;
+     position: relative;
+     left: 35%;
+   }
+
+   .boxSlides_slide > img {
+     width: 320px;
+     height: 450px;
+     -webkit-box-shadow: 9px 2px 50px 14px #ff0000;
+     box-shadow: 9px 2px 50px 14px #ff0000;
+     border-radius: 10px;
+     cursor: pointer;
+   }
 
     .rank_container {
       background: black;
       max-width: 1400px;
       height: 400px;
-      margin: 100px auto;
+      margin: 80px auto;
       /* background-color: darkgoldenrod; */
     }
     
     .rank_container_text {
         font-family: 'RixYeoljeongdo_Regular';
-		margin-bottom: 10px;
-    	background-color: black;
-    	font-size: 38px;
-    	color: white;	
+      margin-bottom: 10px;
+       background-color: black;
+       font-size: 38px;
+       color: white;   
     }
     
     .rank_container.populary_playing {
-    	margin-top: 140px;
-    	position: relative;
+       margin-top: 140px;
+       position: relative;
     }
     
     .rank_container.now_playing {
-  		margin-bottom: 50px;
-    	position: relative;
+        margin-top: 150px;
+       position: relative;
     }
 
 
@@ -247,7 +282,7 @@ header {
     }
     .arrows .prev:hover,
     .arrows .next:hover {
-	background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
+   background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     transform: scale(1.4);
@@ -256,52 +291,97 @@ header {
 
   </style>
   <body>
-  <div class="movie_container">
-  	    <div class="rank_container now_playing">
-	   	  <p class="rank_container_text">현재 상영중</p>
-		      <div class="arrows">
-		 	      <div class="prev">
-		         	 <i class="fa-solid fa-caret-left"></i>
-		          </div>
-		       	  <div class="next">
-		            <i class="fa-solid fa-caret-right"></i>
-		          </div>
-		      </div>
-	      <div class="slider slider_now_playing">
-	
-	      </div>
-	    </div>
-	    
-  	  	<div class="rank_container populary_playing">
-	  	  	<p class="rank_container_text">인기 상영중</p>
-		   	<p class="innerNum1">1</p>
-		    <p class="innerNum2">2</p>
-		    <p class="innerNum3">3</p>
-		    <p class="innerNum4">4</p>
-		    <p class="innerNum5">5</p>
-	   
-	      <div class="slider slider_populary_playing">
-	
-	      </div>
-	    </div>
-	   
+    <div class="mainBox_slider">
+        <div class="boxSlides" id="boxSlides"></div>
+     </div>
+     <div class="movie_container">
+             <div class="rank_container populary_playing">
+               <p class="rank_container_text">인기 상영중</p>
+               <p class="innerNum1">1</p>
+                <p class="innerNum2">2</p>
+                <p class="innerNum3">3</p>
+                <p class="innerNum4">4</p>
+                <p class="innerNum5">5</p>
+         
+            <div class="slider slider_populary_playing">
+            </div>
+          </div>
+          
+          
+            <div class="rank_container now_playing">
+              <p class="rank_container_text">역대 흥행작</p>
+               <div class="arrows">
+                   <div class="prev">
+                      <i class="fa-solid fa-caret-left"></i>
+                   </div>
+                     <div class="next">
+                     <i class="fa-solid fa-caret-right"></i>
+                   </div>
+               </div>
+            <div class="slider slider_now_playing">
+            </div>
+          </div>
+       
+      
     </div>
     <script>
       const slider = document.querySelector(".slider");
       const slider1 = document.querySelector(".slider_now_playing");
       const slider2 = document.querySelector(".slider_populary_playing");
       let scrollAmount = 0;
-      let scrollMax = slider1.clientWidth; //현재상영중만 적용
+      let scrollMax = slider2.clientWidth; //현재상영중만 적용
 
       let page = 1;
       const key = "52048cb9f5d2b1983acc31ecdadd5b4d";
       const base_url = "https://image.tmdb.org/t/p/w300/";
-      
+      const section = document.querySelector(".boxSlides");
     
+      function fetchMainBox() {
+         const url ="https://api.themoviedb.org/3/movie/now_playing?api_key="+key+"&language=ko-KR&region=KR&page=1";
+         
+          fetch(url)
+            .then((res) => res.json())
+            .then(function (res) {
+              const movies = res.results;
+              movies.map(function (movie) {
+                //console.log(movie.title);
+                const div = document.createElement("div");
+                div.className = "boxSlides_slide";
+                const output = `
+                          <img src= ${'${base_url + movie.poster_path}'} loading="lazy" data-id=${'${movie.id}'} onClick= 'openView(this)' >
+                     `;
+                div.innerHTML = output;
+                section.appendChild(div);
+              });
+            })
+            .catch((err) => console.log(err));
+        }
+
+        let xOffset = 0;
+        let isMouseIn = false;
+        const boxSlides = document.getElementById("boxSlides");
+
+        setInterval(translate, 0);
+
+        function translate() {
+          let offsetIncrement = isMouseIn ? 0.001 : 0.1;
+          if (xOffset >= 258 * 7) xOffset = 0;
+          else xOffset = xOffset + offsetIncrement;
+          boxSlides.style.transform = "translateX(-" + xOffset + "px)";
+        }
+
+        boxSlides.addEventListener("mouseover", function (event) {
+          isMouseIn = true;
+        });
+
+        boxSlides.addEventListener("mouseout", function (event) {
+          isMouseIn = false;
+        });
+      
 
       function fetchMovie1(page) {
-       // 현재 상영중 API
-    	  const url ="https://api.themoviedb.org/3/movie/now_playing?api_key="+key+"&language=ko-KR&region=KR&page=1";
+       // 역대 흥행작 API
+         const url ="https://api.themoviedb.org/3/movie/top_rated?api_key="+key+"&language=ko-KR&region=KR&page=1";
         fetch(url)
           .then((res) => res.json())
           .then(function (res) {
@@ -346,13 +426,13 @@ header {
         const movieId = event.getAttribute("data-id");
         location.href="/movie/movieView?movieId="+movieId
       }
-     
+      window.addEventListener("load", fetchMainBox());
       window.addEventListener("load", fetchMovie1());
       window.addEventListener("load", fetchMovie2());
 
       // 스크롤 >
       document.querySelector(".next").onclick = function () {
-        slider.scrollTo({
+        slider1.scrollTo({
           top: 0,
           left: scroll("right"),
           behavior: "smooth",
@@ -361,7 +441,7 @@ header {
 
       // 스크롤 <
       document.querySelector(".prev").onclick = function () {
-        slider.scrollTo({
+        slider1.scrollTo({
           top: 0,
           left: scroll("left"),
           behavior: "smooth",
