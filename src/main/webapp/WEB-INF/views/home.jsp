@@ -37,6 +37,9 @@
 		display:block;
 		position:relative
 	}
+	header {background-color:rgba(0,0,0,0.5);}
+	header:hover {background-color:rgba(255,255,255,0.8);}
+	nav > ul > li > ul {background-color:rgba(255,255,255,0.8);}
 </style>
 	
 	<main id="home_main_container">
