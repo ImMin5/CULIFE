@@ -64,7 +64,7 @@ body {
 }
 header {
 	width:100vw; height:100px;
-	background-color:rgba(0,0,0,0.5);
+	background-color:rgba(0,0,0,1);
 	position:fixed; z-index:999;
 	text-align:center;
 	left:0px;
@@ -104,7 +104,7 @@ nav > ul > li > a {
 
 nav > ul > li > ul{
 	width:100vw; height:0px;
-	background-color:rgba(255,255,255,0.8);
+	background-color:rgba(255,255,255,1);
 	position: absolute; left:0; top:103px;
 	overflow:hidden;
 	transition:all 0.5s;
@@ -289,9 +289,7 @@ nav > ul > li:nth-child(2) > ul a {
 /* rnb - 마이페이지 - end */
 
 /* hover */
-header:hover {
-	background-color:rgba(255,255,255,0.8);
-}
+header:hover {background-color:rgba(255,255,255,1);}
 header:hover a::after {opacity:1;}
 header:hover #main_logo {opacity:0;}
 header:hover nav a {color:#222}
@@ -330,7 +328,6 @@ footer {
 	color:#fff;
 	background-color:rgba(0,0,0,0.8);
 	font-size:0.8vw;
-	position:absolute; left:0; bottom:0
 }
 #footer_wrap {
 	width:50%;
