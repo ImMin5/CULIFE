@@ -118,14 +118,14 @@ $(window).scroll(function () {
 				$("#home_author_regi").css({
 					"position" : "absolute",
 			   		"left" : "65%",
-			   		"bottom" : "200px",
+			   		"bottom" : "25%",
 			   		"opacity" : "1",
 			 		"transition-delay" : "3.5s"
 				})
 				$("#home_online_ex").css({
 					"position" : "absolute",
 			   		"left" : "60%",
-			   		"bottom" : "100px",
+			   		"bottom" : "15%",
 			   		"opacity" : "1",
 			 		"transition-delay" : "4s"
 				})
