@@ -24,9 +24,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
+import com.team.culife.service.MovieService;
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.MemberVO;
+import com.team.culife.vo.MovieVO;
 import com.team.culife.vo.PageResponseBody;
 import com.team.culife.vo.PagingVO;
 
@@ -40,6 +42,9 @@ public class MemberController {
 	
 	@Inject
 	AuthorService authorService;
+	
+	@Inject
+	MovieService movieService;
 	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
@@ -489,6 +494,46 @@ public class MemberController {
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
 		}
 		
+		return entity;
+	}
+	
+	//영화 리뷰 검색
+	@GetMapping("/mypage/review/movie/search")
+	public PageResponseBody<MovieVO> mypageMovieSearch(HttpSession session,  @RequestParam(value="pageNo",required = false, defaultValue = "1")int pageNo,
+			@RequestParam(value="pageCount",required = false, defaultValue = "8")int pageCount, 
+			@RequestParam(value="searchWord",required = false, defaultValue = "")String searchWord) {
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		PageResponseBody<MovieVO> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		System.out.println("search --> " + searchWord);
+		try {
+			if (memberNo == null) {
+				result.put("msg", "로그인 후 이용해 주세요");
+				result.put("redirect", "/");
+			} else {
+				PagingVO pvo = new PagingVO();
+				// 전체 리스트 업데이트
+				System.out.println("member_ no --->" + memberNo);
+				System.out.println("pageCount --->" + pageCount);
+				pvo.setRecordPerPage(pageCount);
+				pvo.setCurrentPage(pageNo);
+				System.out.println("pvo offset -->" + pvo.getOffsetIndex());
+				pvo.setMember_no(memberNo);
+				if(searchWord != null)pvo.setSearchWord(searchWord);
+				pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
+				
+				List<MovieVO> list = movieService.movieReviewSelectByMemberNo(pvo);
+				
+				entity = new PageResponseBody<MovieVO>();
+				entity.setItems(list);
+				entity.setVo(pvo);
+			}
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new PageResponseBody<MovieVO>();
+		
+			}
 		return entity;
 	}
 }
