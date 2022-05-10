@@ -4,7 +4,7 @@
     border-color: var(--ck-color-base-border);
     height: 450px;
 }
-#shareBoardTitle{
+#freeBoardTitle,#helpBoardTitle{
 	margin-right:10px;
 	width:100%;
 	font-size:2.3rem;
@@ -26,19 +26,11 @@ h1{
 	text-align:center;
 	padding-bottom:10px;
 }
-#freeForm h1{
-	text-align:center;
-	font-weight:700;
-	color:rgb(72, 97, 86);
-} 
-#freeForm table{
-	text-align:center;
-}
-#freeBoardTitle{
+#freeBoardTitle,#helpBoardTitle{
 	margin-right:10px;
 }
 #writeBtn{
-	background-color: rgb(72, 97, 86);
+	background-color: gray;
 	color:white;
 	padding:10px 30px;
 }

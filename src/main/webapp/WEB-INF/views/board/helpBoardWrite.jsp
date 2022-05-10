@@ -3,8 +3,8 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 
 <div class="container">
-<h1>자유 게시판 글쓰기폼</h1>
-<input type="text" class="form-control" id="freeBoardTitle" placeholder="글 제목을 입력하세요." name="title"/>
+<h1>문의사항 글쓰기폼</h1>
+<input type="text" class="form-control" id="helpBoardTitle" placeholder="글 제목을 입력하세요." name="title"/>
 <textarea name="content" id="editor"></textarea>
     <script>
     ClassicEditor

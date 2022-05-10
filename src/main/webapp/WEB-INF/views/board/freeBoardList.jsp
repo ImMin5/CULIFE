@@ -63,7 +63,7 @@
 		<li>22-05-06</li>
 		<!-- 지워도되는부분 ↑↑↑ -->
 		<input id="search" type="text" placeholder="검색" style="float:left">
-		<button id="write" style='float:right'><a href="freeBoardWrite">글쓰기</a></button>
+		<button id="write" style='float:right' onclick="location.href='freeBoardWrite'">글쓰기</button>
 		<ol><a href="#"> ◀ </a></ol>
 		<ol><a href="#"> 1 </a></ol>
 		<ol><a href="#"> 2 </a></ol>

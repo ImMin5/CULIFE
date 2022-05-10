@@ -18,13 +18,13 @@ public class BoardController {
 	
 	ModelAndView mav = new ModelAndView();
 	
-	//자유게시판 입장?
+	//자유게시판
 	@GetMapping("freeBoardList")
 	public ModelAndView freeboardList(PagingVO pVO) {
 		mav.setViewName("/board/freeBoardList");
 		return mav;
 	}
-	
+	//자유게시판 게시글 등록 폼
 	@GetMapping("freeBoardWrite")
 	public ModelAndView freeBoardWrite() {
 		mav.setViewName("board/freeBoardWrite");
@@ -32,10 +32,14 @@ public class BoardController {
 	}
 	//문의사항게시판
 	@GetMapping("helpBoardList")
-	public ModelAndView helpboardList(PagingVO pVO) {
-		ModelAndView mav = new ModelAndView();
-		
+	public ModelAndView helpboardList(PagingVO pVO) {		
 		mav.setViewName("/board/helpBoardList");
 		return mav;	
+	}
+	//문의사항 게시글 등록 폼
+	@GetMapping("helpBoardWrite")
+	public ModelAndView helpBoardWrite() {
+		mav.setViewName("board/helpBoardWrite");
+		return mav;
 	}
 }

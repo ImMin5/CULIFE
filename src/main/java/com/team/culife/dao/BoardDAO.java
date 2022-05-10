@@ -13,13 +13,12 @@ import com.team.culife.vo.PagingVO;
 public interface BoardDAO {
 
 	// 글 등록
-	public int boardInsert(BoardVO vo); 
+	public int boardInsert(BoardVO vo);
 	
 	// 글 리스트 보이기
 	public List<BoardVO> selectList(BoardVO vo);
 	/*
-	 * // 게시판의 레코드 개수 가져오기(페이징) public int selectTotalRecord(PagingVO pvo, BoardVO
-	 * vo);
+	 * // 게시판의 레코드 개수 가져오기(페이징) public int selectTotalRecord(PagingVO pvo, BoardVO vo);
 	 * 
 	 * // 상세페이지(뷰) public BoardVO selectView(int no);
 	 * 
