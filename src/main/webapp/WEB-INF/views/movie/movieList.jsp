@@ -25,15 +25,6 @@ body {
     position: relative;
  }
     
-header {
-    width: 100vw;
-    height: 100px;
-    background-color: rgba(0,0,0,0.5);
-    position: fixed;
-    z-index: 999;
-    text-align: center;
-    top: 0;
-}
  
  .movie_container {
     margin: 100px auto 0 auto;
