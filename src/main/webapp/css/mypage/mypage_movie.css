@@ -1,6 +1,7 @@
 .btn{
 	font-size:2rem;
 }
+
 /*선택창*/
 #select_container{
 	width:130px;
@@ -29,7 +30,7 @@
 	text-align:left;
 	width:85%;
 	min-width:300px;
-	height:74vh;
+	height:70vh;
 	font-size:2rem;
 	scrollbar-width:none;
 
