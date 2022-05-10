@@ -50,7 +50,7 @@
 					<div class="col">
 						<!-- 작가 대표 사진 -->
 						<div id="mypage_member_thumbnail_container">
-							<img id="thumbnail_member" src="${url}/upload/${logNo}/thumbnail/${avo.thumbnail}"/>
+							<img id="thumbnail_member" src="${url}/upload/${logNo}/author/thumbnail/${avo.thumbnail}"/>
 							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
 						</div>
 						<div class="mb-3" style="display:none;">
@@ -96,7 +96,7 @@
 					<li><a href="${url}/mypage/board">작성글</a></li>
 					<li><a href="${url}/mypage/fan">팔로잉 작가</a></li>
 					<c:if test="${grade == 0}">
-						<li><a href="${url}/mypage">작가등록 신청</a></li>
+						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
 						<li><a  class="selected_menu" href="${url}/mypage/author" style="color:#9DC3E6">작가 정보</a></li>

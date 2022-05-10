@@ -77,18 +77,6 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
-				PagingVO pvo = new PagingVO();
-				//전체 리스트 업데이트
-		        System.out.println("member_ no --->" + memberNo);
-				pvo.setOnePageCount(pageCount);
-		        pvo.setPageNo(pageNo);
-		        pvo.setMember_no(memberNo);
-		        pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
-				
-		        List<AuthorVO> list =memberService.authorFanSelectAll(pvo);
-		        
-		        System.out.println("list size -->" + list.size());
-				//mav.addObject("followList", memberService.authorFanSelectAll(pvo));
 				mav.setViewName("mypage/my_fan");
 			}
 			
@@ -120,6 +108,53 @@ public class MemberController {
 		return mav;
 		
 	}
+	
+	//마이페이지 - 영화 리뷰 뷰
+	@GetMapping("/mypage/review/movie")
+	public ModelAndView mypageReviewMovie(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		try {
+			if(memberNo == null) {
+				mav.setViewName("redirect:/");
+			}
+			else {
+				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
+				mav.setViewName("mypage/my_movie");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
+		}
+		
+		return mav;
+	}
+	
+	//마이페이지 -연극.뮤지컬 리뷰 뷰
+	@GetMapping("/mypage/review/theater")
+	public ModelAndView mypageReviewTheater(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		try {
+			if(memberNo == null) {
+				mav.setViewName("redirect:/");
+			}
+			else {
+				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
+				mav.setViewName("mypage/my_theater");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
+		}
+		
+		return mav;
+	}
+	
+	
+	
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
@@ -357,12 +392,15 @@ public class MemberController {
 				// 전체 리스트 업데이트
 				System.out.println("member_ no --->" + memberNo);
 				System.out.println("pageCount --->" + pageCount);
-				pvo.setOnePageCount(pageCount);
+				pvo.setRecordPerPage(pageCount);
+				pvo.setCurrentPage(pageNo);
+				System.out.println("pvo offset -->" + pvo.getOffsetIndex());
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
-				pvo.setPageNo(pageNo);
+				
 				List<AuthorVO> list = memberService.authorFanSelectAll(pvo);
+				
 				entity = new PageResponseBody<AuthorVO>();
 				entity.setItems(list);
 				entity.setVo(pvo);
@@ -373,6 +411,64 @@ public class MemberController {
 			entity = new PageResponseBody<AuthorVO>();
 
 		}
+		return entity;
+	}
+	
+	//작가 썸네일 업로드
+	@PostMapping("/mypage/author/thumbnail")
+	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(MemberVO mvo, HttpServletRequest request ,HttpSession session){
+		ResponseEntity<HashMap<String,String>> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author/thumbnail");
+		System.out.println("path --> " +path);
+		
+		try {
+			if(memberNo != null) {
+				System.out.println("th "+ mvo.getThumbnail());
+				
+				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
+				MultipartFile newFile = (MultipartFile) mr.getFile("file");
+				
+				if(newFile != null) { //새로업로드된 파일이 있으면
+					String newUploadFilename = newFile.getOriginalFilename();	
+						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
+							File f = new File(path, newUploadFilename);
+							//폴더가 존재하지 않을 경우 폴더 생성
+							if(!f.exists()) {
+								try {
+									System.out.println(f.mkdirs());
+								}catch(Exception e) {e.printStackTrace();}
+							}
+
+							// 업로드
+							try {
+								//기존에 있던 썸네일 파일 삭제
+								
+								mvo = memberService.memberSelectByNo(memberNo);
+								if(mvo.getThumbnail() != null) {
+									File deleteFile = new File(path,mvo.getThumbnail());
+									deleteFile.delete();
+								}
+								mvo.setThumbnail(newUploadFilename);
+								System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
+								newFile.transferTo(f);
+							} catch(Exception ee) {ee.printStackTrace();}
+								
+						}
+				} // if newFile != null
+			}
+			else {
+				result.put("msg","로그인 후 이용해 주세요");
+			}
+			
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("msg", "회원정보 업데이트 에러...");
+			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+		}
+		
 		return entity;
 	}
 }
