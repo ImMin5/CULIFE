@@ -214,65 +214,32 @@ $(function(){
 });
 </script>
 <script>
-//별점
-var locked = 0;
-function show(star){
-	if(locked)
-		return;
-	var i;
-	var grade;
-	var el;
-	var e = document.getElementById('startext');
-	var stateMsg;
-	
-	for(i=1; i<=star; i++){
-		
-	}
-	switch(star){
-	case1:
-		stateMsg = "별로입니다.";
-		break;
-	case2:
-		stateMsg = "기대하지마세요.";
-		break;
-	case3:
-		stateMsg = "보통입니다.";
-		break;
-	case4:
-		stateMsg = "기대해도좋아요";
-		break;
-	case 5:
-		stateMsg = "최고입니다.";
-		break;
-	default:
-		stateMsg="";
-	}
-	e.innerHTML = stateMsg;
+//별점 마킹 모듈 프로토타입으로 생성
+function Rating(){};
+Rating.prototype.rate = 0;
+Rating.prototype.setRate = function(newrate){
+    //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
+    this.rate = newrate;
+    let items = document.querySelectorAll('.rate_radio');
+    items.forEach(function(item, idx){
+        if(idx < newrate){
+            item.checked = true;
+        }else{
+            item.checked = false;
+        }
+    });
 }
+let rating = new Rating();//별점 인스턴스 생성
 
-function noshow(star){
-	if(locked)
-		return;
-	var i;
-	var image;
-	var el;
-	
-	for(i=1; i<= star; i++){
-		grade ='grage' + i;
-		el = documnet.getElementById(grade);
-		el.src="~~~`";
-	}
-}
-
-function lock(star){
-	show(star);
-	locked=1;
-}
-function mark(star){
-	lock(star);
-	alert("선택2"+star);
-	document.cmtform.star.value=star;
-}
+document.addEventListener('DOMContentLoaded', function(){
+    //별점선택 이벤트 리스너
+    document.querySelector('.rating').addEventListener('click',function(e){
+        let elem = e.target;
+        if(elem.classList.contains('rate_radio')){
+            rating.setRate(parseInt(elem.value));
+        }
+    })
+});
 </script>
 <div id="detail_container">
 	<div id="topDetail"></div>
@@ -283,13 +250,21 @@ function mark(star){
 			<form method="post" id="reviewFrm">
 				<input type="hidden" value="${vo.id}">
 				<div class="review_submit">
-					<div>
-						<span class="material-icons">grade</span>
-						<span class="material-icons">star_outline</span>
-						<span class="material-icons">grade</span>
-						<span class="material-icons">grade</span>
-						<span class="material-icons">grade</span>
-					</div>
+		
+						<!-- <span class="material-icons">grade</span> -->
+					<div class="rating">
+		                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+		                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점">
+		                <label for="rating1"></label>
+		                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점">
+		                <label for="rating2"></label>
+		                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" >
+		                <label for="rating3"></label>
+		                <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점">
+		                <label for="rating4"></label>
+		                <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio" title="5점">
+		                <label for="rating5"></label>
+		            </div>			            
 					<input name="review" class="input_review" id="review" placeholder="리뷰를 남겨주세요."/>
 					<input type="submit" class="submit_review" value="등록"/>
 				</div>				
