@@ -67,6 +67,8 @@ header {
 	background-color:rgba(0,0,0,0.5);
 	position:fixed; z-index:999;
 	text-align:center;
+	left:0px;
+	top:0px;
 }
 #main_logo {
 	width:260px; height:80px;
@@ -93,7 +95,7 @@ nav > ul > li {
 }
 nav > ul > li:nth-child(2) {float:right}
 nav > ul > li > a {
-	font-size : 2.4rem;
+	font-size : 1.3vw;
 	line-height:30px; font-weight:bold;
 	display:inline-block;
 	margin:35px 0;
@@ -328,7 +330,7 @@ footer {
 	text-align:center;
 	color:#fff;
 	background-color:rgba(0,0,0,0.8);
-	font-size:1.6rem;
+	font-size:0.8vw;
 }
 #footer_wrap {
 	width:50%;

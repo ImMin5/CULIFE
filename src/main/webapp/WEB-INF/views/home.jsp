@@ -50,17 +50,19 @@
 		<section id="home_entertain">
 			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
 			<ul>
-				<li>
+				<li onmouseover="movieplay('/img/Reality - From La Boum_cut.mp3')" onmouseleave="movieplay('')">
 					<a href="">영화</a>
-					<em></em>
+					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
+					<audio id='movie_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>				
-				<li>
+				<li onmouseover="musicalplay('/img/웃는남자_일단와_cut.mp3')" onmouseleave="musicalplay('')">
 					<a href="">연극 / 뮤지컬</a>
-					<em></em>
+					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
+					<audio id='musical_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>
 			</ul>
 			<img class="home_scrolldown" id="home_scrolldown2" src="/img/scrolldown.png">
@@ -79,13 +81,52 @@
 			</ul>
 			<img class="home_scrolldown" id="home_scrolldown3" src="/img/scrolldown.png">
 		</section>
-		<section>
-			<h2>커뮤니티</h2>
-			<ul>
-				<li></li>
-				<li></li>
-			</ul>
-			<h2>작가 검색</h2>
+		<section id="home_notice">
+			<div id="home_notice_wrap">
+				<div id="home_commu">
+					<h2>자유게시판</h2>
+					<ul>
+						<li>
+							<ul>
+								<li>제목</li>
+								<li>작성자</li>
+								<li>날짜</li>
+							</ul>
+							<a href=""></a>
+						</li>
+						<li>
+							<ul>
+								<li>제목</li>
+								<li>작성자</li>
+								<li>날짜</li>
+							</ul>
+							<a href=""></a>
+						</li>
+						<li>
+							<ul>
+								<li>제목</li>
+								<li>작성자</li>
+								<li>날짜</li>
+							</ul>
+							<a href=""></a>
+						</li>
+						<li>
+							<ul>
+								<li>제목</li>
+								<li>작성자</li>
+								<li>날짜</li>
+							</ul>
+							<a href=""></a>
+						</li>
+					</ul>
+					<a href="">+ 더보기</a>
+				</div>
+				<div id="home_author">
+					<p><img src="/img/logo_w.png" alt="로고"></p>
+					<button>문의하기</button>
+				</div>
+				<img class="home_scrolldown" id="home_scrolldown4" src="/img/scrolldown.png">
+			</div>
 		</section>
 		<ul id="home_pagination">
 			<li class="hidden">페이지네이션</li>

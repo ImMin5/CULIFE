@@ -51,6 +51,9 @@ $(document).ready(function(){
 	$("#home_scrolldown3").on('click', function(){
 		$('html').animate({scrollTop : $(window).height()*3});
 	});
+	$("#home_scrolldown4").on('click', function(){
+		$('html').animate({scrollTop : $(window).height()*0});
+	});
 });	
 
 /* 오른쪽 pagination 버튼 기능 */
@@ -115,14 +118,14 @@ $(window).scroll(function () {
 				$("#home_author_regi").css({
 					"position" : "absolute",
 			   		"left" : "65%",
-			   		"bottom" : "200px",
+			   		"bottom" : "25%",
 			   		"opacity" : "1",
 			 		"transition-delay" : "3.5s"
 				})
 				$("#home_online_ex").css({
 					"position" : "absolute",
 			   		"left" : "60%",
-			   		"bottom" : "100px",
+			   		"bottom" : "15%",
 			   		"opacity" : "1",
 			 		"transition-delay" : "4s"
 				})
@@ -165,20 +168,13 @@ $(document).ready(function(){
 	});
 });
 
-/*window.onscroll = function() {moving()};
-function moving() {
-if (document.body.scrollTop >  || document.documentElement.scrollTop > 400) {
-	document.getElementById("a1_title1").className = "title_style1";
- }  else {
-    document.getElementById("a1_title1").className = "";
-  }*/
-/* $(document).ready(function(){
-	if(height < wHeight*3){
-		$('#home_exhibition li').css({
-			"position" : "absolute",
-   			"left" : "0px",
-   			"top" : "0px",
-   			"opacity" : "1"
-		});
-	}
-})*/
+function movieplay($mp3){
+    movie_audio = document.getElementById("movie_audio");
+    movie_audio.src = $mp3;
+    movie_audio.play();
+}
+function musicalplay($mp3){
+    musical_audio = document.getElementById("musical_audio");
+    musical_audio.src = $mp3;
+    musical_audio.play();
+}

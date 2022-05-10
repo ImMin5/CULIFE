@@ -18,7 +18,7 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url : jdbc:mysql://127.0.0.1/culife?characterEncoding=utf-8
         username : root
-        password : root
+        password : root1234
 
 mybatis:
     type-aliases-package: com.team.culife.vo  #mybatis 에서 패키지 생략 할 수ㅡ 있도록 설정
