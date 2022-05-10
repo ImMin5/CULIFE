@@ -288,6 +288,77 @@ header {
     transform: scale(1.4);
     
     }
+    
+    
+    
+      .search_container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 50px 0 70px 0;
+      }
+
+      #searchMovie {
+        background-color: black;
+        float: right;
+        margin-top: 1px;
+        margin-right: 8px;
+        padding: 6px 10px;
+        width: 320px;
+        color: white;
+        border: none;
+        border-bottom: white solid 4px;
+        font-size: 24px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      #searchMovie:focus {
+        
+        width: 480px;
+  
+        font-size: 24px;
+        font-weight: bold;
+        transition: 0.3s;
+        border-bottom: white solid 4px;
+        outline: none;
+      }
+
+      #searchMovie::placeholder {
+        color: white;
+        font-size: 1em;
+        font-weight: bold;
+      }
+
+      main {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      main div {
+        width: 250px;
+        height: 320px;
+        margin: 19px 15px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      
+      }
+      .search_text {
+        margin: 0;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        color: pink;
+      }
+
+      .fa-magnifying-glass {
+        color: white;
+        font-size: 32px;
+      }
 
   </style>
   <body>
@@ -321,7 +392,21 @@ header {
             <div class="slider slider_now_playing">
             </div>
           </div>
-       
+
+      <div class="search_container">
+        <form id="form">
+          <input
+            type="text"
+            id="searchMovie"
+            placeholder="영화를 검색해주세요"
+            class="searchMovie"
+          />
+        </form>
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    
+
+    <main id="main"></main>      
       
     </div>
     <script>
@@ -484,6 +569,58 @@ header {
       slides.forEach((image) => {
         observer.observe(image);
       });
+      
+      // const apiUrl =
+      //   "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&language=ko-KR&page=1";
+
+      const SEARCHAPI =
+        "https://api.themoviedb.org/3/search/movie?&api_key=52048cb9f5d2b1983acc31ecdadd5b4d&language=ko-KR&query=";
+      const main = document.querySelector("#main");
+      const form = document.querySelector("#form");
+      const search = document.querySelector("#searchMovie");
+
+      // searchMovies(apiUrl);
+      function searchMovies(url) {
+        fetch(url)
+          .then((res) => res.json())
+          .then(function (data) {
+            if (data.results.length == 0) {
+              const div = document.createElement("div");
+              const text = document.createElement("p");
+              text.className = "search_text";
+              text.innerHTML = "검색결과가 없습니다.";
+              main.appendChild(div);
+              div.appendChild(text);
+            }
+            data.results.forEach((element) => {
+              console.log(element);
+
+              const div = document.createElement("div");
+              const image = document.createElement("img");
+              const text = document.createElement("p");
+
+              text.innerHTML = `${element.title}`;
+              text.className = "search_text";
+              image.src =  base_url + element.poster_path;
+              div.appendChild(image);
+              div.appendChild(text);
+              main.appendChild(div);
+            });
+          });
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        main.innerHTML = "";
+
+        const searchTerm = search.value;
+        if (searchTerm) {
+          searchMovies(SEARCHAPI + searchTerm);
+          search.value = "";
+        }
+      });
+      
+      
     </script>
   </body>
 </html>
