@@ -4,6 +4,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
 	$(function(){
+		$(".selected_menu").css("color","#9DC3E6");
 		$("#thumbnail_member_btn").on("click",function(){
 			$("#formFile_member").trigger("click");
 		})
@@ -122,7 +123,7 @@
 				</ul>
 				<hr/>
 				<ul>
-					<li><strong><a href="${url}/mypage/member" style="color:#9DC3E6">내정보</a></strong></li>
+					<li><a class="selected_menu" href="${url}/mypage/member">내정보</a></li>
 					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
 					
 				</ul>
