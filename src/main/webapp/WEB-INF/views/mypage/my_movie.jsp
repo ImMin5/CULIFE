@@ -41,6 +41,8 @@ let is_loading = false;
 			var searchWord = $(this).val();
 			is_paging = false;
 			pageNo = 1;
+			row_num = 0;
+			row_count = 0;
 			search(searchWord);
 		})
 		
@@ -65,8 +67,6 @@ let is_loading = false;
 					console.log(data);
 					if(!is_paging)container.empty();
 					if(data.items == null) return;
-					row_num = 0;
-					row_count = 0;
 					data.items.forEach(function(element, index){
 						if(row_count%4 == 0){
 							row_num++;
