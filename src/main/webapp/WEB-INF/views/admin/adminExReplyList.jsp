@@ -42,15 +42,15 @@ $(function () {
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
 	<ul class='mini_top'>
-		<li>자유게시판관리</li>
+		<li>감상평관리</li>
 		<li>
 			<!-- 검색 -->
 			<div class='adminList_searchFrm'>
-				<form method="get" action="/admin/adminBoardList" id='searchFrm'>
+				<form method="get" action="/admin/adminExReplyList" id='searchFrm'>
 					<select name="searchKey" id="searchkey">
-						<option value='b.no'>게시글번호</option>
-						<option value='subject'>제목</option>
-						<option value='m.nickname'>닉네임</option>
+						<option value='b.no'>전시명</option>
+						<option value='subject'>댓글내용</option>
+						<option value='m.nickname'>작성자</option>
 					</select>
 					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
 					<input type="submit" value="검색" id="searchBtn"/>
@@ -58,20 +58,20 @@ $(function () {
 			</div>
 		</li>
 	</ul>
-	<form method="get" action="/admin/adminBoardDel" id='listFrm'>
-	<ul class='adminBoardList'>
+	<form method="get" action="/admin/adminExReplyDel" id='listFrm'>
+	<ul class='adminExReplyList'>
 		<li class='list_title'>번호</li>
-		<li class='list_title'>제목</li>
-		<li class='list_title'>닉네임</li>
-		<li class='list_title'>조회수</li>
-		<li class='list_title'>날짜</li>
+		<li class='list_title'>전시명</li>
+		<li class='list_title'>댓글내용</li>
+		<li class='list_title'>작성자</li>
+		<li class='list_title'>작성일</li>
 		<li class='list_title'>전체선택<input type="checkbox" id="allCheck"/></li>
 		
-		<c:forEach var="vo" items="${adminBoardList}">
+		<c:forEach var="vo" items="${adminExReplyList}">
 			<li>${vo.no }</li>
 			<li><a href='#'>${vo.subject }</a></li>
+			<li>${vo.content }</li>
 			<li>${vo.nickname }</li>
-			<li>${vo.view }</li>
 			<li>${vo.write_date }</li>
 			<li><input type="checkbox" name="noList" value="${vo.no}" class="chk"/></li>
 		</c:forEach>
@@ -85,7 +85,7 @@ $(function () {
 		<li>◀</li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/memberList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+		<li><a href="/admin/adminExReplyList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
@@ -95,7 +95,7 @@ $(function () {
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
 			</c:if>
-			<a href="/admin/memberList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
+			<a href="/admin/adminExReplyList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
 		</c:if>
 	</c:forEach>
 	<!--  다음페이지 -->
@@ -103,11 +103,11 @@ $(function () {
 		<li>▶</li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/memberList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+		<li><a href="/admin/adminExReplyList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
 	</c:if>
 		<li>
 			<input type="button" value="삭제" id="multiDel"/>
-			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminBoardList'"/>		
+			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminExReplyList'"/>		
 		</li>
 	</ul>
 </div> <!-- div:admin_container -->

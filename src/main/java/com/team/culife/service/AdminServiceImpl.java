@@ -1,6 +1,8 @@
 package com.team.culife.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -92,6 +94,20 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int adminBoardDel(BoardVO bVO) {
 		return dao.adminBoardDel(bVO);
+	}
+	
+	//문의사항게시판
+	@Override
+	public List<BoardVO> adminHelpList(AdminPagingVO pVO) {
+		return dao.adminHelpList( pVO);
+	}
+	@Override
+	public int adminhelp_totalRecord(AdminPagingVO pVO) {
+		return dao.adminhelp_totalRecord(pVO);
+	}
+	@Override
+	public int adminHelpDel(BoardVO bVO) {
+		return dao.adminHelpDel(bVO);
 	}
 	
 	

@@ -47,4 +47,11 @@ public interface AdminService {
 	public int adminboard_totalRecord(AdminPagingVO pVO);
 	//자유게시판: 게시글 삭제
 	public int adminBoardDel(BoardVO bVO);
+	
+	//문의게시판목록 불러오기
+	public List<BoardVO> adminHelpList(AdminPagingVO pVO);
+	//문의게시판목록 카운트
+	public int adminhelp_totalRecord(AdminPagingVO pVO);
+	//문의게시판: 게시글 삭제
+	public int adminHelpDel(BoardVO bVO);
 }

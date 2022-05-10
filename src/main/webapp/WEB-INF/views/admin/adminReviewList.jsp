@@ -37,20 +37,23 @@ $(function () {
 		}
 	});	
 });
+
 </script>
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
 	<ul class='mini_top'>
-		<li>자유게시판관리</li>
+		<li>리뷰관리</li>
 		<li>
 			<!-- 검색 -->
 			<div class='adminList_searchFrm'>
-				<form method="get" action="/admin/adminBoardList" id='searchFrm'>
+				<form method="get" action="/admin/adminReviewList" id='searchFrm'>
 					<select name="searchKey" id="searchkey">
-						<option value='b.no'>게시글번호</option>
-						<option value='subject'>제목</option>
-						<option value='m.nickname'>닉네임</option>
+						<option value='category'>카테고리</option>
+						<option value='title'>작품명</option>
+						<option value='content'>리뷰내용</option>
+						<option value='nickname'>작성자</option>
+						<option value='warning_count'>신고</option>
 					</select>
 					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
 					<input type="submit" value="검색" id="searchBtn"/>
@@ -58,22 +61,38 @@ $(function () {
 			</div>
 		</li>
 	</ul>
-	<form method="get" action="/admin/adminBoardDel" id='listFrm'>
-	<ul class='adminBoardList'>
-		<li class='list_title'>번호</li>
-		<li class='list_title'>제목</li>
-		<li class='list_title'>닉네임</li>
-		<li class='list_title'>조회수</li>
-		<li class='list_title'>날짜</li>
+	<form method="get" action="/admin/adminReviewDel" id='listFrm'>
+	<ul class='adminReviewList'>
+		<li class='list_title'>카테고리</li>
+		<li class='list_title'>작품명</li>
+		<li class='list_title'>리뷰내용</li>
+		<li class='list_title'>작성자</li>
+		<li class='list_title'>작성일</li>
+		<li class='list_title'>신고</li>
 		<li class='list_title'>전체선택<input type="checkbox" id="allCheck"/></li>
 		
-		<c:forEach var="vo" items="${adminBoardList}">
-			<li>${vo.no }</li>
-			<li><a href='#'>${vo.subject }</a></li>
+		<c:forEach var="vo" items="${adminReviewList}">
+			<li>${vo.category }</li>
+			<li>${vo.title }</li>
+			<li>
+				<c:if test="${vo.category eq '영화' }">
+					<a href='#' target="_blank">${vo.content }</a>
+				</c:if>
+				<c:if test="${vo.category ne '영화' }">
+					<a href='#' target="_blank">${vo.content }</a>
+				</c:if>
+			</li>
 			<li>${vo.nickname }</li>
-			<li>${vo.view }</li>
 			<li>${vo.write_date }</li>
-			<li><input type="checkbox" name="noList" value="${vo.no}" class="chk"/></li>
+			<li>${vo.warning_count}</li>
+			<li>
+				<c:if test="${vo.category eq '영화' }">
+					<input type="checkbox" name="movie_noList" value="${vo.no}" class="chk"/>
+				</c:if>
+				<c:if test="${vo.category ne '영화' }">
+					<input type="checkbox" name="noList" value="${vo.no}" class="chk"/>
+				</c:if>
+			</li>
 		</c:forEach>
 	</ul>
 	</form>
@@ -85,7 +104,7 @@ $(function () {
 		<li>◀</li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/memberList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+		<li><a href="/admin/adminReviewList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
@@ -95,7 +114,7 @@ $(function () {
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
 			</c:if>
-			<a href="/admin/memberList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
+			<a href="/admin/adminReviewList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
 		</c:if>
 	</c:forEach>
 	<!--  다음페이지 -->
@@ -103,11 +122,11 @@ $(function () {
 		<li>▶</li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/memberList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+		<li><a href="/admin/adminReviewList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
 	</c:if>
 		<li>
 			<input type="button" value="삭제" id="multiDel"/>
-			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminBoardList'"/>		
+			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminReviewList'"/>		
 		</li>
 	</ul>
 </div> <!-- div:admin_container -->
