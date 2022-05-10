@@ -1,6 +1,8 @@
 package com.team.culife.controller;
 
+import java.io.File;
 import java.nio.charset.Charset;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.culife.service.AuthorService;
@@ -51,7 +55,7 @@ public class ExhibitionController {
 		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/thumbnail");
+		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
 		System.out.println("path --> " +path);
 		ResponseEntity<String> entity = null;
 		
@@ -63,7 +67,7 @@ public class ExhibitionController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html",Charset.forName("UTF-8")));
 		
-        try {
+        try {        	
         	authorService.authorWrite(vo);
         	String msg = "<script>alert('작가 신청되었습니다.');location.href='/exhibition/authorWrite';</script>";
 			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
@@ -98,6 +102,13 @@ public class ExhibitionController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("exhibition/exhibitionWrite");
 		return mav;
+	}
+	@PostMapping("exhibitionWriteOk")
+	public ResponseEntity<String> exhibitionWriteOk(ExhibitionVO vo, HttpServletRequest request, HttpSession session){
+		System.out.println("exhibitionWriteOk");
+		System.out.println("author " + vo.getAuthor());
+		ResponseEntity<String> entity = null;
+		return entity;
 	}
 	
 	@GetMapping("workCreate")

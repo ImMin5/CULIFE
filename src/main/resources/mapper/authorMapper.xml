@@ -4,17 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.team.culife.dao.AuthorDAO" >
   	<select id="authorSelectByName" resultType="com.team.culife.vo.AuthorVO">
-  		select no, member_no, author, sns_link, author_thumbnail, debut_year, create_date
+  		select no, member_no, author, sns_link, author_thumbnail, debut_year, create_date, author_msg
   		from author 
   		where author=#{param1}
   	</select>
 
 	<insert id="authorWrite" >
-		insert into author(member_no, author, sns_link, author_thumbnail, debut_year)
-		values(#{member_no}, #{author}, #{sns_link}, #{author_thumbnail}, #{debut_year})
+		insert into author(member_no, author, sns_link, author_thumbnail, debut_year, author_msg)
+		values(#{member_no}, #{author}, #{sns_link}, #{author_thumbnail}, #{debut_year}, #{author_msg})
 	</insert>
 	<select id="authorSelect" resultType="com.team.culife.vo.ExhibitionVO">
-  		select no, member_no, author, sns_link, author_thumbnail, debut_year, create_date
+  		select no, member_no, author, sns_link, author_thumbnail, debut_year, create_date, author_msg
   		from author 
   	</select>
   	<select id="authorCheck" resultType="string">

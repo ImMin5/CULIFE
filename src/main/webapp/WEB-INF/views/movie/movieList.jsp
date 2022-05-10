@@ -392,7 +392,7 @@ header {
             <div class="slider slider_now_playing">
             </div>
           </div>
-       
+
       <div class="search_container">
         <form id="form">
           <input
