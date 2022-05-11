@@ -10,6 +10,9 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/home_main_visual.js"></script>
 <script src="/js/home.js"></script>
+<style>
+	footer {position:absolute; left:0; bottom:0}
+</style>
 <script>
 	/*스크롤 무빙*/
 
