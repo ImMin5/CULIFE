@@ -1,5 +1,16 @@
 @charset "UTF-8";
-
+@font-face {
+    font-family: 'SuncheonR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/SuncheonR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'yg-jalnan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /* ***************************************************** */
 /* 리셋 */
 html, body,div, span, applet, object, iframe,
@@ -57,7 +68,7 @@ a:visited {color:#fff}
 /* ***************************************************** */
 /* top - start */
 
-html {font-size:62.5%; font-family: 'Noto Sans KR';}
+html {font-size:62.5%; font-family: 'SuncheonR';}
 body {
 	font-size:1.6rem; overflow-x:hidden; 
 	position:relative; z-index:-1;
@@ -122,7 +133,7 @@ nav > ul > li:nth-child(2) > ul a {
 #gnb_movie a {
 	display:block;
 	position:absolute; 
-	left:0; top:50px;
+	left:0; top:100px;
 }
 #gnb_movie a::after {
 	content:"";
@@ -167,14 +178,15 @@ nav > ul > li:nth-child(2) > ul a {
 	position:absolute; left:30px; top:270px;
 	transition-delay:0.5s
 }
-#gnb_movie div {
-	position:absolute;
-	left:480px; top:60px;
-}
-#gnb_movie div p {
-	height:30px;
-	font-size:2rem; font-weight:600;
-	line-height:30px; text-align:left;
+#gnb_movie > p {
+	width:300px; height:100px;
+	font-family: 'yg-jalnan';
+	position:absolute; left:-100px; top:350px;
+	font-size:5rem; color:#fff;
+	transform:rotate(5deg);
+	background:url(../img/gnb_zigzag_bg_r.png);
+	background-size:300px 100px;
+	line-height:90px;
 }
 /* 문화생활 - 영화 - end */
 
@@ -187,7 +199,7 @@ nav > ul > li:nth-child(2) > ul a {
 #gnb_musical a {
 	display:block;
 	position:absolute; 
-	right:0; top:150px;
+	right:0; top:100px;
 }
 #gnb_musical a::after {
 	content:"";
@@ -232,15 +244,27 @@ nav > ul > li:nth-child(2) > ul a {
 	position:absolute; left:30px; top:270px;
 	transition-delay:0.5s
 }
-
 #gnb_musical div {
-	position:absolute;
-	right:480px; top:400px;
+	font-family: 'yg-jalnan';
+	font-size:5rem; color:#fff;
+	line-height:90px;
 }
-#gnb_musical div p {
-	height:30px;
-	font-size:2rem; font-weight:600;
-	line-height:30px; text-align:right;
+#gnb_musical div > span {
+	width:400px; height:100px;
+	display:block;	
+	position:absolute; right:150px; top:50px;
+	transform:rotate(-5deg);
+	background:url(../img/gnb_zigzag_bg_r.png);
+	background-size:400px 100px;
+	line-height:110px;
+}
+#gnb_musical div > p {
+	width:350px; height:100px;
+	display:block;
+	position:absolute; right:-100px; top:350px;
+	transform:rotate(-5deg);
+	background:url(../img/gnb_zigzag_bg_r.png);
+	background-size:350px 100px;
 }
 /* 문화생활 - 연극/뮤지컬 - end */
 
