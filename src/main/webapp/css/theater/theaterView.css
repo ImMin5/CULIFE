@@ -20,7 +20,7 @@
 	margin:0 auto;
 	background-color:white;
 	width:800px;
-	height:800px;
+	height:1000px;
 	padding:5px;
 	border: 1px solid white;
 	background-clip: content-box;
@@ -38,4 +38,52 @@
 #map{
 	margin:0 auto;
 	padding-top:100px;
+}
+
+#review{
+	margin:0 auto;
+	padding-top:50px;
+}
+
+.input_review{
+	width:600px;
+	height:100px;
+}
+
+.wrap{
+    max-width: 480px;
+    margin: 0 auto; /* 화면 가운데로 */
+    background-color: #fff;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+}
+
+.rating .rate_radio {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+.rating .rate_radio + label {
+    position: relative;
+    display: inline-block;
+    margin-left: -3px;
+    width: 30px;
+    height: 30px;
+    background-image: url('/img/theater/star.png');
+    background-repeat: no-repeat;
+    background-size: 30.4px 30.4px;
+    cursor: pointer;
+    background-color: white;
+}
+.rating .rate_radio:checked + label {
+    background-color: gold;
 }

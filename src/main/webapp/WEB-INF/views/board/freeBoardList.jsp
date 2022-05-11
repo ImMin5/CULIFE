@@ -2,8 +2,9 @@
 <link rel="stylesheet" href="/css/board/board.css" type="text/css" />
 
 <div class="container">
-	<h1>자유게시판</h1>
 	<br><br><br><br>
+	<h1>자유게시판</h1>
+	<br><br><br><br><br>
 	<ul class='freeboardList'>
 		<li>번호</li>
 		<li>제목</li>

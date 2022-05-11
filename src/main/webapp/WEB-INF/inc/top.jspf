@@ -48,7 +48,7 @@
 		<a href="/"><img id="main_logo" src="/img/logo_w.png" alt="logo"></a>
 		<nav>
         	<ul id="nav_section1">
-        		<li><a href="">HOME</a></li>
+        		<li><a href="/">HOME</a></li>
         		<li>
         			<a href="">문화생활</a>
         			<ul>
@@ -83,7 +83,7 @@
         		</li>
         	</ul>
         	<ul id="nav_section2">
-        		<li><a href="">온라인 전시회</a></li>
+        		<li><a href="/online_exhibition/onlineList">온라인 전시회</a></li>
         		<li id="gnb_commu">
         			<a href="/board/freeBoardList">커뮤니티</a>
         			<ul>
@@ -99,7 +99,7 @@
 	            	<p><a href="${url}/mypage/review/movie">mypage</a></p>
 	            </c:if>
 	            <c:if test="${grade == '2'}"> <!-- 관리자 : 2 -->
-	            	<p><a href="">mypage</a></p> 
+	            	<p><a href="${url}/mypage/review/movie">mypage</a></p> 
 	            </c:if>
         	</div>
         </nav>

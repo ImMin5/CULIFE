@@ -17,6 +17,7 @@ public class BoardVO {
 	//문의사항(help)불러올때 댓글 카운트
 	private int cnt;
 	
+	
 	public int getNo() {
 		return no;
 	}

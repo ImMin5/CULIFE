@@ -7,8 +7,9 @@
 	<!-- 회원목록 불러오기 -->
 	<!-- 우선 임의로 썸네일은 빼겠습니다. -->
   	<select id='memberList' resultType="com.team.culife.vo.MemberVO">
-  	 select no, kakao_id, email, nickname, grade, status, date_format(create_date,'%Y-%m-%d') create_date  
-  	 from member
+  	 select m.no, m.kakao_id, m.email, m.nickname, m.grade, m.status, date_format(m.create_date,'%Y-%m-%d') create_date, date_format(mb.end_date,'%Y-%m-%d') end_date 
+	from member m left outer join member_ban mb 
+	on m.no = mb.member_no 
   	<if test="searchWord != null" >
 			where ${searchKey} like '%${searchWord}%' 
 	</if>
@@ -143,12 +144,51 @@
   	</delete>
   	
   	<!-- 문의게시판목록 불러오기 -->
-  	<select id="adminHelpList">
+  	<select id="adminHelpList" resultType="com.team.culife.vo.BoardVO">
   	select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
   	from board b left join member m on b.member_no = m.no 
 				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no 
-  	 where b.category='help' 
+  	 where b.category='help'
+  	<if test="searchWord != null and searchKey != 'cnt'" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+	<if test="searchWord == 1 and searchKey == 'cnt'" >
+		and br.cnt is not null  
+	</if>
+	<if test="searchWord == 2 and searchKey == 'cnt'" >
+		and br.cnt is null   
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}   
   	</select>
+  	
+  	<!-- 문의게시판 목록 카운트 -->
+  	<select id='adminhelp_totalRecord' resultType='int'>
+  	select count(b.no) cnt 
+  	from board b left join member m on b.member_no = m.no 
+				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no 
+  	 where b.category='help'
+	<if test="searchWord != null and searchKey != 'cnt'" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+	<if test="searchWord == 1 and searchKey == 'cnt'" >
+		and br.cnt is not null  
+	</if>
+	<if test="searchWord == 2 and searchKey == 'cnt'" >
+		and br.cnt is null   
+	</if>
+  	</select>
+  	
+  	<!-- 문의게시판 게시글 삭제 -->
+  	<delete id='adminHelpDel'>
+  	delete from board
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
   	
 </mapper>
   

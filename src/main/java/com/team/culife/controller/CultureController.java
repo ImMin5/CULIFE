@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class CultureController {	
 	
-	//¿¬±Ø¸®½ºÆ®
+	//ì—°ê·¹ë¦¬ìŠ¤íŠ¸
 	@GetMapping("/theater/theaterList")
 	public ModelAndView theaterListAll() {
 		ModelAndView mav = new ModelAndView();
@@ -26,7 +26,7 @@ public class CultureController {
 		return mav;
 	}
 	
-	//¿¬±Ø¸®½ºÆ®(¿¬±Ø)
+	//ì—°ê·¹ë¦¬ìŠ¤íŠ¸(ì—°ê·¹)
 	@PostMapping(value="/theater/theaterList", produces = "application/xml")
 	public String theaterList() throws IOException{
 		StringBuilder result = new StringBuilder();
@@ -55,7 +55,7 @@ public class CultureController {
 	}
 	
 
-	//¿¬±Ø¸®½ºÆ®(¹ÂÁöÄÃ)
+	//ì—°ê·¹ë¦¬ìŠ¤íŠ¸(ë®¤ì§€ì»¬)
 	@PostMapping(value="/theater/theaterList2", produces = "application/xml")
 	public String theaterList2() throws IOException{
 		StringBuilder result = new StringBuilder();
@@ -85,7 +85,7 @@ public class CultureController {
 		return result.toString();
 	}	
 	
-	// ¿¬±Ø&¹ÂÁöÄÃ »ó¼¼ ÆäÀÌÁö(view)
+	//ì—°ê·¹&ë®¤ì§€ì»¬ ìƒì„¸ í˜ì´ì§€(view)
 	@GetMapping("/theater/theaterView")
 	public ModelAndView theaterViewAll() {
 		ModelAndView mav = new ModelAndView();
@@ -93,7 +93,7 @@ public class CultureController {
 		return mav;
 	}
 	
-	// ¿¬±Ø&¹ÂÁöÄÃ »ó¼¼ ÆäÀÌÁö(view)
+	//ì—°ê·¹&ë®¤ì§€ì»¬ ìƒì„¸ í˜ì´ì§€(view)
 	@PostMapping(value="/theater/theaterView", produces = "application/xml")
 	public String theaterView(HttpServletRequest request, HttpServletResponse response, @RequestParam String seq)throws Exception{
 		StringBuilder result = new StringBuilder();

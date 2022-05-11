@@ -1,19 +1,18 @@
 .btn{
 	font-size:2rem;
 }
-/* 선택창*/
 
-#type_select_container{
-	position:relative;
-	margin-top:40px;
-	height:100%;
-	font-size:1.7rem;
-	
+/*선택창*/
+#select_container{
+	width:130px;
+	font-size:2rem; 
+	margin:5px; 
+	text-align:center;
 }
 /*          검색창                */
 #search_container{
-	margin:0 auto; 
 	width:50%; 
+	margin:0 auto;
 	font-size:1.7rem;
 	margin-top:40px;
 	border : solid 1.5px gray;
@@ -31,7 +30,7 @@
 	text-align:left;
 	width:85%;
 	min-width:300px;
-	height:74vh;
+	height:70vh;
 	font-size:2rem;
 	scrollbar-width:none;
 
@@ -42,7 +41,7 @@
     scrollbar-width: none; /* Firefox */
 	
 }
-.card-body::-webkit-scrollbar, #review_contatiner::-webkit-scrollbar {
+.card-text::-webkit-scrollbar, #review_contatiner::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
 }
 .table_author_thumbnail{

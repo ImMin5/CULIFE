@@ -7,12 +7,19 @@
 <script>
 let pageNo = 1;
 let totalPage = 1;
+let row_num = 0;
+let row_count = 0;
 let is_paging= true;
+let is_loading = false;
 	$(function(){
-		
+		search();
+		$("#select_container").on("change",function(){
+			console.log($(this).val());
+			window.location.href="${url}/mypage/review/"+$(this).val();
+		})
 		
 		//스크롤 위치 파악
-		$(".table-responsive").scroll(function(){
+		$("#review_contatiner").scroll(function(){
 			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
 	        var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
 	        var contentH = $(".table").height(); //문서 전체 내용을 갖는 div의 높이
@@ -20,7 +27,6 @@ let is_paging= true;
 	        	pagination();
 	        }
 		});
-		search();
 		//페이지 네이션
 		function pagination(){
 			is_paging = true;
@@ -35,9 +41,67 @@ let is_paging= true;
 			var searchWord = $(this).val();
 			is_paging = false;
 			pageNo = 1;
+			row_num = 0;
+			row_count = 0;
 			search(searchWord);
 		})
 		
+		// 검색 함수
+		function search(searchWord){
+			if(pageNo != 1 && parseInt(totalPage) < parseInt(pageNo)){
+				is_loading=false;
+				return;
+			}
+			
+			var url = "${url}/mypage/review/movie/search";
+			var container = $("#review_contatiner");
+			$.ajax({
+				url : url,
+				type : "GET",
+				dataType:"JSON",
+				data : {
+					pageNo : pageNo,
+					searchWord : searchWord,
+				},
+				success : function(data){
+					console.log(data);
+					if(!is_paging)container.empty();
+					if(data.items == null) return;
+					data.items.forEach(function(element, index){
+						if(row_count%4 == 0){
+							row_num++;
+							$("#review_contatiner").append(`<div name="review_row_${'${row_num}'}" class="row row-cols-1 row-cols-md-4 g-3"></div>`);
+						}
+						$("[name=review_row_"+row_num).append(`
+								<div class="col">
+								    <div class="card">
+								      <img onclick="location.href='${url}/movie/movieView?movieId=${'${element.movie_id}'}'"src="https://image.tmdb.org/t/p/original/${'${element.poster_path}'}" class="card-img-top">
+								      <div class="card-body">
+								        <h5 class="card-title">${'${element.movie_title}'}<br/><i style="color:blue"class="bi bi-star-fill"></i>${'${element.score_star}'}</h5>
+								        <p class="card-text">${'${element.content}'}</p>
+								      </div>
+								    </div>
+								</div>
+							`);
+						row_count++;
+					});
+					if(is_paging){
+						pageNo = parseInt(data.vo.currentPage)+1;
+						totalPage = data.vo.totalPage;
+					}
+					else{
+						pageNo = 2;
+						totalPage = data.vo.totalPage;
+					}
+					is_loading = false;
+				},
+				error : function(error){
+					console.log(error);
+					is_loading = false;
+				}
+			});
+			
+		}
 		
 	});
 </script>
@@ -45,99 +109,19 @@ let is_paging= true;
 	<div class="row" style="height:100%;">
 		<div class="col-9" id="mypage_col">
 			<div class="row">
-				<div class="col-3" id="type_select_container">
-					<select class="form-select" aria-label="Default select example">
-						<option selected>영화</option>
-					 	<option value="1">연극/뮤지컬</option>
-					</select>
-				</div>
-				<div class="col-9">
+				<div class="col">
 					<div class="input-group mb-3" id="search_container">
 						<img id="search_btn" src="${url}/img/member/search.png">
-			  			<input type="text" class="form-control" id="search_word" placeholder="검색" style=" font-size:2.3rem;">
+				  		<input type="text" class="form-control" id="search_word" placeholder="검색" style=" font-size:2.3rem;">
+				  		<select id="select_container">
+							<option value="movie" selected>영화</option>
+						 	<option value="theater">연극/뮤지컬</option>
+						</select>
 					</div>
 				</div>
 			</div>
 			<div id="review_contatiner" class="container" style=" overflow: scroll;">
-		  		<div class="row row-cols-1 row-cols-md-4 g-3">
-				  <div class="col">
-				    <div class="card">
-				      <img onclick="location.href='${url}/movie/movieView?movieId=763285'"src="https://image.tmdb.org/t/p/original/74xTEgt7R36Fpooo50r9T25onhq.jpg" class="card-img-top" alt="...">
-				      <div class="card-body">
-				        <h5 class="card-title">더 배트<br/><i style="color:blue"class="bi bi-star-fill"></i>4.5</h5>
-				        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="col">
-				    <div class="card">
-				      <img src="https://image.tmdb.org/t/p/original/tlZpSxYuBRoVJBOpUrPdQe9FmFq.jpg" class="card-img-top" alt="...">
-				      <div class="card-body">
-				        <h5 class="card-title">Card title <br/><i style="color:blue"class="bi bi-star-fill"></i>4.5</h5>
-				        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="col">
-				    <div class="card">
-				      <img src="https://image.tmdb.org/t/p/original/7qU0SOVcQ8BTJLodcAlulUAG16C.jpg" class="card-img-top" alt="...">
-				      <div class="card-body">
-				        <h5 class="card-title">Card title <br/><i style="color:blue"class="bi bi-star-fill"></i>4.5</h5>
-				        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="col">
-				    <div class="card">
-				      <img src="https://image.tmdb.org/t/p/original/zT5ynZ0UR6HFfWQSRf2uKtqCyWD.jpg" class="card-img-top" alt="...">
-				      <div class="card-body">
-				        <h5 class="card-title">Card title <br/><i style="color:blue"class="bi bi-star-fill"></i>4.5</h5>
-				        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-				<div class="row row-cols-1 row-cols-md-4 g-4">
-				  <div class="col">
-				    <div class="card">
-				      <img src="https://image.tmdb.org/t/p/original/qsdjk9oAKSQMWs0Vt5Pyfh6O4GZ.jpg" class="card-img-top" alt="...">
-				      <div class="card-body">
-				        <h5 class="card-title">Card title <br/><i style="color:blue"class="bi bi-star-fill"></i>4.5</h5>
-				        <div>
-				        	<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				        </div>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="col">
-				    <div class="card">
-				      <img src="https://image.tmdb.org/t/p/original/jPIY9B8IWBz6imj972m5FpDpnop.jpg" class="card-img-top" alt="...">
-				      <div class="card-body">
-				        <h5 class="card-title">Card title <br/><i style="color:blue"class="bi bi-star-fill"></i>4.5</h5>
-				        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="col">
-				    <div class="card">
-				      <img src="https://image.tmdb.org/t/p/original/wRnbWt44nKjsFPrqSmwYki5vZtF.jpg" class="card-img-top" alt="...">
-				      <div class="card-body">
-				        <h5 class="card-title">Card title <br/><i style="color:blue"class="bi bi-star-fill"></i>4.5</h5>
-				        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="col">
-				    <div class="card">
-				      <img src="https://image.tmdb.org/t/p/original/4j0PNHkMr5ax3IA8tjtxcmPU3QT.jpg" class="card-img-top" alt="...">
-				      <div class="card-body">
-				        <h5 class="card-title">Card title <br/><i style="color:blue"class="bi bi-star-fill"></i>4.5</h5>
-				        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-			</div>
+		  	</div>
 				
 			
 		</div> <!-- col-9 -->
@@ -146,12 +130,12 @@ let is_paging= true;
 				<h1 class="h1">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
 				<hr/>
 				<ul>
-					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
+					<li><a class="selected_menu" style="color:#9DC3E6"  href="${url}/mypage/review/movie">리뷰</a></li>
 					<li><a href="${url}/mypage/review">감상평</a></li>
 					<li><a href="${url}/mypage/board">작성글</a></li>
-					<li class="selected_menu"><a href="${url}/mypage/fan" style="color:#9DC3E6" >팔로잉 작가</a></li>
+					<li><a href="${url}/mypage/fan" >팔로잉 작가</a></li>
 					<c:if test="${grade == 0}">
-						<li><a href="${url}/mypage">작가등록 신청</a></li>
+						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
 						<li><a href="${url}/mypage/author">작가 정보</a></li>
