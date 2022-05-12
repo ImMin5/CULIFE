@@ -30,8 +30,8 @@ public class ReviewServiceImpl implements ReviewService{
 
 	
 	@Override
-	public int reviewDel(int no, String attribute) {
-		return dao.reviewDel(no, no);
+	public int reviewDel(int no, int member_no) {
+		return dao.reviewDel(no, member_no);
 	}
 	
 }

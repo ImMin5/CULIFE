@@ -20,29 +20,29 @@ public class ReviewController {
 	ReviewService service;
 	
 	
-	//´ñ±Ûµî·Ï
+	//¸®ºäµî·Ï
 	@RequestMapping(value="/review/reviewWriteOk", method=RequestMethod.POST)
 	public int writeOk(ReviewVO vo, HttpSession session) {
-		vo.setNo((Integer)session.getAttribute("logNo"));
+		vo.setMember_no((Integer)session.getAttribute("logNo"));
 		return service.reviewWrite(vo);
 	}
 	
-	//´ñ±Û¸ñ·Ï
+	//¸®ºä¸ñ·Ï
 	@RequestMapping("/review/reviewList")
 	public List<ReviewVO> list(String title){
 		return service.reviewList(title);
 	}
 	
-	//´ñ±Û¼öÁ¤
-	@PostMapping("review/reviewEditOk")
+	//¸®ºä¼öÁ¤
+	@PostMapping("/review/reviewEditOk")
 	public int editOk(ReviewVO vo, HttpSession session) {
 		vo.setMember_no((Integer)session.getAttribute("logNo"));
 		return service.reviewEdit(vo);
 	}
 	
-	//´ñ±Û»èÁ¦
+	//¸®ºä»èÁ¦
 	@GetMapping("/review/reviewDel")
 	public int delOk(int no, HttpSession session) {
-		return service.reviewDel(no, (String)session.getAttribute("logNo"));
+		return service.reviewDel(no,(Integer)session.getAttribute("logNo"));
 	}
 }
