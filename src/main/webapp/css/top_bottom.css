@@ -115,7 +115,7 @@ nav > ul > li > a {
 
 nav > ul > li > ul{
 	width:100vw; height:0px;
-	background-color:rgba(255,255,255,1);
+	background-color:rgba(255,255,255,0.8);
 	position: absolute; left:0; top:103px;
 	overflow:hidden;
 	transition:all 0.5s;
@@ -356,6 +356,7 @@ footer {
 #footer_wrap {
 	width:50%;
 	margin:0 auto;
+	padding-top:20px
 }
 footer ul {
 	display:inline-block;
@@ -366,6 +367,5 @@ footer ul li {
 	margin:0 30px;
 	line-height:30px
 }
-.f_menu {padding-top:20px}
 /* bottom - end */
 /* ***************************************************** */

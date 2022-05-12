@@ -61,7 +61,6 @@
         						<span id="gnb_movie_line3"></span>
         						<span id="gnb_movie_line4"></span>
         					</a>
-        					<p>MOVIE</p>
         				</li>
         				<li id="gnb_musical">
         					<a href="${url}/theater/theaterList">
@@ -72,10 +71,6 @@
         						<span id="gnb_musical_line3"></span>
         						<span id="gnb_musical_line4"></span>
         					</a>
-        					<div>
-        						<span>THEATRICAL</span>
-        						<p>MUSICAL</p>
-        					</div>
         				</li>
         			</ul>
         		</li>
