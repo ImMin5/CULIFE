@@ -47,11 +47,12 @@
 
 .input_review{
 	width:600px;
-	height:100px;
+	height:50px;
 }
-
+.rating{
+	margin:0 auto;
+}
 .rating .rate_radio {
-    position: relative;
     display: inline-block;
     z-index: 20;
     opacity: 0.001;
@@ -63,7 +64,7 @@
     display: none;
 }
 .rating .rate_radio + label {
-    position: relative;
+
     display: inline-block;
     margin-left: -3px;
     width: 30px;

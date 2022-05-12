@@ -8,5 +8,5 @@ public interface ReviewService {
 	public int reviewWrite(ReviewVO vo);
 	public List<ReviewVO> reviewList(String title);
 	public int reviewEdit(ReviewVO vo);
-	public int reviewDel(int no, String attribute);
+	public int reviewDel(int no, int member_no);
 }

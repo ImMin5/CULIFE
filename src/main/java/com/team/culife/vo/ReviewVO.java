@@ -10,6 +10,7 @@ public class ReviewVO {
 	private int no;
 	private String title;
 	private int member_no;
+	private String nickname;
 	private String content;
 	private int score_star;
 	private String write_date;
