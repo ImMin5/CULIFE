@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.team.culife.vo.AdminPagingVO;
+import com.team.culife.vo.AdminReviewVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
 import com.team.culife.vo.MemberBanVO;
@@ -60,4 +61,27 @@ public interface AdminDAO {
 	public int adminhelp_totalRecord(AdminPagingVO pVO);
 	//문의게시판: 게시글 삭제
 	public int adminHelpDel(BoardVO bVO);
+	
+	//리뷰게시판목록 불러오기
+	public List<AdminReviewVO> adminReviewList(AdminPagingVO pVO);
+	//리뷰게시판목록 카운트
+	public int adminreview_totalRecord(AdminPagingVO pVO);
+	
+	//영화리뷰: 게시글 삭제
+	public int adminMovieReviewDel(AdminReviewVO arVO);
+	//연극리뷰: 게시글 삭제
+	public int adminTheaterReviewDel(AdminReviewVO arVO);
+	
+	//신고목록 불러오기
+	public List<AdminReviewVO> adminWarningList(AdminPagingVO pVO);
+	//신고목록 카운트
+	public int adminwarning_totalRecord(AdminPagingVO pVO);
+	
+	//감상평목록 불러오기
+	public List<AdminReviewVO> adminExReplyList(AdminPagingVO pVO);
+	//문의게시판목록 카운트
+	public int adminexhibition_totalRecord(AdminPagingVO pVO);
+	//감상평 삭제
+	public int adminExReplyDel(AdminReviewVO arVO);
+	
 }

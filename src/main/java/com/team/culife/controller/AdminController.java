@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.team.culife.service.AdminService;
 import com.team.culife.vo.AdminPagingVO;
+import com.team.culife.vo.AdminReviewVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
 import com.team.culife.vo.MemberBanVO;
@@ -135,12 +136,83 @@ public class AdminController {
 		return mav;
 	}
 	
-	//choi0504-자유게시판 게시글삭제
+	//choi0504-문의게시판 게시글삭제
 	@GetMapping("/adminHelpDel")
 	public ModelAndView adminHelpDel(BoardVO bVO) {
 		ModelAndView mav = new ModelAndView();
 		service.adminHelpDel(bVO);
 		mav.setViewName("redirect:/admin/adminHelpList");
+		return mav;
+	}
+	
+	//choi0512-리뷰게시판 페이지로 이동
+	@GetMapping("/adminReviewList")
+	public ModelAndView adminReviewList(AdminPagingVO pVO) {
+		ModelAndView mav = new ModelAndView();
+		//문의사항목록페이징
+		pVO.setTotalRecord(service.adminreview_totalRecord(pVO));
+		mav.addObject("pVO", pVO);
+		//문의사항목록 불러오기
+		mav.addObject("adminReviewList", service.adminReviewList(pVO));
+			
+		mav.setViewName("/admin/adminReviewList");
+		return mav;
+	}
+	
+	//choi0512-리뷰게시판 게시글삭제
+	@GetMapping("/adminReviewDel")
+	public ModelAndView adminReviewDel(AdminReviewVO arVO) {
+		ModelAndView mav = new ModelAndView();
+		service.adminMovieReviewDel(arVO);
+		service.adminTheaterReviewDel(arVO);
+		mav.setViewName("redirect:/admin/adminReviewList");
+		return mav;
+	}
+
+	// choi0512-신고관리 페이지로 이동
+	@GetMapping("/adminWarningList")
+	public ModelAndView adminWarningList(AdminPagingVO pVO) {
+		ModelAndView mav = new ModelAndView();
+		// 문의사항목록페이징
+		pVO.setTotalRecord(service.adminwarning_totalRecord(pVO));
+		mav.addObject("pVO", pVO);
+		// 문의사항목록 불러오기
+		mav.addObject("adminWarningList", service.adminWarningList(pVO));
+
+		mav.setViewName("/admin/adminWarningList");
+		return mav;
+	}
+
+	// choi0512-신고관리 게시글삭제
+	@GetMapping("/adminWarningDel")
+	public ModelAndView adminWarningDel(AdminReviewVO arVO) {
+		ModelAndView mav = new ModelAndView();
+		service.adminMovieReviewDel(arVO);
+		service.adminTheaterReviewDel(arVO);
+		mav.setViewName("redirect:/admin/adminWarningList");
+		return mav;
+	}
+	
+	// choi0512-감상평관리 페이지로 이동
+	@GetMapping("/adminExReplyList")
+	public ModelAndView adminExReplyList(AdminPagingVO pVO) {
+		ModelAndView mav = new ModelAndView();
+		// 문의사항목록페이징
+		pVO.setTotalRecord(service.adminexhibition_totalRecord(pVO));
+		mav.addObject("pVO", pVO);
+		// 문의사항목록 불러오기
+		mav.addObject("adminExReplyList", service.adminExReplyList(pVO));
+
+		mav.setViewName("/admin/adminExReplyList");
+		return mav;
+	}
+
+	// choi0512-감상평관리 게시글삭제
+	@GetMapping("/adminExReplyDel")
+	public ModelAndView adminExReplyDel(AdminReviewVO arVO) {
+		ModelAndView mav = new ModelAndView();
+		service.adminExReplyDel(arVO);
+		mav.setViewName("redirect:/admin/adminExReplyList");
 		return mav;
 	}
 }

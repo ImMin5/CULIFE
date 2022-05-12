@@ -190,5 +190,116 @@
   	</where>
   	</delete>
   	
+  	<!-- 리뷰게시판 목록 -->
+  	<select id="adminReviewList" resultType="com.team.culife.vo.AdminReviewVO">
+  	select * from(
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	from member m join review r on m.no = r.member_no
+	union 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	from member m join movie_review mr on m.no = mr.member_no) a 
+  	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}   
+  	</select>
+  	<!-- 리뷰게시판 목록 카운트 -->
+  	<select id="adminreview_totalRecord" resultType="int">
+  	select count(no) cnt from(
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	from member m join review r on m.no = r.member_no
+	union 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	from member m join movie_review mr on m.no = mr.member_no) a 
+  	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}   
+  	</select>
+  	<!-- 영화리뷰 삭제 -->
+  	<delete id='adminMovieReviewDel'>
+  	delete from movie_review
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="movie_noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
+	<!-- 연극리뷰 삭제 -->
+	<delete id='adminTheaterReviewDel'>
+  	delete from review
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
+  	<!-- 신고 목록 -->
+  	<select id="adminWarningList" resultType="com.team.culife.vo.AdminReviewVO">
+  	select * from(
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	from member m join review r on m.no = r.member_no
+	union 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	from member m join movie_review mr on m.no = mr.member_no) a
+	where  warning_count > 0 
+  	<if test="searchWord != null" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}   
+  	</select>
+  	<!-- 신고 목록 카운트 -->
+  	<select id="adminwarning_totalRecord" resultType="int">
+  	select count(no) cnt from(
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	from member m join review r on m.no = r.member_no
+	union 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	from member m join movie_review mr on m.no = mr.member_no) a 
+	where  warning_count > 0  
+  	<if test="searchWord != null" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}   
+  	</select>
+  	<!-- 감상평 목록 -->
+  	<select id="adminExReplyList" resultType="com.team.culife.vo.AdminReviewVO">
+  	select er.no, e.subject, er.content, m.nickname, date_format(er.write_date,'%Y-%m-%d') write_date 
+	from exhibition_reply er join exhibition e on er.exhibition_no = e.no 
+						 join member m on er.member_no = m.no  
+  	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}   
+  	</select>
+  	<!-- 감상평 목록 카운트 -->
+  	<select id="adminexhibition_totalRecord" resultType="int">
+  	select count(no) cnt from(
+  	select er.no, e.subject, er.content, m.nickname, date_format(er.write_date,'%Y-%m-%d') write_date 
+	from exhibition_reply er join exhibition e on er.exhibition_no = e.no 
+						 join member m on er.member_no = m.no) a  
+  	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	 order by no desc 
+  	 limit ${onePageRecord} offset ${offsetIndex}   
+  	</select>
+  	<!-- 감상평 게시글 삭제 -->
+  	<delete id='adminExReplyDel'>
+  	delete from exhibition_reply 
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
 </mapper>
   
