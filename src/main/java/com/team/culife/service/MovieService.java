@@ -7,5 +7,5 @@ import com.team.culife.vo.PagingVO;
 
 public interface MovieService {
 	public List<MovieVO> movieReviewSelectByMemberNo(PagingVO vo);
-
+	public int movieReviewTotalRecord(PagingVO vo);
 }
