@@ -28,9 +28,11 @@ const SEARCHAPI =
           const div = document.createElement("div");
           const text = document.createElement("p");
           text.className = "search_text";
-          text.innerHTML = "검색결과가 없습니다.";
+          text.innerHTML = "검색결과가 없습니다. <br /> 이전페이지로 돌아갑니다.";
           main.appendChild(div);
           div.appendChild(text);
+ 
+          window.setTimeout("window.history.back()", 2500);           
         }
         data.results.forEach((element) => {
           console.log(element);
