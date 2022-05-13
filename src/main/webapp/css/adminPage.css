@@ -63,7 +63,8 @@ body{
 	width: 1200px;
 	margin: 0px auto;
 	overflow: auto;
-	padding-bottom: 100px;
+	padding-bottom: 500px;
+	margin-bottom: 100px;
 }
 li{
 	list-style-type: none;
@@ -133,12 +134,20 @@ li{
 	display: none;
 	background-color: rgba(0, 0, 0, 0.4);
 }
-.modal_cancel, .modal_reason{
+.modal_body{
+	position: relative;
+	background-color: red;
+	width: 500px;
+	height: 500px;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%)
+}
+.modal_info{
 	background-color: white;
-	width: 200px;
-	position: absolute;
-	top: 20%;
-	left: 20%;
+}
+.modal_info a{
+	color: black;
 }
 
 /* 자유게시판 목록*/

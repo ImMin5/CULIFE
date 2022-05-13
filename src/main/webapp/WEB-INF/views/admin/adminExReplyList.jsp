@@ -48,9 +48,9 @@ $(function () {
 			<div class='adminList_searchFrm'>
 				<form method="get" action="/admin/adminExReplyList" id='searchFrm'>
 					<select name="searchKey" id="searchkey">
-						<option value='b.no'>전시명</option>
-						<option value='subject'>댓글내용</option>
-						<option value='m.nickname'>작성자</option>
+						<option value='subject'>전시명</option>
+						<option value='content'>댓글내용</option>
+						<option value='nickname'>작성자</option>
 					</select>
 					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
 					<input type="submit" value="검색" id="searchBtn"/>

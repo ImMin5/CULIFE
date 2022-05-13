@@ -72,7 +72,10 @@ public class AdminServiceImpl implements AdminService{
 	public int authorDown(AuthorVO aVO) {
 		return dao.authorDown(aVO);
 	}
-	
+	@Override
+	public AuthorVO adminAuthorInfo(int no) {
+		return dao.adminAuthorInfo(no);
+	}
 	//스케줄러
 	@Override
 	public void scheduleUpdate() {
@@ -155,6 +158,7 @@ public class AdminServiceImpl implements AdminService{
 	public int adminExReplyDel(AdminReviewVO arVO) {
 		return dao.adminExReplyDel(arVO);
 	}
+	
 	
 	
 	

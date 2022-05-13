@@ -1,5 +1,7 @@
 package com.team.culife.controller;
 
+import java.io.Console;
+
 import javax.inject.Inject;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -99,6 +101,12 @@ public class AdminController {
 		return mav;
 	}
 	
+	//choi0513-작가 정보불러오기
+	@GetMapping("/adminAuthorInfo")
+	public AuthorVO adminAuthorInfo(int no) {
+		return service.adminAuthorInfo(no);
+	}
+	
 	//choi0502-자유게시판 불러오기
 	@GetMapping("/adminBoardList")
 	public ModelAndView adminBoardList(AdminPagingVO pVO) {
@@ -149,10 +157,10 @@ public class AdminController {
 	@GetMapping("/adminReviewList")
 	public ModelAndView adminReviewList(AdminPagingVO pVO) {
 		ModelAndView mav = new ModelAndView();
-		//문의사항목록페이징
+		//리뷰목록 페이징
 		pVO.setTotalRecord(service.adminreview_totalRecord(pVO));
 		mav.addObject("pVO", pVO);
-		//문의사항목록 불러오기
+		//리뷰목록 불러오기
 		mav.addObject("adminReviewList", service.adminReviewList(pVO));
 			
 		mav.setViewName("/admin/adminReviewList");
@@ -163,8 +171,10 @@ public class AdminController {
 	@GetMapping("/adminReviewDel")
 	public ModelAndView adminReviewDel(AdminReviewVO arVO) {
 		ModelAndView mav = new ModelAndView();
-		service.adminMovieReviewDel(arVO);
-		service.adminTheaterReviewDel(arVO);
+		if(arVO.getMovie_noList() != null) {
+		service.adminMovieReviewDel(arVO);};
+		if(arVO.getNoList() != null) {
+		service.adminTheaterReviewDel(arVO);};
 		mav.setViewName("redirect:/admin/adminReviewList");
 		return mav;
 	}
@@ -187,8 +197,10 @@ public class AdminController {
 	@GetMapping("/adminWarningDel")
 	public ModelAndView adminWarningDel(AdminReviewVO arVO) {
 		ModelAndView mav = new ModelAndView();
-		service.adminMovieReviewDel(arVO);
-		service.adminTheaterReviewDel(arVO);
+		if(arVO.getMovie_noList() != null) {
+			service.adminMovieReviewDel(arVO);};
+		if(arVO.getNoList() != null) {
+			service.adminTheaterReviewDel(arVO);};
 		mav.setViewName("redirect:/admin/adminWarningList");
 		return mav;
 	}

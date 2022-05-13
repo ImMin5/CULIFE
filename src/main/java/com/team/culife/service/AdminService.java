@@ -36,6 +36,8 @@ public interface AdminService {
 	public int authorUpgrade(AuthorVO aVO);
 	//작가 취소
 	public int authorDown(AuthorVO aVO);
+	//작가 정보 불러오기
+	public AuthorVO adminAuthorInfo(int no);
 	
 	//스케줄러 실행: member테이블 회원상태: 정상
 	public void scheduleUpdate();

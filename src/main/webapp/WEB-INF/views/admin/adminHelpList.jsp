@@ -59,10 +59,10 @@ $(function () {
 		<li>
 			<!-- 검색 -->
 			<div class='adminList_searchFrm'>
-				<form method="get" action="/admin/memberList" id='searchFrm'>
+				<form method="get" action="/admin/adminHelpList" id='searchFrm'>
 					<select name="searchKey" id="searchkey">
 						<option value='b.no'>게시글번호</option>
-						<option value='subject'>제목</option>
+						<option value='b.subject'>제목</option>
 						<option value='m.nickname'>닉네임</option>
 						<option value='cnt'>상태</option>
 					</select>
@@ -106,7 +106,7 @@ $(function () {
 		<li>◀</li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/authorList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+		<li><a href="/admin/adminHelpList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
@@ -116,7 +116,7 @@ $(function () {
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
 			</c:if>
-			<a href="/admin/authorList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
+			<a href="/admin/adminHelpList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
 		</c:if>
 	</c:forEach>
 	<!--  다음페이지 -->
@@ -124,7 +124,7 @@ $(function () {
 		<li>▶</li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/authorList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+		<li><a href="/admin/adminHelpList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
 	</c:if>
 		<li>	
 			<input type="button" value="삭제" id="multiDel"/>

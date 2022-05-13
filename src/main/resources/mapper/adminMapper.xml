@@ -11,10 +11,10 @@
 	from member m left outer join member_ban mb 
 	on m.no = mb.member_no 
   	<if test="searchWord != null" >
-			where ${searchKey} like '%${searchWord}%' 
+		where ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex} 
+	order by no desc 
+  	 limit #{onePageRecord} offset #{offsetIndex} 
   	</select>
   	
   	<!-- 회원목록 전체 인원 카운트 -->
@@ -65,12 +65,12 @@
   	<!-- 우선 임의로 썸네일은 빼겠습니다. 저장경로 설정되면 생각해보기 -->
   	<select id='authorList' resultType="com.team.culife.vo.AuthorVO">
   	 select no, member_no, author, debut_year, sns_link, author_status, date_format(create_date,'%Y-%m-%d') create_date, msg  
-  	 from author
+  	 from author 
   	<if test="searchWord != null" >
-			where ${searchKey} like '%${searchWord}%' 
+		where ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex} 
+	order by no desc 
+  	 limit #{onePageRecord} offset #{offsetIndex} 
   	</select>
   	<!-- <select id='authorList' resultType="com.team.culife.vo.AuthorVO">
   	 select a.msg, a.no,a.member_no, a.author, a.debut_year, a.sns_link, a.author_status, a.create_date, b.cnt 
@@ -107,6 +107,11 @@
 	set a.author_status = '2', m.grade = '0', a.msg = #{msg}   
 	where a.no = #{no} 
   	</update>
+  	<!-- 작가정보 불러오기 -->
+  	<select id='adminAuthorInfo' resultType="com.team.culife.vo.AuthorVO">
+  	 select author, sns_link, author_thumbnail, debut_year, author_msg, msg , author_status  
+  	 from author where no = #{param} 
+  	</select>
   	
   	<!-- 자유게시판 목록 불러오기 -->
   	<select id='adminBoardList' resultType="com.team.culife.vo.BoardVO">
@@ -117,8 +122,8 @@
   	<if test="searchWord != null" >
 		and ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}  
+	 order by no desc 
+  	 limit #{onePageRecord} offset #{offsetIndex} 
   	 </select>
   	 
   	 <!-- 자유게시판 목록 카운트 -->
@@ -145,38 +150,40 @@
   	
   	<!-- 문의게시판목록 불러오기 -->
   	<select id="adminHelpList" resultType="com.team.culife.vo.BoardVO">
-  	select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
-  	from board b left join member m on b.member_no = m.no 
-				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no 
-  	 where b.category='help'
+     select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
+	from board b left join member m on b.member_no = m.no 
+				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no
+	where b.category='help'  
   	<if test="searchWord != null and searchKey != 'cnt'" >
 		and ${searchKey} like '%${searchWord}%' 
 	</if>
 	<if test="searchWord == 1 and searchKey == 'cnt'" >
-		and br.cnt is not null  
+		and cnt is not null  
 	</if>
 	<if test="searchWord == 2 and searchKey == 'cnt'" >
-		and br.cnt is null   
+		and cnt is null   
 	</if>
   	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}   
+  	 limit #{onePageRecord} offset #{offsetIndex}   
   	</select>
   	
   	<!-- 문의게시판 목록 카운트 -->
   	<select id='adminhelp_totalRecord' resultType='int'>
-  	select count(b.no) cnt 
-  	from board b left join member m on b.member_no = m.no 
-				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no 
-  	 where b.category='help'
+  	select count(no) cnt from(
+	select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
+	from board b left join member m on b.member_no = m.no 
+				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no
+	where b.category='help' 
 	<if test="searchWord != null and searchKey != 'cnt'" >
 		and ${searchKey} like '%${searchWord}%' 
 	</if>
 	<if test="searchWord == 1 and searchKey == 'cnt'" >
-		and br.cnt is not null  
+		and cnt is not null 
 	</if>
 	<if test="searchWord == 2 and searchKey == 'cnt'" >
-		and br.cnt is null   
+		and cnt is null  
 	</if>
+	 ) a 
   	</select>
   	
   	<!-- 문의게시판 게시글 삭제 -->
@@ -200,13 +207,13 @@
 	from member m join movie_review mr on m.no = mr.member_no) a 
   	<if test="searchWord != null" >
 		where ${searchKey} like '%${searchWord}%' 
-	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}   
+	</if> 
+	order by no desc 
+  	limit #{onePageRecord} offset #{offsetIndex} 
   	</select>
   	<!-- 리뷰게시판 목록 카운트 -->
   	<select id="adminreview_totalRecord" resultType="int">
-  	select count(no) cnt from(
+  	select count(a.no) as cnt from(
 	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
 	from member m join review r on m.no = r.member_no
 	union 
@@ -215,8 +222,7 @@
   	<if test="searchWord != null" >
 		where ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}   
+  
   	</select>
   	<!-- 영화리뷰 삭제 -->
   	<delete id='adminMovieReviewDel'>
@@ -249,9 +255,9 @@
 	where  warning_count > 0 
   	<if test="searchWord != null" >
 		and ${searchKey} like '%${searchWord}%' 
-	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}   
+	</if> 
+	order by no desc 
+  	limit #{onePageRecord} offset #{offsetIndex} 
   	</select>
   	<!-- 신고 목록 카운트 -->
   	<select id="adminwarning_totalRecord" resultType="int">
@@ -265,19 +271,18 @@
   	<if test="searchWord != null" >
 		and ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}   
   	</select>
   	<!-- 감상평 목록 -->
   	<select id="adminExReplyList" resultType="com.team.culife.vo.AdminReviewVO">
+  	select * from( 
   	select er.no, e.subject, er.content, m.nickname, date_format(er.write_date,'%Y-%m-%d') write_date 
 	from exhibition_reply er join exhibition e on er.exhibition_no = e.no 
-						 join member m on er.member_no = m.no  
+						 join member m on er.member_no = m.no) a   
   	<if test="searchWord != null" >
 		where ${searchKey} like '%${searchWord}%' 
-	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}   
+	</if> 
+	order by no desc 
+  	limit #{onePageRecord} offset #{offsetIndex} 
   	</select>
   	<!-- 감상평 목록 카운트 -->
   	<select id="adminexhibition_totalRecord" resultType="int">
@@ -288,8 +293,6 @@
   	<if test="searchWord != null" >
 		where ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}   
   	</select>
   	<!-- 감상평 게시글 삭제 -->
   	<delete id='adminExReplyDel'>
