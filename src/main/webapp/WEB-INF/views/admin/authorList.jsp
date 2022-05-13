@@ -4,14 +4,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
 <script>
-$(function () {
-	$(".author_upgrade").submit(function () {
-		var check = confirm('작가로 승인하시겠습니까?');
-		if(!check){
-			return false;
-		}
-	});
-	
+$(function () {	
 	//모달창-취소버튼: 모달창on, 취소사유확인close, 취소사유입력on
 	$(".modalup_info").click(function(){
 		$(".modal").css("display","block");
@@ -32,25 +25,39 @@ $(function () {
 					tag += '<li>SNS주소: <a href="'+vo.sns_link+'" target="_blank">'+vo.sns_link+'</a></li>';
 					tag += '<li>데뷔년도: '+vo.debut_year+'</li>';
 					tag += '<li>자기소개 </li>	';
-					tag += '<li><textarea name="msg" rows="10" id="textBox1" readonly="readonly" style="width:98%; resize:none">'+vo.author_msg+'</textarea></li>';
+					tag += '<li><textarea name="msg" rows="10" id="textBox1" readonly="readonly" style="width:86.5%; resize:none">'+vo.author_msg+'</textarea></li>';
+					tag += '<li>취소사유   <span class="textCount">0</span>/100</li>';
 					tag += '</ul>';
 					tag += '<form method="get" action="/admin/authorDelete" class="author_delete">';
 					tag += '<input type="hidden" name="no" value="'+vo.no+'" id="cancel_no"/>';
 					/* 취소일때 - 취소사유확인 */
 					if(vo.author_status == 2){
-						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" readonly="readonly" style="width:98%; resize:none">취소사유: '+vo.msg+'</textarea>';
+						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" readonly="readonly" style="width:86.5%; resize:none">취소사유: '+vo.msg+'</textarea>';
 					}
 					/* 신청일때 - 걍 취소*/
-					if(vo.author_status == 1 && vo.msg == null){
-						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" style="width:98%; resize:none">취소사유: </textarea>';						
+					if(vo.author_status == 0 && vo.msg == null || vo.author_status == 1){
+						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" style="width:86.5%; resize:none" onclick="alert("감자")">취소사유: </textarea>';						
 					}
 					/* 재신청일때 - 취소사유보여주고 재설정 */
-					if(vo.author_status == 1 && vo.msg != null){
-						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" style="width:98%; resize:none">취소사유: '+vo.msg+'</textarea>';
+					if(vo.author_status == 0 && vo.msg != null){
+						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" style="width:86.5%; resize:none" onkeyup="alert("감자")">취소사유: '+vo.msg+'</textarea>';
 					}
-					tag += '<input type="button" value="작가승인"/>';
-					tag += '<input type="button" value="작가취소"/>';
-					tag += '<input type="button" value="닫기" onclick="btnclose()" class="modalclose"/>';
+					if(vo.author_status == 0){
+						tag += '<div class="btn_wrap">'
+						tag += '<input type="button" value="작가승인" id="author_ok" title="'+vo.no+'"/>';
+						tag += '<input type="button" value="작가취소" id="author_cancel"/>';
+						tag += '<input type="button" value="닫기" class="modalclose"/>';
+						tag += '</div>'
+					}
+					if(vo.author_status == 1){
+						tag += '<div class="btn_wrap">'
+						tag += '<input type="button" value="작가취소" id="author_cancel"/>';
+						tag += '<input type="button" value="닫기" class="modalclose"/>';
+						tag += '</div>'
+					}
+					if(vo.author_status == 2){
+						tag += '<input type="button" value="닫기" class="modalclose"/>';
+					}
 					tag += '</form>'; 
 					$(".modal_info").html(tag);
 				},
@@ -61,7 +68,7 @@ $(function () {
 	});
 	
 	//모달창-취소사유: 글자수 100자제한.
-	$('#textBox').keyup(function (e) {
+	$(document).on('keyup','#textBox2', function (e) {
 		let content = $(this).val();
 		if(content.length == 0 || content == ''){
 			$('.textCount').text('0');
@@ -74,6 +81,34 @@ $(function () {
 		};
 	});
 	
+	//모달창 닫기
+	$(document).on('click','.modalclose', function (e) {
+		$(".modal").css("display","none");
+		$(".modal_info").css("display","none");
+	});
+	
+	//작가 승인
+	$(document).on('click','#author_ok', function (e) {
+		var url = "/admin/authorUpgrade";
+		$.ajax({
+			url: url,
+			data: {
+				no: $(this).attr('title')
+			},
+			success: function(vo) {
+				alert("승인이 완료되었습니다.");
+				location.reload();
+			},
+			error: function(e) {
+				console.log(e.responseText);
+			}
+		});
+	});
+	
+	//작가 취소
+	$(document).on('click','#author_cancel', function (e) {
+		$(".author_delete").submit();
+	});
 	$("#searchFrm").submit(function(){
 		if($("#searchWord").val()==""){
 			alert("검색어를 입력해주세요.");
@@ -81,11 +116,6 @@ $(function () {
 		}
 	});	
 });
-	//모달창 닫기.
-	function btnclose(){
-		$(".modal").css("display","none");
-		$(".modal_info").css("display","none");
-	};
 </script>
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
@@ -184,6 +214,7 @@ $(function () {
 		<div class="modal_info">
 		</div>
 	</div>
+	
 </div><!--  div:modal -->	
 
 </body>

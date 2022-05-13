@@ -109,7 +109,7 @@
   	</update>
   	<!-- 작가정보 불러오기 -->
   	<select id='adminAuthorInfo' resultType="com.team.culife.vo.AuthorVO">
-  	 select author, sns_link, author_thumbnail, debut_year, author_msg, msg , author_status  
+  	 select no, author, sns_link, author_thumbnail, debut_year, author_msg, msg , author_status  
   	 from author where no = #{param} 
   	</select>
   	

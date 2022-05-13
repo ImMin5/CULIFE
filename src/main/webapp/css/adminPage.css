@@ -139,17 +139,46 @@ li{
 	background-color: red;
 	width: 500px;
 	height: 500px;
-	top: 30%;
+	top: 25%;
 	left: 50%;
 	transform: translate(-50%, -50%)
 }
 .modal_info{
 	background-color: white;
+	text-align: center;
+}
+.modal_info li{
+	padding-top: 10px;
+}
+.modal_info li:first-child{
+	text-align: center;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+.modal_info li:nth-child(2){
+	text-align: center;
+}
+.modal_info li:nth-child(4){
+	text-overflow: ellipsis;
+}
+.modal_info li:last-child{
+	padding-bottom: 10px;
 }
 .modal_info a{
 	color: black;
 }
+#textBox2{
+	margin-bottom: 10px;
+}
+.btn_wrap{
+	text-align: center;
 
+}
+.modal_info input{
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
 /* 자유게시판 목록*/
 .adminBoardList{
 	width: 1200px;
