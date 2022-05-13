@@ -7,16 +7,12 @@ import lombok.Setter;
 @Setter
 public class ExhibitionVO {
 	private int no;
-	private int member_no;
-	private String author;
-	private String sns_link;
-	private String author_thumbnail;
+	private int author_no;
+	private String subject;
+	private String content;
+	private String start_date;
+	private String end_date;
 	private String create_date;
-	private String nickname;
-	private String debut_year;
-	private String auhor_status;
-	private String msg;
-	private String author_msg;
-	
-	
+	private String poster;
+	private int type;
 }

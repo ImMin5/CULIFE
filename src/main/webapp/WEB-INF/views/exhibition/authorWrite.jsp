@@ -5,10 +5,12 @@
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
+let authorch = false;
+
 $(function(){
-		
 	$("#authorWriteName").keyup(function(){
 		var author = $("#authorWriteName").val();
+		authorch = false;
 		if(author != ''){
 			console.log(author);
 			var url = "/authorNameCheck";
@@ -22,10 +24,12 @@ $(function(){
 						$("#chk").html("이미 사용중인 작가명 입니다.");
 						$("#authorchk").val("N");
 						$("#chk").css("color","red");
+						authorch = false;
 					}else{//사용가능
 						$("#chk").html("사용 가능한 작가명 입니다.");
 						$("#authorchk").val("Y");
 						$("#chk").css("color","blue");
+						authorch = true;
 					}
 				}
 			});
@@ -50,6 +54,11 @@ $(function(){
 
 
 function authorSubmit() {
+	if(!authorch) {
+		alert("작가명을 확인해 주세요");
+		return false;
+	}
+	var pattern_num = /^[0-9]*$/;
 	var authorNickname = "${mvo.nickname}";
 	var params = "nickname=" + "${mvo.nickname}";
 	var author = $("#authorWriteName").val();
@@ -57,10 +66,10 @@ function authorSubmit() {
 	var author_thumbnail = $("#authorThumbnail").val();
 	var debut_year = $("#authorDebutYear").val();
 	var author_msg = $("#authorMsg").val();
+	var author_status = "${avo.author_status}";
 	console.log(authorNickname);
-	console.log(params);
 	console.log(author);
-	console.log(debut_year);
+	console.log(author_status);
 	if (author == '' ) {
 		alert("작가명을 입력해 주세요")
 	} 
@@ -72,7 +81,17 @@ function authorSubmit() {
 	}
 	else if (debut_year == '' ) {
 		alert("데뷔년도를 입력해 주세요")
-	} else {
+	}  
+	else if (!pattern_num.test(debut_year)) {
+		alert("데뷔년도에 숫자만 입력해 주세요")
+	} 
+	else if (author_msg == '') {
+		alert("자기소개를 입력해 주세요")
+	}
+	else if (author_status != '' ) {
+		alert("이미 작가신청이 완료되었습니다.")
+	}
+	else {
 	
 		$.ajax({
 			url: '/authorWriteOk',
@@ -89,6 +108,7 @@ function authorSubmit() {
 			},
 			
 			success: function(result) {
+				consloe.log("작가 신청 완료");
 				if (result) {
 					alert("작가 신청 완료되었습니다.");
 				} else {
@@ -116,7 +136,7 @@ function authorSubmit() {
 						<div class="authorWriteContent">
 							<div class="authorWriteID">
 								<label>닉네임</label>
-								<input type="text" value="${mvo.nickname}" class="form-control" id="authorWriteName" readonly>
+								<input type="text" value="${mvo.nickname}" class="form-control" readonly>
 								
 
 							</div>
@@ -126,7 +146,6 @@ function authorSubmit() {
 									<input type="text" class="form-control" id="authorWriteName" placeholder='작가명 입력'>
 								</div>
 								<span id="chk"></span>
-								<!-- <div><input type ="text" id="authorchk" value ="N" style="visibility:hidden"/></div> -->
 							</div>
 							<div class="authorWriteSNS">
 								<div>SNS 주소</div>
@@ -138,7 +157,7 @@ function authorSubmit() {
 							<div class="authorDebutYear">
 								<div>데뷔년도</div>
 								<div>
-									<input type="text" class="form-control" id="authorDebutYear">
+									<input type="text" class="form-control" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018'>
 								</div>
 							</div>
 							<div class="authorMsg">
