@@ -15,4 +15,6 @@ public class MemberVO {
 	private String thumbnail;
 	private boolean status;
 	private String create_date;	
+	//admin(memberList)-end_date
+	private String end_date;
 }

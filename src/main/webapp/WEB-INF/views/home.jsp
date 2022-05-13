@@ -10,6 +10,9 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/home_main_visual.js"></script>
 <script src="/js/home.js"></script>
+<style>
+	footer {position:absolute; left:0; bottom:0}
+</style>
 <script>
 	/*스크롤 무빙*/
 
@@ -37,6 +40,9 @@
 		display:block;
 		position:relative
 	}
+	header {background-color:rgba(0,0,0,0.5);}
+	header:hover {background-color:rgba(255,255,255,0.8);}
+	nav > ul > li > ul {background-color:rgba(255,255,255,0.8);}
 </style>
 	
 	<main id="home_main_container">
@@ -45,8 +51,7 @@
 			<h2 class="hidden">share your cultural life</h2>
 			<div id="three-container"></div>
     		<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
-    		<img class="home_scrolldown" id="home_scrolldown1" src="/img/scrolldown.png">
-		</section>
+    	</section>
 		<section id="home_entertain">
 			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
 			<ul>
@@ -65,7 +70,6 @@
 					<audio id='musical_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>
 			</ul>
-			<img class="home_scrolldown" id="home_scrolldown2" src="/img/scrolldown.png">
 		</section>
 		<section id="home_exhibition">
 			<h2>온라인에서 만나는 전시회 작품</h2>
@@ -79,7 +83,6 @@
 				<li id="home_sec3_img5"></li>
 				<li id="home_sec3_img6"></li>
 			</ul>
-			<img class="home_scrolldown" id="home_scrolldown3" src="/img/scrolldown.png">
 		</section>
 		<section id="home_notice">
 			<div id="home_notice_wrap">
@@ -125,7 +128,6 @@
 					<p><img src="/img/logo_w.png" alt="로고"></p>
 					<button>문의하기</button>
 				</div>
-				<img class="home_scrolldown" id="home_scrolldown4" src="/img/scrolldown.png">
 			</div>
 		</section>
 		<ul id="home_pagination">

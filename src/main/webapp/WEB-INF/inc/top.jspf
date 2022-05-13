@@ -48,7 +48,7 @@
 		<a href="/"><img id="main_logo" src="/img/logo_w.png" alt="logo"></a>
 		<nav>
         	<ul id="nav_section1">
-        		<li><a href="">HOME</a></li>
+        		<li><a href="/">HOME</a></li>
         		<li>
         			<a href="">문화생활</a>
         			<ul>
@@ -61,10 +61,6 @@
         						<span id="gnb_movie_line3"></span>
         						<span id="gnb_movie_line4"></span>
         					</a>
-        					<div>
-        						<p>다양한 영화 정보도 얻고</p>
-								<p>원하는 영화로 즐거운 시간을 보내세요</p>
-        					</div>
         				</li>
         				<li id="gnb_musical">
         					<a href="${url}/theater/theaterList">
@@ -75,9 +71,6 @@
         						<span id="gnb_musical_line3"></span>
         						<span id="gnb_musical_line4"></span>
         					</a>
-        					<div>
-        						<p>원하는 정보만 쏙쏙 골라보세요</p>
-        					</div>
         				</li>
         			</ul>
         		</li>

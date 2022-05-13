@@ -63,11 +63,11 @@ $(document).ready(function () {
 <div id="theater_container">
 	<div id="theaterMenu">
 		<ul id="theaterMain">
-			<li>연극/뮤지컬</li>
+			<li>연극/공연</li>
 		</ul>
 		<ul id="theaterSub">
 			<li>연극</li>
-			<li>뮤지컬</li>
+			<li>공연</li>
 		</ul>
 	</div>
 	<div id="list">
