@@ -33,6 +33,7 @@ $(document).ready(function () {
 			$(data).find('perforInfo').each(function(index, item){
 				title=$(this).find('title').text()
 				thumb=$(this).find('imgUrl').text()
+				seq=$(this).find('seq').text()
 				start=$(this).find('startDate').text()
 				end=$(this).find('endDate').text()
 				place=$(this).find('place').text()
@@ -47,7 +48,10 @@ $(document).ready(function () {
 				gpsY=$(this).find('gpsY').text()
 							
 				$('input[name="title"]').val(title)
+				$('input[name="poster"]').val(thumb)
+				$('input[name="seq"]').val(seq)
 				mtitle=title;
+				
 				
 					topDetail += `						
 						<ul>						
@@ -89,19 +93,21 @@ $(document).ready(function () {
 					var container=$('#map')[0];
 					var options = {
 							center: new kakao.maps.LatLng(gpsY, gpsX),
-							level: 3
+							level: 2
 						};
 					
 
 					// 마커 생성
+					var markerPosition  = new kakao.maps.LatLng(gpsY, gpsX); 
 					var marker = new kakao.maps.Marker({
 					    position: markerPosition
 					});
-					var markerPosition  = new kakao.maps.LatLng(gpsY, gpsX); 
 					var map = new kakao.maps.Map(container, options);
+					marker.setMap(map);
 					$('#topDetail').empty().append(topDetail);
 					$('#midDetail').empty().append(midDetail);
 					reviewListAll();
+					
 			});
 		}
 });
@@ -110,7 +116,7 @@ $(document).ready(function () {
 //리뷰리스트
 	function reviewListAll(){
 		var url = "/review/reviewList";
-		var params = "title="+mtitle
+		var params = "title="+encodeURIComponent(mtitle)
 		//alert(params)
 		$.ajax({
 			url:url,
@@ -209,7 +215,7 @@ $(document).on('submit','#reviewList form', function(){
 		data:params,
 		type:'POST',
 		success:function(result){
-			console.log(result);
+			//console.log(result);
 			reviewListAll();
 		},error:function(e){
 			console.log("수정에러발생");
@@ -244,7 +250,7 @@ Rating.prototype.setRate = function(newrate){
     items.forEach(function(item, idx){
         if(idx < newrate){
             item.checked = true;
-           alert('a'+newrate+item.checked);
+           //alert('a'+newrate+item.checked);
         }else{
             item.checked = false;
         }
@@ -257,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function(){
     	
         let elem = e.target;
         if(elem.classList.contains('rate_radio')){
-        	alert('ab'+elem.value)
+        	//alert('ab'+elem.value)
             rating.setRate(parseInt(elem.value));
             document.getElementById('score_star').value
     	    = elem.value;
@@ -291,6 +297,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		                <label for="rating5"></label>
 		            </div>		
 		            <input type="hidden" name="title" value="${vo.title}">            
+		            <input type="hidden" name="poster" value="${vo.poster}">  
+		            <input type="hidden" name="seq" value="${vo.seq}">  
 		            <textarea name="content" id="input_review" placeholder="리뷰를 남겨주세요." ></textarea>
 					<!-- <input type="checkbox" class="spo_check" value="스포"/> -->
 					<input type="submit" value="등록"/>
