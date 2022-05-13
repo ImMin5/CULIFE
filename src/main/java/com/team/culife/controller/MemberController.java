@@ -32,6 +32,7 @@ import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.MovieVO;
 import com.team.culife.vo.PageResponseBody;
 import com.team.culife.vo.PagingVO;
+import com.team.culife.vo.ReviewVO;
 
 @RestController
 public class MemberController {
@@ -541,13 +542,13 @@ public class MemberController {
 			}
 		return entity;
 	}
-	//영화 리뷰 검색
+	//뮤지컬/연극 검색
 	@GetMapping("/mypage/review/theater/search")
-	public PageResponseBody<MovieVO> mypageTheaterSearch(HttpSession session,  @RequestParam(value="pageNo",required = false, defaultValue = "1")int pageNo,
+	public PageResponseBody<ReviewVO> mypageTheaterSearch(HttpSession session,  @RequestParam(value="pageNo",required = false, defaultValue = "1")int pageNo,
 			@RequestParam(value="pageCount",required = false, defaultValue = "8")int pageCount, 
 			@RequestParam(value="searchWord",required = false, defaultValue = "")String searchWord) {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		PageResponseBody<MovieVO> entity = null;
+		PageResponseBody<ReviewVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		System.out.println("search --> " + searchWord);
 		try {
@@ -564,18 +565,18 @@ public class MemberController {
 				System.out.println("pvo offset -->" + pvo.getOffsetIndex());
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
-				pvo.setTotalRecord(movieService.movieReviewTotalRecord(pvo));
+				pvo.setTotalRecord(reviewService.theaterReviewTotalRecord(pvo));
 					
-					List<MovieVO> list = movieService.movieReviewSelectByMemberNo(pvo);
+					List<ReviewVO> list = reviewService.theaterReviewSelectByMemberNo(pvo);
 					
-					entity = new PageResponseBody<MovieVO>();
+					entity = new PageResponseBody<ReviewVO>();
 					entity.setItems(list);
 					entity.setVo(pvo);
 				}
 		
 				} catch (Exception e) {
 					e.printStackTrace();
-					entity = new PageResponseBody<MovieVO>();
+					entity = new PageResponseBody<ReviewVO>();
 			
 				}
 			return entity;

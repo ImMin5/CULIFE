@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.culife.dao.ReviewDAO;
+import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.ReviewVO;
 
 @Service
@@ -32,6 +33,16 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int reviewDel(int no, int member_no) {
 		return dao.reviewDel(no, member_no);
+	}
+
+	@Override
+	public int theaterReviewTotalRecord(PagingVO vo) {
+		return dao.theaterReviewTotalRecord(vo);
+	}
+
+	@Override
+	public List<ReviewVO> theaterReviewSelectByMemberNo(PagingVO vo) {
+		return dao.theaterReviewSelectByMemberNo(vo);
 	}
 	
 }
