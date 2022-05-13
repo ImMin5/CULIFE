@@ -6,18 +6,23 @@
 	background-size:100vw 100vh;
 	padding-top:100px;
 	position:relative; z-index:-2;
+	overflow:hidden
 }
 #online_exhibition_container > a {
-	line-height:30px;
-	padding:5px 20px;
-	background-color:#000;
+	width:100px; height:40px;
+	padding:10px;
+	line-height:40px; text-align:center;
+	background:url(/img/exhibition/zigzag_bg.png);
+	background-size:120px 60px;
 	border-radius:20px;
-	position:absolute; right:13vw; top:140px;
-	z-index:5;
+	position:absolute; right:12vw; top:135px;
+	z-index:-2;
 }
+#online_exhibition_container #reg_ex {left:10vw; top:65vh;}
+#online_exhibition_container #reg_work {left:10vw; top:65vh; margin-left:150px}
 #online_exhibition_container > img {
 	width:30px; height:30px;
-	position:absolute; right:8vw; top:145px;
+	position:absolute; right:8vw; top:150px;
 	z-index:-2;
 	cursor:pointer;
 }
@@ -26,12 +31,17 @@
 	position:relative;
 	z-index:-1
 }
+/* 전시 작품 검색 - start */
 #online_ex_search {
-	width:20vw; height:80vh;
+	width:20vw; height:70vh;
 	background-color:#fff;
 	z-index:-1;
 	transition:all 1s;
 	position:absolute; right:-1000px; top:100px;
+}
+#online_ex_search h3 {
+	font-size:2.4rem; line-height:50px;
+	margin: 35px 0 0 13%
 }
 #online_ex_search > #online_search_close {
 	position:absolute; right:2.6vw; top:50px;
@@ -40,7 +50,7 @@
 #ex_searchFrm {
 	display:block;
 	width:15vw; height:30px;
-	margin:120px auto 0 auto;
+	margin:35px auto 0 auto;
 }
 #ex_searchFrm >* {height:30px; line-height:30px;}
 #ex_searchFrm > select {width:25%; float:left;}
@@ -53,9 +63,11 @@
 
 .searchHide {transform:translateX(0px)}
 .searchShow {transform:translateX(-1000px)}
+/* 전시 작품 검색 - end */
 
+/* 전시 작품 list - start */
 #room {
-	width:38vw; height:64.8vh;
+	width:38vw; height:64.8vh; max-width:1200px;
 	background:url(/img/exhibition/room.png);
 	background-size:100% 100%;
 	margin:20px auto;
@@ -77,19 +89,18 @@
 	z-index:-1;
 }
 #room ul li p {
-	width:9.3vw; height:38vh;
-	background:url(/img/exhibition/painting_frame_skew.png);
+	width:12.5vw; height:40vh;
+	background:url(/img/exhibition/painting_frame_skew_shadow.png);
 	background-size:100% 100%;
-	position:absolute; right:22%; top:15%;
+	position:absolute; right:15%; top:13%;
 	z-index:2;
 }
 #room ul li p::after {
 	content:"";
-	width:12.5vw; height:40vh;
-	background:url(/img/exhibition/painting_frame_skew_shadow.png);
+	width:9.3vw; height:38vh;
+	background:url(/img/exhibition/painting_frame_skew.png);
 	background-size:100% 100%;
-	position:absolute; right:-33%; top:-3%;
-	z-index:0;
+	position:absolute; right:22%; top:3%;
 }
 #room ul li:nth-child(2) img {
 	width:6.5vw; height:18vh;
@@ -109,5 +120,81 @@
 	font-size:1.8rem;
 	transition:all 0.5s;
 }
-#room button:hover {background-color:salmon; color:#fff}
+#room button:hover {background-color:rgba(255,127,0,0.8); color:#fff}
+/* 전시 작품 list - end */
 
+/* 전시리시트 페이지네이션 - start */
+#online_ex_pagination {
+	width:1200px; height:20vh;
+	margin:0 auto;
+	position:relative;
+}
+#online_ex_pagination > img {
+	width:50px; height:50px;
+	position:absolute; top:50%;
+	transform:translateY(-25px);
+	cursor:pointer
+}
+#online_ex_pagination #online_ex_prev {left:0}
+#online_ex_pagination #online_ex_next {right:0}
+/* 전시리시트 페이지네이션 - end */
+
+/* 전시등록 모달 - start */
+
+#exhibition_wrap {
+	width:1200px; height:700px;
+	margin:50vh auto 0 auto;
+	transform:translateY(-350px);
+	background-color:#fff
+}
+#exhibition_wrap ul > li {display:block; float:left}
+
+/* 그림 section */
+#exhibition_wrap ul > li:nth-child(1) {width:720px;}
+#exhibition_wrap ul > li:nth-child(1) figure {
+	width:500px; height:400px;
+	overflow:hidden;
+	margin:0 auto
+}
+#exhibition_wrap ul > li:nth-child(1) figure img {width:500px; min-height:400px}
+#exhibition_wrap ul > li:nth-child(1) > span {
+	display:block;
+	font-size:2.2rem; line-height:50px;
+	margin: 30px 0 0 110px;
+}
+/* Form section */
+#exhibition_wrap ul > li:nth-child(2) {width:480px;}
+#ex_reg_form ul {
+	display:block;
+	width:480px; height:390px;
+	padding-top:10px
+}
+#ex_reg_form ul li {display:block}
+#ex_reg_form ul li p {
+	text-align:left;
+	font-size:2.0rem;
+	line-height:50px;
+}
+#ex_reg_form ul li input {
+	margin-bottom:30px;
+	width:300px; height:30px;
+	line-height:30px
+}
+#ex_reg_form ul li:nth-child(1) input {width:140px}
+#ex_reg_form ul li:nth-child(3) textarea {
+	width:300px;height:100px; 
+	white-space:nowrap;
+	line-height:30px
+}
+#ex_reg_form > input {
+	display:block;
+	width:150px; height:80px;
+	background:url(/img/exhibition/zigzag_bg.png);
+	background-size:150px 80px;
+	border:none;
+	color:#fff; font-size:1.6rem;
+	line-height:80px;
+	cursor:pointer;
+	margin:50px 0 0 80px;
+}
+/* 전시등록 모달 - end */

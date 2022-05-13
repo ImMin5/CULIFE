@@ -11,6 +11,7 @@
    font-weight: normal;
    font-style: normal;
 }
+ 
 
 * {
   box-sizing: border-box;
@@ -27,9 +28,9 @@ body {
     
  
  .movie_container {
-    margin: 100px auto 0 auto;
+    margin: 100px auto 300px auto;
     width: 1500px;
-    height: 4000px;
+    height: 100%;
 
  }
  
@@ -85,7 +86,7 @@ body {
     }
     
     .rank_container.populary_playing {
-       margin-top: 140px;
+       margin-top: 100px;
        position: relative;
     }
     
@@ -273,21 +274,18 @@ body {
     }
     .arrows .prev:hover,
     .arrows .next:hover {
-   background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transform: scale(1.4);
+	   background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
+	    -webkit-background-clip: text;
+	    -webkit-text-fill-color: transparent;
+	    transform: scale(1.4);
     
-    }
-    
-    
-    
+    } 
       .search_container {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        margin: 50px 0 70px 0;
+        margin: 50px 0 50px 0;
       }
 
       #searchMovie {
@@ -296,7 +294,7 @@ body {
         margin-top: 1px;
         margin-right: 8px;
         padding: 6px 10px;
-        width: 320px;
+        width: 450px;
         color: white;
         border: none;
         border-bottom: white solid 4px;
@@ -305,10 +303,8 @@ body {
         transition: 0.3s;
       }
 
-      #searchMovie:focus {
-        
-        width: 480px;
-  
+      #searchMovie:focus {    
+        width: 520px;
         font-size: 24px;
         font-weight: bold;
         transition: 0.3s;
@@ -317,33 +313,17 @@ body {
       }
 
       #searchMovie::placeholder {
-        color: white;
+        color: #b6b6b6;
         font-size: 1em;
-        font-weight: bold;
+        /* font-weight: bold; */
       }
 
-      main {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      main div {
-        width: 250px;
-        height: 320px;
-        margin: 19px 15px;
-      }
-      img {
-        width: 100%;
-        height: 100%;
-      
-      }
+
       .search_text {
         margin: 0;
         font-size: 20px;
         font-weight: bold;
         text-align: center;
-        color: pink;
       }
 
       .fa-magnifying-glass {
@@ -356,49 +336,47 @@ body {
     <div class="mainBox_slider">
         <div class="boxSlides" id="boxSlides"></div>
      </div>
+     
      <div class="movie_container">
-             <div class="rank_container populary_playing">
-               <p class="rank_container_text">인기 상영중</p>
-               <p class="innerNum1">1</p>
-                <p class="innerNum2">2</p>
-                <p class="innerNum3">3</p>
-                <p class="innerNum4">4</p>
-                <p class="innerNum5">5</p>
-         
-            <div class="slider slider_populary_playing">
-            </div>
-          </div>
-          
-          
-            <div class="rank_container now_playing">
-              <p class="rank_container_text">역대 흥행작</p>
-               <div class="arrows">
-                   <div class="prev">
-                      <i class="fa-solid fa-caret-left"></i>
-                   </div>
-                     <div class="next">
-                     <i class="fa-solid fa-caret-right"></i>
-                   </div>
-               </div>
-            <div class="slider slider_now_playing">
-            </div>
-          </div>
-
-      <div class="search_container">
-        <form id="form">
-          <input
-            type="text"
-            id="searchMovie"
-            placeholder="영화를 검색해주세요"
-            class="searchMovie"
-          />
-        </form>
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </div>
-    
-
-    <main id="main"></main>      
+        <div class="search_container">
+	        <form id="form" action="/movie/movieSearch">
+	          <input
+	            type="text" name="searchMovie"
+	            id="searchMovie"
+	            placeholder="영화를 검색해주세요"
+	            class="searchMovie"
+	          />
+	        </form>
+        	<i class="fa-solid fa-magnifying-glass"></i>
+     	 </div>
+  	 	 <div class="search_textbox"></div>
+  	 	 
+          <div class="rank_container populary_playing">
+            <p class="rank_container_text">인기 상영중</p>
+            <p class="innerNum1">1</p>
+             <p class="innerNum2">2</p>
+             <p class="innerNum3">3</p>
+             <p class="innerNum4">4</p>
+             <p class="innerNum5">5</p>
       
+	         <div class="slider slider_populary_playing">
+	         </div>
+     	  </div>
+          
+          
+          <div class="rank_container now_playing">
+            <p class="rank_container_text">역대 흥행작</p>
+             <div class="arrows">
+                 <div class="prev">
+                    <i class="fa-solid fa-caret-left"></i>
+                 </div>
+                   <div class="next">
+                   <i class="fa-solid fa-caret-right"></i>
+                 </div>
+             </div>
+          <div class="slider slider_now_playing">
+          </div>
+        </div>
     </div>
     <script>
       const slider = document.querySelector(".slider");
@@ -561,14 +539,12 @@ body {
         observer.observe(image);
       });
       
-      // const apiUrl =
-      //   "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&language=ko-KR&page=1";
-
+/*
       const SEARCHAPI =
-        "https://api.themoviedb.org/3/search/movie?&api_key=52048cb9f5d2b1983acc31ecdadd5b4d&language=ko-KR&query=";
-      const main = document.querySelector("#main");
+        "https://api.themoviedb.org/3/search/movie?&api_key="+key+"&language=ko-KR&query=";
       const form = document.querySelector("#form");
       const search = document.querySelector("#searchMovie");
+      const text = document.querySelector(".search_textbox");
 
       // searchMovies(apiUrl);
       function searchMovies(url) {
@@ -577,40 +553,32 @@ body {
           .then(function (data) {
             if (data.results.length == 0) {
               const div = document.createElement("div");
-              const text = document.createElement("p");
-              text.className = "search_text";
-              text.innerHTML = "검색결과가 없습니다.";
-              main.appendChild(div);
+              const div_text = document.createElement("p");
+              div_text.className = "search_text";
+              div_text.innerHTML = "검색결과가 없습니다.";
+              div_text.appendChild(div);
               div.appendChild(text);
             }
-            data.results.forEach((element) => {
-              console.log(element);
 
-              const div = document.createElement("div");
-              const image = document.createElement("img");
-              const text = document.createElement("p");
-
-              text.innerHTML = `${element.title}`;
-              text.className = "search_text";
-              image.src =  base_url + element.poster_path;
-              div.appendChild(image);
-              div.appendChild(text);
-              main.appendChild(div);
-            });
           });
       }
+*/
 
+
+/*
       form.addEventListener("submit", (event) => {
+    	  
+      
         event.preventDefault();
-        main.innerHTML = "";
+        search.innerHTML = "";
 
         const searchTerm = search.value;
         if (searchTerm) {
           searchMovies(SEARCHAPI + searchTerm);
           search.value = "";
-        }
+        } 
       });
-      
+ */     
       
     </script>
   </body>

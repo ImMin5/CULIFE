@@ -19,6 +19,11 @@ public class MovieServiceImpl implements MovieService {
 	public List<MovieVO> movieReviewSelectByMemberNo(PagingVO vo) {
 		return dao.movieReviewSelectByMemberNo(vo);
 	}
+
+	@Override
+	public int movieReviewTotalRecord(PagingVO vo) {
+		return dao.movieReviewTotalRecord(vo);
+	}
 	
 	
 }

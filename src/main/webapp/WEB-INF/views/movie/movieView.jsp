@@ -12,19 +12,11 @@
    font-style: normal;
 }
 
+
 * {
    box-sizing: border-box;
 }
 
-header {
-   width: 100vw;
-   height: 100px;
-   background-color: rgba(0, 0, 0, 0.5);
-   position: fixed;
-   z-index: 999;
-   text-align: center;
-   top: 0;
-}
 
 body {
    background: black;
@@ -36,10 +28,10 @@ body {
 }
 
 .movieView_container {
-   margin: 0 auto;
+   margin: 0 auto 300px auto;
    margin-top: 160px;
    max-width: 1500px;
-   height: 4000px;
+   height: 100%;
 }
 
 .movieDetail_container {

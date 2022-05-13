@@ -47,21 +47,12 @@
 
 .input_review{
 	width:600px;
-	height:100px;
+	height:50px;
 }
-
-.wrap{
-    max-width: 480px;
-    margin: 0 auto; /* 화면 가운데로 */
-    background-color: #fff;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-
+.rating{
+	margin:0 auto;
 }
-
 .rating .rate_radio {
-    position: relative;
     display: inline-block;
     z-index: 20;
     opacity: 0.001;
@@ -73,7 +64,7 @@
     display: none;
 }
 .rating .rate_radio + label {
-    position: relative;
+
     display: inline-block;
     margin-left: -3px;
     width: 30px;
