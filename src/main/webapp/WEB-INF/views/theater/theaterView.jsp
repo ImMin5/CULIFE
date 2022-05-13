@@ -123,6 +123,9 @@ $(document).ready(function () {
 				$result.each(function(idx, vo){
 					tag += "<li><div>"+vo.nickname;
 					tag += " ("+vo.write_date+")";
+					for(var i=0;i<vo.score_star;i++){
+					tag+="★"
+					}
 					tag += " ("+vo.score_star+")";
 					
 					if(vo.member_no=='${logNo}'){
@@ -134,6 +137,20 @@ $(document).ready(function () {
 				if(vo.member_no='${logNo}'){
 					tag += "<div style='display:none'><form method='post'>";
 					tag += "<input type='hidden' name='no' value='"+vo.no+"'/>";
+					tag+="<input type='text' name='score_star' value='"+vo.score_star+"' id='score_star'>"
+					tag += `<div class='rating'>
+			                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+			                <input type='checkbox' name='score_star2' id='rating1' value="1" class="rate_radio" title="1점">
+			                <label for="rating1"></label>
+			                <input type="checkbox" name="score_star2" id="rating2" value="2" class="rate_radio" title="2점">
+			                <label for="rating2"></label>
+			                <input type="checkbox" name="score_star2" id="rating3" value="3" class="rate_radio" title="3점">
+			                <label for="rating3"></label>
+			                <input type="checkbox" name="score_star2" id="rating4" value="4" class="rate_radio" title="4점">
+			                <label for="rating4"></label>
+			                <input type="checkbox" name="score_star2" id="rating5" value="5" class="rate_radio" title="5점">
+			                <label for="rating5"></label>
+			            </div>`
 					tag += "<textarea name='content' style='width:400px'>"+vo.content+"</textarea>";
 					tag += "<input type='submit' value='수정'/>";									
 					tag += "</form></div>";
@@ -179,10 +196,13 @@ $(function(){
 $(document).on('click','#reviewList input[value=수정]', function(){
 	$(this).parent().css("display","none");
 	$(this).parent().next().css("display","block");
+	$("#review").css("display","none");
 });
 $(document).on('submit','#reviewList form', function(){
 	event.preventDefault();
+	$("#score_star").val("4");
 	var params = $(this).serialize();
+ 	console.log(params);
 	var url = "/review/reviewEditOk";
 	$.ajax({
 		url:url,
@@ -198,7 +218,21 @@ $(document).on('submit','#reviewList form', function(){
 });
 
 //리뷰삭제
-$(document).on('click')
+$(document).on('click','#reviewList input[value=삭제]', function(){
+	if(confirm('리뷰를 삭제하시겠습니까?')){
+		var params = "no="+$(this).attr("title");
+		$.ajax({
+			url:'/review/reviewDel',
+			data:params,
+			success:function(result){
+				console.log(result);
+				reviewListAll();
+			}, error:function(){
+				console.log("리뷰삭제에러발생");
+			}
+		});
+	}
+});
 </script>
 <script>
 //별클릭 radio
@@ -210,6 +244,7 @@ Rating.prototype.setRate = function(newrate){
     items.forEach(function(item, idx){
         if(idx < newrate){
             item.checked = true;
+           alert('a'+newrate+item.checked);
         }else{
             item.checked = false;
         }
@@ -219,14 +254,18 @@ let rating = new Rating();
 
 document.addEventListener('DOMContentLoaded', function(){
     document.querySelector('.rating').addEventListener('click',function(e){
+    	
         let elem = e.target;
         if(elem.classList.contains('rate_radio')){
+        	alert('ab'+elem.value)
             rating.setRate(parseInt(elem.value));
             document.getElementById('score_star').value
     	    = elem.value;
         }
     })
 });
+
+
 </script>
 <div id="detail_container">
 	<div id="topDetail"></div>
