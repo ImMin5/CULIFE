@@ -9,15 +9,24 @@
 	header {background-color:#000}
 	html {-ms-overflow-style: none;}
 	html::-webkit-scrollbar{display:none}
-	footer {position:absolute; left:0; bottom:0}
+	input:focus {
+		border:2px solid orange;
+		border-color:orange;
+	    outline: none;
+	}
+	textarea:focus {
+		border:2px solid orange;
+		border-color:orange;
+	    outline: none;
+	}
 </style>
 
     <div id="online_exhibition_container">
     	<h2 class="hidden">온라인 전시회</h2>
-    	<a href="">작가목록</a>
+    	<a href="/online_exhibition/onlineAuthorList">작가목록</a>
 	    <c:if test="${grade == '1'}"> <!-- 작가 : 1 -->
 		   	<a href="javascript:;" id="reg_ex">전시등록</a>
-		   	<a href="/workCreate" id="reg_work">작품등록</a>
+		   	<a href="javascript:;" id="reg_work">작품등록</a>
 		</c:if>
 	    <img id="online_ex_searchIcon" src="/img/exhibition/magnifying_glass.png" alt="검색 아이콘">
     	<div id="online_ex_search">
@@ -51,7 +60,7 @@
 	    				<img src="/img/exhibition/test_img_1.jpg" alt="두번째 작품">
 	    			</li>
 	    		</ul>
-	    		<button>작품보기</button>
+	    		<button class="w-btn-neon2" type="button">작품보기</button>
 	    	</div>
 	    	<div id="online_ex_pagination">
 	    		<img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전">
@@ -73,7 +82,6 @@
     <div id="exhibition_reg_bg" class="modal">
     	<div id="exhibition_wrap" class="modal_wrap">
     		<h3>전시등록</h3>
-    		<img class="close" src="/img/exhibition/close.png" alt="닫기버튼">
     		<ul>
     			<li>
     				<figure id="ex_reg_img"></figure>
@@ -99,5 +107,39 @@
 					</form>
     			</li>    		
     		</ul>
+    		<i class="fa-solid fa-xmark"></i>
+    	</div>
+    </div>
+    
+    <!-- 작품등록 모달 -->
+    <div id="ex_work_bg" class="modal">
+    	<div id="ex_work_wrap" class="modal_wrap">
+    		<h3>작품등록</h3>
+    		<form id="ex_work_form" method="post" action="" enctype="multipart/form-data">
+				<ul id="ex_work_box">
+					<li class="exhibitionWorkContent">
+						<ul>
+							<li class="workThumbnail">
+								<p class="hidden">작품 썸네일</p>
+								<figure><img src="" id="workPreview1"/></figure>
+								<input class="work_upload-name" value="첨부파일" placeholder="첨부파일" readonly>
+								<input type="file" name="work_name" id="work_file1" class="workFile"/>
+								<label for="work_file1">파일찾기</label> 
+							</li>
+							<li class="exhibitionApplyTitle">
+								<p>작품명</p>
+								<input type="text">
+							</li>
+							<li class="exhibitionApplyContent">
+								<p>작품 설명</p>
+								<textarea></textarea>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
+				<input type="submit" value="등록하기" />
+			</form>
+			<i class="fa-solid fa-xmark"></i>
     	</div>
     </div>
