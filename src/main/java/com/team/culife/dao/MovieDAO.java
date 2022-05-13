@@ -12,5 +12,5 @@ import com.team.culife.vo.PagingVO;
 @Repository
 public interface MovieDAO {
 	public List<MovieVO> movieReviewSelectByMemberNo(PagingVO vo);
-
+	public int movieReviewTotalRecord(PagingVO vo);
 }
