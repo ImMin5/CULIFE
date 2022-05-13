@@ -13,12 +13,12 @@
 		<li>작성일</li>
 		<!-- 지워도되는부분 ↓↓↓ -->
 		<li>01</li>
-		<li><a href="#">제목쓸공간입니다1.</a></li>
+		<li><a href="/board/freeBoardView">제목쓸공간입니다1.</a></li>
 		<li>닉네임입니다.</li>
 		<li>1 회</li>
 		<li>22-05-06</li>
 		<li>02</li>
-		<li><a href="#">제목쓸공간입니다2.</a></li>
+		<li><a href="/board/freeBoardView">제목쓸공간입니다2.</a></li>
 		<li>닉네임입니다.</li>
 		<li>2 회</li>
 		<li>22-05-06</li>

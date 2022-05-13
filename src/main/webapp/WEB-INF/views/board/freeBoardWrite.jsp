@@ -3,6 +3,8 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 
 <div class="container">
+<br/>
+<form class="form-group" method="post" action="/board/freeBoardWriteOk?category=free" id="freeForm">
 <h1>자유 게시판 글쓰기폼</h1>
 <input type="text" class="form-control" id="freeBoardTitle" placeholder="글 제목을 입력하세요." name="title"/>
 <textarea name="content" id="editor"></textarea>
@@ -26,8 +28,9 @@
     <br>
     <div class="writeok">
     	<input type="submit" class="btn" id="writeBtn" value="등록"/>
-		<input type="reset" id="resetBtn" class="btn" value="취소"/>
-		<input type="button" class="btn" id="backList" value="리스트로 돌아가기"/>
+		<input type="reset"  class="btn"id="resetBtn" value="취소"/>
+		<input type="button" class="btn" id="backList" value="돌아가기"/>
     </div>
+    </form>
 <br />
 </div>
