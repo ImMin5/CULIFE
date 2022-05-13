@@ -16,4 +16,6 @@ public class ReviewVO {
 	private String write_date;
 	private int spo_check;
 	private int warning_count;
+	private String poster;
+	private int seq;
 }

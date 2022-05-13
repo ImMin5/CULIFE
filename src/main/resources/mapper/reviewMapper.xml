@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.culife.dao.ReviewDAO">
 	<insert id="reviewWrite">
-		insert into review(no, title, member_no, content, score_star, spo_check)
-		 values(#{no}, #{title}, #{member_no}, #{content}, #{score_star}, #{spo_check})
+		insert into review(no, title, member_no, content, score_star, spo_check, poster, seq)
+		 values(#{no}, #{title}, #{member_no}, #{content}, #{score_star}, #{spo_check}, #{poster}, #{seq})
 	</insert>
 	<select id="reviewList" resultType="ReviewVO">
 		select r.no, member_no, content, write_date, score_star,nickname from review r join member m

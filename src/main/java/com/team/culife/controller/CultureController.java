@@ -31,7 +31,7 @@ public class CultureController {
 	public String theaterList() throws IOException{
 		StringBuilder result = new StringBuilder();
 			String urlStr = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/realm?serviceKey="
-					+ "2cBi8%2FMgNHSEJAAbQmI%2BvzUi41lwnVyfTl%2BcTIesdtQnirvIHazsX%2BRzV4hboJb%2BJ6nBFNSIQTGC1pidgHzRcw%3D%3D&realmCode=A000";			
+					+ "2cBi8%2FMgNHSEJAAbQmI%2BvzUi41lwnVyfTl%2BcTIesdtQnirvIHazsX%2BRzV4hboJb%2BJ6nBFNSIQTGC1pidgHzRcw%3D%3D&realmCode=A000&rows=20";			
 			
 			URL url = new URL(urlStr);
 			
@@ -61,7 +61,7 @@ public class CultureController {
 		StringBuilder result = new StringBuilder();
 			String urlStr = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/realm?serviceKey="
 					+ "2cBi8%2FMgNHSEJAAbQmI%2BvzUi41lwnVyfTl%2BcTIesdtQnirvIHazsX%2BRzV4hboJb%2BJ6nBFNSIQTGC1pidgHzRcw%3D%3D&realmCode=B000"
-					+ "&rows=30"
+					+ "&rows=50"
 					+ "&realmCode=B000";			
 			
 			URL url = new URL(urlStr);
