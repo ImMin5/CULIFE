@@ -56,12 +56,12 @@ main {
    font-size: 1.9em;
    font-weight: 700;
    color: white;
-   margin: 23px 0;
+   margin: 29px 0 14px 0;
 }
 
 .search_date {
    font-size: 1.2em;
-   margin: 8px 0;
+   margin: 8px 0 40px 0;
    color: #b3b3b3;
    font-style: italic;
 }
@@ -77,4 +77,13 @@ main {
    display: -webkit-box;
    -webkit-line-clamp: 2;
    -webkit-box-orient: vertical;
+}
+
+.search_text {
+	margin-top: 150px;
+	text-align: center;
+	color: white;
+	font-size: 48px;
+	line-height: 70px;
+	
 }
