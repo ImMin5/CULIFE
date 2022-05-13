@@ -13,27 +13,34 @@ import com.team.culife.service.MovieService;
 @RestController
 @RequestMapping("/movie/")
 public class MovieController {
-	
-	@Inject
-	MovieService service;
+   
+   @Inject
+   MovieService service;
 
-	//영화 메인페이지이동
-	@GetMapping("movieList")
-	public ModelAndView movieList(HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("movie/movieList");
-		return mav;
-	}
+   //영화 메인페이지이동
+   @GetMapping("movieList")
+   public ModelAndView movieList(HttpSession session) {
+      ModelAndView mav = new ModelAndView();
+      mav.setViewName("movie/movieList");
+      return mav;
+   }
 
-	//영화 세부페이지이동
-
-	@GetMapping("movieView")
-	public ModelAndView movieView(int movieId) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("movieId",movieId);
-		mav.setViewName("movie/movieView");
-		return mav;
-	}
-	
+   //영화 세부페이지이동
+   @GetMapping("movieView")
+   public ModelAndView movieView(int movieId) {
+      ModelAndView mav = new ModelAndView();
+      mav.addObject("movieId",movieId);
+      mav.setViewName("movie/movieView");
+      return mav;
+   }
+   
+   //영화 검색페이지이동
+   @GetMapping("movieSearch")
+   public ModelAndView movieSearch(String searchMovie) {
+      ModelAndView mav = new ModelAndView();
+      mav.addObject("searchMovie", searchMovie);
+      mav.setViewName("movie/movieSearch");
+      return mav;
+   }
 
 }

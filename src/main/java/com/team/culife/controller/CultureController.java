@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class CultureController {	
 	
-	//���ظ���Ʈ
+	//연극리스트
 	@GetMapping("/theater/theaterList")
 	public ModelAndView theaterListAll() {
 		ModelAndView mav = new ModelAndView();
@@ -26,7 +26,7 @@ public class CultureController {
 		return mav;
 	}
 	
-	//���ظ���Ʈ(����)
+	//연극리스트(연극)
 	@PostMapping(value="/theater/theaterList", produces = "application/xml")
 	public String theaterList() throws IOException{
 		StringBuilder result = new StringBuilder();
@@ -55,7 +55,7 @@ public class CultureController {
 	}
 	
 
-	//���ظ���Ʈ(������)
+	//연극리스트(뮤지컬)
 	@PostMapping(value="/theater/theaterList2", produces = "application/xml")
 	public String theaterList2() throws IOException{
 		StringBuilder result = new StringBuilder();
@@ -85,7 +85,7 @@ public class CultureController {
 		return result.toString();
 	}	
 	
-	// ����&������ �� ������(view)
+	//연극&뮤지컬 상세 페이지(view)
 	@GetMapping("/theater/theaterView")
 	public ModelAndView theaterViewAll() {
 		ModelAndView mav = new ModelAndView();
@@ -93,7 +93,7 @@ public class CultureController {
 		return mav;
 	}
 	
-	// ����&������ �� ������(view)
+	//연극&뮤지컬 상세 페이지(view)
 	@PostMapping(value="/theater/theaterView", produces = "application/xml")
 	public String theaterView(HttpServletRequest request, HttpServletResponse response, @RequestParam String seq)throws Exception{
 		StringBuilder result = new StringBuilder();

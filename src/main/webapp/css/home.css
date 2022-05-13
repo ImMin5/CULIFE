@@ -10,13 +10,6 @@ body{
 	text-align:center;
 }
 section {overflow:hidden}
-section .home_scrolldown {
-	width:50px; height:50px;
-	position:absolute; left:50%; top:85vh;
-	transform:translateX(-25px);
-	z-index:5;
-	cursor:pointer;
-}
 h2 {
 	font-size:5rem; font-weight:500;
 	line-height:250px; color:#fff;
@@ -28,11 +21,11 @@ h2 {
 #home_pagination li {
 	display:block;
 }
-.home_tab_filled {background-color:#fff}
+.home_tab_filled {background-color:rgba(255,255,255,0.5)}
 #home_pagination span {
 	display:block;
 	width:calc(100vw/128); height:calc(100vh/72);
-	border:1px solid #fff;
+	border:1px solid rgba(255,255,255,0.8);
 	border-radius:50%;	
 	margin:calc(100vh/38.4) 0;
 	position:fixed; right:5%;
@@ -123,7 +116,7 @@ h2 {
 	background-size:100vw 100vh;
 	z-index:-2;
 }
-#home_entertain h2 {padding-top:7%}
+#home_entertain h2 {padding-top:8%}
 #home_entertain::after {
     content:"";
     width:100vw; height:100vh;
@@ -261,15 +254,15 @@ h2 {
 	z-index:-2;
 	background-color:rgba(0,0,0,0.1)
 }
-#home_notice_wrap{width:1200px; margin:0 auto}
-#home_notice .home_scrolldown {
-	transform:translateX(-25px) rotate(180deg);
-	top:80vh;
+#home_notice_wrap{
+	width:62.5vw; max-width:2400px;
+	margin:0 auto
 }
+
 #home_notice_wrap div {
 	height:100%; 
 	float:left;
-	padding-top:30vh
+	padding-top:32.5vh
 }
 
 #home_commu {width:60%; position:relative}

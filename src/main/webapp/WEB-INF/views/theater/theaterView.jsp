@@ -8,7 +8,10 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c6a67ea9b7a46ee55b3b3ccaaf230569"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c6a67ea9b7a46ee55b3b3ccaaf230569&libraries=services,clusterer,drawing"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script>
+//API(공연/지도)
+var mtitle;
 $(document).ready(function () {
 	$.ajax({
 		url: '/theater/theaterView', //통신을 원하는 URL주소를 입력합니다
@@ -43,8 +46,8 @@ $(document).ready(function () {
 				gpsX=$(this).find('gpsX').text()
 				gpsY=$(this).find('gpsY').text()
 							
-		
-		
+				$('input[name="title"]').val(title)
+				mtitle=title;
 				
 					topDetail += `						
 						<ul>						
@@ -90,7 +93,7 @@ $(document).ready(function () {
 						};
 					
 
-					// 마커를 생성합니다
+					// 마커 생성
 					var marker = new kakao.maps.Marker({
 					    position: markerPosition
 					});
@@ -98,17 +101,164 @@ $(document).ready(function () {
 					var map = new kakao.maps.Map(container, options);
 					$('#topDetail').empty().append(topDetail);
 					$('#midDetail').empty().append(midDetail);
-				
+					reviewListAll();
 			});
 		}
 });
 </script>
+<script>
+//리뷰리스트
+	function reviewListAll(){
+		var url = "/review/reviewList";
+		var params = "title="+mtitle
+		//alert(params)
+		$.ajax({
+			url:url,
+			data:params,
+			success:function(result){
+				//alert(JSON.stringify(result))
+				var $result = $(result);
+				var tag = "<ul>";
+				
+				$result.each(function(idx, vo){
+					tag += "<li><div>"+vo.nickname;
+					tag += " ("+vo.write_date+")";
+					tag += " ("+vo.score_star+")";
+					
+					if(vo.member_no=='${logNo}'){
+						tag += "<input type='button' value='수정'/>";
+						tag += "<input type='button' value='삭제' title='"+vo.no+"'/>";	
+					}
+					tag += "<br/>" + vo.content + "</div>";
 
+				if(vo.member_no='${logNo}'){
+					tag += "<div style='display:none'><form method='post'>";
+					tag += "<input type='hidden' name='no' value='"+vo.no+"'/>";
+					tag += "<textarea name='content' style='width:400px'>"+vo.content+"</textarea>";
+					tag += "<input type='submit' value='수정'/>";									
+					tag += "</form></div>";
+				}
+				tag += "<hr/></li>";		
+			});
+			tag+="</ul>";
+			
+			$("#reviewList").html(tag);
+		}, error:function(e){
+			console.log(e.responseText)
+		}
+	});
+}//--------------------------------
+
+$(function(){
+	//리뷰등록
+	$("#reviewFrm").submit(function(){		
+		event.preventDefault();
+		if($("#content").val()==''){
+			alert("리뷰를 입력 후 등록하세요.");
+			return false;
+		}else{
+			var params = $("#reviewFrm").serialize();
+			
+			$.ajax({
+				url:'/review/reviewWriteOk',
+				data:params,
+				type:'POST',
+				success:function(r){
+					$("#review").val("");
+					reviewListAll();
+				},
+				error:function(e){
+					console.log(e.responseText);
+				}
+			});
+		}
+	});
+})
+
+//리뷰수정
+$(document).on('click','#reviewList input[value=수정]', function(){
+	$(this).parent().css("display","none");
+	$(this).parent().next().css("display","block");
+});
+$(document).on('submit','#reviewList form', function(){
+	event.preventDefault();
+	var params = $(this).serialize();
+	var url = "/review/reviewEditOk";
+	$.ajax({
+		url:url,
+		data:params,
+		type:'POST',
+		success:function(result){
+			console.log(result);
+			reviewListAll();
+		},error:function(e){
+			console.log("수정에러발생");
+		}
+	});
+});
+
+//리뷰삭제
+$(document).on('click')
+</script>
+<script>
+//별클릭 radio
+function Rating(){};
+Rating.prototype.rate = 0;
+Rating.prototype.setRate = function(newrate){
+    this.rate = newrate;
+    let items = document.querySelectorAll('.rate_radio');
+    items.forEach(function(item, idx){
+        if(idx < newrate){
+            item.checked = true;
+        }else{
+            item.checked = false;
+        }
+    });
+}
+let rating = new Rating();
+
+document.addEventListener('DOMContentLoaded', function(){
+    document.querySelector('.rating').addEventListener('click',function(e){
+        let elem = e.target;
+        if(elem.classList.contains('rate_radio')){
+            rating.setRate(parseInt(elem.value));
+            document.getElementById('score_star').value
+    	    = elem.value;
+        }
+    })
+});
+</script>
 <div id="detail_container">
 	<div id="topDetail"></div>
 	<div id="detail">
 		<div id="midDetail"></div>
 		<div id="map" style="width: 500px; height: 400px;"></div>
+		
+		
+		<div id="review">
+			<form method="post" id="reviewFrm" action="/review/reviewWriteOk">	
+			<input type="hidden" name="score_star" id="score_star">		
+					<div class="rating">
+		                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+		                <input type="checkbox" name="score_star2" id="rating1" value="1" class="rate_radio" title="1점">
+		                <label for="rating1"></label>
+		                <input type="checkbox" name="score_star2" id="rating2" value="2" class="rate_radio" title="2점">
+		                <label for="rating2"></label>
+		                <input type="checkbox" name="score_star2" id="rating3" value="3" class="rate_radio" title="3점">
+		                <label for="rating3"></label>
+		                <input type="checkbox" name="score_star2" id="rating4" value="4" class="rate_radio" title="4점">
+		                <label for="rating4"></label>
+		                <input type="checkbox" name="score_star2" id="rating5" value="5" class="rate_radio" title="5점">
+		                <label for="rating5"></label>
+		            </div>		
+		            <input type="hidden" name="title" value="${vo.title}">            
+		            <textarea name="content" id="input_review" placeholder="리뷰를 남겨주세요." ></textarea>
+					<!-- <input type="checkbox" class="spo_check" value="스포"/> -->
+					<input type="submit" value="등록"/>
+			</form>
+		</div>
+		
+		<div id="reviewList"></div>
 	</div>
 	
 </div>
