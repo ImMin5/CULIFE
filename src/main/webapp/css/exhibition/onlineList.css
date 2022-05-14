@@ -16,7 +16,6 @@
 	border-radius:20px;
 	position:absolute; right:12vw; top:135px;
 	z-index:-2;
-	cursor:pointer;
 }
 #online_exhibition_container #reg_ex {left:10vw; top:65vh;}
 #online_exhibition_container #reg_work {
