@@ -566,6 +566,7 @@ public class MemberController {
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(reviewService.theaterReviewTotalRecord(pvo));
+				
 					
 					List<ReviewVO> list = reviewService.theaterReviewSelectByMemberNo(pvo);
 					

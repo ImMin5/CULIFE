@@ -75,7 +75,7 @@ let is_loading = false;
 						$("[name=review_row_"+row_num).append(`
 								<div class="col">
 								    <div class="card">
-								      <img onclick="location.href='${url}/theater/theaterView?seq=${'${element.seq}'}'"src="${'${element.poster_path}'}" class="card-img-top">
+								      <img onclick="location.href='${url}/theater/theaterView?seq=${'${element.seq}'}'"src="${'${element.poster}'}" class="card-img-top">
 								      <div class="card-body">
 								        <h5 class="card-title">${'${element.title}'}<br/><i style="color:blue"class="bi bi-star-fill"></i>${'${element.score_star}'}</h5>
 								        <p class="card-text">${'${element.content}'}</p>

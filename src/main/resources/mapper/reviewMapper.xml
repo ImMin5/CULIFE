@@ -28,7 +28,7 @@
   		</if>
 	</select>
 	<select id="theaterReviewSelectByMemberNo" resultType="com.team.culife.vo.ReviewVO">
-		select no, title, content, score_star, write_date, spo_check, warning_count from review
+		select no, title, content, score_star, write_date, spo_check, warning_count, poster, seq from review
   		where member_no=${member_no}
   		<if test='searchWord != null'>
   			and (title like '%${searchWord}%' or content like '%${searchWord}%') 
