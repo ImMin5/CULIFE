@@ -24,7 +24,7 @@ h2 {
 .home_tab_filled {background-color:rgba(255,255,255,0.5)}
 #home_pagination span {
 	display:block;
-	width:calc(100vw/128); height:calc(100vh/72);
+	width:15px; height:15px;
 	border:1px solid rgba(255,255,255,0.8);
 	border-radius:50%;	
 	margin:calc(100vh/38.4) 0;

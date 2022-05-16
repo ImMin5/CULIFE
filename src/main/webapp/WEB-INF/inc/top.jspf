@@ -35,7 +35,7 @@
 	</script>
 	<c:if test="${grade == '2'}"> <!-- 관리자 : 2 -->
 		<style>
-	    	header {background-color:rgba(255,255,255,0.8)}
+	    	header {background-color:rgba(255,255,255,0.8) !important}
 	    	header > a::after {opacity:1}
 	    	header a:link {color:#222}
 	    	header a:visited {color:#222}
