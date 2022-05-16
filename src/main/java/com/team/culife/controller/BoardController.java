@@ -23,7 +23,6 @@ public class BoardController {
 	@Inject 
 	MemberService memberService;
 	
-	
 	//자유게시판
 	@GetMapping("freeBoardList")
 	public ModelAndView freeboardList(PagingVO pVO) {
@@ -47,43 +46,44 @@ public class BoardController {
 	@GetMapping("freeBoardView")
 	public ModelAndView freeView(int no, String userid, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		
 		// 조회수 증가
-		/*
-		 * service.updateViews(no);
-		 * 
-		 * // 상세페이지 보이기(뷰 보이기) mav.addObject("viewVo", service.selectView(no));
-		 */
+		service.updateViews(no);
+		  
+		//상세페이지 보이기(뷰 보이기) 
+		mav.addObject("viewVo", service.selectView(no));
 		mav.setViewName("/board/freeBoardView");
 		
 		return mav;
 	}
 	
 	//자유게시판 글등록 DB연결
-		@PostMapping("freeBoardWriteOk")
-		public ModelAndView freeWriteOk(BoardVO vo, HttpSession session){
-			ModelAndView mav = new ModelAndView();
-			try {
-			// 현재 session에 있는 ID와 카테고리
+	@PostMapping("freeBoardWriteOk")
+	public ModelAndView freeWriteOk(BoardVO vo, HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		try {
+		// 현재 session에 있는 ID와 카테고리
 
-			vo.setMember_no((Integer)session.getAttribute("logNo")); 
-			vo.setNickname((String)session.getAttribute("logNickname")); 
-			vo.setCategory("free");
+		vo.setMember_no((Integer)session.getAttribute("logNo")); 
+		vo.setNickname((String)session.getAttribute("logNickname")); 
+		vo.setCategory("free");
 			
-			mav.addObject("cnt",service.boardInsert(vo));
+		mav.addObject("cnt",service.boardInsert(vo));
 
-			mav.addObject("vo", vo);
-			mav.setViewName("board/boardWriteSuc");
-			}catch(Exception e) {
-				e.printStackTrace();
-				mav.setViewName("redirect:/");
-			}
-			return mav;
+		mav.addObject("vo", vo);
+		mav.setViewName("board/boardWriteSuc");
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
 		}
+		return mav;
+	}
 	//문의사항게시판
 	@GetMapping("helpBoardList")
 	public ModelAndView helpboardList(PagingVO pVO) {	
 		ModelAndView mav = new ModelAndView();
 		
+		mav.addObject("list", service.selectList(pVO));
 		mav.setViewName("/board/helpBoardList");
 		return mav;	
 	}
@@ -95,7 +95,7 @@ public class BoardController {
 		mav.setViewName("board/helpBoardWrite");
 		return mav;
 	}
-	// 대여 상세페이지 뷰
+	// 문의사항 상세페이지 뷰
 	@GetMapping("helpBoardView")
 	public ModelAndView helpView(int no, String userid, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -109,4 +109,25 @@ public class BoardController {
 		
 		return mav;
 	}
+	//문의게시판 글등록 DB연결
+		@PostMapping("helpBoardWriteOk")
+		public ModelAndView helpWriteOk(BoardVO vo, HttpSession session){
+			ModelAndView mav = new ModelAndView();
+			try {
+			// 현재 session에 있는 ID와 카테고리
+
+			vo.setMember_no((Integer)session.getAttribute("logNo")); 
+			vo.setNickname((String)session.getAttribute("logNickname")); 
+			vo.setCategory("help");
+				
+			mav.addObject("cnt",service.boardInsert(vo));
+
+			mav.addObject("vo", vo);
+			mav.setViewName("board/boardWriteSuc");
+			}catch(Exception e) {
+				e.printStackTrace();
+				mav.setViewName("redirect:/");
+			}
+			return mav;
+		}
 }

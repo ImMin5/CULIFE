@@ -15,7 +15,6 @@ public class PagingVO {
 	private int totalPage;
 	private int offsetIndex = 0;
 	
-
 	private int member_no;
 	private String searchWord;
 	
