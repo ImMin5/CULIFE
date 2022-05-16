@@ -63,6 +63,9 @@ main{
 		        			token : token,
 		        		},success : function(data){
 		        			console.log(data);
+		        			if(data.status=="201"){
+		        				alert(data.msg);
+		        			}
 		        			window.location.href=data.redirect;
 		        		},fail : function(error){
 		        			console.log(error);

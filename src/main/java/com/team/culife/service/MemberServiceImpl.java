@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.team.culife.dao.MemberDAO;
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
+import com.team.culife.vo.MemberBanVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.PagingVO;
 
@@ -66,6 +67,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int authorFanTotalRecord(PagingVO vo) {
 		return dao.authorFanTotalRecord(vo);
+	}
+	@Override
+	public MemberBanVO memberBanSelectByMemberNo(int member_no) {
+		return dao.memberBanSelectByMemberNo(member_no);
 	}
 	
 	
