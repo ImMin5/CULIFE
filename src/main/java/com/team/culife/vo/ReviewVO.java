@@ -18,4 +18,6 @@ public class ReviewVO {
 	private int warning_count;
 	private String poster;
 	private int seq;
+	private int review_cnt;
+	private double star_avg;
 }
