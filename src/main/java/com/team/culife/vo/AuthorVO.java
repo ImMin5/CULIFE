@@ -15,4 +15,5 @@ public class AuthorVO {
 	String create_date;
 	int author_status;
 	String msg;
+	String author_msg;
 }

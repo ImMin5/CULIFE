@@ -1,28 +1,17 @@
 @charset "UTF-8";
 
 main {
-    font-weight: 100;
-    font-size: 12px;
-    line-height: 30px;
-    background: #dddddd;
-    width: 100%;
-}
-.container {
-	max-width: 900px;
-	width: 100%;
-	margin: 0 auto;
-	position: relative;
 	
 }
-.containerWrap {
-	min-height: 400px;
-	height: 100%;
-	background: white;
-	padding: 9vh 10vw;
+.container{
+	height: 600px;
+}
+.exhibitionContainer {
+	margin-top: 100px;
+}
+#authorWrite {
 	margin: 0 auto;
-	margin-bottom:100px;
-	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
-		rgba(0, 0, 0, 0.24);
+	width: 200px;
 }
 .authorWriteTitle {
 	font-size: 2rem;

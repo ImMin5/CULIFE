@@ -2,23 +2,47 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
-<%@ include file="adminTop.jspf" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
 <script>
+$(function () {	
 	$("#searchFrm").submit(function(){
-		//if(searchKey)
-	});
+		if($("#searchWord").val()==""){
+			alert("검색어를 입력해주세요.");
+			return false;
+		}
+	});	
+});	
 </script>
+<div class="wrap">
+<%@ include file="adminTop.jspf" %>
 <div class="admin_container">
-	<h1>회원관리</h1>
+	<ul class='mini_top'>
+		<li>회원관리</li>
+		<li>
+			<!-- 검색 -->
+			<div class='adminList_searchFrm'>
+				<form method="get" action="/admin/memberList" id='searchFrm'>
+					<select name="searchKey" id="searchkey">
+						<option value='kakao_id'>카카오ID</option>
+						<option value='nickname'>닉네임</option>
+						<option value='grade'>회원등급</option>
+						<option value='status'>회원상태</option>
+					</select>
+					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
+					<input type="submit" value="검색" id="searchBtn"/>
+				</form>
+			</div>
+		</li>
+	</ul>
 	<ul class='memberList'>
-		<li>번호</li>
-		<li>카카오ID</li>
-		<li>닉네임</li>
-		<li>회원등급</li>
-		<li>회원가입일</li>
-		<li>회원상태</li>
-		<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+		<li class='list_title'>번호</li>
+		<li class='list_title'>카카오ID</li>
+		<li class='list_title'>닉네임</li>
+		<li class='list_title'>회원등급</li>
+		<li class='list_title'>회원가입일</li>
+		<li class='list_title'>정지기간</li>
+		<li class='list_title'>회원상태</li>
+		<li class='list_title'>설정</li>
 
 		<c:forEach var="vo" items="${memberList}">
 			<li>${vo.no}</li>
@@ -34,6 +58,12 @@
 			<li>관리자</li>
 			</c:if>			
 			<li>${vo.create_date}</li>
+			<c:if test="${empty vo.end_date}">
+			<li>-</li>
+			</c:if>
+			<c:if test="${not empty vo.end_date}">
+			<li>${vo.end_date}</li>
+			</c:if>
 			<c:if test="${vo.status eq 'False'}">
 			<li>정상</li>
 			</c:if>
@@ -54,15 +84,14 @@
 			</li>
    		</c:forEach>
 	</ul>
-	
 	<!-- 페이징 -->
 	<ul class="paging">
 	<!--  이전페이지 -->
 	<c:if test="${pVO.pageNum == 1 }">
-		<li>prev</li>
+		<li>◀</li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/memberList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">prev</a></li>
+		<li><a href="/admin/memberList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
@@ -77,26 +106,12 @@
 	</c:forEach>
 	<!--  다음페이지 -->
 	<c:if test="${pVO.pageNum == pVO.totalPage }">
-		<li>next</li>
+		<li>▶</li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/memberList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">next</a></li>
-	</c:if>	
-		
+		<li><a href="/admin/memberList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+	</c:if>
+		<li><input type="button" value="목록" id="resetList" onclick="location.href='/admin/memberList'"/></li>
 	</ul>
-	
-	<!-- 검색 -->
-	<div class='adminList_searchFrm'>
-		<form method="get" action="/admin/memberList" id='searchFrm'>
-			<select name="searchKey">
-				<option value='kakao_id'>카카오ID</option>
-				<option value='nickname'>닉네임</option>
-				<option value='grade'>회원등급</option>
-				<option value='status'>회원상태</option>
-			</select>
-			<input type="text" name="searchWord" id='searchWord'/>
-			<input type="submit" value="검색"/>
-		</form>
-	</div>
-	
-</div><!-- class='memberList_container' -->
+</div><!-- class='adminList_container' -->
+</div>

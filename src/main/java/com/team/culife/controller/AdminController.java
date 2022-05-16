@@ -102,7 +102,7 @@ public class AdminController {
 	@GetMapping("/adminBoardList")
 	public ModelAndView adminBoardList(AdminPagingVO pVO) {
 		ModelAndView mav = new ModelAndView();
-		//작가목록목록페이징
+		//자유게시판목록페이징
 		pVO.setTotalRecord(service.adminboard_totalRecord(pVO));
 		mav.addObject("pVO", pVO);
 		//자유게시판목록 불러오기
@@ -122,13 +122,25 @@ public class AdminController {
 	}
 	
 	//choi0506-문의게시판 페이지로 이동
-		@GetMapping("/adminHelpList")
-		public ModelAndView adminHelpList() {
-			ModelAndView mav = new ModelAndView();
-			//문의사항목록 불러오기
-			//mav.addObject("adminHelpList", service.authorList(pVO));
-				
-			mav.setViewName("/admin/adminHelpList");
-			return mav;
-		}
+	@GetMapping("/adminHelpList")
+	public ModelAndView adminHelpList(AdminPagingVO pVO) {
+		ModelAndView mav = new ModelAndView();
+		//문의사항목록페이징
+		pVO.setTotalRecord(service.adminhelp_totalRecord(pVO));
+		mav.addObject("pVO", pVO);
+		//문의사항목록 불러오기
+		mav.addObject("adminHelpList", service.adminHelpList(pVO));
+			
+		mav.setViewName("/admin/adminHelpList");
+		return mav;
+	}
+	
+	//choi0504-자유게시판 게시글삭제
+	@GetMapping("/adminHelpDel")
+	public ModelAndView adminHelpDel(BoardVO bVO) {
+		ModelAndView mav = new ModelAndView();
+		service.adminHelpDel(bVO);
+		mav.setViewName("redirect:/admin/adminHelpList");
+		return mav;
+	}
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.culife.dao.ReviewDAO">
+	<insert id="reviewWrite">
+		insert into review(no, title, member_no, content, score_star, spo_check, poster, seq)
+		 values(#{no}, #{title}, #{member_no}, #{content}, #{score_star}, #{spo_check}, #{poster}, #{seq})
+	</insert>
+	<select id="reviewList" resultType="ReviewVO">
+		select r.no, member_no, content, write_date, score_star,nickname from review r join member m
+		on r.member_no = m.no
+		where title=#{param1}
+		order by no desc
+	</select>
+	<update id="reviewEdit">
+		update review set content=#{content}, score_star=#{score_star}, spo_check=#{spo_check}
+		 where no=${no} and member_no=#{member_no}
+	</update>
+	<delete id="reviewDel">
+		delete from review where no=${param1} and member_no=#{param2}
+	</delete>
+	<select id="theaterReviewTotalRecord" resultType="int">
+		select count(no) from review
+  		where member_no=${member_no}
+  		<if test='searchWord != null'>
+  			and (title like '%${searchWord}%' or content like '%${searchWord}%') 
+  		</if>
+	</select>
+	<select id="theaterReviewSelectByMemberNo" resultType="com.team.culife.vo.ReviewVO">
+		select no, title, content, score_star, write_date, spo_check, warning_count from review
+  		where member_no=${member_no}
+  		<if test='searchWord != null'>
+  			and (title like '%${searchWord}%' or content like '%${searchWord}%') 
+  		</if>
+  		order by write_date
+  		limit ${recordPerPage} offset ${offsetIndex}
+	</select>
+</mapper>
