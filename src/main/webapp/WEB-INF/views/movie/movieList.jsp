@@ -418,7 +418,7 @@ body {
         setInterval(translate, 0);
 
         function translate() {
-          let offsetIncrement = isMouseIn ? 0.001 : 0.1;
+          let offsetIncrement = isMouseIn ? 0.001 : 0.29;
           if (xOffset >= 258 * 7) xOffset = 0;
           else xOffset = xOffset + offsetIncrement;
           boxSlides.style.transform = "translateX(-" + xOffset + "px)";
