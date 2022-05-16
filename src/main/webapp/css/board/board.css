@@ -2,10 +2,10 @@
 h1{
 	text-align:center;
 	font-size:5rem;
+	color:white;
 }
 .freeboardList{
-	overflow:hidden;
-	text-align:center;
+	text-align:center;	
 }
 .freeboardList li{
 	float:left;
@@ -15,7 +15,19 @@ h1{
 	width:20%;
 	text-align:center;
 	color:white;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
 }
+/* .freeboardList>li:nth-child(5n+1),li:nth-child(5n+4){
+	width:8%;
+}
+.freeboardList>li:nth-child(5n+2){
+	width:55%;
+}
+.freeboardList>li:nth-child(5n+3){
+	width:14%;
+} */
 .freeboardList ol{
 	height:40px;
 	line-height:40px;
@@ -27,8 +39,37 @@ h1{
 /* .freeboardList li a{ 본문 제목
 	color:black;
 }*/
-.freeboardList button a{ /*글쓰기 버튼*/
-	color:black;
+.helpboardList{
+	text-align:center;	
+}
+.helpboardList li{
+	float:left;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ddd;
+	width:15%;
+	text-align:center;
+	color:white;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.helpboardList>li:nth-child(5n+1),li:nth-child(5n+4){
+	width:8%;
+}
+.helpboardList>li:nth-child(5n+2){
+	width:55%;
+}
+.helpboardList>li:nth-child(5n+3){
+	width:14%;
+}
+.helpboardList ol{
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	width:5%;
+	display:inline-block;
+	margin:10px 0 0 -35px;
 }
 /*
 .freeboardList ol a{ 페이징 버튼 부트스트랩쓰면 사라질 얘들입니다.

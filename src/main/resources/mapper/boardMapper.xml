@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.culife.dao.BoardDAO">
+	<insert id="boardInsert">
+		insert into board(no,subject,content,view,member_no,category)
+		values(#{no},#{subject},#{content},#{view},#{member_no},#{category})
+	</insert>
+	<select id='selectList' resultType="BoardVO">
+		select no, subject, member_no,view,write_date from board
+	</select>
+	<delete id="deleteView">
+		delete from board where no=#{param1} and member_no=#{param2}
+	</delete>
+	<update id="updateViews">
+		update board set views=views+1 where no=#{param1}
+	</update>
+	
+</mapper>

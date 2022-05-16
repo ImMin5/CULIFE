@@ -12,7 +12,7 @@ public class PagingVO {
 	private int recordPerPage = 10;
 	private int onePageCount = 5;
 	private int totalRecord;
-	private int totalPage; 
+	private int totalPage;
 	private int offsetIndex = 0;
 	
 
