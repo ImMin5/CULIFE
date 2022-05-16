@@ -12,14 +12,14 @@ h1{
 	height:40px;
 	line-height:40px;
 	border-bottom:1px solid #ddd;
-	width:15%;
+	width:20%;
 	text-align:center;
 	color:white;
 	overflow:hidden;
 	white-space:nowrap;
 	text-overflow:ellipsis;
 }
-.freeboardList>li:nth-child(5n+1),li:nth-child(5n+4){
+/* .freeboardList>li:nth-child(5n+1),li:nth-child(5n+4){
 	width:8%;
 }
 .freeboardList>li:nth-child(5n+2){
@@ -27,7 +27,7 @@ h1{
 }
 .freeboardList>li:nth-child(5n+3){
 	width:14%;
-}
+} */
 .freeboardList ol{
 	height:40px;
 	line-height:40px;

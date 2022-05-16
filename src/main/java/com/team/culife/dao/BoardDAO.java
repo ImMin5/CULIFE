@@ -16,7 +16,7 @@ public interface BoardDAO {
 	public int boardInsert(BoardVO vo);
 	
 	// 글 리스트 보이기
-	public List<BoardVO> selectList(BoardVO vo);
+	public List<BoardVO> selectList(PagingVO pvo);
 	
 	// 글 내용
 	public BoardVO selectView(int no);

@@ -11,7 +11,7 @@ public interface BoardService {
 	public int boardInsert(BoardVO vo);
 	
 	// 글 리스트 보이기
-	public List<BoardVO> selectList(BoardVO vo);
+	public List<BoardVO> selectList(PagingVO pvo);
 
 	//조회수
 	public void updateViews(int no);
