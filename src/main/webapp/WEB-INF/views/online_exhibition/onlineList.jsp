@@ -92,15 +92,20 @@
 						<ul class="exhibitionWriteContent">
 							<li class="exhibitionWriteTitle">
 								<p>전시 기간</p>
-								<input type="date" name="startDate" id="startDate" class="ridingDate"> - <input type="date" name="endDate" id="endDate" class="ridingDate">
+								<input type="date" name="start_date" id="startDate" class="ridingDate"> - <input type="date" name="end_date" id="endDate" class="ridingDate">
 							</li>
 							<li class="exhibitionWriteDate">
 								<p>전시명</p>
-								<input type="text">
+								<input type="text" name="subject">
 							</li>
 							<li class="exhibitionWriteContent">
 								<p>전시 설명</p>
-								<textarea></textarea>
+								<textarea name="content"></textarea>
+							</li>
+							<li class="exhibitionWriteType">
+								<p>전시 유형</p>
+								<div><input id="exhibitionRadio" type="radio" name="type" value="1"> <span>그림 전시</span>
+								<input id="exhibitionRadio" type="radio" name="type" value="2"> <span>글 전시</span></div>
 							</li>
 						</ul>
 						<input type="submit" value="등록하기" />
