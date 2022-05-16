@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.ReviewVO;
 
 @Mapper
@@ -17,4 +18,7 @@ public interface ReviewDAO {
 	public double starAvg(String title);
 	public int reviewCnt(String title);
 	int oxReview(int member_no,String title);
+	
+	public int theaterReviewTotalRecord(PagingVO vo);
+	public List<ReviewVO>theaterReviewSelectByMemberNo(PagingVO vo);
 }
