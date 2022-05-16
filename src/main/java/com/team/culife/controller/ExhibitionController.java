@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpHeaders;
@@ -47,14 +48,14 @@ public class ExhibitionController {
 		
 		System.out.println(mvo.getNickname());
 		System.out.println(mvo.getNo());
-		//System.out.println(avo.getAuthor_status());
 		 
 		mav.setViewName("exhibition/authorWrite");
 		return mav;
 	}
 	// 작가등록
-	@PostMapping("authorWriteOk")
-	public ResponseEntity<String> authorWriteOk(AuthorVO vo, HttpServletRequest request, HttpSession session){
+	@PostMapping("/authorWriteOk")
+	@ResponseBody
+	public ResponseEntity<String> authorWriteOk(AuthorVO vo, HttpServletRequest request, HttpServletResponse response, HttpSession session){
 		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
@@ -64,18 +65,18 @@ public class ExhibitionController {
 		
 		System.out.println("author " + vo.getAuthor());
 		System.out.println("debut_year " + vo.getDebut_year());
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html",Charset.forName("UTF-8")));
-		
-        try {        	
-        	authorService.authorWrite(vo);
-        	String msg = "<script>alert('작가 신청되었습니다.');location.href='/exhibition/authorWrite';</script>";
+		try {        	
+			authorService.authorWrite(vo);
+			String msg = "작가 신청되었습니다.";
 			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	String msg = "<script>alert('작가등록 실패');history.back();</script>";
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = "작가등록 실패";
 			entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST);
-        }
+		}
 		
 		
 		return entity;
@@ -90,17 +91,19 @@ public class ExhibitionController {
 
 	
 	@GetMapping("exhibitionWrite")
-	public ModelAndView exhibitionApply(HttpSession session, ExhibitionVO vo) {
-
+	public ModelAndView exhibitionApply(HttpSession session, HttpServletRequest request, ExhibitionVO vo) {
+		vo.setAuthor_no((Integer)request.getSession().getAttribute("authorNo"));
+		System.out.println("author_no " + vo.getAuthor_no());
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("exhibition/exhibitionWrite");
 		return mav;
 	}
 	@PostMapping("exhibitionWriteOk")
 	public ResponseEntity<String> exhibitionWriteOk(ExhibitionVO vo, HttpServletRequest request, HttpSession session){
-
+		/* vo.setAuthor_no((Integer)request.getSession().getAttribute("authorNo")); */
 		System.out.println("end_date " + vo.getEnd_date());
 		System.out.println("Type " + vo.getType());
+		System.out.println("author_no " + vo.getAuthor_no());
 		ResponseEntity<String> entity = null;
 		return entity;
 	}

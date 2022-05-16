@@ -50,7 +50,7 @@
 					<div class="col">
 						<!-- 작가 대표 사진 -->
 						<div id="mypage_member_thumbnail_container">
-							<img id="thumbnail_member" src="${url}/upload/${logNo}/author/thumbnail/${avo.thumbnail}"/>
+							<%-- <img id="thumbnail_member" src="${url}/upload/${logNo}/author/thumbnail/${avo.thumbnail}"/> --%>
 							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
 						</div>
 						<div class="mb-3" style="display:none;">
@@ -63,12 +63,12 @@
 						  	<label >작가 이름</label>
 						</div>
 						<div class="form-floating mb-3" style="margin:0 auto; width:50%; font-size:2.1rem;">
-	  						<input type="text" class="form-control" id="sns_link" name="sns_link" value="${mvo.nickname}" placeholder="닉네임" style=" font-size:2.4rem; height:75px;">
+	  						<input type="text" class="form-control" id="sns_link" name="sns_link" value="${avo.sns_link}" placeholder="닉네임" style=" font-size:2.4rem; height:75px;">
 						  	<label >sns 주소</label>
 						  	
 						</div>
 						<div class="form-floating mb-3" style="margin:0 auto; width:50%; font-size:2.1rem;">
-	  						<input type="text" class="form-control" id="" value="${mvo.nickname}" placeholder="닉네임" style=" font-size:2.4rem; height:75px;">
+	  						<input type="text" class="form-control" id="" value="${avo.debut_year}" placeholder="닉네임" style=" font-size:2.4rem; height:75px;">
 						  	<label >데뷔 연도</label>
 						  	
 						</div>

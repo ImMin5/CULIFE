@@ -4,10 +4,14 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
 let authorch = false;
 
 $(function(){
+	$("#thumbnail_btn").on("click",function(){
+		$("#authorThumbnail").trigger("click");
+	})
 	$("#authorWriteName").keyup(function(){
 		var author = $("#authorWriteName").val();
 		authorch = false;
@@ -89,14 +93,14 @@ function authorSubmit() {
 		alert("자기소개를 입력해 주세요")
 	}
 	else if (author_status != '' ) {
-		alert("이미 작가신청이 완료되었습니다.")
+		alert("작가 신청 심사 중입니다.")
 	}
 	else {
 	
 		$.ajax({
 			url: '/authorWriteOk',
 			type: 'POST', 
-			dataType: 'json',
+			dataType: "html",
 			data : {
 				nickName: '${mvo.nickname}',
 				member_no: '${mvo.no}',
@@ -108,13 +112,17 @@ function authorSubmit() {
 			},
 			
 			success: function(result) {
-				consloe.log("작가 신청 완료");
+				console.log("작가 신청 완료")
+				console.log(result)
 				if (result) {
-					alert("작가 신청 완료되었습니다.");
+					alert(result)
+					window.location.href='/mypage/authorWrite';
 				} else {
-					alert("작가 신청 실패");
+					alert("작가 신청 실패")
 				}
-					
+			},
+			error: function(request, status, error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});
 	}
@@ -130,8 +138,9 @@ function authorSubmit() {
 						<div class="authorWriteThumbnail">
 							<img src="/img/member/default_thumbnail.png" id="preview"
 								style="width: 170px; height: 170px;" /> 
+							<img class="thumbnail_btn" id="thumbnail_btn" src="${url}/img/member/thumbnail_btn.png"/>
 							<input type="file" name="authorThumbnail" class="files" id="authorThumbnail"
-								style="width: 270px; height: 46px;" value="사진 선택">
+								style="display:none;">
 						</div>
 						<div class="authorWriteContent">
 							<div class="authorWriteID">

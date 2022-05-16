@@ -98,9 +98,13 @@ public class MemberController {
 	
 	//마이페이지 - 작가 정보 뷰 
 	@GetMapping("/mypage/author")
-	public ModelAndView mypageAuthor(HttpSession session) {
+	public ModelAndView mypageAuthor(HttpSession session, String author) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
+		MemberVO mvo = memberService.memberSelectByNo(memberNo);
+		AuthorVO avo = authorService.authorSelect(author);
+		mav.addObject("mvo", mvo);
+		mav.addObject("avo", avo);
 		try {
 			if(memberNo == null) {
 				mav.setViewName("redirect:/");
