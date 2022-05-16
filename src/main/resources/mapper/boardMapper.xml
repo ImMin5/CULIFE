@@ -17,11 +17,8 @@
 		update board set views=views+1 where no=#{param1}
 	</update>
 	<select id="boardTotalRecord" resultType="int">
-		select count(no) cnt from board
-		where category=#{category}
-		<if test='member_no != null'>
-			and member_no=${member_no}
-		</if>
+		select count(no) from board
+		where category=#{category} and member_no=${member_no}
   		<if test='searchWord != null'>
   			and content like '%${searchWord}%' or subject like '%${searchWord}%'
   		</if>
