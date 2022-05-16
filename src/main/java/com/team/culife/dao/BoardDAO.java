@@ -35,4 +35,8 @@ public interface BoardDAO {
 
 	// 글 삭제
 	public int deleteView(int no, int member_no);
+	
+	public int boardTotalRecord(PagingVO vo);
+	
+	public List<BoardVO> boardSelectByMemberNo(PagingVO vo);
 }

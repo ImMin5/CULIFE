@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+#authorView_container {
+	width:100vw; height:100%;
+	background-color:#F6F5F0;
+}
+.authorView_modal {
+	height:100vh !important; overflow:hidden;
+}
+#authorView_wrap {
+	width:1200px; height:100%;
+	margin:100px auto 0 auto;
+}
+#author_profile {
+	width:100%; height:400px;
+	padding:50px 0;
+	border-bottom:1px solid #c0c0c0;
+}
+#author_profile > img {
+	width:300px; height:400px;
+	margin-left:100px;
+}
+#author_profile > ul {
+	width:700px; height:380px;
+	margin-right:50px; padding-top:20px;
+	float:right;
+	font-size:2rem;
+	line-height:50px;
+}
+#author_profile > ul > li:nth-child(4) {
+	width:90%; height:200px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	background-color:rgba(255,255,255,0.5);
+	border:1px solid #c0c0c0;
+	font-size:1.8rem;
+	line-height:30px;
+}
+#author_works > h2 {font-size:2rem;	line-height:80px}
+#author_works > ul {
+	width:960px; height:420px;
+	display:block;
+	margin:0 auto;
+}
+#author_works > ul > li {
+	float:left;
+	width:225px; height:200px;
+	margin:0 20px 20px 0;
+	cursor:pointer
+}
+#author_works > ul > li > img {width:100%; height:100%;}
+#author_works > ul > li:nth-child(4n) {margin-right:0px;}
+
+
+/* pagination - start */
+.pagination {width:300px; height:100px; margin:0 auto;}
+.pagination > ol > li {
+	width:calc(300px/5);
+	line-height:80px;
+	float:left;
+	text-align:center;
+}
+.pagination > ol > li > a {color:#222}
+/* pagination - end */
+
+/* 작품상세 모달 - start */
+#workDeatil_bg {display:block}
+#workDetail_wrap {
+	width:1200px; height:800px;
+	margin:50vh auto 0 auto;
+	transform:translateY(-400px);
+	background:url(/img/exhibition/marble_bg.png);
+	overflow:hidden
+}
+#workDetail_wrap > ul {
+	width:100%; height:85%;
+	display:block;
+	overflow-y:auto;
+}
+#workDetail_wrap > ul > li {
+	width:100%; height:650px;
+	display:block;
+	padding:20px 0 10px 0;
+	position:relative;
+}
+.workDetail_img {
+	width:600px; height:630px;
+	display:block;
+	position:relative;
+	margin-left:50px;
+}
+.workDetail_img > img {
+	min-width:400px; max-width:600px; max-height:630px;
+	position:absolute; 
+	left: 50%; top:50%;
+	transform: translate(-50%, -50%);
+	display:block;
+}
+.workDetail_info {
+	width:380px; height:570px;
+	display:block; padding:30px 50px;
+	position:absolute; right:50px; top:20px;
+	font-size:2rem;
+	line-height:50px;
+}
+.workDetail_info > ul > li:nth-child(4) {
+	margin-top:50px
+}
+.workDetail_info p {
+	width:100%; height:300px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	background-color:rgba(255,255,255,0.5);
+	border:1px solid #c0c0c0;
+	
+}
+/* 작품상세 모달 - end */
+

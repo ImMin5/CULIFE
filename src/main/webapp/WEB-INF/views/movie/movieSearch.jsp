@@ -58,8 +58,8 @@ const SEARCHAPI =
           overview.innerHTML = element.overview;
           
           image.src =  base_url + element.poster_path;
-          image.setAttribute("data-id", element.id);
-          image.setAttribute("onClick", "openView(this)"); 
+          div.setAttribute("data-id", element.id);
+          div.setAttribute("onClick", "openView(this)"); 
     
           main.appendChild(div);
           div.appendChild(image);

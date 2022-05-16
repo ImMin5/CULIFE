@@ -9,12 +9,14 @@ import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+@Repository
 @RestController
 public class CultureController {	
 	
@@ -31,7 +33,7 @@ public class CultureController {
 	public String theaterList() throws IOException{
 		StringBuilder result = new StringBuilder();
 			String urlStr = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/realm?serviceKey="
-					+ "2cBi8%2FMgNHSEJAAbQmI%2BvzUi41lwnVyfTl%2BcTIesdtQnirvIHazsX%2BRzV4hboJb%2BJ6nBFNSIQTGC1pidgHzRcw%3D%3D&realmCode=A000";			
+					+ "2cBi8%2FMgNHSEJAAbQmI%2BvzUi41lwnVyfTl%2BcTIesdtQnirvIHazsX%2BRzV4hboJb%2BJ6nBFNSIQTGC1pidgHzRcw%3D%3D&realmCode=A000&rows=20";			
 			
 			URL url = new URL(urlStr);
 			
@@ -61,7 +63,7 @@ public class CultureController {
 		StringBuilder result = new StringBuilder();
 			String urlStr = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/realm?serviceKey="
 					+ "2cBi8%2FMgNHSEJAAbQmI%2BvzUi41lwnVyfTl%2BcTIesdtQnirvIHazsX%2BRzV4hboJb%2BJ6nBFNSIQTGC1pidgHzRcw%3D%3D&realmCode=B000"
-					+ "&rows=30"
+					+ "&rows=50"
 					+ "&realmCode=B000";			
 			
 			URL url = new URL(urlStr);

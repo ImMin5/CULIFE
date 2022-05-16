@@ -62,4 +62,10 @@
   		order by b.author
   		limit ${recordPerPage} offset ${offsetIndex}
   	</select>
+  	
+  	<select id="memberBanSelectByMemberNo" resultType="com.team.culife.vo.MemberBanVO">
+  		select no, member_no, start_date, end_date
+  		from member_ban
+  		where member_no=${param1}
+  	</select>
   </mapper>

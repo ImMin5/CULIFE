@@ -35,7 +35,7 @@ public class ReviewController {
 	
 	//¸®ºä¼öÁ¤
 	@PostMapping("/review/reviewEditOk")
-	public int editOk(ReviewVO vo, HttpSession session) {
+	public int editOk(ReviewVO vo,Integer score_star,  Integer score_star2, HttpSession session) {
 		vo.setMember_no((Integer)session.getAttribute("logNo"));
 		return service.reviewEdit(vo);
 	}

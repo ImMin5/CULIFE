@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
+import com.team.culife.vo.MemberBanVO;
 import com.team.culife.vo.MemberVO;
 
 @RestController
@@ -66,14 +67,15 @@ public class LoginController {
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String, String>();
 		try {
+			result.put("status", "200");
 			if(jsonObj == null) {
 				System.out.println("잘못된 접근입니다.");
 			}
-			System.out.println(jsonObj.toString());
-			
 			//이메일이 없을 경우 or is_email_valid가 false일 경우 
 			if(!jsonObj.getJSONObject("kakao_account").getBoolean("has_email")) {
+				result.put("redirect", "/");
 				System.out.println("이메일을 입력 받아야 합니다.");
+				
 			}
 			mvo = memberService.memberSelectByEmail(jsonObj.getJSONObject("kakao_account").getString("email"));
 			if(mvo == null) {
@@ -91,20 +93,31 @@ public class LoginController {
 				session.setAttribute("grade",mvo.getGrade());
 				
 				result.put("msg","회원가입 성공");
-				result.put("status", "200");
 				result.put("redirect", "/");
 				System.out.println("회원가입");
 			}
 			else {
-				//로그인
-				session.setAttribute("logNo", mvo.getNo());
-				session.setAttribute("logNickname", mvo.getNickname());
-				session.setAttribute("Token", token);
-				session.setAttribute("grade",mvo.getGrade());
 				
-				result.put("msg","로그인 성공");
-				result.put("status", "200");
-				result.put("redirect", "/");
+				//정지된 회원인기 판별
+				if(mvo.getStatus() == 0) {
+					//로그인
+					session.setAttribute("logNo", mvo.getNo());
+					session.setAttribute("logNickname", mvo.getNickname());
+					session.setAttribute("Token", token);
+					session.setAttribute("grade",mvo.getGrade());
+					
+					result.put("msg","로그인 성공");
+					result.put("status", "200");
+					result.put("redirect", "/");
+					
+				}else {
+					//정지된 아이디
+					MemberBanVO mbvo = memberService.memberBanSelectByMemberNo(mvo.getNo());
+					result.put("msg", "[정지된 아이디]\n기간 : "+mbvo.getStart_date().split(" ")[0] + " ~ " + mbvo.getEnd_date().split(" ")[0]);
+					result.put("status", "201");
+					result.put("redirect", "/login");
+				}
+				
 				System.out.println("로그인 성공");
 			}    
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
