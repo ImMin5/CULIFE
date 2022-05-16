@@ -36,6 +36,20 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
+	public double starAvg(String title) {
+		return dao.starAvg(title);
+	}
+
+	@Override
+	public int oxReview(int member_no,String title) {
+		return dao.oxReview(member_no,title);
+	}
+
+	@Override
+	public int reviewCnt(String title) {
+		return dao.reviewCnt(title);
+	}
+	
 	public int theaterReviewTotalRecord(PagingVO vo) {
 		return dao.theaterReviewTotalRecord(vo);
 	}

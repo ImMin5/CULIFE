@@ -142,7 +142,7 @@
 	margin:25px;
 }
 .author_details {width:400px; float:right;}
-.author_details > h4 {
+.author_details > h2 {
 	font-size:2.4rem;
 	line-height:50px;
 	margin:25px 0;

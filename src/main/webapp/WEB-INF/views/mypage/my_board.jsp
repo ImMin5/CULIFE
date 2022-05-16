@@ -3,68 +3,40 @@
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage_board.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<style>
+.tr_record{
+	height:2vh;
+}
+</style>
 <script>
 	$(function(){
+		
+		console.log("${pvo.totalPage}")
 		//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
+		//게시판 타입 선택
 		$("#select_container").on("change",function(){
-			console.log($(this).val());
-			//window.location.href="${url}/mypage/review/"+$(this).val();
-		})
+			console.log("select-->",$(this).val());
+			window.location.href="${url}/mypage/board?category="+$(this).val();
+		});
 		
-		$("#thumbnail_member_btn").on("click",function(){
-			$("#formFile_member").trigger("click");
-		})
+		$(document).ready(function(){
+			var category = "${pvo.category}";
+			$("#select_container").val(category).prop("selected",true);
+		});
 		
-		//회원 탈퇴
-		$("#memberForm_member_delete_btn").on("click", function(){
-			var url = "${url}/mypage/member"
-			if(!confirm("정말 탈퇴하시겠습니까?")) return;
-			$.ajax({
-				url : url,
-				type : "Delete",
-				success : function(data){
-					alert(data.msg);
-					window.location.href=data.redirect;
-				},
-				error : function(error){
-					alert(error);
-				}
-			});
-		})
+		//검색
 
-		//프로필 이미지 미리보기
-		$("#formFile_member").change(function(){
-			console.log(this.files[0]);
-			//fileReader
-			var reader = new FileReader();
-    		reader.onload = function(e) {
-      			document.getElementById('thumbnail_member').src = e.target.result;
-    		};
-    		reader.readAsDataURL(this.files[0]);
-    		console.log(this.files[0].name)
-    		$("[name=thumbnail]").val(this.files[0].name);
-		});
+		 $("#search_word").on("keyup",function(key){
+	        if(key.keyCode==13) {
+	           var searchWord = $(this).val();
+	           window.location.href='${url}/mypage/board?category=${pvo.category}&searchWord='+searchWord;
+	            
+	        }
+    	});
+
 		
-		//프로필 이지미 바꾸기 요청
-		$("#memberForm_member_edit_btn").on("click",function(){
-			var url = "${url}/mypage/member/thumbnail";
-			var data = new FormData($("#memberForm")[0]);
-			console.log(data.thumbnail);
-			$.ajax({
-				url : url,
-				processData: false,
-				contentType: false,
-				type : "POST",
-				data : data,
-				success:function(data){
-					console.log(data);
-				},error : function(error){
-					alert(error);
-				}
-			});
-		});
 	});
 </script>
 <main id="mypage_member" class="container-fluid">
@@ -74,10 +46,10 @@
 				<div class="col">
 					<div class="input-group mb-3" id="search_container">
 						<img id="search_btn" src="${url}/img/member/search.png">
-				  		<input type="text" class="form-control" id="search_word" placeholder="검색" style=" font-size:2.3rem;">
+				  		<input type="text" class="form-control" id="search_word" value="${pvo.searchWord}" placeholder="검색" style=" font-size:2.3rem;">
 				  		<select id="select_container">
-							<option value="movie" selected>자유게시판</option>
-						 	<option value="theater">문의사항</option>
+							<option value="free">자유게시판</option>
+						 	<option value="help">문의사항</option>
 						</select>
 					</div>
 				</div>
@@ -87,103 +59,119 @@
 			  		<table class="table table-striped table-hover">
 			  			<thead class="sticky-top" style="background-color:gray">
 			  				<tr>	
-			  					<td style="width:5%">번호</td>
-			  					<td>제목</td>
-			  					<td>닉네임</td>
-			  					<td style="width:8%">조회수</td>
-			  					<td style="width:18%">작성일</td>
+			  					<th style="width:5%">번호</td>
+			  					<th>제목</td>
+			  					<th>닉네임</td>
+			  					<th style="width:8%">조회수</td>
+			  					<th style="width:18%">작성일</td>
 			  				</tr>
 			  			</thead>
 			  			<tbody>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>1</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
-			  				<tr>
-			  					<td>2</td>
-			  					<td>제목111111111111111</td>
-			  					<td>고무마</td>
-			  					<td>1</td>
-			  					<td>2022-02-02 11:11:11</td>
-			  				</tr>
+			  				<c:forEach var="vo" items="${boardList}">
+				  				<tr class="tr_record" onclick="location.href='${url}/board/boardList/${vo.no}'">
+				  					<th scope="row">${vo.no}</td>
+				  					<td>${vo.subject}</td>
+				  					<td>${vo.nickname}</td>
+				  					<td>${vo.view}</td>
+				  					<td>${vo.write_date}</td>
+				  				</tr>
+			  				</c:forEach>
+			  				
 			  				
 			  			</tbody>
 					</table>
 				</div>
+				<!-- 페이징 -->
 				<nav id="mypage_board_pagination" class="container">
 				  <ul class="pagination">
-				    <li class="page-item">
-				      <a class="page-link" href="#" aria-label="Previous">
-				        <span aria-hidden="true">&laquo;</span>
-				      </a>
-				    </li>
-				    <li class="page-item"><a class="page-link" href="#">1</a></li>
-				    <li class="page-item"><a class="page-link" href="#">2</a></li>
-				    <li class="page-item"><a class="page-link" href="#">3</a></li>
-				    <li class="page-item">
-				      <a class="page-link" href="#" aria-label="Next">
-				        <span aria-hidden="true">&raquo;</span>
-				      </a>
-				    </li>
+				  <!-- 이전 페이지 -->
+				  <c:choose>
+				  	<c:when test="${pvo.currentPage>1}">
+					    <li class="page-item">
+					      <a class="page-link" href="${url}/mypage/board?pageNo=${pvo.currentPage-1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+				    </c:when>
+				    <c:otherwise>
+				    	<li class="page-item">
+				    		<a class="page-link" href="#" aria-label="Previous">
+					        	<span aria-hidden="true">&laquo;</span>
+					        </a>
+					    </li>
+				   </c:otherwise>
+				  </c:choose>
+
+				    <!-- 페이지 번호 -->
+				    <!-- totalPage 가 onePageCount 보다 클때 -->
+				    <c:choose>
+				    	<c:when test="${pvo.totalPage > pvo.onePageCount and pvo.startPage - pvo.onePageCount/2 > 0 and pvo.startPage <= pvo.totalPage}">
+				    		<c:choose>
+				    			<c:when test="${pvo.totalPage- pvo.onePageCount/2 == pvo.currentPage}">
+				    				<c:set var="endPage" value="${pvo.totalPage}"/>
+				    			</c:when>
+				    			<c:otherwise>
+				    				<c:set var="endPage" value="${pvo.startPage+pvo.onePageCount/2}"/>
+				    			</c:otherwise>		
+				    		</c:choose>
+				    		<c:forEach var="p" begin="${pvo.startPage- pvo.onePageCount/2 + 1}" end="${endPage}">
+						    	<c:choose>
+							    	<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
+								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
+								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    	</c:if>
+								    	<c:if test="${p!=pvo.currentPage && p<=pvo.totalPage}">	
+								    		<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								   		</c:if>
+								   	</c:when>
+							    	<c:otherwise>
+								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
+								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    	</c:if>
+								    	<c:if test="${p!=pvo.currentPage && p<= pvo.totalPage}">	
+								    		<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								   		</c:if>
+								   	</c:otherwise>
+							   	</c:choose>
+							</c:forEach>
+				    	</c:when>
+				    	<c:otherwise>
+				    		<c:choose>
+				    			<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
+				    		 		<c:set var="endPage" value="${pvo.totalPage}"/>
+				    			</c:when>
+				    			<c:otherwise>
+				    				<c:set var="endPage" value="${pvo.onePageCount}"/>
+				    			</c:otherwise>
+				    		</c:choose>
+				    		<c:forEach var="p" begin="1" end="${endPage}">
+					    		<c:if test="${p==pvo.currentPage }">
+					    			<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								</c:if>
+								<c:if test="${p!=pvo.currentPage }">	
+									<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								</c:if>
+							</c:forEach>
+				    	</c:otherwise>
+				    </c:choose>
+				   
+					<!-- 다음 페이지  -->
+					<c:choose>
+						<c:when test="${pvo.currentPage < pvo.totalPage }">
+							<li class="page-item">
+							      <a class="page-link" href="${url}/mypage/board?pageNo=${pvo.currentPage+1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Next">
+							        <span aria-hidden="true">&raquo;</span>
+							      </a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+							      <a class="page-link" href="#" aria-label="Next">
+							        <span aria-hidden="true">&raquo;</span>
+							      </a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				  </ul>
 				</nav>
 			</div>
@@ -191,7 +179,7 @@
 		</div>
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
-				<h1 class="h1">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
+				<h1 class="h1">${logNickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
@@ -204,8 +192,6 @@
 					<c:if test="${grade == 1}">
 						<li><a href="${url}/mypage/author">작가 정보</a></li>
 					</c:if>
-					
-					
 				</ul>
 				<hr/>
 				<ul>

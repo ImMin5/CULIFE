@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.culife.dao.BoardDAO">
+	<insert id="boardInsert">
+		insert into board(no,subject,content,view,member_no,category)
+		values(#{no},#{subject},#{content},#{view},#{member_no},#{category})
+	</insert>
+	<select id='selectList' resultType="BoardVO">
+		select no, subject, member_no,view,write_date from board
+	</select>
+	<delete id="deleteView">
+		delete from board where no=#{param1} and member_no=#{param2}
+	</delete>
+	<update id="updateViews">
+		update board set views=views+1 where no=#{param1}
+	</update>
+	<select id="boardTotalRecord" resultType="int">
+		select count(no) from board
+		where category=#{category} and member_no=${member_no}
+  		<if test='searchWord != null'>
+  			and content like '%${searchWord}%' or subject like '%${searchWord}%'
+  		</if>
+	</select>
+	
+	<select id="boardSelectByMemberNo" resultType="com.team.culife.vo.BoardVO">
+		select b.no, b.subject, b.content, b.write_date, b.view, b.member_no, b.category, m.nickname from board b
+		join member m
+		on b.member_no = m.no and b.category=#{category} and m.no=${member_no}
+  		<if test='searchWord != null'>
+  			where b.content like '%${searchWord}%' or b.subject like '%${searchWord}%'
+  		</if>
+  		order by no desc
+  		limit ${recordPerPage} offset ${offsetIndex}
+	</select>
+	
+</mapper>

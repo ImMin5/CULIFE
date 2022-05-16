@@ -37,6 +37,7 @@ main {
    -webkit-box-shadow: 10px 10px 44px 0px rgba(19,160,134,0.753);
    -moz-box-shadow: 10px 10px 44px 0px rgba(19,160,134,0.753);
    box-shadow: 10px 10px 44px 0px rgba(19,160,134,0.753);
+   cursor: pointer;
 }
 
 .search_box img {

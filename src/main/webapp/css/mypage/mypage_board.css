@@ -3,7 +3,12 @@
 	font-size:2rem;
 	height:65vh;
 }
-.table , .table-responsive{
+.table{
+	max-height:55vh;
+	text-align:center;
+}
+
+.table-responsive{
 	height:55vh;
 	text-align:center;
 }

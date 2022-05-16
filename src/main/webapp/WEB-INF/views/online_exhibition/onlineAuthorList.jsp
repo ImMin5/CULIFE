@@ -15,7 +15,8 @@
 
 <div id="authorList_container">
 	<div id="authorList_wrap">
-		<a href="/online_exhibition/onlineList">전시회보기</a>
+		<h1 class="hidden">작가 검색 페이지</h1>
+		<a href="/online_exhibition/onlineList">전시회가기</a>
 		<div class="authorSearchcontainer">
 		  <form id="authorSearchFrm" name="authorSearch" autocomplete="off">
 		    <div class="finder">
@@ -33,7 +34,7 @@
 				<span class="hidden">번호</span>
 				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
 				<div class="author_details">
-					<h4>권길동</h4>
+					<h2>권길동</h2>
 					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
 					<a href="">자세히보기 ></a>
 				</div>
@@ -42,7 +43,7 @@
 				<span class="hidden">번호</span>
 				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
 				<div class="author_details">
-					<h4>김길동</h4>
+					<h2>김길동</h2>
 					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
 					<a href="">자세히보기 ></a>
 				</div>
@@ -51,7 +52,7 @@
 				<span class="hidden">번호</span>
 				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
 				<div class="author_details">
-					<h4>이길동</h4>
+					<h2>이길동</h2>
 					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
 					<a href="">자세히보기 ></a>
 				</div>
@@ -60,7 +61,7 @@
 				<span class="hidden">번호</span>
 				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
 				<div class="author_details">
-					<h4>최길동</h4>
+					<h2>최길동</h2>
 					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
 					<a href="">자세히보기 ></a>
 				</div>
@@ -69,7 +70,7 @@
 				<span class="hidden">번호</span>
 				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
 				<div class="author_details">
-					<h4>허길동</h4>
+					<h2>허길동</h2>
 					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
 					<a href="">자세히보기 ></a>
 				</div>
@@ -78,7 +79,7 @@
 				<span class="hidden">번호</span>
 				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
 				<div class="author_details">
-					<h4>홍길동</h4>
+					<h2>홍길동</h2>
 					<p>이곳은 자기소개를 보여주는 공간입니다.<br/>이곳은 자기소개를 보여주는 공간입니다.이곳은 자기소개를 보여주는 공간입니다.</p>
 					<a href="">자세히보기 ></a>
 				</div>
