@@ -1,9 +1,12 @@
 @charset "UTF-8";
-#tbBody{
-	display:flex;	
+.ck-editor__editable {
+    min-height: 400px;
 }
-.table td, .table th{
-	border:none !important;
+#freeBoardTitle,#helpBoardTitle{
+	margin-right:10px;
+	width:100%;
+	font-size:2.3rem;
+	margin-bottom:15px;
 }
 .container{/* 본문 */
 	width: 1200px;
@@ -21,19 +24,11 @@ h1{
 	text-align:center;
 	padding-bottom:10px;
 }
-#freeForm h1{
-	text-align:center;
-	font-weight:700;
-	color:rgb(72, 97, 86);
-} 
-#freeForm table{
-	text-align:center;
-}
-#freeBoardTitle{
+#freeBoardTitle,#helpBoardTitle{
 	margin-right:10px;
 }
 #writeBtn{
-	background-color: rgb(72, 97, 86);
+	background-color: gray;
 	color:white;
 	padding:10px 30px;
 }
