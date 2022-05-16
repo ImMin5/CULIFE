@@ -13,6 +13,8 @@ public class MemberVO {
 	private int grade;
 	private int warning_count;
 	private String thumbnail;
-	private boolean status;
+	private int status; //0 : 정상 , 1 : 정지 
 	private String create_date;	
+	//admin(memberList)-end_date
+	private String end_date;
 }

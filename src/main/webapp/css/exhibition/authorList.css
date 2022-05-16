@@ -1,0 +1,175 @@
+@charset "UTF-8";
+
+#authorList_container {
+	width:100vw; height:100vh;
+	background-color:#F6F5F0;
+	overflow:hidden;
+	position:relative;
+}
+#authorList_wrap {
+	width:1200px; height:900px;
+	padding-top:100px;
+	position:absolute; left:50%; top:50%;
+	transform:translate(-50%, -50%);
+}
+#authorList_wrap > a {
+	width:100px; height:40px;
+	padding:10px;
+	line-height:40px; text-align:center;
+	background:url(/img/exhibition/zigzag_bg.png);
+	background-size:120px 60px;
+	border-radius:20px;
+	position:absolute; right:-12vw; top:150px;
+}
+
+/* 검색바 - start */
+
+.authorSearchcontainer {
+  text-align: center; color: #2c3e50;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#authorSearchFrm {
+	transition: all 0.5s;
+  	position: absolute;	top: 180px;
+}
+.finder {
+  border: 1px solid #fff;
+  background-color: #f6f5f0;
+  border-radius: 15px;
+  padding: 8px;
+  box-shadow: 9px 9px 16px rgba(189, 189, 189, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+}
+.finder__outer {
+  display: flex;
+  width: 600px;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: inset 10px 10px 15px -10px #c3c3c3, inset -10px -10px 15px -10px #ffffff;
+}
+.finder__inner {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+.finder__form {flex: 1; height: calc(80% + 3rem);}
+.finder__input {
+  width:560px;height: calc(80% + 3rem);
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-size: 1.5rem;
+  letter-spacing: 0.75px;
+}
+.finder__icon {
+  width: 40px; height: 40px;
+  margin-right:1rem;
+  transition: all 0.2s;
+  box-shadow: inset 0 0 0 20px #292929;
+  border-radius: 50%;
+  position: relative;
+}
+.active .finder__icon {
+  width: 30px; height: 30px;
+  margin:0.5rem 1rem;
+}
+.finder__icon:after, .finder__icon:before {
+  display: block;
+  content: "";
+  position: absolute;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.finder__icon:after {
+  width: 10px;
+  height: 10px;
+  background-color: #292929;
+  border: 3px solid #f9f2ee;
+  position: absolute;
+  left: 0px;  right: 0; top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+  border-radius: 50%;
+}
+.active .finder__icon:after {
+  border-width: 5px;
+  background-color: #f6f5f0;
+}
+.finder__icon:before {
+  width: 4px; height: 13px;
+  background-color: #f6f5f0;
+  top: 50%; left: 20px;
+  transform: rotateZ(45deg) translate(-50%, 0);
+  transform-origin: 0 0;
+  border-radius: 4px;
+}
+.active .finder__icon:before {
+  background-color: #292929;
+  width: 6px;
+  transform: rotateZ(45deg) translate(-50%, 25px);
+}
+.processing .finder__icon {
+  transform-origin: 50%;
+  animation: spinner 0.3s linear infinite;
+  animation-delay: 0.5s;
+}
+.active .finder__icon {transform: translateY(-5px);}
+@keyframes spinner {
+  0% {transform: rotateZ(45deg);}
+  100% {transform: rotateZ(405deg);}
+}
+/* 검색바 - end */
+
+/* SearchResult - start */
+#authorSearchResult {
+	display:block;
+	width:100%; height:600px;
+	margin-top:180px;
+}
+#authorSearchResult > li {
+	width:50%; height:198px;
+	float:left;
+	border-bottom:2px solid #c0c0c0;
+	transition:all 0.3s;
+	position:relative;
+}
+#authorSearchResult > li > img {
+	width:150px; height:150px;
+	display:inline-block;
+	margin:25px;
+}
+.author_details {width:400px; float:right;}
+.author_details > h2 {
+	font-size:2.4rem;
+	line-height:50px;
+	margin:25px 0;
+}
+.author_details > p {
+	width:375px; height:75px;
+	padding-right:25px;
+	line-height:calc(75px/2);
+	font-size:1.8rem;
+	color:#777;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+.author_details > a {
+	display:block;
+	position:absolute; right:25px; top:40px;
+	color:#777;
+	text-align:right;
+}
+#authorSearchResult > li:hover {background-color:rgba(0,0,0,0.1)}
+.pagination {width:300px; height:100px; margin:0 auto;}
+.pagination > ol > li {
+	width:calc(300px/5);
+	line-height:100px;
+	float:left;
+	text-align:center
+}
+.pagination > ol > li > a {color:#222}
+/* SearchResult - end */

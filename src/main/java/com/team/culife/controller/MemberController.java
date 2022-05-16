@@ -22,13 +22,19 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.culife.service.AuthorService;
+import com.team.culife.service.BoardService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
+import com.team.culife.service.MovieService;
+import com.team.culife.service.ReviewService;
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
+import com.team.culife.vo.BoardVO;
 import com.team.culife.vo.MemberVO;
+import com.team.culife.vo.MovieVO;
 import com.team.culife.vo.PageResponseBody;
 import com.team.culife.vo.PagingVO;
+import com.team.culife.vo.ReviewVO;
 
 @RestController
 public class MemberController {
@@ -40,6 +46,15 @@ public class MemberController {
 	
 	@Inject
 	AuthorService authorService;
+	
+	@Inject
+	MovieService movieService;
+	
+	@Inject
+	ReviewService reviewService;
+	
+	@Inject
+	BoardService boardService;
 	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
@@ -153,7 +168,46 @@ public class MemberController {
 		return mav;
 	}
 	
-	
+	//마이페이지 - 작성글
+	@GetMapping("/mypage/board")
+	public ModelAndView mypageBoard(HttpSession session, @RequestParam(value="category", required=false, defaultValue="free")String category,
+			@RequestParam(value="pageNo", required=false, defaultValue="1") int pageNo,
+			@RequestParam(value="pageNo", required=false, defaultValue="9") int pageCount,
+			@RequestParam(value="searchWord", required=false, defaultValue="") String searchWord) {
+		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		
+		try {
+			if(memberNo == null) {
+				mav.setViewName("redirect:/");
+			}
+			else {
+				PagingVO pvo = new PagingVO();
+				// 전체 리스트 업데이트
+				pvo.setRecordPerPage(1);
+				pvo.setCurrentPage(pageNo);
+				pvo.setMember_no(memberNo);
+				pvo.setCategory(category);
+				if(searchWord != null)pvo.setSearchWord(searchWord);
+				pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+				List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
+				System.out.println("category --->" + pvo.getCategory());
+				for(BoardVO vo : list) {
+					System.out.println("cate -->" + vo.getCategory());
+				}
+				mav.addObject("boardList", list);
+				mav.addObject("pvo", pvo);
+				mav.setViewName("mypage/my_board");
+				
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
+		}
+		
+		return mav;
+	}
 	
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
@@ -354,8 +408,6 @@ public class MemberController {
 				//팔로일 하고 있는 지 확인
 				if(avo != null && memberService.authorFanCheck(avo.getNo(), memberNo)!= null) {
 					//팔로잉
-					System.out.println("author ---> " + author);
-					System.out.println("member no " + memberNo);
 					memberService.authorFanDelete(avo.getNo(), memberNo);
 					result.put("mgs", "언팔로우 성공");
 				}
@@ -374,6 +426,7 @@ public class MemberController {
 		return entity;
 	}
 	
+	
 	//마이페이지 - 팔로잉 작가 검색
 	@GetMapping("/mypage/fan/search")
 	public PageResponseBody<AuthorVO> mypageFanSearch(HttpSession session,  @RequestParam(value="pageNo",required = false, defaultValue = "1")int pageNo,
@@ -390,13 +443,10 @@ public class MemberController {
 			} else {
 				PagingVO pvo = new PagingVO();
 				// 전체 리스트 업데이트
-				System.out.println("member_ no --->" + memberNo);
-				System.out.println("pageCount --->" + pageCount);
 				pvo.setRecordPerPage(pageCount);
 				pvo.setCurrentPage(pageNo);
-				System.out.println("pvo offset -->" + pvo.getOffsetIndex());
 				pvo.setMember_no(memberNo);
-				if(searchWord != null)pvo.setSearchWord(searchWord);
+				if(searchWord != null) pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(memberService.authorFanTotalRecord(pvo));
 				
 				List<AuthorVO> list = memberService.authorFanSelectAll(pvo);
@@ -471,4 +521,78 @@ public class MemberController {
 		
 		return entity;
 	}
+	
+	//영화 리뷰 검색
+	@GetMapping("/mypage/review/movie/search")
+	public PageResponseBody<MovieVO> mypageMovieSearch(HttpSession session,  @RequestParam(value="pageNo",required = false, defaultValue = "1")int pageNo,
+			@RequestParam(value="pageCount",required = false, defaultValue = "8")int pageCount, 
+			@RequestParam(value="searchWord",required = false, defaultValue = "")String searchWord) {
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		PageResponseBody<MovieVO> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		System.out.println("search --> " + searchWord);
+		try {
+			if (memberNo == null) {
+				result.put("msg", "로그인 후 이용해 주세요");
+				result.put("redirect", "/");
+			} else {
+				PagingVO pvo = new PagingVO();
+				// 전체 리스트 업데이트
+				System.out.println("member_ no --->" + memberNo);
+				System.out.println("pageCount --->" + pageCount);
+				pvo.setRecordPerPage(pageCount);
+				pvo.setCurrentPage(pageNo);
+				System.out.println("pvo offset -->" + pvo.getOffsetIndex());
+				pvo.setMember_no(memberNo);
+				if(searchWord != null)pvo.setSearchWord(searchWord);
+				pvo.setTotalRecord(movieService.movieReviewTotalRecord(pvo));
+				
+				List<MovieVO> list = movieService.movieReviewSelectByMemberNo(pvo);
+				
+				entity = new PageResponseBody<MovieVO>();
+				entity.setItems(list);
+				entity.setVo(pvo);
+			}
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new PageResponseBody<MovieVO>();
+		
+			}
+		return entity;
+	}
+	//뮤지컬/연극 검색
+	@GetMapping("/mypage/review/theater/search")
+	public PageResponseBody<ReviewVO> mypageTheaterSearch(HttpSession session,  @RequestParam(value="pageNo",required = false, defaultValue = "1")int pageNo,
+			@RequestParam(value="pageCount",required = false, defaultValue = "8")int pageCount, 
+			@RequestParam(value="searchWord",required = false, defaultValue = "")String searchWord) {
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		PageResponseBody<ReviewVO> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		System.out.println("search --> " + searchWord);
+		try {
+			if (memberNo == null) {
+				result.put("msg", "로그인 후 이용해 주세요");
+				result.put("redirect", "/");
+			} else {
+				PagingVO pvo = new PagingVO();
+				// 전체 리스트 업데이트
+				pvo.setRecordPerPage(pageCount);
+				pvo.setCurrentPage(pageNo);
+				pvo.setMember_no(memberNo);
+				if(searchWord != null)pvo.setSearchWord(searchWord);
+				pvo.setTotalRecord(reviewService.theaterReviewTotalRecord(pvo));
+				List<ReviewVO> list = reviewService.theaterReviewSelectByMemberNo(pvo);
+				entity = new PageResponseBody<ReviewVO>();
+				entity.setItems(list);
+				entity.setVo(pvo);
+			}
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new PageResponseBody<ReviewVO>();
+			
+			}
+			return entity;
+		}
 }

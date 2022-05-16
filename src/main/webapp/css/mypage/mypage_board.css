@@ -1,0 +1,37 @@
+#mypage_board_contatiner{
+	margin-top:10px;
+	font-size:2rem;
+	height:65vh;
+}
+.table{
+	max-height:55vh;
+	text-align:center;
+}
+
+.table-responsive{
+	height:55vh;
+	text-align:center;
+}
+
+#mypage_board_pagination{
+	margin-top:5px;
+}
+#mypage_board_pagination > ul{
+	text-align:center;
+	width:40%;
+	margin:0 auto;
+
+}
+.page-item > a{
+	font-size:1.8rem;
+	color:black;
+}
+
+.table-responsive{
+	 -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+	
+}
+.table-responsive::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}

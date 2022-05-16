@@ -12,12 +12,13 @@ public class PagingVO {
 	private int recordPerPage = 10;
 	private int onePageCount = 5;
 	private int totalRecord;
-	private int totalPage; 
+	private int totalPage;
 	private int offsetIndex = 0;
 	
 
 	private int member_no;
 	private String searchWord;
+	private String category;
 	
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;

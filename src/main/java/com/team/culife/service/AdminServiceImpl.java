@@ -1,6 +1,8 @@
 package com.team.culife.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.team.culife.dao.AdminDAO;
 import com.team.culife.vo.AdminPagingVO;
+import com.team.culife.vo.AdminReviewVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
 import com.team.culife.vo.MemberBanVO;
@@ -69,7 +72,10 @@ public class AdminServiceImpl implements AdminService{
 	public int authorDown(AuthorVO aVO) {
 		return dao.authorDown(aVO);
 	}
-	
+	@Override
+	public AuthorVO adminAuthorInfo(int no) {
+		return dao.adminAuthorInfo(no);
+	}
 	//스케줄러
 	@Override
 	public void scheduleUpdate() {
@@ -93,6 +99,66 @@ public class AdminServiceImpl implements AdminService{
 	public int adminBoardDel(BoardVO bVO) {
 		return dao.adminBoardDel(bVO);
 	}
+	
+	//문의사항게시판
+	@Override
+	public List<BoardVO> adminHelpList(AdminPagingVO pVO) {
+		return dao.adminHelpList( pVO);
+	}
+	@Override
+	public int adminhelp_totalRecord(AdminPagingVO pVO) {
+		return dao.adminhelp_totalRecord(pVO);
+	}
+	@Override
+	public int adminHelpDel(BoardVO bVO) {
+		return dao.adminHelpDel(bVO);
+	}
+	
+	//리뷰관리
+	@Override
+	public List<AdminReviewVO> adminReviewList(AdminPagingVO pVO) {
+		return dao.adminReviewList(pVO);
+	}
+	@Override
+	public int adminreview_totalRecord(AdminPagingVO pVO) {
+		return dao.adminreview_totalRecord(pVO);
+	}
+	
+	//영화리뷰 삭제
+	@Override
+	public int adminMovieReviewDel(AdminReviewVO arVO) {
+		return dao.adminMovieReviewDel(arVO);
+	}
+	//연극리뷰 삭제
+	@Override
+	public int adminTheaterReviewDel(AdminReviewVO arVO) {
+		return dao.adminTheaterReviewDel(arVO);
+	}
+	
+	//신고관리
+	@Override
+	public List<AdminReviewVO> adminWarningList(AdminPagingVO pVO) {
+		return dao.adminWarningList(pVO);
+	}
+	@Override
+	public int adminwarning_totalRecord(AdminPagingVO pVO) {
+		return dao.adminwarning_totalRecord(pVO);
+	}
+	
+	//감상평관리
+	@Override
+	public List<AdminReviewVO> adminExReplyList(AdminPagingVO pVO) {
+		return dao.adminExReplyList(pVO);
+	}
+	@Override
+	public int adminexhibition_totalRecord(AdminPagingVO pVO) {
+		return dao.adminexhibition_totalRecord(pVO);
+	}
+	@Override
+	public int adminExReplyDel(AdminReviewVO arVO) {
+		return dao.adminExReplyDel(arVO);
+	}
+	
 	
 	
 	

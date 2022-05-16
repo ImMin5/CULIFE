@@ -3,6 +3,7 @@ package com.team.culife.service;
 import java.util.List;
 
 import com.team.culife.vo.AdminPagingVO;
+import com.team.culife.vo.AdminReviewVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
 import com.team.culife.vo.MemberBanVO;
@@ -35,6 +36,8 @@ public interface AdminService {
 	public int authorUpgrade(AuthorVO aVO);
 	//작가 취소
 	public int authorDown(AuthorVO aVO);
+	//작가 정보 불러오기
+	public AuthorVO adminAuthorInfo(int no);
 	
 	//스케줄러 실행: member테이블 회원상태: 정상
 	public void scheduleUpdate();
@@ -47,4 +50,33 @@ public interface AdminService {
 	public int adminboard_totalRecord(AdminPagingVO pVO);
 	//자유게시판: 게시글 삭제
 	public int adminBoardDel(BoardVO bVO);
+	
+	//문의게시판목록 불러오기
+	public List<BoardVO> adminHelpList(AdminPagingVO pVO);
+	//문의게시판목록 카운트
+	public int adminhelp_totalRecord(AdminPagingVO pVO);
+	//문의게시판: 게시글 삭제
+	public int adminHelpDel(BoardVO bVO);
+	
+	//리뷰게시판목록 불러오기
+	public List<AdminReviewVO> adminReviewList(AdminPagingVO pVO);
+	//리뷰게시판목록 카운트
+	public int adminreview_totalRecord(AdminPagingVO pVO);
+	
+	//영화리뷰: 게시글 삭제
+	public int adminMovieReviewDel(AdminReviewVO arVO);
+	//연극리뷰: 게시글 삭제
+	public int adminTheaterReviewDel(AdminReviewVO arVO);
+	
+	//신고목록 불러오기
+	public List<AdminReviewVO> adminWarningList(AdminPagingVO pVO);
+	//신고목록 카운트
+	public int adminwarning_totalRecord(AdminPagingVO pVO);
+	
+	//감상평목록 불러오기
+	public List<AdminReviewVO> adminExReplyList(AdminPagingVO pVO);
+	//문의게시판목록 카운트
+	public int adminexhibition_totalRecord(AdminPagingVO pVO);
+	//감상평 삭제
+	public int adminExReplyDel(AdminReviewVO arVO);
 }

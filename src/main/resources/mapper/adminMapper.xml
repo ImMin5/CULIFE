@@ -7,13 +7,14 @@
 	<!-- 회원목록 불러오기 -->
 	<!-- 우선 임의로 썸네일은 빼겠습니다. -->
   	<select id='memberList' resultType="com.team.culife.vo.MemberVO">
-  	 select no, kakao_id, email, nickname, grade, status, date_format(create_date,'%Y-%m-%d') create_date  
-  	 from member
+  	 select m.no, m.kakao_id, m.email, m.nickname, m.grade, m.status, date_format(m.create_date,'%Y-%m-%d') create_date, date_format(mb.end_date,'%Y-%m-%d') end_date 
+	from member m left outer join member_ban mb 
+	on m.no = mb.member_no 
   	<if test="searchWord != null" >
-			where ${searchKey} like '%${searchWord}%' 
+		where ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex} 
+	order by no desc 
+  	 limit #{onePageRecord} offset #{offsetIndex} 
   	</select>
   	
   	<!-- 회원목록 전체 인원 카운트 -->
@@ -64,12 +65,12 @@
   	<!-- 우선 임의로 썸네일은 빼겠습니다. 저장경로 설정되면 생각해보기 -->
   	<select id='authorList' resultType="com.team.culife.vo.AuthorVO">
   	 select no, member_no, author, debut_year, sns_link, author_status, date_format(create_date,'%Y-%m-%d') create_date, msg  
-  	 from author
+  	 from author 
   	<if test="searchWord != null" >
-			where ${searchKey} like '%${searchWord}%' 
+		where ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex} 
+	order by no desc 
+  	 limit #{onePageRecord} offset #{offsetIndex} 
   	</select>
   	<!-- <select id='authorList' resultType="com.team.culife.vo.AuthorVO">
   	 select a.msg, a.no,a.member_no, a.author, a.debut_year, a.sns_link, a.author_status, a.create_date, b.cnt 
@@ -106,6 +107,11 @@
 	set a.author_status = '2', m.grade = '0', a.msg = #{msg}   
 	where a.no = #{no} 
   	</update>
+  	<!-- 작가정보 불러오기 -->
+  	<select id='adminAuthorInfo' resultType="com.team.culife.vo.AuthorVO">
+  	 select no, author, sns_link, author_thumbnail, debut_year, author_msg, msg , author_status  
+  	 from author where no = #{param} 
+  	</select>
   	
   	<!-- 자유게시판 목록 불러오기 -->
   	<select id='adminBoardList' resultType="com.team.culife.vo.BoardVO">
@@ -116,8 +122,8 @@
   	<if test="searchWord != null" >
 		and ${searchKey} like '%${searchWord}%' 
 	</if>
-  	 order by no desc 
-  	 limit ${onePageRecord} offset ${offsetIndex}  
+	 order by no desc 
+  	 limit #{onePageRecord} offset #{offsetIndex} 
   	 </select>
   	 
   	 <!-- 자유게시판 목록 카운트 -->
@@ -143,12 +149,160 @@
   	</delete>
   	
   	<!-- 문의게시판목록 불러오기 -->
-  	<select id="adminHelpList">
-  	select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
-  	from board b left join member m on b.member_no = m.no 
-				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no 
-  	 where b.category='help' 
+  	<select id="adminHelpList" resultType="com.team.culife.vo.BoardVO">
+     select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
+	from board b left join member m on b.member_no = m.no 
+				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no
+	where b.category='help'  
+  	<if test="searchWord != null and searchKey != 'cnt'.toString()" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+	<if test='searchWord != null and searchWord.equals("답변완료") and searchKey == "cnt".toString()' >
+		and cnt is not null  
+	</if>
+	<if test='searchWord != null and searchWord.equals("미답변") and searchKey == "cnt".toString()' >
+		and cnt is null   
+	</if>
+  	 order by no desc 
+  	 limit #{onePageRecord} offset #{offsetIndex}   
   	</select>
   	
+  	<!-- 문의게시판 목록 카운트 -->
+  	<select id='adminhelp_totalRecord' resultType='int'>
+  	select count(no) cnt from(
+	select b.no, b.subject, b.content, b.member_no, date_format(b.write_date,'%Y-%m-%d') write_date, m.nickname, br.cnt   
+	from board b left join member m on b.member_no = m.no 
+				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no
+	where b.category='help' 
+	<if test="searchWord != null and searchKey != 'cnt'" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+	<if test='searchWord != null and searchWord.equals("답변완료") and searchKey == "cnt".toString()' >
+		and cnt is not null  
+	</if>
+	<if test='searchWord != null and searchWord.equals("미답변") and searchKey == "cnt".toString()' >
+		and cnt is null   
+	</if>
+	 ) a 
+  	</select>
+  	
+  	<!-- 문의게시판 게시글 삭제 -->
+  	<delete id='adminHelpDel'>
+  	delete from board
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
+  	
+  	<!-- 리뷰게시판 목록 -->
+  	<select id="adminReviewList" resultType="com.team.culife.vo.AdminReviewVO">
+  	select * from(
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	from member m join review r on m.no = r.member_no
+	union 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	from member m join movie_review mr on m.no = mr.member_no) a 
+  	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if> 
+	order by no desc 
+  	limit #{onePageRecord} offset #{offsetIndex} 
+  	</select>
+  	<!-- 리뷰게시판 목록 카운트 -->
+  	<select id="adminreview_totalRecord" resultType="int">
+  	select count(a.no) as cnt from(
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	from member m join review r on m.no = r.member_no
+	union 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	from member m join movie_review mr on m.no = mr.member_no) a 
+  	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  
+  	</select>
+  	<!-- 영화리뷰 삭제 -->
+  	<delete id='adminMovieReviewDel'>
+  	delete from movie_review
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="movie_noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
+	<!-- 연극리뷰 삭제 -->
+	<delete id='adminTheaterReviewDel'>
+  	delete from review
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
+  	<!-- 신고 목록 -->
+  	<select id="adminWarningList" resultType="com.team.culife.vo.AdminReviewVO">
+  	select * from(
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	from member m join review r on m.no = r.member_no
+	union 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	from member m join movie_review mr on m.no = mr.member_no) a
+	where  warning_count > 0 
+  	<if test="searchWord != null" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if> 
+	order by no desc 
+  	limit #{onePageRecord} offset #{offsetIndex} 
+  	</select>
+  	<!-- 신고 목록 카운트 -->
+  	<select id="adminwarning_totalRecord" resultType="int">
+  	select count(no) cnt from(
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	from member m join review r on m.no = r.member_no
+	union 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	from member m join movie_review mr on m.no = mr.member_no) a 
+	where  warning_count > 0  
+  	<if test="searchWord != null" >
+		and ${searchKey} like '%${searchWord}%' 
+	</if>
+  	</select>
+  	<!-- 감상평 목록 -->
+  	<select id="adminExReplyList" resultType="com.team.culife.vo.AdminReviewVO">
+  	select * from( 
+  	select er.no, e.subject, er.content, m.nickname, date_format(er.write_date,'%Y-%m-%d') write_date 
+	from exhibition_reply er join exhibition e on er.exhibition_no = e.no 
+						 join member m on er.member_no = m.no) a   
+  	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if> 
+	order by no desc 
+  	limit #{onePageRecord} offset #{offsetIndex} 
+  	</select>
+  	<!-- 감상평 목록 카운트 -->
+  	<select id="adminexhibition_totalRecord" resultType="int">
+  	select count(no) cnt from(
+  	select er.no, e.subject, er.content, m.nickname, date_format(er.write_date,'%Y-%m-%d') write_date 
+	from exhibition_reply er join exhibition e on er.exhibition_no = e.no 
+						 join member m on er.member_no = m.no) a  
+  	<if test="searchWord != null" >
+		where ${searchKey} like '%${searchWord}%' 
+	</if>
+  	</select>
+  	<!-- 감상평 게시글 삭제 -->
+  	<delete id='adminExReplyDel'>
+  	delete from exhibition_reply 
+  	<where>
+  		<!-- item을 찍는다 어디에서? nolist에서 가져온다. 단, 시작은 no in (으로 시작하고 ,(콤마)를 기준으로 분리한다. 그리고 마지막에 ")" 한다. -->
+		<foreach item="item" collection="noList" open="no in (" separator="," close=")">
+			#{item}
+		</foreach>
+  	</where>
+  	</delete>
 </mapper>
   

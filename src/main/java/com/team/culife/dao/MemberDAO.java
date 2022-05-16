@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
+import com.team.culife.vo.MemberBanVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.PagingVO;
 
@@ -22,4 +23,6 @@ public interface MemberDAO {
 	public AuthorFanVO authorFanCheck(int author_no, int member_no);
 	public int authorFanDelete(int author_no, int member_no);
 	public List<AuthorVO> authorFanSelectAll(PagingVO vo);
+	
+	public MemberBanVO memberBanSelectByMemberNo(int member_no);
 }
