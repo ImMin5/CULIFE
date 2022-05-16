@@ -30,7 +30,7 @@
 	<select id="boardSelectByMemberNo" resultType="com.team.culife.vo.BoardVO">
 		select b.no, b.subject, b.content, b.write_date, b.view, b.member_no, b.category, m.nickname from board b
 		join member m
-		on b.member_no = m.no and  b.category=#{category}
+		on b.member_no = m.no and b.category=#{category} and m.no=${member_no}
   		<if test='searchWord != null'>
   			where b.content like '%${searchWord}%' or b.subject like '%${searchWord}%'
   		</if>
