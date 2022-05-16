@@ -155,10 +155,10 @@ $(function () {
 		<li><a href="${vo.sns_link}" target="_blank">${vo.sns_link}</a></li>
 		<li>${vo.create_date}</li>
 		<li>
-			<c:if test="${vo.author_status == 0 && vo.msg eq null}">대기중</c:if>
-			<c:if test="${vo.author_status == 0 && vo.msg ne null}">재신청</c:if>
-			<c:if test="${vo.author_status == 1}">승인완료</c:if>
-			<c:if test="${vo.author_status == 2}">취소됨</c:if>
+			<c:if test="${vo.author_status == 0 && vo.msg eq null}">대기(일반)</c:if>
+			<c:if test="${vo.author_status == 0 && vo.msg ne null}">대기(재신청)</c:if>
+			<c:if test="${vo.author_status == 1}">승인</c:if>
+			<c:if test="${vo.author_status == 2}">취소</c:if>
 		</li>
 		<li>
 			<!-- <c:if test="${vo.author_status == 0}">

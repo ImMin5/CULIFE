@@ -154,13 +154,13 @@
 	from board b left join member m on b.member_no = m.no 
 				 left join (select no, count(no) cnt from board_reply group by no) br on b.no = br.no
 	where b.category='help'  
-  	<if test="searchWord != null and searchKey != 'cnt'" >
+  	<if test="searchWord != null and searchKey != 'cnt'.toString()" >
 		and ${searchKey} like '%${searchWord}%' 
 	</if>
-	<if test="searchWord == 1 and searchKey == 'cnt'" >
+	<if test='searchWord != null and searchWord.equals("답변완료") and searchKey == "cnt".toString()' >
 		and cnt is not null  
 	</if>
-	<if test="searchWord == 2 and searchKey == 'cnt'" >
+	<if test='searchWord != null and searchWord.equals("미답변") and searchKey == "cnt".toString()' >
 		and cnt is null   
 	</if>
   	 order by no desc 
@@ -177,11 +177,11 @@
 	<if test="searchWord != null and searchKey != 'cnt'" >
 		and ${searchKey} like '%${searchWord}%' 
 	</if>
-	<if test="searchWord == 1 and searchKey == 'cnt'" >
-		and cnt is not null 
+	<if test='searchWord != null and searchWord.equals("답변완료") and searchKey == "cnt".toString()' >
+		and cnt is not null  
 	</if>
-	<if test="searchWord == 2 and searchKey == 'cnt'" >
-		and cnt is null  
+	<if test='searchWord != null and searchWord.equals("미답변") and searchKey == "cnt".toString()' >
+		and cnt is null   
 	</if>
 	 ) a 
   	</select>

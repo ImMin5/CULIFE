@@ -37,11 +37,11 @@ $(function () {
 			return false;
 		}
 
-		if($("#searchKey").val() == "cnt"){
-			if($("#searchWord").val() == "답변완료"){
+		if($("#searchKey").val().equals("cnt")){
+			if($("#searchWord").val().equals("답변완료")){
 				$("#searchWord").val(1);
 				alert($("#searchWord").val());
-			}else if($("#searchWord").val() == "미답변" ){
+			}else if($("#searchWord").val().equals("미답변")){
 				$("#searchWord").val(2);
 			}else{
 				alert("정확히 검색해주세요.");
