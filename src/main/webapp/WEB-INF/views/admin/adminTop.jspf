@@ -15,8 +15,8 @@
       		</li>
       	</ul>
       	<ul id="admin_section2">
-      		<li id="dropB">
-      			<a href="">게시판관리</a>
+      		<li>
+      			<a href="" id="dropB">게시판관리</a>
       			<ul class="adminTopMenu_drop" id="dropBB">
       				<li><a href="/admin/adminBoardList">자유게시판관리</a></li>
       				<li><a href="/admin/adminReviewList">리뷰관리</a></li>
@@ -32,11 +32,17 @@
 	$(function(){
 		$("header").remove();
 		$(".adminTopMenu_drop").css("display","none");		
-		$("#dropA").hover(function(){
-			$(this).find("ul").slideToggle(300);
+		$("#dropA").mouseenter(function(){
+			$("#dropAA").stop().slideDown();
 		});
-		$("#dropB").hover(function(){
-			$(this).find("ul").slideToggle(300);
+		$("#dropA").mouseleave(function(){
+			$("#dropAA").stop().slideUp();
+		});
+		$("#dropB").mouseenter(function(){
+			$("#dropBB").stop().slideDown();
+		});
+		$("#dropB").mouseleave(function(){
+			$("#dropBB").stop().slideUp();
 		});
 	});
 </script>
