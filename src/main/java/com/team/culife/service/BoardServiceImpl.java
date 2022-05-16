@@ -56,4 +56,18 @@ public class BoardServiceImpl implements BoardService {
 		return dao.deleteView(no, member_no);
 	}
 
+	@Override
+	public int boardTotalRecord(PagingVO vo) {
+		return dao.boardTotalRecord(vo);
+	}
+
+	@Override
+	public List<BoardVO> boardSelectByMemberNo(PagingVO vo) {
+		return dao.boardSelectByMemberNo(vo);
+	}
+	
+	
+
+
+
 }

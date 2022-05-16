@@ -18,6 +18,7 @@ public class PagingVO {
 
 	private int member_no;
 	private String searchWord;
+	private String category;
 	
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
