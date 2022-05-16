@@ -3,6 +3,7 @@ $(document).ready(function(){
 	$(".fa-xmark").click(function(){
 		$(".modal").css({"display" : "none"});
 		$('footer').css({"display" : "block"});
+		$("#authorView_container").removeClass("authorView_modal");
 	});	
 });
 
@@ -12,12 +13,13 @@ $(document).ready(function(){
 	$(".modal").css({
 		"width" : "100vw",
 		"height" : "100vh",
-		"position" : "absolute",
+		"position" : "fixed",
 		"left" : "0",
 		"top" : "0",
 		"z-index" : "1000",
 		"background-color" : "rgba(0,0,0,0.8)",
-		"display" : "none"
+		"display" : "none",
+		"overflow" : "hidden"
 	});
 	/*모달 제목*/
 	$(".modal_wrap > h3").css({
