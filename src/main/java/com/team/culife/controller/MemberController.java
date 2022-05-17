@@ -106,16 +106,16 @@ public class MemberController {
 	public ModelAndView mypageAuthor(HttpSession session, String author) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		MemberVO mvo = memberService.memberSelectByNo(memberNo);
-		AuthorVO avo = authorService.authorSelect(author);
-		mav.addObject("mvo", mvo);
-		mav.addObject("avo", avo);
-		try {
+		try {	
 			if(memberNo == null) {
 				mav.setViewName("redirect:/");
 			}
 			else {
 				//작가 정보 넣기
+				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				AuthorVO avo = authorService.authorSelect(author);
+				mav.addObject("mvo", mvo);
+				mav.addObject("avo", avo);
 				mav.setViewName("mypage/my_author");
 			}
 			
