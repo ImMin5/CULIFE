@@ -76,10 +76,10 @@ $(function () {
 			<li>${vo.title }</li>
 			<li>
 				<c:if test="${vo.category eq '영화' }">
-					<a href='#' target="_blank">${vo.content }</a>
+					<a href='${url}/movie/movieView?movieId=${vo.numb}' target="_blank">${vo.content }</a>
 				</c:if>
 				<c:if test="${vo.category ne '영화' }">
-					<a href='#' target="_blank">${vo.content }</a>
+					<a href='${url}/theater/theaterView?seq=${vo.numb}' target="_blank">${vo.content }</a>
 				</c:if>
 			</li>
 			<li>${vo.nickname }</li>
