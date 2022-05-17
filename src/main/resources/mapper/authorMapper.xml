@@ -26,4 +26,26 @@
   		select author from author
   		where author=#{author}
   	</select>
+  	<select id = "authorList" resultType="com.team.culife.vo.AuthorVO">
+		select no, member_no, author, sns_link, author_thumbnail, debut_year, create_date, author_msg
+  		from author
+		<if test="searchWord != null">
+			where author like '%${searchWord}%'
+		</if>		
+		order by author asc 
+		limit ${recordPerPage} offset ${offsetIndex}
+	</select>
+	<select id = "totalAuthorList" resultType="int">
+		select count(no) cnt from author
+		<if test='searchWord != null'>
+			where author like '%${searchWord}%'
+		</if>
+	</select>
+	<select id="authorListSelect" resultType="com.team.culife.vo.AuthorVO">
+		select no, member_no, author, sns_link, author_thumbnail, debut_year, create_date, author_msg
+  		from author where no=#{param1}
+	</select>
+	<update id="authorUpdate">
+  		update author set author_thumbnail=#{author_thumbnail}, sns_link=#{sns_link}, debut_year=${debut_year},  author_msg=#{author_msg}
+  	</update>
   </mapper>

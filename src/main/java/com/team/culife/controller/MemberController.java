@@ -477,18 +477,19 @@ public class MemberController {
 		return entity;
 	}
 	
-	//작가 썸네일 업로드
-	@PostMapping("/mypage/author/thumbnail")
-	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(MemberVO mvo, HttpServletRequest request ,HttpSession session){
+	//작가 정보 수정
+	@PostMapping("/mypage/author/info")
+	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(AuthorVO avo, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author/thumbnail");
+		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
 		System.out.println("path --> " +path);
 		
 		try {
+			result.put("status", "200");
 			if(memberNo != null) {
-				System.out.println("th "+ mvo.getThumbnail());
+				System.out.println("th "+ avo.getAuthor_thumbnail());
 				
 				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
 				MultipartFile newFile = (MultipartFile) mr.getFile("file");
@@ -507,19 +508,20 @@ public class MemberController {
 							// 업로드
 							try {
 								//기존에 있던 썸네일 파일 삭제
-								
-								mvo = memberService.memberSelectByNo(memberNo);
-								if(mvo.getThumbnail() != null) {
-									File deleteFile = new File(path,mvo.getThumbnail());
+								String oriFile = authorService.authorSelectByName(avo.getAuthor()).getAuthor_thumbnail();
+								if(oriFile != null) {
+									File deleteFile = new File(path,oriFile);
 									deleteFile.delete();
 								}
-								mvo.setThumbnail(newUploadFilename);
-								System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
+								avo.setAuthor_thumbnail(newUploadFilename);
+								
 								newFile.transferTo(f);
 							} catch(Exception ee) {ee.printStackTrace();}
 								
 						}
 				} // if newFile != null
+				System.out.println("업로드 결과 ---> "+ authorService.authorUpdate(avo));
+				result.put("msg","정보 수정 완료!");
 			}
 			else {
 				result.put("msg","로그인 후 이용해 주세요");
@@ -528,6 +530,7 @@ public class MemberController {
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
+			result.put("status","400");
 			result.put("msg", "회원정보 업데이트 에러...");
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
 		}
