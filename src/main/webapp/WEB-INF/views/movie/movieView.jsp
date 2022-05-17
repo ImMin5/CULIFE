@@ -127,6 +127,12 @@ body {
    line-height: 21px;
 }
 
+.header_review_start i {
+   margin-top: 7px;
+   color: #fd4;
+   font-size: 22px;
+}
+
 /*
 .movie_card .info_section .movie_social {
    height: 10%;
@@ -391,6 +397,172 @@ body {
     opacity: 1;
   }
 }
+
+.review_container {
+  position: relative;
+  max-width: 1000px;
+  text-align: center;
+  margin: 2% auto;
+  padding: 30px 0;
+  background: #111;
+  color: #eee;
+  border-radius: 5px;
+  border: thin solid #444;
+  overflow: hidden;
+}
+
+
+div.stars {
+  width: 680px;
+  display: inline-block;
+}
+
+input.star {
+  display: none;
+}
+
+label.star {
+  float: right;
+  margin-right:15px;
+  padding: 10px;
+  font-size: 36px;
+  color: #444;
+  transition: all 0.2s;
+}
+
+input.star:checked ~ label.star:before {
+  content: "\f005";
+  color: rgb(253, 219, 68);
+  transition: all 0.25s;
+}
+
+input.star-5:checked ~ label.star:before {
+  color: rgb(248, 235, 135);
+  text-shadow: 0 0 20px #952;
+}
+
+input.star-1:checked ~ label.star:before {
+  color: #f62;
+}
+
+label.star:hover {
+  transform: rotate(-15deg) scale(1.3);
+}
+
+label.star:before {
+  content: "\f006";
+  font-family: FontAwesome;
+}
+
+.review_box {
+  overflow: hidden;
+  height: 0;
+  width: 100%;
+  transition: all 0.25s;
+}
+
+textarea.review {
+  width: 100%;
+  height: 100px;
+  max-width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  background: #222;
+  color: #eee;
+  font-size: 21px;
+  resize: none;
+}
+
+label.review {
+  display: block;
+  transition: opacity 0.25s;
+}
+
+input.star:checked ~ .review_box {
+  height: 125px;
+  overflow: visible;
+}
+
+ .review_h4Text {
+	margin : 200px 0 0px 100px;
+}
+
+
+input[id="checkbox"] {
+  display: none;
+  border: thin solid #444;
+
+}
+
+input[id="checkbox"]:checked + label[for="checkbox"]:before {
+  box-shadow: inset 0 0 0 16px #E74C3C;
+  transition: box-shadow 0.2s ease-out;
+}
+input[id="checkbox"]:checked:focus + label[for="checkbox"] {
+  text-decoration: underline;
+}
+input[id="checkbox"]:checked:focus + label[for="checkbox"]:before {
+  outline: 0;
+}
+input[id="checkbox"]:focus + label[for="checkbox"]:before {
+  outline: 1px solid #E74C3C;
+}
+
+label[for="checkbox"] {
+  position: absolute;
+  left: 170px;
+  line-height: 60px;
+  padding-left: 50px;
+  font-size: 26px;
+  color: white;
+}
+
+label[for="checkbox"]:before {
+  box-shadow: inset 0 0 0 0 #E74C3C;
+  content: "";
+  display: block;
+  height: 24px;
+  width: 24px;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  transition: box-shadow 0.15s ease-in;
+  border: 4px solid #444;;
+
+}
+
+.review_submit {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  font-size: 19px;
+  font-weight: 600;
+  transition: 0.25s;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #6e6e6e;
+}
+
+.review_submit:hover {
+  letter-spacing: 2px;
+  transform: scale(1.1);
+  cursor: pointer;
+  background-color: #a3a1a1;
+  color: #e3dede;
+  
+}
+
+.review_submit:active {
+  transform: scale(1.5);
+}
+
+
 </style>
 
 <body>
@@ -412,6 +584,32 @@ body {
          <h4 class="h4Text">주요 출연진</h4>
          <div class="slider"></div>
       </div>
+      
+      <h4 class="h4Text review_h4Text">평점 작성</h4>
+      <div class="review_container">
+	    <div class="stars">
+	      <form action="">
+	      	 <input type="checkbox" name="checkbox" id="checkbox" />
+      		 <label for="checkbox">스포체크</label>
+	        <input class="star star-5" id="star-5-2" type="radio" name="star" />
+	        <label class="star star-5" for="star-5-2"></label>
+	        <input class="star star-4" id="star-4-2" type="radio" name="star" />
+	        <label class="star star-4" for="star-4-2"></label>
+	        <input class="star star-3" id="star-3-2" type="radio" name="star" />
+	        <label class="star star-3" for="star-3-2"></label>
+	        <input class="star star-2" id="star-2-2" type="radio" name="star" />
+	        <label class="star star-2" for="star-2-2"></label>
+	        <input class="star star-1" id="star-1-2" type="radio" name="star" />
+	        <label class="star star-1" for="star-1-2"></label>
+	        <div class="review_box">
+	          <textarea class="review" col="30" name="review" placeholder="평점을 남겨주세요."></textarea>
+	          <label class="review" for="review"></label>
+	        </div>
+	        <input type="submit" value="등록" class="review_submit" />
+	      </form>
+	    </div>
+  	</div>
+      
    </div>
 </body>
 
@@ -450,6 +648,7 @@ body {
                     <span class="minutes">${'${res.runtime}'}분</span>
                     <p class="type">장르 : ${'${res.genres[0].name}'}</p>
                     <h4>개봉 : ${'${res.release_date}'}</h4>
+                    <p class="header_review_start"><i class="fa-solid fa-star"></i></p>
                   </div>
                   <div class="movie_desc">
                     <p class="text">
