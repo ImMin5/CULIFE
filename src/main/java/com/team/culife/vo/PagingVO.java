@@ -15,7 +15,6 @@ public class PagingVO {
 	private int totalPage;
 	private int offsetIndex = 0;
 	
-
 	private int member_no;
 	private String searchWord;
 	private String category;
@@ -39,5 +38,6 @@ public class PagingVO {
 	 public void setEndPage(int endPage) {
 	        this.endPage = (int)Math.ceil(this.currentPage*0.1)*10;
 	} 
+	
 }
 

@@ -28,14 +28,15 @@
 	line-height:50px;
 }
 #author_profile > ul > li:nth-child(4) {
-	width:90%; height:200px;
+	width:85%; height:160px;
 	overflow:hidden;
 	text-overflow:ellipsis;
 	white-space:nowrap;
 	background-color:rgba(255,255,255,0.5);
 	border:1px solid #c0c0c0;
-	font-size:1.8rem;
+	font-size:1.8rem; color:#666;
 	line-height:30px;
+	padding:20px;
 }
 #author_works > h2 {font-size:2rem;	line-height:80px}
 #author_works > ul {
