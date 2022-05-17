@@ -7,7 +7,7 @@
 	<!-- 회원목록 불러오기 -->
 	<!-- 우선 임의로 썸네일은 빼겠습니다. -->
   	<select id='memberList' resultType="com.team.culife.vo.MemberVO">
-  	 select m.no, m.kakao_id, m.email, m.nickname, m.grade, m.status, date_format(m.create_date,'%Y-%m-%d') create_date, date_format(mb.end_date,'%Y-%m-%d') end_date 
+  	 select m.no, m.kakao_id, m.email, m.nickname, m.grade, m.status, date_format(m.create_date,'%Y-%m-%d') create_date, date_format(mb.end_date,'%Y-%m-%d') end_date, m.thumbnail  
 	from member m left outer join member_ban mb 
 	on m.no = mb.member_no 
   	<if test="searchWord != null" >
@@ -200,10 +200,10 @@
   	<!-- 리뷰게시판 목록 -->
   	<select id="adminReviewList" resultType="com.team.culife.vo.AdminReviewVO">
   	select * from(
-	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count, r.seq numb  
 	from member m join review r on m.no = r.member_no
 	union 
-	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count, mr.movie_id numb  
 	from member m join movie_review mr on m.no = mr.member_no) a 
   	<if test="searchWord != null" >
 		where ${searchKey} like '%${searchWord}%' 
