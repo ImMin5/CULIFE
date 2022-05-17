@@ -120,7 +120,7 @@
     <div id="ex_work_bg" class="modal">
     	<div id="ex_work_wrap" class="modal_wrap">
     		<h3>작품등록</h3>
-    		<form id="ex_work_form" method="post" action="" enctype="multipart/form-data">
+    		<form id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
 				<ul id="ex_work_box">
 					<li class="exhibitionWorkContent">
 						<ul>
@@ -128,16 +128,18 @@
 								<p class="hidden">작품 썸네일</p>
 								<figure><img src="" id="workPreview1"/></figure>
 								<input class="work_upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-								<input type="file" name="work_name" id="work_file1" class="workFile"/>
-								<label for="work_file1">파일찾기</label> 
+								<input type="file" name="work_thumbnail" id="work_file1" class="workFile"/>
+								<button id="work_btn">g</button>
+								<label for="work_file1" >파일찾기</label> 
+								
 							</li>
 							<li class="exhibitionApplyTitle">
 								<p>작품명</p>
-								<input type="text">
+								<input type="text" name="work_subject">
 							</li>
 							<li class="exhibitionApplyContent">
 								<p>작품 설명</p>
-								<textarea></textarea>
+								<textarea name="work_content"></textarea>
 							</li>
 						</ul>
 					</li>

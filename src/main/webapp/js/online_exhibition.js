@@ -39,7 +39,11 @@ $(document).ready(function(){
 		$('footer').css({"display" : "none"});
 	});	
 });
-
+$(document).ready(function(){
+	$("#work_btn").on("click", function(){
+		$("#work_file1").trigger("click");
+	})
+});
 $(document).ready(function(){
 	var count = 1;
 	/* 작품 추가 등록 */

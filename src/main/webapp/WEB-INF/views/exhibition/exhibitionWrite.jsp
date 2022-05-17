@@ -36,7 +36,7 @@
 					</div>
 					<div class="exhibitionWritePoster">
 						<div>대표 포스터</div>
-<!-- 						<input type="file" name="poster" class="poster" id="poster"
+						<!-- <input type="file" name="poster" class="poster" id="poster"
 								style="width: 270px; height: 46px;"> -->
 					</div>
 					<div>

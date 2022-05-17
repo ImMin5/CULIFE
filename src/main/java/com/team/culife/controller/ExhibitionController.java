@@ -29,6 +29,7 @@ import com.team.culife.service.MemberService;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.ExhibitionVO;
 import com.team.culife.vo.MemberVO;
+import com.team.culife.vo.WorkVO;
 
 @RestController
 public class ExhibitionController {
@@ -126,11 +127,13 @@ public class ExhibitionController {
 		return entity;
 	}
 	
-	@GetMapping("workCreate")
-	public ModelAndView workCreate(HttpSession session, ExhibitionVO vo) {
+	@PostMapping("workCreateOk")
+	public ResponseEntity<String> workCreateOk(HttpServletRequest request, HttpSession session, WorkVO wvo) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("exhibition/workCreate");
-		return mav;
+		ResponseEntity<String> entity = null;
+		System.out.println("work_content");
+		
+		return entity;
 	}
 	
 	@GetMapping("workEdit")
