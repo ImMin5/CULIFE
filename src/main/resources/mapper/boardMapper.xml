@@ -13,7 +13,7 @@
 	</select>
 	
  	<select id="selectView" resultType="BoardVO">
-		select b.member_no, m.nickname, m.no, b.subject, b.category, b.view, b.content 
+		select b.no,b.member_no, m.nickname, m.no, b.subject, b.category, b.view, b.content 
 		from board b join member m on b.member_no=m.no
 		where b.no=${no} order by b.member_no desc
 	</select>
@@ -25,6 +25,7 @@
 	<update id="updateViews">
 		update board set view=view+1 where no=#{param1}
 	</update>
+	
 	<select id="boardTotalRecord" resultType="int">
 		select count(no) cnt from board
 		where category=#{category}
@@ -47,4 +48,11 @@
   		limit ${recordPerPage} offset ${offsetIndex}
 	</select>
 	
+	<select id="selectEditView" resultType="BoardVO">
+		select no, category, subject, content from board where no=#{param1} 
+	</select>
+	
+	<update id="updateEditViews">
+		update board set subject=#{subject}, content=#{content} where no=${no} and member_no=#{member_no}
+	</update>
 </mapper>

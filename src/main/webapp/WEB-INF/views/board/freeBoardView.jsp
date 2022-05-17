@@ -13,18 +13,21 @@
 		<div class="child1">조회수 : ${viewVo.view}</div>
 	</div>
 	<hr/>
+	<div class="edel">
+	<a href="/board/freeBoardEdit?no=${viewVo.no}" class="btn" id="freeBoardEdit">수정</a>
+	<span id="btnSpace"></span><input type="button" class="btn" id="freeBoardDel" value="삭제"/>
+	</div>
 		<br>
-
 		<li>글 내용</li>
 		<br>
 		<div class="freeContent">
-
 		<div>${viewVo.content}</div>
 		</div>
 	</ul>
 	<!-- 댓글 -->
 	<hr />
-	<div>
+	<div id="replyLine">
+	<br>
 		<i class="fa fa-comment fa-lg"></i><span class="iconValue">댓글</span>
 	</div>
 	<form method="post" id="replyForm">

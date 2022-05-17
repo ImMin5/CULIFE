@@ -1,8 +1,12 @@
 package com.team.culife.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.team.culife.service.BoardService;
 import com.team.culife.service.MemberService;
 import com.team.culife.vo.BoardVO;
-import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.PagingVO;
 
 @RestController
@@ -78,6 +81,55 @@ public class BoardController {
 		}
 		return mav;
 	}
+	//자유게시판 글 수정 폼
+	@GetMapping("freeBoardEdit")
+	public ModelAndView shareEdit(int no) {
+		ModelAndView mav = new ModelAndView();
+		BoardVO bvo = service.selectEditView(no);
+		
+		mav.addObject("bvo", bvo);
+		mav.setViewName("board/freeBoardEdit");
+		return mav;
+	}
+	
+	//자유게시판 글 수정DB
+	@PostMapping("freeBoardEditOk")
+	public ModelAndView freeBoardEditOk(BoardVO vo, HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		
+		vo.setMember_no((Integer)session.getAttribute("logNo"));
+		vo.setCategory("free");
+	
+			int cnt = service.updateEditView(vo);
+			
+			mav.addObject("cnt", cnt);
+			mav.addObject("vo", vo);
+			mav.setViewName("board/boardEditSuc");
+			
+			return mav;
+	}
+	//자유게시판 글 삭제하기
+	@GetMapping("freeBoardDel")
+	public ResponseEntity<String> freeBoardDel(int no, HttpSession session) {
+		int member_no = (Integer)session.getAttribute("logNo");
+		ResponseEntity<String> entity = null;
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "text/html; charset=utf-8");
+
+		// 삭제
+			int result = service.deleteView(no, member_no);
+			if(result>0) {				
+				String msg ="<script>alert('글이 삭제되었습니다.');";
+				msg +="location.href='/board/freeBoardList';</script>";
+				entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+			}else {
+				entity = new ResponseEntity<String>(failMsg(), headers, HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+
+
 	//문의사항게시판
 	@GetMapping("helpBoardList")
 	public ModelAndView helpboardList(PagingVO pVO) {	
@@ -130,4 +182,9 @@ public class BoardController {
 			}
 			return mav;
 		}
+		
+	public static String failMsg() {
+		String msg = "<script>alret('글 삭제에 실패했습니다.');history.back();</script>";
+		return msg;
+	}
 }

@@ -17,17 +17,24 @@ body{
 .child2{
 	flex:12;
 }
+hr{
+	width:1400px;
+}
+.edel{
+	float:right;
+	padding-right:14%;
+}
 /*버튼*/
 #freeBoardEdit{
-	background-color: rgb(72, 97, 86);
+	background-color: gray;
 	color:white;
-	padding:10px 30px;
+	padding:10px 10px;
 }
 
 #freeBoardDel{
 	background-color: gray;
 	color:white;
-	padding:10px 30px;
+	padding:10px 10px;
 }
 
 #btnSpace{
@@ -40,7 +47,7 @@ body{
 .container li{
 	width:1200px;
 	text-align:left;
-	padding-left:18.75%;
+	padding-left:14.5%;
 }
 .container h1{
 	font-size:2.5rem;
@@ -52,7 +59,9 @@ body{
 	text-align:left;
 	padding-left:18.75%;
 }
-
+#commentLine, #replyLine{
+	padding-left:13.75%;	
+}
 .freeBoardComent{
 	padding: 12px;
 	border: none;
