@@ -9,7 +9,7 @@
   		where author=#{param1}
   	</select>
   	<select id="authorNoSelect" resultType="com.team.culife.vo.AuthorVO">
-  		select  author.no
+  		select  no, member_no, author, sns_link, author_thumbnail, debut_year, create_date, author_msg, author_status
 		from author
 		where member_no = #{param1};
   	</select>
@@ -21,6 +21,7 @@
 	<select id="authorSelect" resultType="com.team.culife.vo.AuthorVO">
   		select no, member_no, author, sns_link, author_thumbnail, debut_year, create_date, author_msg, author_status
   		from author 
+  		where member_no = #{member_no};
   	</select>
   	<select id="authorCheck" resultType="string">
   		select author from author

@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WorkVO {
-	private int no;
+	private Integer no;
 	private int exhibition_no;
 	private String work_subject;
 	private String work_thumbnail;
