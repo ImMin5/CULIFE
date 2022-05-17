@@ -108,7 +108,12 @@ public class LoginController {
 					
 					result.put("msg","로그인 성공");
 					result.put("status", "200");
-					result.put("redirect", "/");
+					//관리자 로그인
+					if(mvo.getGrade() == 2) 
+						result.put("redirect", "/admin/memberList");
+					//일반 로그인
+					else
+						result.put("redirect", "/");
 					
 				}else {
 					//정지된 아이디
