@@ -69,8 +69,8 @@ $(function () {
 		
 		<c:forEach var="vo" items="${adminExReplyList}">
 			<li>${vo.no }</li>
-			<li><a href='#'>${vo.subject }</a></li>
-			<li>${vo.content }</li>
+			<li>${vo.subject }</li>
+			<li><a href='#'>${vo.content }</a></li>
 			<li>${vo.nickname }</li>
 			<li>${vo.write_date }</li>
 			<li><input type="checkbox" name="noList" value="${vo.no}" class="chk"/></li>

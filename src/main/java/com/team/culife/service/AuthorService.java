@@ -10,11 +10,11 @@ import com.team.culife.vo.PagingVO;
 public interface AuthorService {
 	public AuthorVO authorSelectByName(String author);
 	// 작가등록
-	public int authorWrite(ExhibitionVO vo);
+	public int authorWrite(AuthorVO vo);
 	public void authorWriteOk(Map<String, Object> map);
-	public ExhibitionVO authorSelect(String author);
+	public AuthorVO authorSelect(String author);
 	public String authorCheck(String author);
-	
+  public AuthorVO authorNoSelect(int no);
 	
 	// 작가리스트
 	public List<AuthorVO> authorList(PagingVO pVO);
@@ -24,4 +24,5 @@ public interface AuthorService {
 	public AuthorVO authorListSelect(int no);
 	// 작가검색
 	public List<AuthorVO> authorSearch(String category, String searchWord, int startPage, int endPage, int member_no);
+
 }

@@ -17,6 +17,8 @@ public class AdminReviewVO {
 	private List<Integer> noList;
 	//adminReviewList: 영화 다중삭제
 	private List<Integer> movie_noList;
+	//관리자페이지 - 리뷰링크
+	private int numb;
 	
 	//감상평관리
 	private String subject;
@@ -92,6 +94,12 @@ public class AdminReviewVO {
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+	public int getNumb() {
+		return numb;
+	}
+	public void setNumb(int numb) {
+		this.numb = numb;
 	}
 	
 	

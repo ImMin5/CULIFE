@@ -10,28 +10,13 @@
 </style>
 <script>
 	$(function(){
-		
-		console.log("${pvo.totalPage}")
 		//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
-		//게시판 타입 선택
-		$("#select_container").on("change",function(){
-			console.log("select-->",$(this).val());
-			window.location.href="${url}/mypage/board?category="+$(this).val();
-		});
-		
-		$(document).ready(function(){
-			var category = "${pvo.category}";
-			$("#select_container").val(category).prop("selected",true);
-		});
-		
-		//검색
-
-		 $("#search_word").on("keyup",function(key){
+		$("#search_word").on("keyup",function(key){
 	        if(key.keyCode==13) {
 	           var searchWord = $(this).val();
-	           window.location.href='${url}/mypage/board?category=${pvo.category}&searchWord='+searchWord;
+	           window.location.href='${url}/mypage/review?searchWord='+searchWord;
 	            
 	        }
     	});
@@ -47,10 +32,6 @@
 					<div class="input-group mb-3" id="search_container">
 						<img id="search_btn" src="${url}/img/member/search.png">
 				  		<input type="text" class="form-control" id="search_word" value="${pvo.searchWord}" placeholder="검색" style=" font-size:2.3rem;">
-				  		<select id="select_container">
-							<option value="free">자유게시판</option>
-						 	<option value="help">문의사항</option>
-						</select>
 					</div>
 				</div>
 			</div> <!-- row end -->
@@ -60,14 +41,13 @@
 			  			<thead class="sticky-top" style="background-color:gray">
 			  				<tr>	
 			  					<th style="width:5%">번호</td>
-			  					<th>제목</td>
+			  					<th>전시명</td>
 			  					<th>닉네임</td>
-			  					<th style="width:8%">조회수</td>
 			  					<th style="width:18%">작성일</td>
 			  				</tr>
 			  			</thead>
 			  			<tbody>
-			  				<c:forEach var="vo" items="${boardList}">
+			  				<c:forEach var="vo" items="${reviewList}">
 				  				<tr class="tr_record" onclick="location.href='${url}/board/boardList/${vo.no}'">
 				  					<th scope="row">${vo.no}</td>
 				  					<td>${vo.subject}</td>
@@ -183,8 +163,8 @@
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
-					<li><a href="${url}/mypage/review">감상평</a></li>
-					<li><a class="selected_menu" href="${url}/mypage/board">작성글</a></li>
+					<li><a class="selected_menu" href="${url}/mypage/review">감상평</a></li>
+					<li><a href="${url}/mypage/board">작성글</a></li>
 					<li><a href="${url}/mypage/fan">팔로잉 작가</a></li>
 					<c:if test="${grade == 0}">
 						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>

@@ -23,7 +23,7 @@ public class AuthorServiceImpl implements AuthorService{
 	}
 
 	@Override
-	public int authorWrite(ExhibitionVO vo) {
+	public int authorWrite(AuthorVO vo) {
 		return dao.authorWrite(vo);
 	}
 
@@ -32,7 +32,7 @@ public class AuthorServiceImpl implements AuthorService{
 	}
 
 	@Override
-	public ExhibitionVO authorSelect(String author) {
+	public AuthorVO authorSelect(String author) {
 		return dao.authorSelect(author);
 	}
 
@@ -40,7 +40,12 @@ public class AuthorServiceImpl implements AuthorService{
 	public String authorCheck(String author) {
 		return dao.authorCheck(author);
 	}
-
+  
+  @Override
+	public AuthorVO authorNoSelect(int no) {
+		return dao.authorNoSelect(no);
+	}
+  
 	@Override
 	public List<AuthorVO> authorSearch(String category, String searchWord, int startPage, int endPage, int member_no) {
 		return dao.authorSearch(category, searchWord, startPage, endPage, member_no);
@@ -59,5 +64,6 @@ public class AuthorServiceImpl implements AuthorService{
 	@Override
 	public AuthorVO authorListSelect(int no) {
 		return dao.authorListSelect(no);
-	}
+  }
+  
 }

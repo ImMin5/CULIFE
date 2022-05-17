@@ -224,10 +224,28 @@
 }
 #ex_reg_form ul li:nth-child(1) input {width:140px}
 #ex_reg_form ul li:nth-child(3) textarea {
-	width:300px;height:100px; 
+	width:300px;height: 80px;
 	white-space:nowrap;
 	line-height:30px;
 	resize:none
+}
+.exhibitionWriteType{
+	width: 800px;
+}
+#ex_reg_form ul li div {
+	height: 80px;
+	
+}
+#ex_reg_form ul li:nth-child(4) input {
+	width:25px;
+	margin:0px;
+	line-height:80px;
+}
+#ex_reg_form ul li:nth-child(4) span {
+	text-align:left;
+	font-size:2.0rem;
+	margin-right: 80px;
+	line-height:80px;
 }
 #ex_reg_form > input {
 	display:block;

@@ -15,8 +15,8 @@
       		</li>
       	</ul>
       	<ul id="admin_section2">
-      		<li>
-      			<a href="" id="dropB">게시판관리</a>
+      		<li id="dropB">
+      			<a href="">게시판관리</a>
       			<ul class="adminTopMenu_drop" id="dropBB">
       				<li><a href="/admin/adminBoardList">자유게시판관리</a></li>
       				<li><a href="/admin/adminReviewList">리뷰관리</a></li>
@@ -24,7 +24,7 @@
       				<li><a href="/admin/adminHelpList">문의사항관리</a></li>
       			</ul>
       		</li>
-      		<li><a href="">로그아웃</a></li>
+      		<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
       	</ul>
       </div>
 </div>
