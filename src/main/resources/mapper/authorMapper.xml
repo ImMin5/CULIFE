@@ -26,4 +26,7 @@
   		select author from author
   		where author=#{author}
   	</select>
+  	<update id="authorUpdate">
+  		update author set author_thumbnail=#{author_thumbnail}, sns_link=#{sns_link}, debut_year=${debut_year},  author_msg=#{author_msg}
+  	</update>
   </mapper>

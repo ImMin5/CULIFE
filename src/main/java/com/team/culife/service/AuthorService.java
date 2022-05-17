@@ -13,4 +13,5 @@ public interface AuthorService {
 	public AuthorVO authorSelect(String author);
 	public String authorCheck(String author);
 	public AuthorVO authorNoSelect(int no);
+	public int authorUpdate(AuthorVO vo);
 }

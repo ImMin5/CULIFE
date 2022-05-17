@@ -44,4 +44,9 @@ public class AuthorServiceImpl implements AuthorService{
 	public AuthorVO authorNoSelect(int no) {
 		return dao.authorNoSelect(no);
 	}
+
+	@Override
+	public int authorUpdate(AuthorVO vo) {
+		return dao.authorUpdate(vo);
+	}
 }
