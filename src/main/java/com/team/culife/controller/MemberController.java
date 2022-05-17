@@ -219,6 +219,7 @@ public class MemberController {
 		}
 		return mav;
 	}
+	
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
