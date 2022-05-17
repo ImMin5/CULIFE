@@ -7,5 +7,5 @@ import com.team.culife.vo.ExhibitionVO;
 
 
 public interface ExhibitionService {
-
+	public int exhibitionWrite(ExhibitionVO vo);
 }

@@ -12,5 +12,5 @@ public interface AuthorService {
 	public void authorWriteOk(Map<String, Object> map);
 	public AuthorVO authorSelect(String author);
 	public String authorCheck(String author);
-
+	public AuthorVO authorNoSelect(int no);
 }

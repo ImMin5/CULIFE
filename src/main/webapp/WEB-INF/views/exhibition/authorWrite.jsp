@@ -92,7 +92,7 @@ function authorSubmit() {
 	else if (author_msg == '') {
 		alert("자기소개를 입력해 주세요")
 	}
-	else if (author_status != '' ) {
+	else if (${avo.author_status} != '' ) {
 		alert("작가 신청 심사 중입니다.")
 	}
 	else {
@@ -133,8 +133,7 @@ function authorSubmit() {
 		<div class="col-9" id="mypage_col">
 			<div class="containerWrap">
 				<div class="exhibitionContainer">
-					<form name="authorWrite" id="authorWrite"
-						enctype="multipart/form-data">
+					<form name="authorWrite" id="authorWrite" enctype="multipart/form-data">
 						<div class="authorWriteThumbnail">
 							<img src="/img/member/default_thumbnail.png" id="preview"
 								style="width: 170px; height: 170px;" /> 

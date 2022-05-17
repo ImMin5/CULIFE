@@ -2,6 +2,8 @@ package com.team.culife.controller;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.security.Provider.Service;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,11 +40,12 @@ public class ExhibitionController {
 	AuthorService authorService;
 	
 	@GetMapping("mypage/authorWrite")
-	public ModelAndView authorWrite(HttpSession session,AuthorVO vo, String author) {
+	public ModelAndView authorWrite(HttpSession session, HttpServletRequest request, AuthorVO vo, String author) {
 		ModelAndView mav = new ModelAndView();
+		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		MemberVO mvo = memberService.memberSelectByNo(memberNo);
-		AuthorVO avo = authorService.authorSelect(author);
+		AuthorVO avo = authorService.authorSelectByName(author);
 		mav.addObject("mvo", mvo);
 		mav.addObject("avo", avo);
 		
@@ -55,21 +58,23 @@ public class ExhibitionController {
 	// 작가등록
 	@PostMapping("/authorWriteOk")
 	@ResponseBody
-	public ResponseEntity<String> authorWriteOk(AuthorVO vo, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+	public ResponseEntity<String> authorWriteOk(AuthorVO vo, HttpServletRequest request, HttpSession session){
 		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
-		System.out.println("path --> " +path);
 		ResponseEntity<String> entity = null;
-		
-		System.out.println("author " + vo.getAuthor());
-		System.out.println("debut_year " + vo.getDebut_year());
-		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html",Charset.forName("UTF-8")));
-		try {        	
+		
+		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
+		System.out.println("path --> " +path);
+		
+		try {
+			/* MultipartHttpServletRequest mr = (MultipartHttpServletRequest) request; */
+			
+			System.out.println("author => " + vo.getAuthor());
 			authorService.authorWrite(vo);
+			System.out.println("service 확인");
 			String msg = "작가 신청되었습니다.";
 			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 		} catch (Exception e) {
@@ -77,8 +82,6 @@ public class ExhibitionController {
 			String msg = "작가등록 실패";
 			entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST);
 		}
-		
-		
 		return entity;
 	}
 	
@@ -89,22 +92,37 @@ public class ExhibitionController {
 		return cnt;
 	}
 
-	
+	/*
 	@GetMapping("exhibitionWrite")
 	public ModelAndView exhibitionApply(HttpSession session, HttpServletRequest request, ExhibitionVO vo) {
 		vo.setAuthor_no((Integer)request.getSession().getAttribute("authorNo"));
+		Integer memberNo = (Integer)session.getAttribute("logNo");
 		System.out.println("author_no " + vo.getAuthor_no());
+		System.out.println("member_no " + memberNo);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("exhibition/exhibitionWrite");
 		return mav;
 	}
+	*/
 	@PostMapping("exhibitionWriteOk")
-	public ResponseEntity<String> exhibitionWriteOk(ExhibitionVO vo, HttpServletRequest request, HttpSession session){
-		/* vo.setAuthor_no((Integer)request.getSession().getAttribute("authorNo")); */
-		System.out.println("end_date " + vo.getEnd_date());
-		System.out.println("Type " + vo.getType());
-		System.out.println("author_no " + vo.getAuthor_no());
+	public ResponseEntity<String> exhibitionWriteOk(ExhibitionVO evo, String author, HttpServletRequest request, HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		AuthorVO avo = authorService.authorNoSelect(memberNo);
+		mav.addObject("avo", avo);
+		evo.setAuthor_no(avo.getNo());
 		ResponseEntity<String> entity = null;
+		try {
+			exhibitionService.exhibitionWrite(evo);
+			String msg = "<script>alert('전시 등록 완료.'); "
+					+ "location.href='/online_exhibition/onlineList'</script>";
+			entity = new ResponseEntity<String>(msg, HttpStatus.OK);
+		} catch (Exception e) {
+			
+		}
+		
+		
 		return entity;
 	}
 	

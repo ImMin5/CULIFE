@@ -16,5 +16,10 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 
 	@Inject
 	ExhibitionDAO dao;
+
+	@Override
+	public int exhibitionWrite(ExhibitionVO vo) {
+		return dao.exhibitionWrite(vo);
+	}
 	
 }

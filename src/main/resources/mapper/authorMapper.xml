@@ -8,6 +8,11 @@
   		from author 
   		where author=#{param1}
   	</select>
+  	<select id="authorNoSelect" resultType="com.team.culife.vo.AuthorVO">
+  		select  author.no
+		from author
+		where member_no = #{param1};
+  	</select>
 
 	<insert id="authorWrite" >
 		insert into author(member_no, author, sns_link, author_thumbnail, debut_year, author_msg)
