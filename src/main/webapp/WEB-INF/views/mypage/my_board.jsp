@@ -10,6 +10,8 @@
 </style>
 <script>
 	$(function(){
+		
+		console.log("${pvo.totalPage}")
 		//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
@@ -103,8 +105,16 @@
 				    <!-- 페이지 번호 -->
 				    <!-- totalPage 가 onePageCount 보다 클때 -->
 				    <c:choose>
-				    	<c:when test="${pvo.startPage - pvo.onePageCount/2 > 0}">
-				    		 <c:forEach var="p" begin="${pvo.startPage- pvo.onePageCount/2 + 1}" end="${pvo.startPage+pvo.onePageCount/2}">
+				    	<c:when test="${pvo.totalPage > pvo.onePageCount and pvo.startPage - pvo.onePageCount/2 > 0 and pvo.startPage <= pvo.totalPage}">
+				    		<c:choose>
+				    			<c:when test="${pvo.totalPage- pvo.onePageCount/2 == pvo.currentPage}">
+				    				<c:set var="endPage" value="${pvo.totalPage}"/>
+				    			</c:when>
+				    			<c:otherwise>
+				    				<c:set var="endPage" value="${pvo.startPage+pvo.onePageCount/2}"/>
+				    			</c:otherwise>		
+				    		</c:choose>
+				    		<c:forEach var="p" begin="${pvo.startPage- pvo.onePageCount/2 + 1}" end="${endPage}">
 						    	<c:choose>
 							    	<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
 								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
@@ -126,25 +136,21 @@
 							</c:forEach>
 				    	</c:when>
 				    	<c:otherwise>
-				    		 <c:forEach var="p" begin="1" end="${pvo.totalPage-1}">
-						    							    	<c:choose>
-							    	<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
-								    	<c:if test="${p==pvo.currentPage }">
-								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
-								    	</c:if>
-								    	<c:if test="${p!=pvo.currentPage }">	
-								    		<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
-								   		</c:if>
-								   	</c:when>
-							    	<c:otherwise>
-								    	<c:if test="${p==pvo.currentPage }">
-								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
-								    	</c:if>
-								    	<c:if test="${p!=pvo.currentPage }">	
-								    		<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
-								   		</c:if>
-								   	</c:otherwise>
-							   	</c:choose>
+				    		<c:choose>
+				    			<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
+				    		 		<c:set var="endPage" value="${pvo.totalPage}"/>
+				    			</c:when>
+				    			<c:otherwise>
+				    				<c:set var="endPage" value="${pvo.onePageCount}"/>
+				    			</c:otherwise>
+				    		</c:choose>
+				    		<c:forEach var="p" begin="1" end="${endPage}">
+					    		<c:if test="${p==pvo.currentPage }">
+					    			<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								</c:if>
+								<c:if test="${p!=pvo.currentPage }">	
+									<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								</c:if>
 							</c:forEach>
 				    	</c:otherwise>
 				    </c:choose>

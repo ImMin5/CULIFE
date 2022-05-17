@@ -4,11 +4,17 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
+let authorch = false;
+
 $(function(){
-		
+	$("#thumbnail_btn").on("click",function(){
+		$("#authorThumbnail").trigger("click");
+	})
 	$("#authorWriteName").keyup(function(){
 		var author = $("#authorWriteName").val();
+		authorch = false;
 		if(author != ''){
 			console.log(author);
 			var url = "/authorNameCheck";
@@ -22,10 +28,12 @@ $(function(){
 						$("#chk").html("이미 사용중인 작가명 입니다.");
 						$("#authorchk").val("N");
 						$("#chk").css("color","red");
+						authorch = false;
 					}else{//사용가능
 						$("#chk").html("사용 가능한 작가명 입니다.");
 						$("#authorchk").val("Y");
 						$("#chk").css("color","blue");
+						authorch = true;
 					}
 				}
 			});
@@ -50,6 +58,11 @@ $(function(){
 
 
 function authorSubmit() {
+	if(!authorch) {
+		alert("작가명을 확인해 주세요");
+		return false;
+	}
+	var pattern_num = /^[0-9]*$/;
 	var authorNickname = "${mvo.nickname}";
 	var params = "nickname=" + "${mvo.nickname}";
 	var author = $("#authorWriteName").val();
@@ -57,10 +70,10 @@ function authorSubmit() {
 	var author_thumbnail = $("#authorThumbnail").val();
 	var debut_year = $("#authorDebutYear").val();
 	var author_msg = $("#authorMsg").val();
+	var author_status = "${avo.author_status}";
 	console.log(authorNickname);
-	console.log(params);
 	console.log(author);
-	console.log(debut_year);
+	console.log(author_status);
 	if (author == '' ) {
 		alert("작가명을 입력해 주세요")
 	} 
@@ -72,12 +85,22 @@ function authorSubmit() {
 	}
 	else if (debut_year == '' ) {
 		alert("데뷔년도를 입력해 주세요")
-	} else {
+	}  
+	else if (!pattern_num.test(debut_year)) {
+		alert("데뷔년도에 숫자만 입력해 주세요")
+	} 
+	else if (author_msg == '') {
+		alert("자기소개를 입력해 주세요")
+	}
+	else if (${avo.author_status} != '' ) {
+		alert("작가 신청 심사 중입니다.")
+	}
+	else {
 	
 		$.ajax({
 			url: '/authorWriteOk',
 			type: 'POST', 
-			dataType: 'json',
+			dataType: "html",
 			data : {
 				nickName: '${mvo.nickname}',
 				member_no: '${mvo.no}',
@@ -89,12 +112,17 @@ function authorSubmit() {
 			},
 			
 			success: function(result) {
+				console.log("작가 신청 완료")
+				console.log(result)
 				if (result) {
-					alert("작가 신청 완료되었습니다.");
+					alert(result)
+					window.location.href='/mypage/authorWrite';
 				} else {
-					alert("작가 신청 실패");
+					alert("작가 신청 실패")
 				}
-					
+			},
+			error: function(request, status, error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});
 	}
@@ -105,18 +133,18 @@ function authorSubmit() {
 		<div class="col-9" id="mypage_col">
 			<div class="containerWrap">
 				<div class="exhibitionContainer">
-					<form name="authorWrite" id="authorWrite"
-						enctype="multipart/form-data">
+					<form name="authorWrite" id="authorWrite" enctype="multipart/form-data">
 						<div class="authorWriteThumbnail">
 							<img src="/img/member/default_thumbnail.png" id="preview"
 								style="width: 170px; height: 170px;" /> 
+							<img class="thumbnail_btn" id="thumbnail_btn" src="${url}/img/member/thumbnail_btn.png"/>
 							<input type="file" name="authorThumbnail" class="files" id="authorThumbnail"
-								style="width: 270px; height: 46px;" value="사진 선택">
+								style="display:none;">
 						</div>
 						<div class="authorWriteContent">
 							<div class="authorWriteID">
 								<label>닉네임</label>
-								<input type="text" value="${mvo.nickname}" class="form-control" id="authorWriteName" readonly>
+								<input type="text" value="${mvo.nickname}" class="form-control" readonly>
 								
 
 							</div>
@@ -126,7 +154,6 @@ function authorSubmit() {
 									<input type="text" class="form-control" id="authorWriteName" placeholder='작가명 입력'>
 								</div>
 								<span id="chk"></span>
-								<!-- <div><input type ="text" id="authorchk" value ="N" style="visibility:hidden"/></div> -->
 							</div>
 							<div class="authorWriteSNS">
 								<div>SNS 주소</div>
@@ -138,7 +165,7 @@ function authorSubmit() {
 							<div class="authorDebutYear">
 								<div>데뷔년도</div>
 								<div>
-									<input type="text" class="form-control" id="authorDebutYear">
+									<input type="text" class="form-control" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018'>
 								</div>
 							</div>
 							<div class="authorMsg">
