@@ -208,7 +208,17 @@ public class MemberController {
 		
 		return mav;
 	}
-	
+	//마이페이지 감상평
+	@GetMapping("/mypage/review")
+	public ModelAndView mypageReview() {
+		ModelAndView mav = new ModelAndView();
+		try {
+			mav.setViewName("mypage/my_review");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 	@PutMapping("/mypage/member")
 	public ResponseEntity<HashMap<String,String>> memberEdit(String thumbnail, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
