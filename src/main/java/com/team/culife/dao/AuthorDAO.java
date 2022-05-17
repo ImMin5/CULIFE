@@ -17,7 +17,8 @@ public interface AuthorDAO {
 	public void authorWriteOk(Map<String, Object> map);
 	public AuthorVO authorSelect(String author);
 	public String authorCheck(String author);
-  public AuthorVO authorNoSelect(int no);
+	public AuthorVO authorNoSelect(int no);
+	public int authorUpdate(AuthorVO vo);
 	
   // 작가리스트
 	public List<AuthorVO> authorList(PagingVO pVO);
@@ -27,5 +28,4 @@ public interface AuthorDAO {
 	public AuthorVO authorListSelect(int no);
 	// 작가 검색...?(수정중)
 	public List<AuthorVO> authorSearch(String category, String searchWord, int startPage, int endPage, int member_no);
-	
 }

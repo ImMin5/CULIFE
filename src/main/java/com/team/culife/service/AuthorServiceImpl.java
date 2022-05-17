@@ -45,6 +45,11 @@ public class AuthorServiceImpl implements AuthorService{
 	public AuthorVO authorNoSelect(int no) {
 		return dao.authorNoSelect(no);
 	}
+
+	@Override
+	public int authorUpdate(AuthorVO vo) {
+		return dao.authorUpdate(vo);
+	}
   
 	@Override
 	public List<AuthorVO> authorSearch(String category, String searchWord, int startPage, int endPage, int member_no) {
@@ -65,5 +70,4 @@ public class AuthorServiceImpl implements AuthorService{
 	public AuthorVO authorListSelect(int no) {
 		return dao.authorListSelect(no);
   }
-  
 }

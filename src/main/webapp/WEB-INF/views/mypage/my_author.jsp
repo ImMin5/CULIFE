@@ -23,7 +23,7 @@
 		
 		//작가 정보 수정
 		$("#authorForm_author_edit_btn").on("click",function(){
-			var url = "${url}/mypage/author/thumbnail";
+			var url = "${url}/mypage/author/info";
 			var data = new FormData($("#memberForm")[0]);
 			console.log(data.thumbnail);
 			$.ajax({
@@ -34,6 +34,7 @@
 				data : data,
 				success:function(data){
 					console.log(data);
+					alert(data.msg);
 				},error : function(error){
 					alert(error);
 				}
@@ -50,12 +51,12 @@
 					<div class="col">
 						<!-- 작가 대표 사진 -->
 						<div id="mypage_member_thumbnail_container">
-							<%-- <img id="thumbnail_member" src="${url}/upload/${logNo}/author/thumbnail/${avo.thumbnail}"/> --%>
+							<img id="thumbnail_member" src="${url}/upload/${logNo}/author/${avo.author_thumbnail}"/>
 							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
 						</div>
 						<div class="mb-3" style="display:none;">
 							<label for="formFile" class="form-label">작가 사진</label>
-							<input type="text" name="thumbnail">
+							<input type="text" name="author_thumbnail" value="${avo.author_thumbnail}">
 							<input class="form-control" type="file" multiple="multiple" name="file" id="formFile_member" >
 						</div>
 						<div class="form-floating mb-3" style="margin:0 auto; width:50%; font-size:2.1rem;" >
@@ -68,9 +69,13 @@
 						  	
 						</div>
 						<div class="form-floating mb-3" style="margin:0 auto; width:50%; font-size:2.1rem;">
-	  						<input type="text" class="form-control" id="" value="${avo.debut_year}" placeholder="닉네임" style=" font-size:2.4rem; height:75px;">
+	  						<input type="text" class="form-control" name="debut_year" value="${avo.debut_year}" placeholder="닉네임" style=" font-size:2.4rem; height:75px;">
 						  	<label >데뷔 연도</label>
 						  	
+						</div>
+						<div class="form-floating mb-3"  style="margin:0 auto; width:50%; font-size:2.1rem;">
+							<textarea class="form-control" name="author_msg" id="floatingTextarea" style="padding-top:30px; font-size:2.4rem; height:100px;">${avo.author_msg}</textarea>
+							<label for="floatingTextarea">작가소개</label>
 						</div>
 						
 						<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center; font-size:2.1rem;">
