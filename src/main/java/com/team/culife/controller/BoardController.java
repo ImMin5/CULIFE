@@ -1,7 +1,6 @@
 package com.team.culife.controller;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpHeaders;
@@ -31,7 +30,7 @@ public class BoardController {
 	public ModelAndView freeboardList(PagingVO pVO) {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("list", service.selectList(pVO));
+		mav.addObject("list", service.freeselectList(pVO));
 		mav.setViewName("/board/freeBoardList");
 		return mav;
 	}
@@ -111,6 +110,7 @@ public class BoardController {
 	//자유게시판 글 삭제하기
 	@GetMapping("freeBoardDel")
 	public ResponseEntity<String> freeBoardDel(int no, HttpSession session) {
+		
 		int member_no = (Integer)session.getAttribute("logNo");
 		ResponseEntity<String> entity = null;
 		
@@ -131,12 +131,12 @@ public class BoardController {
 
 
 	//문의사항게시판
-	@GetMapping("helpBoardList")
+	@GetMapping("/help/helpBoardList")
 	public ModelAndView helpboardList(PagingVO pVO) {	
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("list", service.selectList(pVO));
-		mav.setViewName("/board/helpBoardList");
+		mav.addObject("list", service.helpselectList(pVO));
+		mav.setViewName("/board/help/helpBoardList");
 		return mav;	
 	}
 	//문의사항 게시글 등록 폼
@@ -144,7 +144,7 @@ public class BoardController {
 	public ModelAndView helpBoardWrite() {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("board/helpBoardWrite");
+		mav.setViewName("board/help/helpBoardWrite");
 		return mav;
 	}
 	// 문의사항 상세페이지 뷰
@@ -157,7 +157,7 @@ public class BoardController {
 			
 		// 상세페이지 보이기(뷰 보이기)
 		mav.addObject("viewVo", service.selectView(no));
-		mav.setViewName("board/helpBoardView");
+		mav.setViewName("board/help/helpBoardView");
 		
 		return mav;
 	}

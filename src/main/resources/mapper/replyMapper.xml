@@ -4,19 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.culife.dao.ReplyDAO">
 	<insert id="insertReply">
-		insert into reply(no, member_no, comment) 
-		values(${no}, #{member_no}, #{comment})
+		insert into board_reply(no, member_no, content) 
+		values(${no}, ${member_no}, #{content})
 	</insert>
+	
 	<select id="selectReplyList" resultType="ReplyVO">
-		select reply_no, no, member_no, comment, 
-		date_format(write_date, "%m/%d %H:%i")write_date
-		from reply 
-		where no=${param1} order by reply_no desc
+		select br.reply_no, br.no, br.member_no, br.content, m.nickname, date_format(br.write_date, "%m/%d %H:%i") write_date
+		from board_reply br join member m on br.member_no = m.no where br.no = ${no}
+		order by reply_no desc
 	</select>
+	
 	<update id="updateReply">
-		update reply set comment=#{comment} where reply_no=${reply_no} and member_no=#{member_no}
+		update board_reply set content=#{content} where reply_no=${reply_no} and member_no=#{member_no}
 	</update>
+	
 	<delete id="deleteReply">
-		delete from reply where reply_no=#{param1} and member_no=#{param2}
+		delete from board_reply where reply_no=#{param1} and member_no=#{param2}
 	</delete>
 </mapper>

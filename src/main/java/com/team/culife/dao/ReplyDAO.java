@@ -21,6 +21,6 @@ public interface ReplyDAO {
 	public int updateReply(ReplyVO vo);
 	
 	// 댓글 삭제하기
-	public int deleteReply(int replyno, String nickname);
+	public int deleteReply(int replyno, int member_no);
 
 }

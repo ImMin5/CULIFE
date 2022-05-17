@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ReplyVO {
 
-	private int replyno;
+	private int reply_no;
 	private int no;
 	private int member_no;
 	private String content;
@@ -12,11 +12,11 @@ public class ReplyVO {
 	private List<Integer> replynoList;
 	private String nickname;
 	
-	public int getReplyno() {
-		return replyno;
+	public int getReply_no() {
+		return reply_no;
 	}
-	public void setReplyno(int replyno) {
-		this.replyno = replyno;
+	public void setReply_no(int reply_no) {
+		this.reply_no = reply_no;
 	}
 	public int getNo() {
 		return no;

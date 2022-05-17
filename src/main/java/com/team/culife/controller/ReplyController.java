@@ -21,17 +21,17 @@ public class ReplyController {
 	
 	// 댓글 등록하기
 	@PostMapping("/reply/writeOk")
-	@ResponseBody
-	public int writeOk(ReplyVO vo, HttpSession session) {
+	public int writeOk(ReplyVO vo, HttpSession session) {System.out.println(vo.getMember_no());
 		vo.setMember_no((Integer)session.getAttribute("logNo"));
 		vo.setNickname((String)session.getAttribute("nickName"));
+		
 		return service.insertReply(vo);
 	}
 	
 	// 댓글 목록보이기
 	@GetMapping("/reply/replyList")
-	@ResponseBody
 	public List<ReplyVO> replyList(int no){
+		System.out.println(no);
 		return service.selectReplyList(no);
 	}
 	
@@ -46,8 +46,7 @@ public class ReplyController {
 	//댓글 삭제하기
 	@GetMapping("/reply/delOk")
 	@ResponseBody
-	public int deleteReply(int replyno, HttpSession session) {
-		return service.deleteReply(replyno, (String)session.getAttribute("nickname")); 
+	public int deleteReply(int reply_no, int member_no) {
+		return service.deleteReply(reply_no, member_no); 
 	}
-
 }

@@ -8,8 +8,11 @@
 		values(#{no},#{subject},#{content},#{view},#{member_no},#{category})
 	</insert>
 	
-	<select id='selectList' resultType="BoardVO">
-		select no, subject, member_no,view,write_date from board
+	<select id='freeselectList' resultType="BoardVO">
+		select no, subject, member_no,view,date_format(write_date,'%y-%m-%d %H:%i') write_date from board where category='free' order by no desc
+	</select>
+	<select id='helpselectList' resultType="BoardVO">
+		select no, subject, member_no,view,date_format(write_date,'%y-%m-%d %H:%i') write_date from board where category='help' order by no desc
 	</select>
 	
  	<select id="selectView" resultType="BoardVO">
