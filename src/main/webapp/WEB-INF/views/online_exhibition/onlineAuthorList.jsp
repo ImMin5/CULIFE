@@ -18,82 +18,57 @@
 		<h1 class="hidden">작가 검색 페이지</h1>
 		<a href="/online_exhibition/onlineList">전시회가기</a>
 		<div class="authorSearchcontainer">
-		  <form id="authorSearchFrm" name="authorSearch" autocomplete="off">
-		    <div class="finder">
-		      <div class="finder__outer">
-		        <div class="finder__inner">
-		          <div class="finder__icon"></div>
-		          <input class="finder__input" type="text" onkeypress="press()"/>
-		        </div>
-		      </div>
-		    </div>
-		  </form>
+			<form method="get" action="/online_exhibition/onlineAuthorList" id="authorSearchFrm" name="onlineAuthorList" autocomplete="off">
+		  		<div class="finder">
+		    		<div class="finder__outer">
+		        		<div class="finder__inner">
+		          			<div class="finder__icon"></div>
+		          			<input class="finder__input" type="text" name="searchWord" id="searchWord">
+		        		</div>
+		      		</div>
+		    	</div>
+			</form>
 		</div>
 		<ul id="authorSearchResult">
-			<li>
-				<span class="hidden">번호</span>
-				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
-				<div class="author_details">
-					<h2>권길동</h2>
-					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
-					<a href="">자세히보기 ></a>
-				</div>
-			</li>
-			<li>
-				<span class="hidden">번호</span>
-				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
-				<div class="author_details">
-					<h2>김길동</h2>
-					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
-					<a href="">자세히보기 ></a>
-				</div>
-			</li>
-			<li>
-				<span class="hidden">번호</span>
-				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
-				<div class="author_details">
-					<h2>이길동</h2>
-					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
-					<a href="">자세히보기 ></a>
-				</div>
-			</li>
-			<li>
-				<span class="hidden">번호</span>
-				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
-				<div class="author_details">
-					<h2>최길동</h2>
-					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
-					<a href="">자세히보기 ></a>
-				</div>
-			</li>
-			<li>
-				<span class="hidden">번호</span>
-				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
-				<div class="author_details">
-					<h2>허길동</h2>
-					<p>이곳은 자기소개를 보여주는 공간입니다.</p>
-					<a href="">자세히보기 ></a>
-				</div>
-			</li>
-			<li>
-				<span class="hidden">번호</span>
-				<img src="/img/exhibition/test_img_1.jpg" alt="프로필 사진">
-				<div class="author_details">
-					<h2>홍길동</h2>
-					<p>이곳은 자기소개를 보여주는 공간입니다.<br/>이곳은 자기소개를 보여주는 공간입니다.이곳은 자기소개를 보여주는 공간입니다.</p>
-					<a href="">자세히보기 ></a>
-				</div>
-			</li>
+			<c:forEach var="vo" items="${list}">
+				<li>
+					<span class="hidden">${vo.no}</span>
+					<img src="<c:url value='${url}/upload/"회원번호"/author/${vo.author_thumbnail }'/>">
+					<div class="author_details">
+						<h2>${vo.author}</h2>
+						<p>${vo.author_msg }</p>
+						<a href="/online_exhibition/onlineAuthorView?no=${vo.no }">자세히보기</a>
+					</div>
+				</li>
+			</c:forEach>
 		</ul>
 		
 		<!-- 페이지네이션 -->
 		<div class="pagination">
-			<ol>
-		    	<li><a href="">&#60;</a></li> <!-- < 기호 -->
-		    	<li><a href="">1</a></li>
-		    	<li><a href="">2</a></li>
-		    	<li><a href="">3</a></li>
-		    	<li><a href="">&#62;</a></li> <!-- > 기호 -->
+			<ol> 
+				<c:if test="${pVO.currentPage==1}">
+		    		<li>&#60;</li> <!-- < 기호 -->
+		    	</c:if>
+		    	<c:if test="${pVO.currentPage>1}">
+		        	<li><a href="/online_exhibition/onlineAuthorList?currentPage=${pVO.currentPage-1}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>">&#60;</a></li>
+		        </c:if>
+		    	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
+           		 	<c:if test="${p<=pVO.totalPage}">
+               			<c:if test="${p==pVO.currentPage}">
+               				<li><a style="color:white; background-color:black" href="/online_exhibition/onlineAuthorList?currentPage=${p}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>">
+              			</c:if>
+               			<c:if test="${p!=pVO.currentPage}">
+               				<li><a href="/online_exhibition/onlineAuthorList?currentPage=${p}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>">
+              			</c:if>
+              			${p}</a></li>
+             		</c:if>
+        		</c:forEach>
+		    	<c:if test="${pVO.currentPage==pVO.totalPage}">
+		    		<li>&#62;</li> <!-- > 기호 -->
+		    	</c:if>
+		    	<c:if test="${pVO.currentPage<pVO.totalPage}">
+		        	<li><a href="/online_exhibition/onlineAuthorList?currentPage=${pVO.currentPage+1}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>">&#62;</a></li>
+		        </c:if>
 		    </ol>
 		</div>
 	</div>

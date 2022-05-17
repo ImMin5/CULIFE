@@ -1,15 +1,16 @@
 package com.team.culife.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.culife.dao.AuthorDAO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.ExhibitionVO;
+import com.team.culife.vo.PagingVO;
 
 @Service
 public class AuthorServiceImpl implements AuthorService{
@@ -38,5 +39,25 @@ public class AuthorServiceImpl implements AuthorService{
 	@Override
 	public String authorCheck(String author) {
 		return dao.authorCheck(author);
+	}
+
+	@Override
+	public List<AuthorVO> authorSearch(String category, String searchWord, int startPage, int endPage, int member_no) {
+		return dao.authorSearch(category, searchWord, startPage, endPage, member_no);
+	}
+
+	@Override
+	public List<AuthorVO> authorList(PagingVO pVO) {
+		return dao.authorList(pVO);
+	}
+
+	@Override
+	public int totalAuthorList(PagingVO pVO) {
+		return dao.totalAuthorList(pVO);
+	}
+
+	@Override
+	public AuthorVO authorListSelect(int no) {
+		return dao.authorListSelect(no);
 	}
 }
