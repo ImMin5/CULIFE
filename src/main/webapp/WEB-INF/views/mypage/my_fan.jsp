@@ -216,7 +216,7 @@ let is_paging= true;
 		</div>
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
-				<h1 class="h1">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
+				<h1 class="h1">${logNickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>

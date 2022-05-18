@@ -7,7 +7,7 @@
 	<!-- 회원목록 불러오기 -->
 	<!-- 우선 임의로 썸네일은 빼겠습니다. -->
   	<select id='memberList' resultType="com.team.culife.vo.MemberVO">
-  	 select m.no, m.kakao_id, m.email, m.nickname, m.grade, m.status, date_format(m.create_date,'%Y-%m-%d') create_date, date_format(mb.end_date,'%Y-%m-%d') end_date 
+  	 select m.no, m.kakao_id, m.email, m.nickname, m.grade, m.status, date_format(m.create_date,'%Y-%m-%d') create_date, date_format(mb.end_date,'%Y-%m-%d') end_date, m.thumbnail  
 	from member m left outer join member_ban mb 
 	on m.no = mb.member_no 
   	<if test="searchWord != null" >
@@ -200,11 +200,14 @@
   	<!-- 리뷰게시판 목록 -->
   	<select id="adminReviewList" resultType="com.team.culife.vo.AdminReviewVO">
   	select * from(
-	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
-	from member m join review r on m.no = r.member_no
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.seq numb, count(w.review_no) cnt  
+	from review r join member m on m.no = r.member_no
+				  left join warning w on r.no = w.review_no group by r.no 
 	union 
-	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
-	from member m join movie_review mr on m.no = mr.member_no) a 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.movie_id numb, count(mw.review_no) cnt   
+	from movie_review mr join member m on m.no = mr.member_no
+				         left join m_warning mw on mr.no = mw.review_no group by mr.no 
+    ) a 
   	<if test="searchWord != null" >
 		where ${searchKey} like '%${searchWord}%' 
 	</if> 
@@ -214,10 +217,10 @@
   	<!-- 리뷰게시판 목록 카운트 -->
   	<select id="adminreview_totalRecord" resultType="int">
   	select count(a.no) as cnt from(
-	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
+	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date  
 	from member m join review r on m.no = r.member_no
 	union 
-	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
+	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date  
 	from member m join movie_review mr on m.no = mr.member_no) a 
   	<if test="searchWord != null" >
 		where ${searchKey} like '%${searchWord}%' 
@@ -246,30 +249,40 @@
   	</delete>
   	<!-- 신고 목록 -->
   	<select id="adminWarningList" resultType="com.team.culife.vo.AdminReviewVO">
-  	select * from(
-	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
-	from member m join review r on m.no = r.member_no
+  	select*from(
+	select * from (select replace(r.no, r.no, "연극공연") category, r.no no, r.title, m.nickname, r.content, r.seq numb 
+	from review r join member m on m.no = r.member_no) a 
+	join (select w.review_no, m.nickname reporter, date_format(w.warning_date,'%Y-%m-%d') write_date 
+	from warning w join member m on w.member_no = m.no 
+	group by review_no) b on a.no = b.review_no 
 	union 
-	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
-	from member m join movie_review mr on m.no = mr.member_no) a
-	where  warning_count > 0 
+	select * from (select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, m.nickname, mr.content, mr.movie_id numb 
+	from movie_review mr join member m on m.no = mr.member_no) a 
+	join (select mw.review_no, m.nickname reporter, date_format(mw.warning_date,'%Y-%m-%d') write_date 
+	from m_warning mw join member m on mw.member_no = m.no 
+	group by review_no) b on a.no = b.review_no) c 
   	<if test="searchWord != null" >
-		and ${searchKey} like '%${searchWord}%' 
+		where ${searchKey} like '%${searchWord}%' 
 	</if> 
-	order by no desc 
+	order by write_date desc 
   	limit #{onePageRecord} offset #{offsetIndex} 
   	</select>
   	<!-- 신고 목록 카운트 -->
   	<select id="adminwarning_totalRecord" resultType="int">
   	select count(no) cnt from(
-	select replace(r.no, r.no, "연극공연") category, r.no no, r.title, r.member_no, m.nickname, r.content, r.score_star, date_format(r.write_date,'%Y-%m-%d') write_date, r.warning_count 
-	from member m join review r on m.no = r.member_no
+	select * from (select replace(r.no, r.no, "연극공연") category, r.no no, r.title, m.nickname, r.content, r.seq numb 
+	from review r join member m on m.no = r.member_no) a 
+	join (select w.review_no, m.nickname reporter, date_format(w.warning_date,'%Y-%m-%d') write_date 
+	from warning w join member m on w.member_no = m.no 
+	group by review_no) b on a.no = b.review_no 
 	union 
-	select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, mr.member_no, m.nickname, mr.content, mr.score_star, date_format(mr.write_date,'%Y-%m-%d') write_date, mr.warning_count 
-	from member m join movie_review mr on m.no = mr.member_no) a 
-	where  warning_count > 0  
+	select * from (select replace(mr.no, mr.no, "영화") category, mr.no no, mr.movie_title, m.nickname, mr.content, mr.movie_id numb 
+	from movie_review mr join member m on m.no = mr.member_no) a 
+	join (select mw.review_no, m.nickname reporter, date_format(mw.warning_date,'%Y-%m-%d') write_date 
+	from m_warning mw join member m on mw.member_no = m.no 
+	group by review_no) b on a.no = b.review_no) c 
   	<if test="searchWord != null" >
-		and ${searchKey} like '%${searchWord}%' 
+		where ${searchKey} like '%${searchWord}%' 
 	</if>
   	</select>
   	<!-- 감상평 목록 -->

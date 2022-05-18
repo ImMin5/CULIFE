@@ -20,7 +20,51 @@
 	    outline: none;
 	}
 </style>
-
+<script>
+$(function(){
+	//프로필 이미지 미리
+	$("input[name=filename]").change(function(){
+			console.log($(this));
+			var count = $(this).attr("data-count");
+			console.log(count);
+			console.log($(this).val());
+			//fileReader
+			var reader = new FileReader();
+			reader.onload = function(e) {
+	  			document.getElementById("workPreview"+count).src = e.target.result;
+			};
+			reader.readAsDataURL(this.files[0]);
+			var format = this.files[0].name.split(".").pop();
+			$("#work_thumbnail"+count).val(count+"."+format);
+	});
+	
+	
+    $("#submit_btn").on("click", function(){
+    	console.log("fffff")
+        var len = $("form[name=ex_work_form]").length;
+        for(var i=0; i<len;i++){
+            var url = "${url}/workCreateOk";
+            var data = new FormData($("form[name=ex_work_form]")[i]);
+            console.log(data)
+            
+            $.ajax({
+                url: url,
+                processData: false,
+                contentType: false,
+                type : "POST",
+                data : data,
+                async : false,
+                success : function(){
+        
+                },
+                error : function(){
+                    
+                }
+            });
+        }
+    });
+})
+</script>
     <div id="online_exhibition_container">
     	<h2 class="hidden">온라인 전시회</h2>
     	<a href="/online_exhibition/onlineAuthorList">작가목록</a>
@@ -108,7 +152,7 @@
 								<input id="exhibitionRadio" type="radio" name="type" value="2"> <span>글 전시</span></div>
 							</li>
 						</ul>
-						<input type="submit" value="등록하기" />
+						<input type="submit" value="등록하기" id="exhibitionSubmit"/>
 					</form>
     			</li>    		
     		</ul>
@@ -118,9 +162,11 @@
     
     <!-- 작품등록 모달 -->
     <div id="ex_work_bg" class="modal">
-    	<div id="ex_work_wrap" class="modal_wrap">
+    	<div id="ex_work_wrap" class="modal_wrap" style="overflow:auto;">
     		<h3>작품등록</h3>
-    		<form id="ex_work_form" method="post" action="" enctype="multipart/form-data">
+    		<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
+    		<!-- 
+    		<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
 				<ul id="ex_work_box">
 					<li class="exhibitionWorkContent">
 						<ul>
@@ -128,23 +174,55 @@
 								<p class="hidden">작품 썸네일</p>
 								<figure><img src="" id="workPreview1"/></figure>
 								<input class="work_upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-								<input type="file" name="work_name" id="work_file1" class="workFile"/>
+								<input type="file" name="filename" id="work_file1" class="workFile"/>
 								<label for="work_file1">파일찾기</label> 
+								
 							</li>
 							<li class="exhibitionApplyTitle">
 								<p>작품명</p>
-								<input type="text">
+								<input type="text" name="work_subject">
 							</li>
 							<li class="exhibitionApplyContent">
 								<p>작품 설명</p>
-								<textarea></textarea>
+								<textarea name="work_content"></textarea>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
-				<input type="submit" value="등록하기" />
 			</form>
+			-->
+			<c:if test="${workList != null}">
+				<c:forEach var="vo" items="${workList}" varStatus="status">
+		    		<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
+						<ul id="ex_work_box">
+							<li class="exhibitionWorkContent">
+								<ul>
+									<li class="workThumbnail">
+										<p class="hidden">작품 썸네일</p>
+										<figure><img src="${url}/upload/${logNo}/author/exhibition/${vo.exhibition_no}/${vo.work_thumbnail}" id="workPreview${status.count}" name="workPreview${status.count}"/></figure>
+										<input type="hidden" name="no" value="${vo.no}"/>
+										<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${status.count}" value="${vo.work_thumbnail}"readonly>
+										<input type="file" name="filename" id="work_file${status.count}" class="workFile" data-count="${status.count}"/>
+										<label for="work_file${status.count}">파일찾기</label> 
+										
+									</li>
+									<li class="exhibitionApplyTitle">
+										<p>작품명</p>
+										<input type="text" name="work_subject" value="${vo.work_subject}">
+									</li>
+									<li class="exhibitionApplyContent">
+										<p>작품 설명</p>
+										<textarea name="work_content">${vo.work_content}</textarea>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
+					</form>					
+				</c:forEach>
+			</c:if>
+			<input type="button" value="등록하기" id="submit_btn"/>
 			<i class="fa-solid fa-xmark"></i>
     	</div>
     </div>

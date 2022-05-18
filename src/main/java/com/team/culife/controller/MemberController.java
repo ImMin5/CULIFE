@@ -66,6 +66,7 @@ public class MemberController {
 			
 			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				session.setAttribute("grade",mvo.getGrade());	
 				mav.addObject("mvo", mvo);
 				mav.setViewName("mypage/mypage");
 			}
@@ -103,19 +104,20 @@ public class MemberController {
 	
 	//마이페이지 - 작가 정보 뷰 
 	@GetMapping("/mypage/author")
-	public ModelAndView mypageAuthor(HttpSession session, String author) {
+	public ModelAndView mypageAuthor(HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		MemberVO mvo = memberService.memberSelectByNo(memberNo);
-		AuthorVO avo = authorService.authorSelect(author);
-		mav.addObject("mvo", mvo);
-		mav.addObject("avo", avo);
-		try {
+		
+		try {	
 			if(memberNo == null) {
 				mav.setViewName("redirect:/");
 			}
 			else {
 				//작가 정보 넣기
+				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				AuthorVO avo = authorService.authorNoSelect(mvo.getNo());
+				mav.addObject("mvo", mvo);
+				mav.addObject("avo", avo);
 				mav.setViewName("mypage/my_author");
 			}
 			
@@ -206,6 +208,17 @@ public class MemberController {
 			mav.setViewName("redirect:/");
 		}
 		
+		return mav;
+	}
+	//마이페이지 감상평
+	@GetMapping("/mypage/review")
+	public ModelAndView mypageReview() {
+		ModelAndView mav = new ModelAndView();
+		try {
+			mav.setViewName("mypage/my_review");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return mav;
 	}
 	
@@ -464,18 +477,19 @@ public class MemberController {
 		return entity;
 	}
 	
-	//작가 썸네일 업로드
-	@PostMapping("/mypage/author/thumbnail")
-	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(MemberVO mvo, HttpServletRequest request ,HttpSession session){
+	//작가 정보 수정
+	@PostMapping("/mypage/author/info")
+	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(AuthorVO avo, HttpServletRequest request ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author/thumbnail");
+		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
 		System.out.println("path --> " +path);
 		
 		try {
+			result.put("status", "200");
 			if(memberNo != null) {
-				System.out.println("th "+ mvo.getThumbnail());
+				System.out.println("th "+ avo.getAuthor_thumbnail());
 				
 				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
 				MultipartFile newFile = (MultipartFile) mr.getFile("file");
@@ -494,19 +508,20 @@ public class MemberController {
 							// 업로드
 							try {
 								//기존에 있던 썸네일 파일 삭제
-								
-								mvo = memberService.memberSelectByNo(memberNo);
-								if(mvo.getThumbnail() != null) {
-									File deleteFile = new File(path,mvo.getThumbnail());
+								String oriFile = authorService.authorSelectByName(avo.getAuthor()).getAuthor_thumbnail();
+								if(oriFile != null) {
+									File deleteFile = new File(path,oriFile);
 									deleteFile.delete();
 								}
-								mvo.setThumbnail(newUploadFilename);
-								System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
+								avo.setAuthor_thumbnail(newUploadFilename);
+								
 								newFile.transferTo(f);
 							} catch(Exception ee) {ee.printStackTrace();}
 								
 						}
 				} // if newFile != null
+				System.out.println("업로드 결과 ---> "+ authorService.authorUpdate(avo));
+				result.put("msg","정보 수정 완료!");
 			}
 			else {
 				result.put("msg","로그인 후 이용해 주세요");
@@ -515,6 +530,7 @@ public class MemberController {
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
+			result.put("status","400");
 			result.put("msg", "회원정보 업데이트 에러...");
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
 		}

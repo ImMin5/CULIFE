@@ -74,12 +74,12 @@ $(function () {
 	</ul>
 	<form method="get" action="/admin/adminHelpDel" id='listFrm'>
 	<ul class="adminHelpList">
-		<li>번호</li>
-		<li>제목</li>
-		<li>닉네임</li>
-		<li>날짜</li>
-		<li>상태</li>
-		<li>전체선택<input type="checkbox" id="allCheck"/></li>
+		<li class='list_title'>번호</li>
+		<li class='list_title'>제목</li>
+		<li class='list_title'>닉네임</li>
+		<li class='list_title'>날짜</li>
+		<li class='list_title'>상태</li>
+		<li class='list_title'>전체선택<input type="checkbox" id="allCheck"/></li>
 		
 		<c:forEach var="vo" items="${adminHelpList}">
 			<li>${vo.no }</li>
@@ -128,7 +128,7 @@ $(function () {
 	</c:if>
 		<li>	
 			<input type="button" value="삭제" id="multiDel"/>
-			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminBoardList'"/>		
+			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminHelpList'"/>		
 		</li>
 	</ul>
 </div><!-- class='memberList_container' -->

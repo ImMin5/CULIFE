@@ -1,398 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<style>
- @font-face {
-   font-family: 'RixYeoljeongdo_Regular';
-   src:
-      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff')
-      format('woff');
-   font-weight: normal;
-   font-style: normal;
-}
-
-
-* {
-   box-sizing: border-box;
-}
-
-
-body {
-   background: black;
-   -webkit-user-select: none;
-   -moz-user-select: none;
-   -ms-user-select: none;
-   user-select: none;
-   position: relative;
-}
-
-.movieView_container {
-   margin: 0 auto 300px auto;
-   margin-top: 160px;
-   max-width: 1500px;
-   height: 100%;
-}
-
-.movieDetail_container {
-   position: relative;
-   margin: 0px auto;
-   width: 1300px;
-   height: 700px;
-   margin: 0px auto;
-}
-
-.movie_card {
-   position: relative;
-   margin: 0 auto;
-   display: block;
-   width: 100%;
-   height: 600px;
-   margin-top: 100px;
-   overflow: hidden;
-   border-radius: 12px;
-   /* transition: all 0.4s ease-in-out; */
-}
-
-.movie_card .info_section {
-   position: relative;
-   width: 100%;
-   height: 100%;
-   background-blend-mode: multiply;
-   border-radius: 10px;
-   z-index: 10;
-}
-
-.movie_card .info_section .movie_header {
-   position: relative;
-   display: inline-block;
-   padding: 15px;
-   height: 45%;
-}
-
-.movie_card .info_section .movie_header h1 {
-   font-family: 'RixYeoljeongdo_Regular';
-   margin-top: 50px;
-   color: white;
-   font-size: 30px;
-}
-
-.movie_card .info_section .movie_header h5 {
-   margin-bottom: 15px;
-   color: white;
-   font-weight: 200;
-}
-
-.movie_card .info_section .movie_header h4 {
-   margin: 2px;
-   color: #cee4fd;
-   font-size: 18px;
-}
-
-.movie_card .info_section .movie_header .minutes {
-   display: inline-block;
-   margin: 10px 0 5px 0;
-   padding: 9px;
-   color: #fff;
-   border-radius: 5px;
-   border: 1px solid rgba(255, 255, 255, 0.33);
-   font-size: 18px;
-}
-
-.movie_card .info_section .movie_header .type {
-   display: block;
-   margin: 2px;
-   color: #cee4fd;
-   font-size: 18px;
-}
-
-.movie_card .info_section .movie_header .poster {
-   position: relative;
-   float: left;
-   margin-right: 20px;
-   height: 300px;
-   box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
-}
-
-.movie_card .info_section .movie_desc {
-   display: flex;
-   align-items: center;
-   margin-top: 15px;
-   padding: 15px;
-   height: 45%;
-}
-
-.movie_card .info_section .movie_desc .text {
-   color: #cfd6e1;
-   line-height: 21px;
-}
-
-/*
-.movie_card .info_section .movie_social {
-   height: 10%;
-   padding-left: 15px;
-   padding-bottom: 20px;
-   bottom: 0;
-   position: absolute;
-}
-
-.movie_card .info_section .movie_social ul {
-   padding: 0;
-   list-style: none;
-}
-
-.movie_card .info_section .movie_social ul li {
-   display: inline-block;
-   margin: 0 10px;
-   color: rgba(255, 255, 255, 0.4);
-   transition: color 0.3s;
-   transition-delay: 0.15s;
-}
-
-.movie_card .info_section .movie_social ul li:hover {
-   color: rgba(255, 255, 255, 0.8);
-   transition: color 0.3s;
-}
-
-.movie_card .info_section .movie_social ul li i {
-   font-size: 19px;
-   cursor: pointer;
-}
-*/
-.movie_card .info_section .movie_youdube {
-   display: inline-block;
-   width: 150px;
-   height: 100px;
-   padding: 0 15px;
-   position: relative;
-}
-
-.movie_card .info_section .movie_youdube a {
-   color: white;
-   text-decoration: none;
-}
-
-.fa-youtube {
-   position: absolute;
-   right: 47%;
-   bottom: 50%;
-   margin-left: 12px;
-   color: #ffffff7b;
-   font-size: 80px;
-}
-
-.fa-youtube:hover {
-   background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
-   -webkit-background-clip: text;
-   -webkit-text-fill-color: transparent;
-}
-
-.movie_card .blur_back {
-   position: absolute;
-   top: 1px;
-   right: 0;
-   height: calc(100% - 2px);
-   z-index: 1;
-   background-size: cover;
-   border-radius: 11px;
-}
-
-@media screen and (min-width: 768px) {
-   .movie_header {
-      width: 55%;
-   }
-   .movie_desc {
-      width: 50%;
-   }
-   .info_section {
-      background: linear-gradient(to right, #0d0d0c 50%, transparent 100%);
-   }
-   .blur_back {
-      width: 80%;
-      background-position: -100% 10% !important;
-   }
-}
-
-@media screen and (max-width: 768px) {
-   .movie_card {
-      width: 98%;
-      height: auto;
-      margin: 70px auto;
-   }
-   .blur_back {
-      width: 100%;
-      background-position: 50% 50% !important;
-   }
-   .movie_header {
-      width: 100%;
-      margin-top: 85px;
-   }
-   .movie_desc {
-      width: 100%;
-   }
-   .info_section {
-      background: linear-gradient(to top, #141413 50%, transparent 100%);
-      display: inline-grid;
-   }
-}
-
-.shadow {
-   box-shadow: 0px 30px 190px -45px rgba(19, 160, 134, 0.6);
-}
-/*
-.shadow:hover {
-   box-shadow: 0px 0px 120px -55px rgba(19, 160, 134, 0.6);
-}
-*/
-.modal {
-   display: none;
-   justify-content: center;
-   align-items: center;
-   position: absolute;
-   z-index: 9999;
-   left: 55px;
-   top: 100px;
-   width: 1100px;
-   height: 600px;
-   overflow: hidden;
-   background-color: black;
-   background-color: rgba(50, 50, 50, 0.6);
-   animation-name: fadeIn;
-   animation-duration: 0.4s;
-   outline: 0;
-}
-
-.modal_content {
-   text-align: center;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.movieCreadits_container {
-   background: #f1f3f5;
-   padding: 0;
-   max-width: 1300px;
-   height: 360px;
-   margin: 25px auto;
-   position: relative;
-   /* background-color: darkgoldenrod; */
-}
-
-.slider {
-   display: flex;
-   height: 100%;
-   width: 100%;
-   overflow-x: auto;
-   overflow-y: hidden;
-   position: relative;
-   scroll-behavior: auto;
-   -webkit-overflow-scrolling: touch;
-   -ms-scroll-snap-type: x proximity;
-   scroll-snap-type: x proximity;
-   -ms-scroll-chaining: none;
-   overscroll-behavior: contain;
-   -webkit-overflow-scrolling: touch;
-   -ms-overflow-style: -ms-autohiding-scrollbar;
-   scrollbar-width: thin;
-   scrollbar-color: #adb5bd transparent;
-   background-color: black;
-}
-
-.slider::-webkit-scrollbar {
-   height: 13px;
-   width: 6px;
-}
-
-.slider::-webkit-scrollbar-track {
-   background-color: transparent;
-   border-radius: 10px;
-}
-
-.slider::-webkit-scrollbar-thumb {
-   background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
-   border-radius: 10px;
-   cursor: pointer;
-   -webkit-transition: all 200ms ease-in-out;
-   transition: all 200ms ease-in-out;
-}
-
-.slider::-webkit-scrollbar-thumb:hover {
-   background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
-}
-
-.slider::-webkit-scrollbar-thumb:active {
-   background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
-}
-
-.slider::-webkit-scrollbar-thumb:vertical {
-   min-height: 30px;
-}
-
-.slider::-webkit-scrollbar-thumb:horizontal {
-   min-width: 30px;
-}
-
-.itemDiv .item {
-   display: flex;
-   width: 164px;
-   height: 230px;
-   position: relative;
-   padding: 0;
-   margin: 32px 22px 17px 0px;
-   -moz-border-radius: 13px 13px 13px 13px;
-   -webkit-border-radius: 13px 13px 13px 13px;
-}
-
-.textTag {
-   color: white;
-   font-size: 18px;
-   font-weight: 500;
-   text-align: center;
-}
-
-.h4Text {
-   font-family: 'RixYeoljeongdo_Regular';
-   background-color: black;
-   color: white;
-   font-size: 32px;
-   color: white;
-}
-
-@-webkit-keyframes show {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-@keyframes show {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-</style>
-
+<link rel="stylesheet" href="${url}/css/movie/movieView.css"
+	type="text/css" />
+	
 <body>
    <div class="movieView_container">
       <div class="movieDetail_container">
@@ -412,6 +23,32 @@ body {
          <h4 class="h4Text">주요 출연진</h4>
          <div class="slider"></div>
       </div>
+      
+      <h4 class="h4Text review_h4Text">평점 작성</h4>
+      <div class="review_container">
+	    <div class="stars">
+	      <form action="">
+	      	 <input type="checkbox" name="checkbox" id="checkbox" />
+      		 <label for="checkbox">스포체크</label>
+	        <input class="star star-5" id="star-5-2" type="radio" name="star" />
+	        <label class="star star-5" for="star-5-2"></label>
+	        <input class="star star-4" id="star-4-2" type="radio" name="star" />
+	        <label class="star star-4" for="star-4-2"></label>
+	        <input class="star star-3" id="star-3-2" type="radio" name="star" />
+	        <label class="star star-3" for="star-3-2"></label>
+	        <input class="star star-2" id="star-2-2" type="radio" name="star" />
+	        <label class="star star-2" for="star-2-2"></label>
+	        <input class="star star-1" id="star-1-2" type="radio" name="star" />
+	        <label class="star star-1" for="star-1-2"></label>
+	        <div class="review_box">
+	          <textarea class="review" col="30" name="review" placeholder="평점을 남겨주세요."></textarea>
+	          <label class="review" for="review"></label>
+	        </div>
+	        <input type="submit" value="등록" class="review_submit" />
+	      </form>
+	    </div>
+  	</div>
+      
    </div>
 </body>
 
@@ -450,6 +87,7 @@ body {
                     <span class="minutes">${'${res.runtime}'}분</span>
                     <p class="type">장르 : ${'${res.genres[0].name}'}</p>
                     <h4>개봉 : ${'${res.release_date}'}</h4>
+                    <p class="header_review_start"><i class="fa-solid fa-star"></i></p>
                   </div>
                   <div class="movie_desc">
                     <p class="text">

@@ -9,6 +9,7 @@
 let authorch = false;
 
 $(function(){
+	console.log(${avo.getAuthor_status()});
 	$("#thumbnail_btn").on("click",function(){
 		$("#authorThumbnail").trigger("click");
 	})
@@ -40,7 +41,7 @@ $(function(){
 		}
 	});
 	
-	$('input[name="authorThumbnail"]').change(function(){
+	$("#authorThumbnail").change(function(){
 	    setImageFromFile(this, '#preview');
 	});
 
@@ -62,6 +63,7 @@ function authorSubmit() {
 		alert("작가명을 확인해 주세요");
 		return false;
 	}
+	
 	var pattern_num = /^[0-9]*$/;
 	var authorNickname = "${mvo.nickname}";
 	var params = "nickname=" + "${mvo.nickname}";
@@ -92,25 +94,17 @@ function authorSubmit() {
 	else if (author_msg == '') {
 		alert("자기소개를 입력해 주세요")
 	}
-	else if (${avo.author_status} != '' ) {
+	else if (author_status != '' ) {
 		alert("작가 신청 심사 중입니다.")
 	}
 	else {
-	
+		var data = new FormData($("#authorWrite")[0]);
 		$.ajax({
 			url: '/authorWriteOk',
 			type: 'POST', 
-			dataType: "html",
-			data : {
-				nickName: '${mvo.nickname}',
-				member_no: '${mvo.no}',
-				author: $("#authorWriteName").val(),
-				sns_link: $("#authorWriteSNS").val(),
-				author_thumbnail: $("#authorThumbnail").val(),
-				debut_year: $("#authorDebutYear").val(),
-				author_msg: $("#authorMsg").val()
-			},
-			
+			processData: false,
+			contentType: false,
+			data : data,
 			success: function(result) {
 				console.log("작가 신청 완료")
 				console.log(result)
@@ -138,11 +132,10 @@ function authorSubmit() {
 							<img src="/img/member/default_thumbnail.png" id="preview"
 								style="width: 170px; height: 170px;" /> 
 							<img class="thumbnail_btn" id="thumbnail_btn" src="${url}/img/member/thumbnail_btn.png"/>
-							<input type="file" name="authorThumbnail" class="files" id="authorThumbnail"
+							<input type="file" multiple="multiple" name="file" class="files" id="authorThumbnail"
 								style="display:none;">
 						</div>
 						<div class="authorWriteContent">
-							<div class="authorWriteID">
 								<label>닉네임</label>
 								<input type="text" value="${mvo.nickname}" class="form-control" readonly>
 								
@@ -151,27 +144,27 @@ function authorSubmit() {
 							<div class="authorWriteName">
 								<div>작가명</div>
 								<div>
-									<input type="text" class="form-control" id="authorWriteName" placeholder='작가명 입력'>
+									<input type="text" class="form-control" name="author" id="authorWriteName" placeholder='작가명 입력'>
 								</div>
 								<span id="chk"></span>
 							</div>
 							<div class="authorWriteSNS">
 								<div>SNS 주소</div>
 								<div>
-									<input type="text" class="form-control" id="authorWriteSNS">
+									<input type="text" class="form-control" name="sns_link" id="authorWriteSNS">
 								</div>
 							</div>
 
 							<div class="authorDebutYear">
 								<div>데뷔년도</div>
 								<div>
-									<input type="text" class="form-control" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018'>
+									<input type="text" class="form-control" name="debut_year" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018'>
 								</div>
 							</div>
 							<div class="authorMsg">
 								<div>자기소개</div>
 								<div>
-									<input type="text" class="form-control" id="authorMsg">
+									<textarea type="text" class="form-control" name="author_msg" id="authorMsg"></textarea>
 								</div>
 							</div>
 						</div>

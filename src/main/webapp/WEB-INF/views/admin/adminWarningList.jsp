@@ -53,7 +53,7 @@ $(function () {
 						<option value='title'>작품명</option>
 						<option value='content'>리뷰내용</option>
 						<option value='nickname'>작성자</option>
-						<option value='warning_count'>신고</option>
+						<option value='reporter'>신고자</option>
 					</select>
 					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
 					<input type="submit" value="검색" id="searchBtn"/>
@@ -67,8 +67,8 @@ $(function () {
 		<li class='list_title'>작품명</li>
 		<li class='list_title'>리뷰내용</li>
 		<li class='list_title'>작성자</li>
-		<li class='list_title'>작성일</li>
-		<li class='list_title'>신고</li>
+		<li class='list_title'>신고자</li>
+		<li class='list_title'>신고일</li>
 		<li class='list_title'>전체선택<input type="checkbox" id="allCheck"/></li>
 		
 		<c:forEach var="vo" items="${adminWarningList}">
@@ -76,15 +76,15 @@ $(function () {
 			<li>${vo.title }</li>
 			<li>
 				<c:if test="${vo.category eq '영화' }">
-					<a href='#' target="_blank">${vo.content }</a>
+					<a href='${url}/movie/movieView?movieId=${vo.numb}' target="_blank">${vo.content }</a>
 				</c:if>
 				<c:if test="${vo.category ne '영화' }">
-					<a href='#' target="_blank">${vo.content }</a>
+					<a href='${url}/theater/theaterView?seq=${vo.numb}' target="_blank">${vo.content }</a>
 				</c:if>
 			</li>
 			<li>${vo.nickname }</li>
+			<li>${vo.reporter }</li>
 			<li>${vo.write_date }</li>
-			<li>${vo.warning_count}</li>
 			<li>
 				<c:if test="${vo.category eq '영화' }">
 					<input type="checkbox" name="movie_noList" value="${vo.no}" class="chk"/>

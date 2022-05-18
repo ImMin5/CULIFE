@@ -3,6 +3,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
+<style>
+	.memberList>li{position:relative;}
+	.memberList img{
+		background-color: gray;
+		position: absolute;
+		left: 120px;
+		top: -40px;
+		border: 1px solid black;
+		z-index: 999999 !important;
+		display:none;
+	}
+</style>
 <script>
 $(function () {	
 	$("#searchFrm").submit(function(){
@@ -11,6 +23,20 @@ $(function () {
 			return false;
 		}
 	});	
+	
+	$(".noimg").mouseover(function(){
+		var point = $(this).offset();
+		alert(point.top);
+	});
+	
+	/*이*/
+	$(".memberList>li:nth-child(8n+2)").hover(function(){
+			$(this).children("img").css("display","block");
+		},
+		function(){
+			$(".memberList img").css("display","none");
+		}		
+	);
 });	
 </script>
 <div class="wrap">
@@ -34,6 +60,7 @@ $(function () {
 			</div>
 		</li>
 	</ul>
+	
 	<ul class='memberList'>
 		<li class='list_title'>번호</li>
 		<li class='list_title'>카카오ID</li>
@@ -46,7 +73,14 @@ $(function () {
 
 		<c:forEach var="vo" items="${memberList}">
 			<li>${vo.no}</li>
-			<li>${vo.kakao_id}</li>
+			<li>${vo.kakao_id}
+			<c:if test="${vo.thumbnail eq Null}">
+				<img id="thumbnail_member" src="${url}/img/member/default_thumbnail.png"/>
+			</c:if>
+			<c:if test="${vo.thumbnail ne Null}">
+				<img id="thumbnail_member" src="${url}/upload/${vo.no}/thumbnail/${vo.thumbnail}"/>
+			</c:if>
+			</li>
 			<li>${vo.nickname}</li>
 			<c:if test="${vo.grade == 0}">
 			<li>일반회원</li>
@@ -64,10 +98,10 @@ $(function () {
 			<c:if test="${not empty vo.end_date}">
 			<li>${vo.end_date}</li>
 			</c:if>
-			<c:if test="${vo.status eq 'False'}">
+			<c:if test="${vo.status eq '0'}">
 			<li>정상</li>
 			</c:if>
-			<c:if test="${vo.status eq 'True'}">
+			<c:if test="${vo.status eq '1'}">
 			<li>정지</li>
 			</c:if>	
 			<li>

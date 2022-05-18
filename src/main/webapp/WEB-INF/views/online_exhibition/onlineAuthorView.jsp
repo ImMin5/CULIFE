@@ -21,10 +21,10 @@
 				<h2 class="hidden">상세정보</h2>
 				<img src="/img/exhibition/test_img.jpg">
 				<ul>
-					<li>작가명 : </li>
-					<li>데뷔년도 : </li>
+					<li>작가명 : ${vo.author}</li>
+					<li>데뷔년도 : ${vo.debut_year}</li>
 					<li>작가소개</li>
-					<li></li>
+					<li>${vo.author_msg}</li>
 				</ul>
 			</li>
 			<li id="author_works">
@@ -64,7 +64,7 @@
 	    				<li><figure class="workDetail_img"><img src="/img/exhibition/test_img.jpg"></figure></li>    		
 		    			<li class="workDetail_info">
 		    				<ul>
-								<li>작가 : </li>
+								<li>작가 : ${vo.author}</li>
 								<li>작품명 : </li>
 								<li>전시기간 : </li>
 								<li>작품설명</li>
