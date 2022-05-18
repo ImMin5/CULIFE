@@ -87,7 +87,7 @@ $(document).ready(function(){
            			 $("#ex_work_wrap").append(addWork);
 			},
 			error : function(error){
-				console.log(error);
+				alert(error.responseJSON.msg);
 			}
 		});
 	});	
