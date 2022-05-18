@@ -49,4 +49,7 @@
 	<update id="authorUpdate">
   		update author set author_thumbnail=#{author_thumbnail}, sns_link=#{sns_link}, debut_year=${debut_year},  author_msg=#{author_msg}
   	</update>
+  	<update id="authorReUpdate">
+  		update author set author=#{author}, sns_link=#{sns_link}, author_thumbnail=#{author_thumbnail}, debut_year=#{debut_year}, author_status=0, author_msg=#{author_msg}
+  	</update>
   </mapper>

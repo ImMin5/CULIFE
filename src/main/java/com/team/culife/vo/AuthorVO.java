@@ -14,7 +14,7 @@ public class AuthorVO {
 	private int debut_year;
 	private String create_date;
 	private String nickname;
-	private int author_status;
+	private Integer author_status;
 	private String msg;
 	private String author_msg;
 }
