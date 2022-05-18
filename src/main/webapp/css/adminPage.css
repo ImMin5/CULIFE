@@ -272,6 +272,9 @@ li{
 	border-bottom: 1px solid black;
 	width: 15%;
 }
+.adminReviewList li:nth-child(7n+1){
+	width: 10%;
+}
 .adminReviewList li:nth-child(7n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -279,7 +282,7 @@ li{
 .adminReviewList li:nth-child(7n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 30%;
+	width: 35%;
 	text-align: left;
 }
 .adminReviewList li:nth-child(3){
@@ -305,6 +308,9 @@ li{
 	border-bottom: 1px solid black;
 	width: 15%;
 }
+.adminWarningList li:nth-child(7n+1){
+	width: 10%;
+}
 .adminWarningList li:nth-child(7n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -318,14 +324,10 @@ li{
 .adminWarningList li:nth-child(3){
 	text-align: center;
 }
-.adminWarningList li:nth-child(7n+5), .adminWarningList li:nth-child(7n){
+.adminWarningList li:nth-child(7n+5), .adminWarningList li:nth-child(7n+6), .adminWarningList li:nth-child(7n){
 	width: 10%;
 
 }
-.adminWarningList li:nth-child(7n+6){
-	width: 5%;
-}
-
 /* 감상평관리 목록*/
 .adminExReplyList{
 	width: 1200px;
