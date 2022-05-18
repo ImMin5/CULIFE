@@ -58,5 +58,6 @@ public class ReviewServiceImpl implements ReviewService{
 	public List<ReviewVO> theaterReviewSelectByMemberNo(PagingVO vo) {
 		return dao.theaterReviewSelectByMemberNo(vo);
 	}
+
 	
 }
