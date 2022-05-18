@@ -32,7 +32,7 @@ $(function () {
 					tag += '<input type="hidden" name="no" value="'+vo.no+'" id="cancel_no"/>';
 					/* 취소일때 - 취소사유확인 */
 					if(vo.author_status == 2){
-						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" readonly="readonly" style="width:86.5%; resize:none">취소사유: '+vo.msg+'</textarea>';
+						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" readonly="readonly" style="width:86.5%; resize:none">'+vo.msg+'</textarea>';
 					}
 					/* 신청일때 - 걍 취소*/
 					if(vo.author_status == 0 && vo.msg == null || vo.author_status == 1){
@@ -40,7 +40,7 @@ $(function () {
 					}
 					/* 재신청일때 - 취소사유보여주고 재설정 */
 					if(vo.author_status == 0 && vo.msg != null){
-						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" style="width:86.5%; resize:none" onkeyup="alert("감자")">취소사유: '+vo.msg+'</textarea>';
+						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" style="width:86.5%; resize:none" onkeyup="alert("감자")">'+vo.msg+'</textarea>';
 					}
 					if(vo.author_status == 0){
 						tag += '<div class="btn_wrap">'
@@ -120,6 +120,9 @@ $(function () {
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
+	<div class="img_top">
+	
+	</div>
 	<ul class='mini_top'>
 		<li>작가관리</li>
 		<li>
