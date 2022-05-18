@@ -15,8 +15,10 @@ public interface BoardDAO {
 	// 글 등록
 	public int boardInsert(BoardVO vo);
 	
-	// 글 리스트 보이기
-	public List<BoardVO> selectList(PagingVO pvo);
+	// 자유게시판 보이기
+	public List<BoardVO> freeselectList(PagingVO pvo);
+	// 문의사항 리스트
+	public List<BoardVO> helpselectList(PagingVO pvo);
 	
 	// 글 내용
 	public BoardVO selectView(int no);

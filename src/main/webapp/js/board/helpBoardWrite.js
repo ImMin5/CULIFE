@@ -3,8 +3,8 @@ $(function(){
 		height:'400px',
 		startupFocus : false,
 	});
-	$("#freeForm").submit(function(){
-		if($("#freeBoardTitle").val()==''){
+	$("#helpForm").submit(function(){
+		if($("#helpBoardTitle").val()==''){
 			alert("🚫 제목을 입력해주세요");
 			return false;
 		}
@@ -18,7 +18,7 @@ $(function(){
 	});
 	
 	$("#backList").click(function(){
-		location.href="/board/freeBoardList";
+		location.href="/board/help/helpBoardList";
 	});
 	
 });

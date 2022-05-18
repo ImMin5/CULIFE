@@ -25,13 +25,13 @@ hr{
 	padding-right:14%;
 }
 /*버튼*/
-#freeBoardEdit{
+#helpBoardEdit{
 	background-color: gray;
 	color:white;
 	padding:10px 10px;
 }
 
-#freeBoardDel{
+#helpBoardDel{
 	background-color: gray;
 	color:white;
 	padding:10px 10px;
@@ -52,7 +52,7 @@ hr{
 .container h1{
 	font-size:2.5rem;
 }
-.freeContent{
+.helpContent{
 	font-size:1.3em;
 	font-weight:700px;
 	width:1200px;
@@ -62,7 +62,7 @@ hr{
 #commentLine, #replyLine{
 	padding-left:13.75%;	
 }
-.freeBoardComent{
+.helpBoardComent{
 	padding: 12px;
 	border: none;
 	border-radius:10px;
