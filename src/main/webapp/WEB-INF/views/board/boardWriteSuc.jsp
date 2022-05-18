@@ -4,13 +4,13 @@
 	<c:if test="${vo.category=='free'}">
 		<script>
 			alert('🟢 글이 등록되었습니다.');
-			location.href='/board/freeBoardList';
+			location.href='/board/freeBoardList?category=free';
 		</script>
 	</c:if>
 	<c:if test="${vo.category=='help'}">
 		<script>
 			alert('🟢 글이 등록되었습니다.');
-			location.href='/board/help/helpBoardList';
+			location.href='/board/help/helpBoardList?category=help';
 		</script>
 	</c:if>
 </c:if>

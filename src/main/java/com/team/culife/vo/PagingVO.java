@@ -7,15 +7,16 @@ import lombok.Setter;
 @Setter
 public class PagingVO {
 	private int currentPage = 1;  //현재 페이지
-	private int startPage = 1;
-	private int endPage = 0;
-	private int recordPerPage = 10;
-	private int onePageCount = 5;
-	private int totalRecord;
-	private int totalPage;
-	private int offsetIndex = 0;
+	private int startPage = 1;	//시작페이지
+	private int endPage = 0;	//끝페이지
+	private int recordPerPage = 2;	//페이지에 몇개를 보여줄것인가
+	private int onePageCount = 5;	//페이지네이션이 몇개인가
+	private int totalRecord;	//총 게시글수
+	private int totalPage;		//총 페이지수
+	private int offsetIndex = 0;	
 	
 	private int member_no;
+	private String searchKey;
 	private String searchWord;
 	private String category;
 	

@@ -4,6 +4,9 @@ h1{
 	font-size:5rem;
 	color:white;
 }
+li{
+	color:white;
+}
 .freeboardList{
 	text-align:center;	
 }

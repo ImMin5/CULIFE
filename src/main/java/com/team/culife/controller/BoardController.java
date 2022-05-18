@@ -32,8 +32,10 @@ public class BoardController {
 		
 		mav.addObject("list", service.freeselectList(pVO));
 		
-		// 자유게시판목록페이징
-		pVO.setTotalRecord(service.boardTotalRecord(pVO));
+		// 자유게시판 목록 페이징
+		int total=service.boardTotalRecord(pVO);
+		System.out.println("total="+total);
+		pVO.setTotalRecord(total);
 		mav.addObject("pVO", pVO);
 						
 		mav.setViewName("/board/freeBoardList");
