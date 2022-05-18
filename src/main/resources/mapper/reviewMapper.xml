@@ -44,5 +44,5 @@
   		</if>
   		order by write_date
   		limit ${recordPerPage} offset ${offsetIndex}
-	</select>
+	</select>	
 </mapper>
