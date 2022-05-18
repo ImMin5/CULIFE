@@ -59,12 +59,4 @@ public class ReviewController {
 	public int delOk(int no, HttpSession session) {
 		return service.reviewDel(no,(Integer)session.getAttribute("logNo"));
 	}
-	
-	/*
-	 * //∏Æ∫‰»Æ¿Œ
-	 * 
-	 * @PostMapping("/oxReview/{title}") public int oxReview(@PathVariable String
-	 * title, HttpSession session, ReviewVO review) { int cnt =
-	 * service.oxReview(title); System.out.println(cnt); return cnt; }
-	 */
 }
