@@ -3,7 +3,127 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${url}/css/movie/movieView.css"
 	type="text/css" />
-	
+<script>
+//영화리뷰리스트
+	function mreviewListAll(){
+		var url = "/mreview/mreviewList";
+		var params = "movie_id="+movie_id;
+		$.ajax({
+			url:url,
+			data:params,
+			success:function(result){
+				var score = result.mstar_avg;
+					$('#mstarAvg').html("<h1>"+score+"</h1>");
+				var cnt = result.mreview_cnt;
+					$("#mreviewCnt").html("<h1>"+cnt+"</h1>") 
+				var $result = $(result.mreviewList);
+				var tag = "<ul>";
+				
+				$result.each(function(idx, vo){
+					tag += "<li><div>" + vo.nickname;
+					tag += "("+ vo.write_date+")";
+					for(var i=0;i<vo.score_star;i++){
+						tag+= "★";
+					}
+					tag += " ("+vo.score_star+")";
+					
+					if(vo.member_no=='${logNo}'){
+						tag += "<input type='button' value='수정' onclick='edit("+vo.score_star+",this)'/>";
+						tag += "<input type='button' value='삭제' title='"+vo.no+"'/>";	
+					}
+					if(vo.spo_check==1){
+						tag+="<h2>스포일러</h2>"
+						tag+="<div class='spo'>"+ vo.content + "</div></div>"
+					}else{
+						tag += "<br/>" + vo.content + "</div>";
+					}
+					if(vo.member_no!='${logNo}'){
+						tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";
+					}
+					
+				if(vo.member_no=='${logNo}'){
+					tag += "<input type='hidden' name='no' value='"+vo.no+"'/>";
+					tag += "<input type='text' name='score_star' value='"+vo.score_star+"' id='score_star_edit'>";
+					tag += `<div class='starss'>
+						<input type="checkbox" name="checkbox" id="checkbox" />
+			      		<label for="checkbox">스포체크</label>
+				        <input class="star star-5" id="star-5-2" type="radio" name="star" />
+				        <label class="star star-5" for="star-5-2"></label>
+				        <input class="star star-4" id="star-4-2" type="radio" name="star" />
+				        <label class="star star-4" for="star-4-2"></label>
+				        <input class="star star-3" id="star-3-2" type="radio" name="star" />
+				        <label class="star star-3" for="star-3-2"></label>
+				        <input class="star star-2" id="star-2-2" type="radio" name="star" />
+				        <label class="star star-2" for="star-2-2"></label>
+				        <input class="star star-1" id="star-1-2" type="radio" name="star" />
+				        <label class="star star-1" for ="star-1-2"></label>
+				       </div>`
+				    tag += "<textarea class='review' col='30' name='review' >"+vo.content+"</textarea>;
+				    if(vo.spo_check==1){
+				    	tag += "<input type='checkbox' name='checkbox' id='checkbox' value='1' checked/>";
+				    }else{
+				    	tag += "<input type='checkbox' name='checkbox' id='checkbox' value='1'/>";
+				    }
+					tag += "<input type='submit' value='수정'/>";									
+					tag += "</form></div>";
+				}
+				tag += "<hr/></li>";
+				score_star = vo.score_star;	
+				});
+				tag+="</ul>";
+				
+				$("#mreviewList").html(tag);
+			}, error:function(e){
+				console.log(e.responseText);
+			}
+		});
+	}
+//영화리뷰등록
+$(function(){
+	$("#mreviewFrm").submit(function(){
+		event.preventDefault();
+		if($("#review").val()==''){
+			alert("리뷰를 입력 후 등록하세요.");
+			return false;
+		}else{
+			var params = $("#mreviewFrm").serialize();
+			
+			$.ajax({
+				url:'/mreview/mreviewWriteOk',
+				data:params,
+				type:'POST',
+				success:function(r){
+					if(pareInt(r)==1){
+						alert('이미 리뷰를 작성하였습니다.');
+						$('#review').val("");
+					}
+					$("#stars").val("");
+					mreviewListAll();
+				},error:function(e){
+					console.log(e.responseText);
+				}
+			});
+		}
+	});
+});
+
+//영화리뷰삭제
+$(document).on('click','#mreviewList input[value=삭제]', function(){
+	if(confirm('리뷰를 삭제하시겠습니까?')){
+		var params = "no="+ vo.movie_id;
+		$.ajax({
+			url:'/mreview/mreviewDel',
+			data:params,
+			success:function(result){
+				//console.log(result);
+				reviewListAll();
+			}, error:function(e){
+				console.log("리뷰삭제에러발생");
+			}
+		});
+	}
+});
+</script>
 <body>
    <div class="movieView_container">
       <div class="movieDetail_container">
@@ -27,19 +147,19 @@
       <h4 class="h4Text review_h4Text">평점 작성</h4>
       <div class="review_container">
 	    <div class="stars">
-	      <form action="">
+	      <form method="post" id="mreviewFrm" action="/mreview/mreviewWriteOk">
 	      	 <input type="checkbox" name="checkbox" id="checkbox" />
       		 <label for="checkbox">스포체크</label>
-	        <input class="star star-5" id="star-5-2" type="radio" name="star" />
+	        <input class="star star-5" id="star-5-2" type="radio" name="star" value="1" title="1점"/>
 	        <label class="star star-5" for="star-5-2"></label>
-	        <input class="star star-4" id="star-4-2" type="radio" name="star" />
+	        <input class="star star-4" id="star-4-2" type="radio" name="star" value="2" title="2점"/>
 	        <label class="star star-4" for="star-4-2"></label>
-	        <input class="star star-3" id="star-3-2" type="radio" name="star" />
+	        <input class="star star-3" id="star-3-2" type="radio" name="star" value="3" title="3점"/>
 	        <label class="star star-3" for="star-3-2"></label>
-	        <input class="star star-2" id="star-2-2" type="radio" name="star" />
+	        <input class="star star-2" id="star-2-2" type="radio" name="star" value="4" title="4점"/>
 	        <label class="star star-2" for="star-2-2"></label>
-	        <input class="star star-1" id="star-1-2" type="radio" name="star" />
-	        <label class="star star-1" for="star-1-2"></label>
+	        <input class="star star-1" id="star-1-2" type="radio" name="star" value="5" title="5점"/>
+	        <label class="star star-1" for ="star-1-2"></label>
 	        <div class="review_box">
 	          <textarea class="review" col="30" name="review" placeholder="평점을 남겨주세요."></textarea>
 	          <label class="review" for="review"></label>
@@ -47,6 +167,8 @@
 	        <input type="submit" value="등록" class="review_submit" />
 	      </form>
 	    </div>
+	    <div id="mstarAvg"></div>
+	    <div id="mreviewList"></div>
   	</div>
       
    </div>
