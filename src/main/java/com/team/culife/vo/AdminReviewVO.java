@@ -12,13 +12,15 @@ public class AdminReviewVO {
 	private String content;
 	private int score_star;
 	private String write_date;
-	private int warning_count;
+	private int cnt;
 	//adminReviewList: 연극공연 다중삭제
 	private List<Integer> noList;
 	//adminReviewList: 영화 다중삭제
 	private List<Integer> movie_noList;
 	//관리자페이지 - 리뷰링크
 	private int numb;
+	//신고자
+	private String reporter;
 	
 	//감상평관리
 	private String subject;
@@ -71,12 +73,6 @@ public class AdminReviewVO {
 	public void setWrite_date(String write_date) {
 		this.write_date = write_date;
 	}
-	public int getWarning_count() {
-		return warning_count;
-	}
-	public void setWarning_count(int warning_count) {
-		this.warning_count = warning_count;
-	}
 	public List<Integer> getNoList() {
 		return noList;
 	}
@@ -101,6 +97,19 @@ public class AdminReviewVO {
 	public void setNumb(int numb) {
 		this.numb = numb;
 	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public String getReporter() {
+		return reporter;
+	}
+	public void setReporter(String reporter) {
+		this.reporter = reporter;
+	}
+	
 	
 	
 	
