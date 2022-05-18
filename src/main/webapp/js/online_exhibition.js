@@ -78,8 +78,15 @@ $(document).ready(function(){
 								</ul>
 							</li>
 						</ul>
-						<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
 					</form>	`
-           			 $("#ex_work_wrap").append(addWork);
+           			 $("#form_box").append(addWork);
+	});	
+});
+
+/* 작품보기 - 모달 띄우기*/
+$(document).ready(function(){
+	$("#reg_ex").click(function(){
+		$("#exhibition_reg_bg").css({"display" : "block"});
+		$('footer').css({"display" : "none"});
 	});	
 });
