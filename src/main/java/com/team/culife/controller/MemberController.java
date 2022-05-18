@@ -66,6 +66,7 @@ public class MemberController {
 			
 			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				session.setAttribute("grade",mvo.getGrade());	
 				mav.addObject("mvo", mvo);
 				mav.setViewName("mypage/mypage");
 			}
@@ -103,7 +104,7 @@ public class MemberController {
 	
 	//마이페이지 - 작가 정보 뷰 
 	@GetMapping("/mypage/author")
-	public ModelAndView mypageAuthor(HttpSession session, HttpServletRequest request, AuthorVO vo, String author) {
+	public ModelAndView mypageAuthor(HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
@@ -114,7 +115,7 @@ public class MemberController {
 			else {
 				//작가 정보 넣기
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				AuthorVO avo = authorService.authorSelect(author);
+				AuthorVO avo = authorService.authorNoSelect(mvo.getNo());
 				mav.addObject("mvo", mvo);
 				mav.addObject("avo", avo);
 				mav.setViewName("mypage/my_author");

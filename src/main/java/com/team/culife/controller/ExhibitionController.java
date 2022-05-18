@@ -263,7 +263,7 @@ public class ExhibitionController {
 		try {
 			result.put("status", "200");
 			if(MemberNo != null) {
-				int workCount = exhibitionService.workSelectByExhibitionNo(exhibitionService.exhibitionSelectByEndDate(authorService.authorNoSelect(MemberNo).getNo()).getNo()).size();
+				Integer workCount = exhibitionService.workSelectByExhibitionNo(exhibitionService.exhibitionSelectByEndDate(authorService.authorNoSelect(MemberNo).getNo()).getNo()).size();
 				result.put("count", Integer.toString(workCount));
 				result.put("msg","최대 5개의 작품을 등록 할 수 있습니다.");
 			}
@@ -273,6 +273,7 @@ public class ExhibitionController {
 			entity = new ResponseEntity<HashMap<String, String>>(result, HttpStatus.OK);
 		}catch(Exception e) {
 			result.put("status", "400");
+			result.put("msg","전시를 먼저 등록해 주세요");
 			e.printStackTrace();
 			entity = new ResponseEntity<HashMap<String, String>>(result, HttpStatus.BAD_REQUEST);
 		}
