@@ -55,7 +55,7 @@ $(function(){
                 data : data,
                 async : false,
                 success : function(){
-        			
+
                 },
                 error : function(){
                     
@@ -86,6 +86,7 @@ $(function(){
     		error : function(){
     			console.log(error);
     		}
+
     	})
     });
 })

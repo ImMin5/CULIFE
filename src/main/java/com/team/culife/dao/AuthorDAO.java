@@ -20,6 +20,9 @@ public interface AuthorDAO {
 	public AuthorVO authorNoSelect(int no);
 	public int authorUpdate(AuthorVO vo);
 	
+	// 작가 재신청
+	public int authorReUpdate(AuthorVO vo);
+	
   // 작가리스트
 	public List<AuthorVO> authorList(PagingVO pVO);
 	// 총레코드수
