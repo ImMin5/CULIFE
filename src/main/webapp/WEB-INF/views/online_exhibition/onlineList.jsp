@@ -65,12 +65,26 @@ $(function(){
     });
     $("#submitDel_btn").on("click", function(){
     	var len = $("form[name=ex_work_form]").length;
-    	console.log(len)
-    	
+    	var form = $("#ex_work_form"+len);
+    	var work_no = form.attr("data-work_no");
+    	if(work_no < 0){
+    		form.remove();
+    		return;
+    	}												
+    	console.log($("#ex_work_form"+len).remove());
     	var url = "/exhibition/workDel";
     	$.ajax({
     		url: url,
-    		type : "POST"
+    		type : "POST",
+    		data : {
+    			"work_no" : work_no,
+    		},
+    		success: function(){
+    			form.remove();
+    		},
+    		error : function(){
+    			console.log(error);
+    		}
     	})
     });
 })
@@ -175,36 +189,9 @@ $(function(){
     	<div id="ex_work_wrap" class="modal_wrap" style="overflow:auto;">
     		<h3>작품등록</h3>
     		<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
-    		<!-- 
-    		<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
-				<ul id="ex_work_box">
-					<li class="exhibitionWorkContent">
-						<ul>
-							<li class="workThumbnail">
-								<p class="hidden">작품 썸네일</p>
-								<figure><img src="" id="workPreview1"/></figure>
-								<input class="work_upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-								<input type="file" name="filename" id="work_file1" class="workFile"/>
-								<label for="work_file1">파일찾기</label> 
-								
-							</li>
-							<li class="exhibitionApplyTitle">
-								<p>작품명</p>
-								<input type="text" name="work_subject">
-							</li>
-							<li class="exhibitionApplyContent">
-								<p>작품 설명</p>
-								<textarea name="work_content"></textarea>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
-			</form>
-			-->
 			<c:if test="${workList != null}">
 				<c:forEach var="vo" items="${workList}" varStatus="status">
-		    		<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
+		    		<form name="ex_work_form" id="ex_work_form${status.count}" method="post" action="/workCreateOk" enctype="multipart/form-data" data-work_no="{vo.no}">
 						<ul id="ex_work_box">
 							<li class="exhibitionWorkContent">
 								<ul>
@@ -228,7 +215,6 @@ $(function(){
 								</ul>
 							</li>
 						</ul>
-						<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
 					</form>					
 				</c:forEach>
 			</c:if>

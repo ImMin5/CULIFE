@@ -54,7 +54,7 @@ $(document).ready(function(){
 				workCount++;
 					var addWork = 
 						/* 임시 */
-		               `<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
+		               `<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
 						<ul id="ex_work_box">
 							<li class="exhibitionWorkContent">
 								<ul>
@@ -78,7 +78,6 @@ $(document).ready(function(){
 								</ul>
 							</li>
 						</ul>
-						<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
 					</form>	`
            			 $("#ex_work_wrap").append(addWork);
 	});	
