@@ -9,6 +9,7 @@
 let authorch = false;
 
 $(function(){
+	console.log(${avo.getAuthor_status()});
 	$("#thumbnail_btn").on("click",function(){
 		$("#authorThumbnail").trigger("click");
 	})
@@ -62,6 +63,7 @@ function authorSubmit() {
 		alert("작가명을 확인해 주세요");
 		return false;
 	}
+	
 	var pattern_num = /^[0-9]*$/;
 	var authorNickname = "${mvo.nickname}";
 	var params = "nickname=" + "${mvo.nickname}";
@@ -134,7 +136,6 @@ function authorSubmit() {
 								style="display:none;">
 						</div>
 						<div class="authorWriteContent">
-							<div class="authorWriteID">
 								<label>닉네임</label>
 								<input type="text" value="${mvo.nickname}" class="form-control" readonly>
 								
@@ -163,7 +164,7 @@ function authorSubmit() {
 							<div class="authorMsg">
 								<div>자기소개</div>
 								<div>
-									<input type="text" class="form-control" name="author_msg" id="authorMsg">
+									<textarea type="text" class="form-control" name="author_msg" id="authorMsg"></textarea>
 								</div>
 							</div>
 						</div>

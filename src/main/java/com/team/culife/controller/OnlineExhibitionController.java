@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.ExhibitionService;
 import com.team.culife.service.MemberService;
+import com.team.culife.vo.AuthorVO;
+import com.team.culife.vo.ExhibitionVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.PagingVO;
 
@@ -26,7 +28,7 @@ public class OnlineExhibitionController {
 	AuthorService aService;
 	@Inject
 	ExhibitionService eService;
-	
+
 	
 	@GetMapping("onlineList")
 	public ModelAndView onlineList(HttpSession session) {
@@ -36,10 +38,17 @@ public class OnlineExhibitionController {
 		try {
 			if(memberNo != null) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				AuthorVO avo = aService.authorNoSelect(memberNo);
+				ExhibitionVO evo = eService.exhibitionSelectByEndDate(avo.getNo());
+				if(evo != null)
+					mav.addObject("workList", eService.workSelectByExhibitionNo(evo.getNo()));
 				mav.addObject("mvo", mvo);
 				session.setAttribute("logNo", mvo.getNo());
 				session.setAttribute("logNickname", mvo.getNickname());
 				session.setAttribute("grade",mvo.getGrade());
+				
+				
+				
 				mav.setViewName("online_exhibition/onlineList");
 			} else {
 				System.out.println("로그인 바람");
