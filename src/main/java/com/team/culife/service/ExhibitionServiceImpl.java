@@ -48,6 +48,16 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	public int workUpdate(WorkVO vo) {
 		return dao.workUpdate(vo);
 	}
+
+	@Override
+	public WorkVO workSelectMaxWriteDate(int exhibition_no) {
+		return dao.workSelectMaxWriteDate(exhibition_no);
+	}
+
+	@Override
+	public int workDelete(WorkVO vo) {
+		return dao.workDelete(vo);
+	}
 	
 
 	

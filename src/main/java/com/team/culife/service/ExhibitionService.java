@@ -15,4 +15,6 @@ public interface ExhibitionService {
 	public int workInsert(WorkVO vo);
 	public List<WorkVO> workSelectByExhibitionNo(int exhibition_no);
 	public int workUpdate(WorkVO vo);
+	public WorkVO workSelectMaxWriteDate(int exhibition_no);
+	public int workDelete(WorkVO vo);
 }

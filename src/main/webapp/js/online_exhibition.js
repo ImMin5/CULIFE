@@ -51,10 +51,6 @@ $(document).ready(function(){
 			return;
 		}
 		console.log(workCount);
-		$.ajax({
-			url : url,
-			tyle : "GET",
-			success : function(data){
 				workCount++;
 					var addWork = 
 						/* 임시 */
@@ -85,10 +81,5 @@ $(document).ready(function(){
 						<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
 					</form>	`
            			 $("#ex_work_wrap").append(addWork);
-			},
-			error : function(error){
-				alert(error.responseJSON.msg);
-			}
-		});
 	});	
 });
