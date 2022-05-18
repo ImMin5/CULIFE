@@ -31,6 +31,11 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("list", service.freeselectList(pVO));
+		
+		// 자유게시판목록페이징
+		pVO.setTotalRecord(service.boardTotalRecord(pVO));
+		mav.addObject("pVO", pVO);
+						
 		mav.setViewName("/board/freeBoardList");
 		return mav;
 	}

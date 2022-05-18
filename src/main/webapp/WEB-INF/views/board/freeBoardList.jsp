@@ -22,19 +22,32 @@
 		</ul>
 		<input id="search" type="text" placeholder="검색" style="float:left">
 		<button id="write" style='float:right' onclick="location.href='freeBoardWrite'">글쓰기</button>
-	<!-- 	<div class="container">
-			<div class="row">
-				<div class="col" style:float=center>
-					<ul class="pagination">
-						<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#">Next</a></li>
-					</ul>
-				</div>
-			</div>
-		</div> -->
+	<!-- 페이징 -->
+	<ul class="paging">
+	<!--  이전페이지 -->
+	<c:if test="${pVO.pageNum == 1 }">
+		<li>◀</li>
+	</c:if>
+	<c:if test="${pVO.pageNum > 1 }">
+		<li><a href="/board/freeBoardList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+	</c:if>
+	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
+		<c:if test="${p<=pVO.totalPage}">
+			<c:if test="${p==pVO.pageNum}">
+				<li style="font-weight: bold;">
+			</c:if>
+			<c:if test="${p!=pVO.pageNum}">
+				<li>
+			</c:if>
+			<a href="/board/freeBoardList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
+		</c:if>
+	</c:forEach>
+	<!--  다음페이지 -->
+	<c:if test="${pVO.pageNum == pVO.totalPage }">
+		<li>▶</li>
+	</c:if>
+	<c:if test="${pVO.pageNum < pVO.totalPage }">
+		<li><a href="/board/freeBoardList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+	</c:if>
+	</ul>
 </div>
