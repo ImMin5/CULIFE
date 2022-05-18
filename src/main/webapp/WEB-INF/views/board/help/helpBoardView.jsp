@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="/css/board/freeBoardView.css"	type="text/css" />
+<link rel="stylesheet" href="/css/board/helpBoardView.css"	type="text/css" />
 <link rel="stylesheet" href="/css/board/boardViewReply.css"	type="text/css" />
 <script>
 $(function(){
-	$("#freeBoardDel").click(function(){
+	$("#helpBoardDel").click(function(){
 		if(confirm("삭제하시겠어요?")){
-			location.href="/board/freeBoardDel?no=${viewVo.no}";
+			location.href="/board/help/helpBoardDel?no=${viewVo.no}";
 		}
 	});
 	// 댓글 등록한 뒤 필요한 댓글 리스트 선택하는 메서드
 	function selectReplyList(){
 		let url = "/reply/replyList";
 		let data = "no="+$('#no').val();
-		console.log(data);
 		$.ajax({
 			url:url,
 			data:data,
@@ -126,13 +125,13 @@ $(function(){
 	</div>
 	<hr/>
 	<div class="edel">
-	<a href="/board/freeBoardEdit?no=${viewVo.no}" class="btn" id="freeBoardEdit">수정</a>
-	<span id="btnSpace"></span><input type="button" class="btn" id="freeBoardDel" value="삭제"/>
+	<a href="/board/help/helpBoardEdit?no=${viewVo.no}" class="btn" id="helpBoardEdit">수정</a>
+	<span id="btnSpace"></span><input type="button" class="btn" id="helpBoardDel" value="삭제"/>
 	</div>
 		<br>
 		<li>글 내용</li>
 		<br>
-		<div class="freeContent">
+		<div class="helpContent">
 		<div>${viewVo.content}</div>
 		</div>
 	</ul>
@@ -145,7 +144,7 @@ $(function(){
 	<form method="post" id="replyForm">
 		<input type="hidden" name="no" id="no" value="${viewVo.no}">
 		<div id="commentLine">
-			<textarea name="content" id="coment" class="freeBoardComent" rows="4"
+			<textarea name="content" id="coment" class="helpBoardComent" rows="4"
 				cols="80" placeholder="내용을 입력하세요"></textarea>
 			<span id="replyBtn"><input type="submit"
 				id="replyInsert" value="댓글 등록"/></span>

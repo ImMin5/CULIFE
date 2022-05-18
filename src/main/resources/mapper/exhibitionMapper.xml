@@ -41,4 +41,13 @@
 		order by a.start_date desc
   		limit ${recordPerPage} offset ${offsetIndex}
 	</select>
+	<select id="workSelectMaxWriteDate" resultType="com.team.culife.vo.WorkVO">
+		select no, exhibition_no, work_subject, work_thumbnail, work_content, max(write_date) 
+		from work 
+		where write_date = (select max(write_date) from work where exhibition_no=${exhibition_no});
+	</select> 
+	<delete id="workDelete">
+		delete from work
+			where no = ${no};
+	</delete>
 </mapper>

@@ -23,19 +23,19 @@
 <script>
 $(function(){
 	//프로필 이미지 미리
-	$("input[name=filename]").change(function(){
-			console.log($(this));
-			var count = $(this).attr("data-count");
-			console.log(count);
-			console.log($(this).val());
-			//fileReader
-			var reader = new FileReader();
-			reader.onload = function(e) {
-	  			document.getElementById("workPreview"+count).src = e.target.result;
-			};
-			reader.readAsDataURL(this.files[0]);
-			var format = this.files[0].name.split(".").pop();
-			$("#work_thumbnail"+count).val(count+"."+format);
+	$(document).on("change","input[name=filename]", function(){
+	            console.log($(this));
+	            var count = $(this).attr("data-count");
+	            console.log(count);
+	            console.log($(this).val());
+	            //fileReader
+	            var reader = new FileReader();
+	            reader.onload = function(e) {
+	                  document.getElementById("workPreview"+count).src = e.target.result;
+	            };
+	            reader.readAsDataURL(this.files[0]);
+	            var format = this.files[0].name.split(".").pop();
+	            $("#work_thumbnail"+count).val(count+"."+format);
 	});
 	
 	
@@ -62,6 +62,16 @@ $(function(){
                 }
             });
         }
+    });
+    $("#submitDel_btn").on("click", function(){
+    	var len = $("form[name=ex_work_form]").length;
+    	console.log(len)
+    	
+    	var url = "/exhibition/workDel";
+    	$.ajax({
+    		url: url,
+    		type : "POST"
+    	})
     });
 })
 </script>
@@ -223,6 +233,7 @@ $(function(){
 				</c:forEach>
 			</c:if>
 			<input type="button" value="등록하기" id="submit_btn"/>
+			<input type="button" value="삭제하기" id="submitDel_btn"/>
 			<i class="fa-solid fa-xmark"></i>
     	</div>
     </div>
