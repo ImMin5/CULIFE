@@ -54,7 +54,7 @@ $(document).ready(function(){
 				workCount++;
 					var addWork = 
 						/* 임시 */
-		               `<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
+		               `<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
 						<ul id="ex_work_box">
 							<li class="exhibitionWorkContent">
 								<ul>
