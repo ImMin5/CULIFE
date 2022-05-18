@@ -7,5 +7,26 @@
 		insert into exhibition(author_no, subject, content, start_date, end_date, type) 
 		values(#{author_no}, #{subject}, #{content}, #{start_date}, #{end_date}, #{type})
 	</insert>
-	
+	<select id="exhibitionSelect" resultType="com.team.culife.vo.ExhibitionVO">
+		select no, author_no, subject
+		from exhibition
+		where no = #{param1}
+	</select>
+	<select id="exhibitionSelectByEndDate" resultType="com.team.culife.vo.ExhibitionVO">
+		select no, author_no, subject, start_date, end_date, type
+		from exhibition
+		where author_no=${param1} and end_date > date_format(now(),'%Y-%m-%d')
+	</select>
+	<insert id="workInsert">
+		insert into work(exhibition_no, work_subject, work_thumbnail, work_content)
+		values(${exhibition_no}, #{work_subject}, #{work_thumbnail}, #{work_content})
+	</insert>
+	<select id="workSelectByExhibitionNo" resultType="com.team.culife.vo.WorkVO">
+		select no, exhibition_no, work_subject, work_thumbnail, work_content, write_date
+		from work
+		where exhibition_no=${exhibition_no}
+	</select>
+	<update id="workUpdate">
+		update work set work_subject=#{work_subject}, work_content=#{work_content}, work_thumbnail=#{work_thumbnail} where no=${no}
+	</update>
 </mapper>
