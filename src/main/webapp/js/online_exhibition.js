@@ -81,6 +81,5 @@ $(document).ready(function(){
 						<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
 					</form>	`
            			 $("#ex_work_wrap").append(addWork);
-
 	});	
 });
