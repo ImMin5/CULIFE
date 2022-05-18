@@ -42,6 +42,9 @@ $(function () {
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
+	<div class="img_top">
+	
+	</div>
 	<ul class='mini_top'>
 		<li>신고관리</li>
 		<li>

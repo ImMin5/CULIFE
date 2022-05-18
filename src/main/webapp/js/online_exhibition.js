@@ -79,6 +79,14 @@ $(document).ready(function(){
 							</li>
 						</ul>
 					</form>	`
-           			 $("#ex_work_wrap").append(addWork);
+           			 $("#form_box").append(addWork);
+	});	
+});
+
+/* 작품보기 - 모달 띄우기*/
+$(document).ready(function(){
+	$("#reg_ex").click(function(){
+		$("#exhibition_reg_bg").css({"display" : "block"});
+		$('footer').css({"display" : "none"});
 	});	
 });

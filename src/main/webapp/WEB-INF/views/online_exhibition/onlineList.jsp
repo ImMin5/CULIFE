@@ -55,13 +55,14 @@ $(function(){
                 data : data,
                 async : false,
                 success : function(){
-        
+        			
                 },
                 error : function(){
                     
                 }
             });
         }
+        location.reload();
     });
     $("#submitDel_btn").on("click", function(){
     	var len = $("form[name=ex_work_form]").length;
@@ -189,37 +190,63 @@ $(function(){
     	<div id="ex_work_wrap" class="modal_wrap" style="overflow:auto;">
     		<h3>작품등록</h3>
     		<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
-			<c:if test="${workList != null}">
-				<c:forEach var="vo" items="${workList}" varStatus="status">
-		    		<form name="ex_work_form" id="ex_work_form${status.count}" method="post" action="/workCreateOk" enctype="multipart/form-data" data-work_no="{vo.no}">
-						<ul id="ex_work_box">
-							<li class="exhibitionWorkContent">
-								<ul>
-									<li class="workThumbnail">
-										<p class="hidden">작품 썸네일</p>
-										<figure><img src="${url}/upload/${logNo}/author/exhibition/${vo.exhibition_no}/${vo.work_thumbnail}" id="workPreview${status.count}" name="workPreview${status.count}"/></figure>
-										<input type="hidden" name="no" value="${vo.no}"/>
-										<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${status.count}" value="${vo.work_thumbnail}"readonly>
-										<input type="file" name="filename" id="work_file${status.count}" class="workFile" data-count="${status.count}"/>
-										<label for="work_file${status.count}">파일찾기</label> 
-										
-									</li>
-									<li class="exhibitionApplyTitle">
-										<p>작품명</p>
-										<input type="text" name="work_subject" value="${vo.work_subject}">
-									</li>
-									<li class="exhibitionApplyContent">
-										<p>작품 설명</p>
-										<textarea name="work_content">${vo.work_content}</textarea>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</form>					
-				</c:forEach>
-			</c:if>
+    		<div id="form_box">
+				<c:if test="${workList != null}">
+					<c:forEach var="vo" items="${workList}" varStatus="status">
+			    		<form name="ex_work_form" id="ex_work_form${status.count}" method="post" action="/workCreateOk" enctype="multipart/form-data">
+							<ul id="ex_work_box">
+								<li class="exhibitionWorkContent">
+									<ul>
+										<li class="workThumbnail">
+											<p class="hidden">작품 썸네일</p>
+											<figure><img src="${url}/upload/${logNo}/author/exhibition/${vo.exhibition_no}/${vo.work_thumbnail}" id="workPreview${status.count}" name="workPreview${status.count}"/></figure>
+											<input type="hidden" name="no" value="${vo.no}"/>
+											<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${status.count}" value="${vo.work_thumbnail}"readonly>
+											<input type="file" name="filename" id="work_file${status.count}" class="workFile" data-count="${status.count}"/>
+											<label for="work_file${status.count}">파일찾기</label> 
+											
+										</li>
+										<li class="exhibitionApplyTitle">
+											<p>작품명</p>
+											<input type="text" name="work_subject" value="${vo.work_subject}">
+										</li>
+										<li class="exhibitionApplyContent">
+											<p>작품 설명</p>
+											<textarea name="work_content">${vo.work_content}</textarea>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</form>					
+					</c:forEach>
+				</c:if>
+			</div>	
 			<input type="button" value="등록하기" id="submit_btn"/>
 			<input type="button" value="삭제하기" id="submitDel_btn"/>
 			<i class="fa-solid fa-xmark"></i>
+    	</div>
+    </div>
+    
+    <!-- 작품 상세 페이지 모달 -->
+	<div id="ex_detail_bg" class="modal">
+    	<div id="ed_detail_wrap" class="modal_wrap">
+    		<h3>작품 상세</h3>
+    		<ul>
+    			<li>
+    				<ul>
+	    				<li><figure class="ex_detail_img"><img src="/img/exhibition/test_img.jpg"></figure></li>    		
+		    			<li class="workDetail_info">
+		    				<ul>
+								<li>작가 : ${vo.author}</li>
+								<li>작품명 : </li>
+								<li>전시기간 : </li>
+								<li>작품설명</li>
+								<li><p></p></li>
+							</ul>
+						</li>
+    				</ul>
+    			</li> 		
+    		</ul>
+    		<i class="fa-solid fa-xmark"></i>
     	</div>
     </div>
