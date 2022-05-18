@@ -19,7 +19,7 @@
 		<ul>
 			<li id="author_profile">
 				<h2 class="hidden">상세정보</h2>
-				<img src="/img/exhibition/test_img.jpg">
+				<img src="${url}/upload/${vo.member_no}/author/${vo.author_thumbnail}">
 				<ul>
 					<li>작가명 : ${vo.author}</li>
 					<li>데뷔년도 : ${vo.debut_year}</li>
@@ -30,14 +30,9 @@
 			<li id="author_works">
 				<h2>작가의 작품</h2>
 				<ul>
-					<li><img src="/img/exhibition/test_img.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
+					<c:forEach var="vv" items="${workList}">
+						<li><img src="${url}/upload/${vo.member_no}/author/exhibition/${vv.exhibition_no}/${vv.work_thumbnail}"></li>
+					</c:forEach>
 				</ul>
 				<!-- 페이지네이션 -->
 				<div class="pagination">
