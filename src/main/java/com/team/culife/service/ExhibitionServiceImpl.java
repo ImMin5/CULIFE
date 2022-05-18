@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.team.culife.dao.ExhibitionDAO;
 import com.team.culife.vo.ExhibitionVO;
 import com.team.culife.vo.MemberVO;
+import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.WorkVO;
 
 @Service
@@ -50,6 +51,13 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	}
 
 	@Override
+	public int workTotalRecord(PagingVO vo) {
+		return dao.workTotalRecord(vo);
+	}
+
+	@Override
+	public List<WorkVO> workSelectByAuthorNo(PagingVO vo) {
+		return dao.workSelectByAuthorNo(vo);
 	public WorkVO workSelectMaxWriteDate(int exhibition_no) {
 		return dao.workSelectMaxWriteDate(exhibition_no);
 	}

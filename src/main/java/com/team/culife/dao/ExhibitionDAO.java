@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.ExhibitionVO;
+import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.WorkVO;
 
 
@@ -20,6 +21,8 @@ public interface ExhibitionDAO {
 	public int workInsert(WorkVO vo);
 	public List<WorkVO> workSelectByExhibitionNo(int exhibition_no);
 	public int workUpdate(WorkVO vo);
+	public int workTotalRecord(PagingVO vo);
+	public List<WorkVO> workSelectByAuthorNo(PagingVO vo);
 	public WorkVO workSelectMaxWriteDate(int exhibition_no);
 	public int workDelete(WorkVO vo);
 }
