@@ -10,8 +10,8 @@ body{
 }
 #header{
 	width:100vw; height:100px;
-	background-color:rgba(0,0,0,0.5);
-	text-align:center;
+	background-color: black;
+	text-align: center;
 }
 
 #nav {width:100vw; height:100px; margin-top:-90px;}
@@ -31,14 +31,14 @@ body{
 }
 
 #nav > ul > li > ul{
-	background-color:rgba(0,0,0,0.5);
+	background-color: black;
 	opacity: 1;
 }
 #admin_section1 > li:nth-child(2) > ul a {
-	color:#222; font-size: 2rem;
+	color: white; font-size: 2rem; 
 }
 #admin_section2 > li:nth-child(1) > ul a {
-	color:#222; font-size: 2rem;
+	color: white; font-size: 2rem;
 }
 .adminTopMenu_drop{
 	position: relative;
@@ -49,7 +49,11 @@ body{
 	text-align: center;
 	line-height: 50px;
 	font-weight:bold;
+	background-color:rgba(0,0,0,0.8);
+	transition: 0.3s;
+	border-bottom: 1px solid white;
 }
+
 .adminTopMenu_drop > li:hover{
 	background-color:rgba(255,255,255,0.8);
 }
