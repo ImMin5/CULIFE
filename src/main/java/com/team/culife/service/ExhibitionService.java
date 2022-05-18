@@ -18,4 +18,6 @@ public interface ExhibitionService {
 	public int workUpdate(WorkVO vo);
 	public int workTotalRecord(PagingVO vo);
 	public List<WorkVO> workSelectByAuthorNo(PagingVO vo);
+	public WorkVO workSelectMaxWriteDate(int exhibition_no);
+	public int workDelete(WorkVO vo);
 }

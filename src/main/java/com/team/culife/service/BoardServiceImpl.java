@@ -22,11 +22,6 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> selectList(PagingVO pvo) {
-		return dao.selectList(pvo);
-	}
-
-	@Override
 	public void updateViews(int no) {
 		dao.updateViews(no);
 	}
@@ -65,9 +60,15 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardSelectByMemberNo(PagingVO vo) {
 		return dao.boardSelectByMemberNo(vo);
 	}
-	
-	
 
+	@Override
+	public List<BoardVO> freeselectList(PagingVO pvo) {
+		return dao.freeselectList(pvo);
+	}
 
+	@Override
+	public List<BoardVO> helpselectList(PagingVO pvo) {
+		return dao.helpselectList(pvo);
+	}
 
 }

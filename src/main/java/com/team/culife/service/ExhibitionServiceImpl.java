@@ -58,6 +58,13 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	@Override
 	public List<WorkVO> workSelectByAuthorNo(PagingVO vo) {
 		return dao.workSelectByAuthorNo(vo);
+	public WorkVO workSelectMaxWriteDate(int exhibition_no) {
+		return dao.workSelectMaxWriteDate(exhibition_no);
+	}
+
+	@Override
+	public int workDelete(WorkVO vo) {
+		return dao.workDelete(vo);
 	}
 	
 
