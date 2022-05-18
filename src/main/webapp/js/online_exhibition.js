@@ -85,8 +85,8 @@ $(document).ready(function(){
 
 /* 작품보기 - 모달 띄우기*/
 $(document).ready(function(){
-	$("#reg_ex").click(function(){
-		$("#exhibition_reg_bg").css({"display" : "block"});
+	$(".workView_btn").click(function(){
+		$("#ex_detail_bg").css({"display" : "block"});
 		$('footer').css({"display" : "none"});
 	});	
 });

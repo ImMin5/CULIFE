@@ -1,11 +1,13 @@
 package com.team.culife.vo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ExhibitionVO {
+public class ExhibitionWorkVO {
 	private int no;
 	private int author_no;
 	private String subject;
@@ -13,9 +15,8 @@ public class ExhibitionVO {
 	private String start_date;
 	private String end_date;
 	private String create_date;
-	private String poster;
 	private int type;
-	private int exhibition_no;
-	private String work_thumbnail;
+	private List<WorkVO> workList;
 	private int member_no;
+	private String author;
 }

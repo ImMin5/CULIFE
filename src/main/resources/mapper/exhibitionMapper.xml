@@ -38,4 +38,58 @@
 		delete from work
 			where no = ${no};
 	</delete>
+	<select id="exhibitionList" resultType="com.team.culife.vo.ExhibitionVO">
+		select w.work_thumbnail, e.no , e.author_no from work w
+		join exhibition e
+		on e.no = w.exhibition_no
+		where start_date >= date_format(now(), '%Y-%m-%d') and e.end_date >= date_format(now(), '%Y-%m-%d')
+		group by e.no
+		order by e.start_date
+		limit ${recordPerPage} offset ${offsetIndex}
+	</select>
+	<select id="exhibitionWorkSelect" resultType="com.team.culife.vo.WorkVO">
+		select no, exhibition_no, work_subject, work_thumbnail, work_content
+		from work where no=${no}
+	</select> 
+	<select id="exhibitionTotalRecord" resultType="int">
+		select count(e.no) cnt from exhibition e
+		join author a
+		on e.author_no = a.no 
+		<if test="category == 'exhibition_subject' and searchWord != null">
+			and e.subject like '%${searchWord}%'
+		</if>
+		<if test="category == 'author' and searchWord != null">
+			and a.author like '%${searchWord}%'
+		</if>
+		where e.start_date >= date_format(now(), '%Y-%m-%d') and e.end_date >= date_format(now(), '%Y-%m-%d')
+		
+	</select>
+	
+	<resultMap id="exhibitionResult" type="com.team.culife.vo.ExhibitionWorkVO">
+		<id property="no" column="eno"/>
+		<result property="author_no" column="author_no"/>
+		<result property="subject" column="subject"/>
+		<result property="content" column="content"/>
+		<result property="start_date" column="start_date"/>
+		<result property="end_date" column="end_date"/>
+		<result property="create_date" column="create_date"/>
+		<result property="type" column="type"/>
+		<collection property="workList" resultMap="workResult"/>
+	</resultMap>
+	<resultMap type="com.team.culife.vo.WorkVO" id="workResult" >
+		<id property="no" column="wno"/>
+		<result property="exhibition_no" column="exhibition_no"/>
+		<result property="work_subject" column="work_subject"/>
+		<result property="work_thumbnail" column="work_thumbnail"/>
+		<result property="work_content" column="work_content"/>
+		<result property="write_date" column="write_date"/>
+	</resultMap>
+	
+	<select id="exhibitionWorkSelectAll" resultMap="exhibitionResult">
+		select e.no eno, e.author_no author_no, e.subject subject, e.content content, e.start_date start_date, e.end_date end_date,
+		 w.no wno, w.exhibition_no exhibition_no, w.work_subject work_subject, w.work_thumbnail work_thumbnail, w.work_content work_content
+		from exhibition e
+		join work w
+		on e.no = w.exhibition_no and e.no=#{param1}
+	</select>
 </mapper>

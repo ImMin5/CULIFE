@@ -25,4 +25,5 @@ public interface AuthorService {
 	public AuthorVO authorListSelect(int no);
 	// 작가검색
 	public List<AuthorVO> authorSearch(String category, String searchWord, int startPage, int endPage, int member_no);
+	public AuthorVO authorSelectByNo(int no);
 }
