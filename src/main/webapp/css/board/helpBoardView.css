@@ -1,0 +1,77 @@
+@charset "UTF-8";
+footer{
+	position:fixed;
+}
+body{
+	padding-top:120px;
+	background:black;
+	color:white;
+}
+.parent{
+	display:flex;
+	text-align:center;
+}
+.child1{
+	flex:11;
+}
+.child2{
+	flex:12;
+}
+hr{
+	width:1400px;
+}
+.edel{
+	float:right;
+	padding-right:14%;
+}
+/*버튼*/
+#helpBoardEdit{
+	background-color: gray;
+	color:white;
+	padding:10px 10px;
+}
+
+#helpBoardDel{
+	background-color: gray;
+	color:white;
+	padding:10px 10px;
+}
+
+#btnSpace{
+	margin:20px;
+}
+
+.pb{
+	margin:20px;
+}
+.container li{
+	width:1200px;
+	text-align:left;
+	padding-left:14.5%;
+}
+.container h1{
+	font-size:2.5rem;
+}
+.helpContent{
+	font-size:1.3em;
+	font-weight:700px;
+	width:1200px;
+	text-align:left;
+	padding-left:18.75%;
+}
+#commentLine, #replyLine{
+	padding-left:13.75%;	
+}
+.helpBoardComent{
+	padding: 12px;
+	border: none;
+	border-radius:10px;
+	outline:none;
+	resize:none;
+	font-size: 16px;
+	background-color:#FAF6F3;
+	margin:20px 20px 0 0;
+}
+.iconValue{
+	margin-left:10px;
+}

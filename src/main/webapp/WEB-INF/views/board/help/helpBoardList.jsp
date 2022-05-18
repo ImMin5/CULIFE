@@ -20,7 +20,7 @@
 		<li>22-05-06</li> -->
 		<c:forEach var="vo" items="${list}">
 			<li>${vo.no }</li>
-			<li><a href="/board/helpBoardView?no=${vo.no}">${vo.subject}</a></li>
+			<li><a href="/board/help/helpBoardView?no=${vo.no}">${vo.subject}</a></li>
 			<li>${vo.member_no }</li>
 			<li>${vo.view }</li>
 			<li>${vo.write_date }</li>

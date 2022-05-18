@@ -21,7 +21,7 @@ public class ReplyController {
 	
 	// 댓글 등록하기
 	@PostMapping("/reply/writeOk")
-	public int writeOk(ReplyVO vo, HttpSession session) {System.out.println(vo.getMember_no());
+	public int writeOk(ReplyVO vo, HttpSession session) {
 		vo.setMember_no((Integer)session.getAttribute("logNo"));
 		vo.setNickname((String)session.getAttribute("nickName"));
 		
@@ -31,7 +31,7 @@ public class ReplyController {
 	// 댓글 목록보이기
 	@GetMapping("/reply/replyList")
 	public List<ReplyVO> replyList(int no){
-		System.out.println(no);
+
 		return service.selectReplyList(no);
 	}
 	
