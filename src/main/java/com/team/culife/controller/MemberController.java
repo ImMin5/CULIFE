@@ -366,6 +366,7 @@ public class MemberController {
 			System.out.println("MemberNo --->" + memberNo);
 			//로그인 확인
 			if(memberNo == null) {
+				result.put("status","201");
 				result.put("msg", "로그인 후 이용해 주세요.");
 			}
 			else {

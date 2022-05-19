@@ -25,6 +25,23 @@
 					<li>데뷔년도 : ${vo.debut_year}</li>
 					<li>작가소개</li>
 					<li>${vo.author_msg}</li>
+					<li>
+						<c:choose>
+							<c:when test="${vo.member_no == logNo}">
+								<a href="${url}/mypage/author">마이페이지로 이동</a>
+							</c:when>
+							<c:when test="${followInfo == null}">
+								<button name="follow" data-author="${vo.author}">팔로우</button>
+							</c:when>
+							<c:otherwise>
+								<button name="unfollow" data-author="${vo.author}">팔로잉</button>
+							</c:otherwise>
+						</c:choose>
+							
+					</li>
+					<li>
+						<a href="${url}/online_exhibition/onlineAuthorList">목록으로 돌아가기</a>
+					</li>
 				</ul>
 			</li>
 			<li id="author_works">

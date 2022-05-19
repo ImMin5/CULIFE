@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.ExhibitionService;
 import com.team.culife.service.MemberService;
+import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.ExhibitionVO;
 import com.team.culife.vo.ExhibitionWorkVO;
@@ -33,7 +34,6 @@ public class OnlineExhibitionController {
 	AuthorService aService;
 	@Inject
 	ExhibitionService eService;
-	
 	
 	@GetMapping("onlineList")
 	public ModelAndView onlineList(HttpSession session, @RequestParam(value="currentPage", required=false, defaultValue="1")int currentPage) {
@@ -88,27 +88,35 @@ public class OnlineExhibitionController {
 	public ModelAndView onlineAuthorList(@RequestParam(value="currentPage",required=false, defaultValue="1")int currentPage,
 			@RequestParam(value="searchWord",required=false)String searchWord) {
 		ModelAndView mav = new ModelAndView();
-		
-		PagingVO pVO = new PagingVO();
-		pVO.setRecordPerPage(6);
-		pVO.setCurrentPage(currentPage);
-		if(searchWord != null) pVO.setSearchWord(searchWord);
-		pVO.setTotalRecord(aService.totalAuthorList(pVO));
-		
-		mav.addObject("list",aService.authorList(pVO));
-		mav.addObject("pVO", pVO);
-		
-		mav.setViewName("/online_exhibition/onlineAuthorList");
+		try {
+			PagingVO pVO = new PagingVO();
+			pVO.setRecordPerPage(6);
+			pVO.setCurrentPage(currentPage);
+			if(searchWord != null) pVO.setSearchWord(searchWord);
+			pVO.setTotalRecord(aService.totalAuthorList(pVO));
+			
+			mav.addObject("list",aService.authorList(pVO));
+			mav.addObject("pVO", pVO);
+			
+			mav.setViewName("/online_exhibition/onlineAuthorList");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return mav;
 	}
 		
 	@GetMapping("onlineAuthorView")
 	public ModelAndView onlineAuthorView(int no,
-			@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage) {
+			@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 				
 		
 		try {
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			if(memberNo != null) {
+				AuthorFanVO afvo = memberService.authorFanCheck(no,memberNo);
+				mav.addObject("followInfo", afvo);
+			}
 			PagingVO pvo = new PagingVO();
 			pvo.setRecordPerPage(8);
 			pvo.setCurrentPage(currentPage);

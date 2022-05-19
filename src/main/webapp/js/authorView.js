@@ -15,3 +15,60 @@ $(document).ready(function(){
 		$("#modal_work_thumbnail").attr("src","/upload/"+$(this).attr("data-member_no")+"/author/exhibition/"+$(this).attr("data-exhibition_no")+"/"+$(this).attr("data-work_thumbnail"));
 	});	
 });
+
+		//팔로우
+		$(document).on("click","button[name=unfollow]",function(){
+			var author = $(this).attr("data-author");
+			var url ="/author/follow";
+			var button = $(this);
+			
+			$.ajax({
+				url : url,
+				type : "DELETE",
+				dataType : "JSON",
+				data :{
+					author:author
+				},
+				success : function(data){
+					console.log(data);
+					if(data.status=="200"){
+						button.attr("name","follow");
+						button.attr("class", "btn btn-primary");
+						button.text("팔로우");
+					}
+					
+				},
+				error : function(error){
+					console.log(error);
+				}
+			});
+		});
+		//언팔로우
+		$(document).on("click","button[name=follow]",function(){
+			var author = $(this).attr("data-author");
+			var url ="/author/follow";
+			var button = $(this);
+			$.ajax({
+				url : url,
+				type : "POST",
+				dataType : "JSON",
+				data :{
+					author:author
+				},
+				success : function(data){
+					console.log(data);
+					if(data.status=="200"){
+						button.attr("name","unfollow");
+						button.attr("class", "btn btn-secondary");
+						button.text("팔로잉");
+					}
+					else{
+						alert(data.msg);
+					}
+					
+				},
+				error : function(error){
+					alert(error);
+				}
+			})
+		});
