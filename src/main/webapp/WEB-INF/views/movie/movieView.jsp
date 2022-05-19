@@ -207,6 +207,28 @@ $(document).on('click','#mreviewList input[value=삭제]', function(){
 		});
 	}
 });
+
+//영화리뷰신고기능
+function warning(no){
+	if(confirm('해당 댓글을 신고하시겠습니까?')){
+		//alert(no);
+		var params = no;
+		$.ajax({
+			type:'get',
+			url:'/mwarning/'+no,			
+			success:function(result){
+				if(parseInt(result)>0){
+					alert('신고가 완료되었습니다.');
+					mreviewListAll();
+				}else{
+					alert('이미 신고 처리되었습니다.')
+				}				
+			},error:function(e){				
+				console.log("신고에러발생 "+JSON.stringify(e));
+			}
+		});
+	}
+}
 </script>
 <body>
    <div class="movieView_container">
