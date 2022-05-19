@@ -68,6 +68,16 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	public int workDelete(WorkVO vo) {
 		return dao.workDelete(vo);
 	}
+
+	@Override
+	public int exhibitionTotalRecord(PagingVO vo) {
+		return dao.exhibitionTotalRecord(vo);
+	}
+
+	@Override
+	public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo) {
+		return dao.exhibitionSelectAll(vo);
+	}
 	
 
 	

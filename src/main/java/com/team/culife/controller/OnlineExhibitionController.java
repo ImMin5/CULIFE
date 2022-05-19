@@ -1,5 +1,6 @@
 package com.team.culife.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.culife.service.AuthorService;
@@ -17,6 +19,7 @@ import com.team.culife.service.MemberService;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.ExhibitionVO;
 import com.team.culife.vo.MemberVO;
+import com.team.culife.vo.PageResponseBody;
 import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.WorkVO;
 
@@ -121,4 +124,37 @@ public class OnlineExhibitionController {
 	 * @GetMapping("onlineAuthorView") public String onlineAuthorView() { return
 	 * "online_exhibition/onlineAuthorView"; }
 	 */
+	
+	@GetMapping("/onlineList/search")
+	@ResponseBody
+	public PageResponseBody<ExhibitionVO> onlineExhibitionSearch(HttpSession session,
+			@RequestParam(value="category",required = false, defaultValue = "work_subject")String category,
+			@RequestParam(value="searchWord",required = false)String searchWord,
+			@RequestParam(value="currentPage",required = false, defaultValue = "1")int currentPage){
+		PageResponseBody<ExhibitionVO> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		int pageCount = 5;
+		try {
+			System.out.println("current--->"+ currentPage);
+			PagingVO pvo = new PagingVO();
+			pvo.setCategory(category);
+			pvo.setRecordPerPage(pageCount);
+			pvo.setCurrentPage(currentPage);
+			if(searchWord != null) pvo.setSearchWord(searchWord);
+			pvo.setTotalRecord(eService.exhibitionTotalRecord(pvo));
+			System.out.println("pvo offset--->" + pvo.getOffsetIndex());
+			List<ExhibitionVO> list = eService.exhibitionSelectAll(pvo);
+			
+			System.out.println("exhibition size --->" + pvo.getTotalRecord());
+			entity = new PageResponseBody<ExhibitionVO>();
+			entity.setItems(list);
+			entity.setVo(pvo);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new PageResponseBody<ExhibitionVO>();
+		}
+		
+		return entity;
+	}
 }

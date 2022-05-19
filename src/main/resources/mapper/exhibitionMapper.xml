@@ -50,4 +50,31 @@
 		delete from work
 			where no = ${no};
 	</delete>
+	<select id="exhibitionTotalRecord" resultType="int">
+  		select count(e.no) from exhibition e
+  		join author a
+  		on e.author_no = a.no 
+  		<if test="category == 'exhibition_subject' and searchWord != null">
+  				and e.subject like '%${searchWord}%'
+  		</if>
+  		<if test="category == 'author' and searchWord != null">
+  				and a.author like '%${searchWord}%'
+  		</if>
+  		where  e.start_date >= date_format(now(),'%Y-%m-%d') and e.end_date >= date_format(now(),'%Y-%m-%d')  
+  	</select>
+  	<select id="exhibitionSelectAll" resultType="com.team.culife.vo.ExhibitionVO">
+  		select e.no, e.subject, e.content, a.author, e.start_date, e.end_date from exhibition e
+  		join author a
+  		on e.author_no = a.no 
+  		<if test="category == 'exhibition_subject' and searchWord != null">
+  				and e.subject like '%${searchWord}%'
+  		</if>
+  		<if test="category == 'author' and searchWord != null">
+  				and a.author like '%${searchWord}%'
+  		</if>
+  		where  e.start_date >= date_format(now(),'%Y-%m-%d') and e.end_date >= date_format(now(),'%Y-%m-%d')  
+  		order by a.author 
+  		limit ${recordPerPage} offset ${offsetIndex}
+  	</select>
+  	
 </mapper>

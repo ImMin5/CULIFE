@@ -54,8 +54,7 @@ $(function(){
                 type : "POST",
                 data : data,
                 async : false,
-                success : function(){
-        			
+                success : function(data){
                 },
                 error : function(){
                     
@@ -88,6 +87,15 @@ $(function(){
     		}
     	})
     });
+  //스크롤 위치 
+    $("#table_container").scroll(function(){
+    	var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+    	var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+    	var contentH = $(".table").height(); //문서 전체 내용을 갖는 div의 높이
+    	if(scrollT + scrollH +1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
+    	     pagination();
+    	}
+    });
 })
 </script>
     <div id="online_exhibition_container">
@@ -101,13 +109,23 @@ $(function(){
     	<div id="online_ex_search">
     		<h3>전시작품 검색</h3>
 	    	<form id="ex_searchFrm">
-		    	<select name="ex_search">
-		    		<option>작품명</option>
-		    		<option>작가</option>
+		    	<select id="ex_search" name="ex_search">
+		    		<option value="exhibition_subject">전시명</option>
+		    		<option value="author">작가</option>
 		    	</select>
 		    	<input type="text" name="ex_searchWord" id="ex_searchWord"/>
 		        <input type="submit" value="검색"/>
 		    </form>
+		    <div id="table_container" style="height:6vh; overflow:scroll;">
+			    <table >
+			    	<th>전시이름</th>
+			    	<th>작가명</th>
+			    	<th>전시기간</th>
+			    	<tbody id="modal_search">
+			    		
+			    	</tbody>
+			    </table>
+		    </div>
 		    <ol>
 		    	<li><a href="">&#60;</a></li> <!-- < 기호 -->
 		    	<li><a href="">1</a></li>

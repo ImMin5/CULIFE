@@ -25,4 +25,6 @@ public interface ExhibitionDAO {
 	public List<WorkVO> workSelectByAuthorNo(PagingVO vo);
 	public WorkVO workSelectMaxWriteDate(int exhibition_no);
 	public int workDelete(WorkVO vo);
+	public int exhibitionTotalRecord(PagingVO vo);
+	public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo);
 }
