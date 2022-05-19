@@ -103,9 +103,6 @@ $(document).ready(function () {
         </li>
       </ul>
 
-
-
-
    <div id="list">
      <div class="tabContent" id="play">
     
