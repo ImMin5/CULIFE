@@ -115,7 +115,7 @@
   		<if test="category == 'author' and searchWord != null">
   				and a.author like '%${searchWord}%'
   		</if>
-  		where  e.start_date >= date_format(now(),'%Y-%m-%d') and e.end_date >= date_format(now(),'%Y-%m-%d')  
+  		where date_format(now(),'%Y-%m-%d') >= e.start_date and e.end_date >= date_format(now(),'%Y-%m-%d')  
   		order by a.author 
   		limit ${recordPerPage} offset ${offsetIndex}
   	</select>

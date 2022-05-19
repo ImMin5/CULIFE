@@ -36,7 +36,8 @@ public class OnlineExhibitionController {
 	ExhibitionService eService;
 	
 	@GetMapping("onlineList")
-	public ModelAndView onlineList(HttpSession session, @RequestParam(value="currentPage", required=false, defaultValue="1")int currentPage) {
+	public ModelAndView onlineList(HttpSession session, @RequestParam(value="currentPage", required=false, defaultValue="1")int currentPage,
+			@RequestParam(value="select", required=false, defaultValue="1")int select) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		//exihibition 가져올 때 param로 받아서 페이지 리로딩
@@ -44,8 +45,8 @@ public class OnlineExhibitionController {
 		
 		try {
 			PagingVO pVO = new PagingVO();
-			pVO.setCurrentPage(currentPage);
 			pVO.setRecordPerPage(6);
+			pVO.setCurrentPage(currentPage);
 			pVO.setTotalRecord(eService.exhibitionTotalRecord(pVO));
 			System.out.println("pvo -->" + pVO.getTotalRecord());
 			List<ExhibitionVO> exhibitionList = eService.exhibitionList(pVO);
@@ -55,7 +56,7 @@ public class OnlineExhibitionController {
 			}
 			if(exhibitionList.size() > 0) {
 		
-				ExhibitionWorkVO exwvo = eService.exhibitionWorkSelectAll(exhibitionList.get(0).getNo());
+				ExhibitionWorkVO exwvo = eService.exhibitionWorkSelectAll(exhibitionList.get(select-1).getNo());
 				AuthorVO authorVO = aService.authorSelectByNo(exwvo.getAuthor_no());
 				exwvo.setMember_no(authorVO.getMember_no());
 				exwvo.setAuthor(authorVO.getAuthor());
