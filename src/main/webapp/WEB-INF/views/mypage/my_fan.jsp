@@ -169,8 +169,8 @@ let is_paging= true;
 					data.items.forEach(function(element, index){
 						$("#myapge_table_body").append(`
 									<tr>
-				  					<td style="width:20%; min-width:150px;"><img class="table_author_thumbnail" src="${url}/img/member/default_thumbnail.png"/></td>
-				  					<td style="width:40%;">${'${element.author}'}</td>
+				  					<td onclick="location.href='/online_exhibition/onlineAuthorView?no=${'${element.no}'}'" style="width:20%; min-width:150px;"><img class="table_author_thumbnail" src="${url}/upload/${'${element.member_no}'}/author/${'${element.author_thumbnail}'}"/></td>
+				  					<td onClick="location.href='/online_exhibition/onlineAuthorView?no=${'${element.no}'}'" style="width:40%;">${'${element.author}'}</td>
 				  					<td style="width:20%;">${'${element.debut_year}'}</td>
 				  					<td style="width:20%; text-align:center;"><button type="button" name="unfollow" data-author="${'${element.author}'}" class="btn btn-secondary">팔로잉</button></td>
 				  				</tr>

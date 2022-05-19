@@ -54,8 +54,7 @@ $(function(){
                 type : "POST",
                 data : data,
                 async : false,
-                success : function(){
-
+                success : function(data){
                 },
                 error : function(){
                     
@@ -89,6 +88,15 @@ $(function(){
 
     	})
     });
+  //스크롤 위치 
+    $("#table_container").scroll(function(){
+    	var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+    	var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+    	var contentH = $(".table").height(); //문서 전체 내용을 갖는 div의 높이
+    	if(scrollT + scrollH +1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
+    	     pagination();
+    	}
+    });
 })
 </script>
     <div id="online_exhibition_container">
@@ -102,13 +110,22 @@ $(function(){
     	<div id="online_ex_search">
     		<h3>전시작품 검색</h3>
 	    	<form id="ex_searchFrm">
-		    	<select name="ex_search">
-		    		<option>작품명</option>
-		    		<option>작가</option>
+		    	<select id="ex_search" name="ex_search">
+		    		<option value="exhibition_subject">전시명</option>
+		    		<option value="author">작가</option>
 		    	</select>
 		    	<input type="text" name="ex_searchWord" id="ex_searchWord"/>
-		        <input type="submit" value="검색"/>
-		    </form>
+		   .</form>
+		    <div id="table_container" style="height:60vh; overflow:scroll;">
+			    <table >
+			    	<th>전시이름</th>
+			    	<th>작가명</th>
+			    	<th>전시기간</th>
+			    	<tbody id="modal_search">
+			    		
+			    	</tbody>
+			    </table>
+		    </div>
 		    <ol>
 		    	<li><a href="">&#60;</a></li> <!-- < 기호 -->
 		    	<li><a href="">1</a></li>
@@ -123,27 +140,51 @@ $(function(){
 	    		<ul>
 	    			<li>
 	    				<span></span>
-	    				<img src="/img/exhibition/test_img.jpg" alt="첫번째 작품">
+	    				<c:choose>
+		    				<c:when test="${exhibition.workList[0] != null}">
+		    					<img src="${url}/upload/${exhibition.member_no}/author/exhibition/${exhibition.no}/${exhibition.workList[0].work_thumbnail}" alt="첫번째 작품">
+		    				</c:when>
+		    				<c:otherwise>
+		    					<img/>
+		    				</c:otherwise>
+	    				</c:choose>
 	    			</li>
 	    			<li>
-	    				<p></p>
-	    				<img src="/img/exhibition/test_img_1.jpg" alt="두번째 작품">
+	    				<span></span>
+	    				<c:choose>
+		    				<c:when test="${exhibition.workList[1] != null}">
+		    				
+		    					<img src="${url}/upload/${exhibition.member_no}/author/exhibition/${exhibition.no}/${exhibition.workList[1].work_thumbnail}" alt="두번째 작품">
+		    				</c:when>
+		    				<c:otherwise>
+		    					<img/>
+		    				</c:otherwise>
+	    				</c:choose>
+	    				
 	    			</li>
 	    		</ul>
-	    		<button class="w-btn-neon2" type="button">작품보기</button>
+	    		<button class="workView_btn" type="button">V I E W</button>
 	    	</div>
+	    	
+	    	<!-- 페이지네이션 -->
 	    	<div id="online_ex_pagination">
-	    		<img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전">
+	    		<c:if test="${pVO.currentPage==1}">
+		    		<img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전"> <!-- < 기호 -->
+		    	</c:if>
+		    	<c:if test="${pVO.currentPage>1}">
+		        	<a href="/online_exhibition/onlineList?currentPage=${pVO.currentPage-1}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>"><img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전"></a>
+		        </c:if>
 	    		<div>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
+	    			<c:forEach var="exvo" items="${exhibitionList}" varStatus="status">
+	    				<p><img onclick="location.href='${url}/online_exhibition/onlineList?currentPage=${pVO.currentPage}&select=${status.count}'" src="${url}/upload/${exvo.member_no}/author/exhibition/${exvo.no}/${exvo.work_thumbnail}"></p>	    			
+	    			</c:forEach>
 	    		</div>
-	    		<img id="online_ex_next" src="/img/exhibition/arrow_right.png" alt="다음">
+	    		<c:if test="${pVO.currentPage==pVO.totalPage}">
+		    		<img id="online_ex_next" src="/img/exhibition/arrow_right.png" alt="다음">
+		    	</c:if>
+		    	<c:if test="${pVO.currentPage<pVO.totalPage}">
+		        	<a href="/online_exhibition/onlineList?currentPage=${pVO.currentPage+1}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>"><img id="online_ex_next" src="/img/exhibition/arrow_right.png" alt="다음"></a>
+		        </c:if>
 	    	</div>
     	</div>
     </div>
@@ -230,24 +271,38 @@ $(function(){
     
     <!-- 작품 상세 페이지 모달 -->
 	<div id="ex_detail_bg" class="modal">
-    	<div id="ed_detail_wrap" class="modal_wrap">
+    	<div id="ex_detail_wrap" class="modal_wrap">
     		<h3>작품 상세</h3>
+    		<div id="ex_reg_detail">
+    			<h4>${exhibition.subject}</h4>
+    			<p>${exhibition.content}</p>
+    		</div>
     		<ul>
+    			<c:forEach var="wk" items="${exhibition.workList}">
     			<li>
-    				<ul>
-	    				<li><figure class="ex_detail_img"><img src="/img/exhibition/test_img.jpg"></figure></li>    		
-		    			<li class="workDetail_info">
-		    				<ul>
-								<li>작가 : ${vo.author}</li>
-								<li>작품명 : </li>
-								<li>전시기간 : </li>
+	    			<ul>
+		    			<li><figure class="ex_detail_img"><img class="ex_work_thumbnail" src="${url}/upload/${exhibition.member_no}/author/exhibition/${wk.exhibition_no}/${wk.work_thumbnail}"></figure></li>    		
+			    		<li class="ex_detail_info">
+			    			<ul>
+								<li>작가 : ${exhibition.author}</li>
+								<li>작품명 : ${wk.work_subject} </li>
+								<li>전시기간 : ${exhibition.start_date} - ${exhibition.end_date}</li>
 								<li>작품설명</li>
-								<li><p></p></li>
+								<li><p>${wk.work_content}</p></li>
 							</ul>
 						</li>
-    				</ul>
-    			</li> 		
-    		</ul>
+					</ul>
+	    		</li>
+   				</c:forEach>
+	    	</ul>
+	    	<div id="ex_review">
+	    	
+	    	</div>
     		<i class="fa-solid fa-xmark"></i>
     	</div>
+    </div>
+    
+    <div id="imgPopup">
+    	<i class="fa-solid fa-xmark"></i>
+    	<img class="pop" src="">
     </div>

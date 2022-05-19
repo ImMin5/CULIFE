@@ -449,4 +449,40 @@ li{
 	color: white;
 	font-weight: bold;
 }
+/* admin top img */
+.admin_gallery_wrap{
+	margin: 0;
+}
+.admin_gallery{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	height: 400px;
+	width: 1200px;
+}
+.admin_gallery li{
+	width: 1200px;
+	height: 400px;
+	transition: 0.3s;
+	position: relative;
+	overflow: hidden;
+}
 
+.admin_gallery li:hover {
+	filter: grayscale(0.4);
+}
+.admin_gallery_content{
+	position: absolute;
+	background-color: rgb(0,0,0,0.4);
+	color:white;
+	text-align: center;
+	height: 400px;
+	width: 200px;
+	line-height: 200px;
+	left: -200px;
+	transition: 0.3s;
+	font-size: 1.3em;
+}
+.admin_gallery li:hover .admin_gallery_content{
+	left: 0px;
+}

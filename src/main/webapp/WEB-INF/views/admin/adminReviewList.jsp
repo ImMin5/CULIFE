@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
+<style>
+	.admin_gallery li:nth-child(1) {
+		background: url(/img/admin/5.jpg) no-repeat center center;
+	}
+</style>
 <script>
 $(function () {	
 	$("#allCheck").click(function () {
@@ -37,11 +42,19 @@ $(function () {
 		}
 	});	
 });
-
 </script>
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
+	<div class="admin_gallery_wrap">
+		<ul class="admin_gallery">
+			<li>
+				<div class="admin_gallery_content">
+					<h2>리뷰관리</h2>
+				</div>
+			</li>
+		</ul>
+	</div>
 	<ul class='mini_top'>
 		<li>리뷰관리</li>
 		<li>
