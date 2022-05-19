@@ -139,21 +139,40 @@
 
 /* 전시리시트 페이지네이션 - start */
 #online_ex_pagination {
-	width:1200px; height:20vh;
-	margin:0 auto;
+	width:62.5vw; height:20vh;
+	margin:0 50%;
+	transform:translateX(-50%);
 	position:relative;
 }
 #online_ex_pagination > img {
 	width:50px; height:50px;
 	position:absolute; top:50%;
 	transform:translateY(-25px);
-	cursor:pointer
+}
+#online_ex_pagination > a > img {
+	width:50px; height:50px;
+	position:absolute; top:50%;
+	transform:translateY(-25px);
 }
 #online_ex_pagination #online_ex_prev {left:0}
 #online_ex_pagination #online_ex_next {right:0}
-
-#online_ex_pagination > div > p {display:inline-block;}
-#online_ex_pagination > div > p > img{width:100px; height:100px; cursor:pointer}
+#online_ex_pagination > div{
+	width:105vh; margin:0 auto;
+}
+#online_ex_pagination > div > p {
+	height:20vh;
+	display:inline-block;
+	margin:0 1vh;
+}
+#online_ex_pagination > div > p > img{
+	width:15vh; height:15vh; 
+	cursor:pointer;
+	margin-top:2.5vh;
+	transition:all 0.5s;
+}
+#online_ex_pagination > div > p > img:hover{
+	transform:scale(1.2)
+}
 /* 전시리시트 페이지네이션 - end */
 
 /* 전시등록 모달 - start */
@@ -430,52 +449,132 @@
 /* 작품상세 모달 - start */
 #ex_detail_bg {display:block}
 #ex_detail_wrap {
-	width:1200px; height:800px;
+	width:1200px; height:900px;
 	margin:50vh auto 0 auto;
-	transform:translateY(-400px);
+	transform:translateY(-450px);
 	background:url(/img/exhibition/marble_bg.png);
 	overflow:hidden
 }
+#ex_detail_wrap > h3 {
+	font-size:1.6rem !important; 
+	line-height:30px !important;
+	font-weight:400 !important;
+	padding:0 10px;
+	background-color:black;
+	color:white;
+	margin:0 !important;
+}
+#ex_reg_detail {width:100%; height:210px; text-align:center}
+#ex_reg_detail > h4 {
+	font-size:4rem; line-height:80px;
+	padding:0 50px;
+	font-weight:bold;
+}
+#ex_reg_detail > p {
+	min-height:50px;max-height:120px;
+	font-size:2rem; line-height:25px;
+	padding:0 50px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	text-overflow:ellipsis;
+	white-space:pre-wrap;
+}
 #ex_detail_wrap > ul {
-	width:100%; height:85%;
+	width:90%; height:630px;
 	display:block;
 	overflow-y:auto;
+	box-shadow:5px 5px 5px 5px gray inset;
+	margin:0 auto
+}
+#ex_detail_wrap > ul::-webkit-scrollbar{width:10px}
+#ex_detail_wrap > ul::-webkit-scrollbar-track {background-color: #f9e9d2;}
+#ex_detail_wrap > ul::-webkit-scrollbar-thumb {
+	background-color: orange;
+	border-radius:5px;	
 }
 #ex_detail_wrap > ul > li {
-	width:100%; height:650px;
+	width:100%; height:600px;
 	display:block;
 	padding:20px 0 10px 0;
 	position:relative;
 }
 .ex_detail_img {
-	width:600px; height:630px;
+	width:550px; height:590px;
 	display:block;
 	position:relative;
 	margin-left:50px;
+	position:relative;
 }
 .ex_detail_img> img {
-	min-width:400px; max-width:600px; max-height:630px;
+	min-width:400px; max-width:550px; max-height:590px;
 	position:absolute; 
 	left: 50%; top:50%;
 	transform: translate(-50%, -50%);
 	display:block;
+	position:relative;
+	cursor: zoom-in;
 }
 .ex_detail_info {
-	width:380px; height:570px;
-	display:block; padding:30px 50px;
+	width:330px; height:440px;
+	display:block; padding:75px 50px;
 	position:absolute; right:50px; top:20px;
 	font-size:2rem;
 	line-height:50px;
 }
-.ex_detail_info > ul > li:nth-child(4) {
-	margin-top:50px
-}
+.ex_detail_info > ul > li:nth-child(4) {margin-top:30px}
 .ex_detail_info p {
-	width:100%; height:300px;
-	overflow:hidden;
+	width:100%; height:180px;
+	overflow-x:hidden;
+	overflow-y:auto;
 	text-overflow:ellipsis;
-	white-space:nowrap;
+	white-space:pre-wrap;
 	background-color:rgba(255,255,255,0.5);
 	border:1px solid #c0c0c0;
+	font-size:1.6rem;
+	line-height:30px;
+	padding:10px;
 }
+.ex_detail_info p::-webkit-scrollbar{width:10px}
+.ex_detail_info p::-webkit-scrollbar-track {background-color: #f9f5d2;}
+.ex_detail_info p::-webkit-scrollbar-thumb {
+	background-color: #f2e10d;
+	border-radius:5px;	
+}
+
 /* 작품상세 모달 - end */
+
+/* 이미지 상세 모달 - start */
+
+#imgPopup {
+	width:100vw; height:100vh;
+	margin:0; padding:0;
+	position:absolute;
+	left:0%; top:0%;
+	z-index:2000;
+	background-color:rgba(0,0,0,0.7);
+	display:none
+}
+#imgPopup > img {
+	min-width:800px; max-width:80vw;
+	min-height:50vh; max-height:90vh;
+	position:absolute;
+	left:50%; top:50%;
+	transform:translate(-50%,-50%);
+}
+#imgPopup > .fa-xmark {
+	position:absolute;
+	right:0; top:0;
+	background-color:white;
+	border:2px solid #000;
+	border-radius:50%;
+	width:50px; height:50px;
+	text-align:center; line-height:50px;
+	transition:all 0.5s;
+}
+#imgPopup > .fa-xmark:hover {
+	background-color:red;
+	color:white
+}
+
+/* 이미지 상세 모달 - end */
+
