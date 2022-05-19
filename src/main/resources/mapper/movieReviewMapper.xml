@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.culife.dao.MovieReviewDAO">
+	<insert id="MreviewWrite">
+		insert into movie_review(no, movie_id, member_no, movie_title, content, score_star, poster_path, spo_check, vote_count)
+		values(#{no}, #{movie_id}, #{member_no}, #{movie_title}, #{content}, #{score_star}, #{poster_path},  #{spo_check}, #{vote_count})
+	</insert>
+	<select id="MreviewList" resultType="MovieReviewVO">
+		select r.no, member_no, content, spo_check, write_date, score_star, nickname from movie_review r join member m
+		on r.member_no = m.no
+		where movie_id=#{param1}
+		order by no desc
+	</select>
+	<update id="MreviewEdit">
+		update movie_review set content=#{content}, score_star=#{score_star}, spo_check=#{spo_check}
+		where no=#{no} and member_no=#{member_no}
+	</update>
+	<delete id="MreviewDel">
+		delete from movie_review where no=#{param1} and member_no=#{param2}
+	</delete>
+	<select id="oxMReview" resultType="int">
+		select count(*) from movie_review where member_no=#{param1} and movie_id=#{param2}
+	</select>
+	<select id="MstarAvg" resultType="double">
+		select round(ifnull(avg(score_star),0),1) score_star from movie_review where movie_id=#{movie_id}
+	</select>
+	<select id="MreviewCnt" resultType="int">
+		select count(*) from movie_review where movie_id=#{movie_id}
+	</select>
+</mapper>
