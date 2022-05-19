@@ -177,8 +177,8 @@ public class MemberController {
 	//마이페이지 - 작성글
 	@GetMapping("/mypage/board")
 	public ModelAndView mypageBoard(HttpSession session, @RequestParam(value="category", required=false, defaultValue="free")String category,
-			@RequestParam(value="pageNo", required=false, defaultValue="1") int pageNo,
-			@RequestParam(value="pageCount", required=false, defaultValue="9") int pageCount,
+			@RequestParam(value="pageNo", required=false, defaultValue="1") int currentPage,
+			@RequestParam(value="pageCount", required=false, defaultValue="10") int pageCount,
 			@RequestParam(value="searchWord", required=false) String searchWord) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
@@ -191,11 +191,16 @@ public class MemberController {
 				PagingVO pvo = new PagingVO();
 				// 전체 리스트 업데이트
 				pvo.setRecordPerPage(pageCount);
-				pvo.setCurrentPage(pageNo);
+				pvo.setCurrentPage(currentPage);
 				pvo.setMember_no(memberNo);
 				pvo.setCategory(category);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+				if(pvo.getTotalPage() < currentPage) {
+					pvo.setCurrentPage(pvo.getTotalPage());
+					pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+				}
+				
 				List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
 				mav.addObject("boardList", list);
 				mav.addObject("pvo", pvo);
