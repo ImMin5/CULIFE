@@ -6,7 +6,7 @@ nav {margin-top:-100px;}
 }
 
 #mypage_container{
-	margin-top:20vh;
+	margin-top:17vh;
 }
 #mypage_col{
 	margin-top:100px;
@@ -48,6 +48,7 @@ nav {margin-top:-100px;}
 }
 
 #mypage_member_thumbnail_container> .thumbnail_btn{
+	cursor:pointer;
 	position : relative;
 	top: -18%;
 	left : 36%;
