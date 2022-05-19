@@ -94,5 +94,10 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	public ExhibitionWorkVO exhibitionWorkSelectAll(int no) {
 		return dao.exhibitionWorkSelectAll(no);
 	}
+  
+  @Override
+	public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo) {
+		return dao.exhibitionSelectAll(vo);
+	}
 	
 }
