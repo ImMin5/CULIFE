@@ -90,3 +90,16 @@ $(document).ready(function(){
 		$('footer').css({"display" : "none"});
 	});	
 });
+
+$(document).ready(function(){
+	$(".ex_detail_img").on('click', (function(){
+		var a = $(this).children().attr("src");
+		$(".pop").replaceWith("<img class='pop' src='" + a + "'/>");
+		$("#imgPopup").css({"display":"block"});
+	}))	
+	$("#imgPopup > .fa-xmark").click(function(){
+		$("#ex_detail_bg").css({"display" : "block"});
+		$('footer').css({"display" : "none"});
+		$("#imgPopup").css({"display":"none"})
+	});	
+})

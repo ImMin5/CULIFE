@@ -120,13 +120,23 @@ $(function(){
 	    	
 	    	<!-- 페이지네이션 -->
 	    	<div id="online_ex_pagination">
-	    		<img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전">
+	    		<c:if test="${pVO.currentPage==1}">
+		    		<img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전"> <!-- < 기호 -->
+		    	</c:if>
+		    	<c:if test="${pVO.currentPage>1}">
+		        	<a href="/online_exhibition/onlineList?currentPage=${pVO.currentPage-1}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>"><img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전"></a>
+		        </c:if>
 	    		<div>
-	    			<c:forEach var="exvo" items="${exhibitionList}">
+	    			<c:forEach var="exvo" items="${exhibitionList}" >
 	    				<p><img src="${url}/upload/${exvo.member_no}/author/exhibition/${exvo.no}/${exvo.work_thumbnail}"></p>	    			
 	    			</c:forEach>
 	    		</div>
-	    		<img id="online_ex_next" src="/img/exhibition/arrow_right.png" alt="다음">
+	    		<c:if test="${pVO.currentPage==pVO.totalPage}">
+		    		<img id="online_ex_next" src="/img/exhibition/arrow_right.png" alt="다음">
+		    	</c:if>
+		    	<c:if test="${pVO.currentPage<pVO.totalPage}">
+		        	<a href="/online_exhibition/onlineList?currentPage=${pVO.currentPage+1}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>"><img id="online_ex_next" src="/img/exhibition/arrow_right.png" alt="다음"></a>
+		        </c:if>
 	    	</div>
     	</div>
     </div>
@@ -223,7 +233,7 @@ $(function(){
     			<c:forEach var="wk" items="${exhibition.workList}">
     			<li>
 	    			<ul>
-		    			<li><figure class="ex_detail_img"><img src="${url}/upload/${exhibition.member_no}/author/exhibition/${wk.exhibition_no}/${wk.work_thumbnail}"></figure></li>    		
+		    			<li><figure class="ex_detail_img"><img class="ex_work_thumbnail" src="${url}/upload/${exhibition.member_no}/author/exhibition/${wk.exhibition_no}/${wk.work_thumbnail}"></figure></li>    		
 			    		<li class="ex_detail_info">
 			    			<ul>
 								<li>작가 : ${exhibition.author}</li>
@@ -233,10 +243,18 @@ $(function(){
 								<li><p>${wk.work_content}</p></li>
 							</ul>
 						</li>
-						</ul>
+					</ul>
 	    		</li>
    				</c:forEach>
 	    	</ul>
+	    	<div id="ex_review">
+	    	
+	    	</div>
     		<i class="fa-solid fa-xmark"></i>
     	</div>
+    </div>
+    
+    <div id="imgPopup">
+    	<i class="fa-solid fa-xmark"></i>
+    	<img class="pop" src="">
     </div>
