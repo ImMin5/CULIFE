@@ -90,7 +90,7 @@ body {
 
 #play>ul{
    float:left;
-   margin:60px;
+   margin:70px;
     width:370px;
 
 }
@@ -104,7 +104,7 @@ body {
 
 /*뮤지컬리스트*/
 #musical{
-   margin-left:-260px;
+   margin-left:-290px;
    text-align: center;
    width:100%;
    float:left;   
@@ -112,8 +112,8 @@ body {
 
 #musical>ul{
    float:right;
-   margin:45px;
-    width:420px;
+   margin:70px;
+    width:370px;
 
 }
 
@@ -133,16 +133,15 @@ body {
 
 #box{
    padding-bottom:25px;
-
+   height: 420px;
 }
 
 
 #box li:nth-child(2) a {
       font-family: 'RixYeoljeongdo_Regular';
-      font-size: 32px;
+      font-size: 30px;
 
 }
-
 
    #theater_container {
       width: 1500px;
@@ -205,14 +204,16 @@ body {
       url(/img/theater/BackBack.png) ;
          background-repeat: no-repeat;
          background-position: right right;
-         background-size:60vw 100vw;
+         background-size:60% 100%;
+         background-attachment: fixed;
     }
     #musical {
-      background-image:linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ),
+      background-image:linear-gradient( rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85) ),
       url(/img/theater/Backg.png) ;
          background-repeat: no-repeat;
          background-position: center right;
-         background-size:95vw 95vw;
+         background-size:78% 95vw;
+         background-attachment: fixed;
     }
     
     
