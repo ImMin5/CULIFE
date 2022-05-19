@@ -4,11 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.culife.dao.MovieReviewDAO">
 	<insert id="MreviewWrite">
-		insert into movie_review(no, movie_id, member_no, movie_title, content, score_star, poster_path, write_date, spo_check)
-		values(#{no}, #{movie_id}, #{member_no}, #{movie_title}, #{content}, #{score_star}, #{poster_path}, #{write_date}, #{spo_check})
+		insert into movie_review(no, movie_id, member_no, movie_title, content, score_star, poster_path, spo_check, vote_count)
+		values(#{no}, #{movie_id}, #{member_no}, #{movie_title}, #{content}, #{score_star}, #{poster_path},  #{spo_check}, #{vote_count})
 	</insert>
 	<select id="MreviewList" resultType="MovieReviewVO">
-		select r.no, member_no, content, spo_check, write_date, score_star,nickname from movie_review r join member m
+		select r.no, member_no, content, spo_check, write_date, score_star, nickname from movie_review r join member m
 		on r.member_no = m.no
 		where movie_id=#{param1}
 		order by no desc

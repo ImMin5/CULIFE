@@ -34,14 +34,14 @@ public class MovieReviewController {
 	
 	//영화리뷰목록
 	@RequestMapping("/mreview/mreviewList")
-	public Map<String, Object> mlist(int movie_id){
+	public Map<String, Object> mlist(Integer movie_id){
 		double mstar_avg = service.MstarAvg(movie_id);
 		int mreview_cnt = service.MreviewCnt(movie_id);
 		List<MovieReviewVO> mlist = service.MreviewList(movie_id);
 		Map<String, Object> map = new HashMap<>();
-		map.put("mreviewList", mlist);
-		map.put("mstar_avg", mstar_avg);
-		map.put("mreview_cnt", mreview_cnt);
+		map.put("reviewList", mlist);
+		map.put("star_avg", mstar_avg);
+		map.put("review_cnt", mreview_cnt);
 		return map;
 	}
 	
