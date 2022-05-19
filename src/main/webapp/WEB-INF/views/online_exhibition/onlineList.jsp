@@ -115,9 +115,8 @@ $(function(){
 		    		<option value="author">작가</option>
 		    	</select>
 		    	<input type="text" name="ex_searchWord" id="ex_searchWord"/>
-		        <input type="submit" value="검색"/>
-		    </form>
-		    <div id="table_container" style="height:6vh; overflow:scroll;">
+		   .</form>
+		    <div id="table_container" style="height:60vh; overflow:scroll;">
 			    <table >
 			    	<th>전시이름</th>
 			    	<th>작가명</th>
@@ -141,11 +140,27 @@ $(function(){
 	    		<ul>
 	    			<li>
 	    				<span></span>
-	    				<img src="/img/exhibition/test_img.jpg" alt="첫번째 작품">
+	    				<c:choose>
+		    				<c:when test="${exhibition.workList[0] != null}">
+		    					<img src="${url}/upload/${exhibition.member_no}/author/exhibition/${exhibition.no}/${exhibition.workList[0].work_thumbnail}" alt="첫번째 작품">
+		    				</c:when>
+		    				<c:otherwise>
+		    					<img/>
+		    				</c:otherwise>
+	    				</c:choose>
 	    			</li>
 	    			<li>
-	    				<p></p>
-	    				<img src="/img/exhibition/test_img_1.jpg" alt="두번째 작품">
+	    				<span></span>
+	    				<c:choose>
+		    				<c:when test="${exhibition.workList[1] != null}">
+		    				
+		    					<img src="${url}/upload/${exhibition.member_no}/author/exhibition/${exhibition.no}/${exhibition.workList[1].work_thumbnail}" alt="두번째 작품">
+		    				</c:when>
+		    				<c:otherwise>
+		    					<img/>
+		    				</c:otherwise>
+	    				</c:choose>
+	    				
 	    			</li>
 	    		</ul>
 	    		<button class="workView_btn" type="button">V I E W</button>
@@ -160,8 +175,8 @@ $(function(){
 		        	<a href="/online_exhibition/onlineList?currentPage=${pVO.currentPage-1}<c:if test='${pVO.searchWord!=null}'>&searchWord=${pVO.searchWord}</c:if>"><img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전"></a>
 		        </c:if>
 	    		<div>
-	    			<c:forEach var="exvo" items="${exhibitionList}" >
-	    				<p><img src="${url}/upload/${exvo.member_no}/author/exhibition/${exvo.no}/${exvo.work_thumbnail}"></p>	    			
+	    			<c:forEach var="exvo" items="${exhibitionList}" varStatus="status">
+	    				<p><img onclick="location.href='${url}/online_exhibition/onlineList?currentPage=${pVO.currentPage}&select=${status.count}'" src="${url}/upload/${exvo.member_no}/author/exhibition/${exvo.no}/${exvo.work_thumbnail}"></p>	    			
 	    			</c:forEach>
 	    		</div>
 	    		<c:if test="${pVO.currentPage==pVO.totalPage}">

@@ -76,7 +76,7 @@
 	margin:120px auto 20px auto;
 	position:relative; z-index:-1
 }
-#room ul li span {
+#room ul li:nth-child(1) span {
 	width:10vw; height:30vh;
 	background:url(/img/exhibition/frame.png);
 	background-size:100% 100%;
@@ -91,14 +91,14 @@
 	position:absolute; left:13%; top:16%;
 	z-index:-1;
 }
-#room ul li p {
+#room ul li:nth-child(2) span {
 	width:12.5vw; height:40vh;
 	background:url(/img/exhibition/painting_frame_skew_shadow.png);
 	background-size:100% 100%;
 	position:absolute; right:15%; top:13%;
 	z-index:2;
 }
-#room ul li p::after {
+#room ul li:nth-child(2) span::after {
 	content:"";
 	width:9.3vw; height:38vh;
 	background:url(/img/exhibition/painting_frame_skew.png);
@@ -578,3 +578,4 @@
 
 /* 이미지 상세 모달 - end */
 
+#table_container {height:500px}

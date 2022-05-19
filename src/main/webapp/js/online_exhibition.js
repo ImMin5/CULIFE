@@ -100,6 +100,26 @@ $(document).ready(function(){
 	});	
 });
 
+
+/* 작품보기 이미지 줌인 */
+$(document).ready(function(){
+	$(".ex_detail_img").on('click', (function(){
+		var a = $(this).children().attr("src");
+		$(".pop").replaceWith("<img class='pop' src='" + a + "'/>");
+		$("#imgPopup").css({"display":"block"});
+		setTimeout(function(){
+			$(".pop").css({
+			"transform" : "translate(-50%,-50%) scale(1)",
+			})
+		})		
+	}))	
+	$("#imgPopup > .fa-xmark").click(function(){
+		$("#ex_detail_bg").css({"display" : "block"});
+		$('footer').css({"display" : "none"});
+		$("#imgPopup").css({"display":"none"});
+	});	
+})
+
 //작품 검색 카테고리 변경 시 
 $(document).on("change","select[name=ex_search]",function(){
 	currentPage = 1;

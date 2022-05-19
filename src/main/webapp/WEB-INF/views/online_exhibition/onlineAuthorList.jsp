@@ -12,7 +12,13 @@
 		user-select:none
 	}
 </style>
-
+<script>
+	$(document).ready(function(){
+		if("${pVO.searchWord}" != null){
+			$("#searchWord").val('${pVO.searchWord}');
+		}
+	})
+</script>
 <div id="authorList_container">
 	<div id="authorList_wrap">
 		<h1 class="hidden">작가 검색 페이지</h1>
