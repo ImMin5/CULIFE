@@ -15,5 +15,8 @@ public class ExhibitionVO {
 	private String create_date;
 	private String poster;
 	private int type;
-	private String author;
+	private int exhibition_no;
+	private String work_thumbnail;
+	private int member_no;
+  private String author;
 }

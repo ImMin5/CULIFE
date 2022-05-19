@@ -148,18 +148,16 @@ $(function(){
 	    				<img src="/img/exhibition/test_img_1.jpg" alt="두번째 작품">
 	    			</li>
 	    		</ul>
-	    		<button class="w-btn-neon2" type="button">작품보기</button>
+	    		<button class="workView_btn" type="button">V I E W</button>
 	    	</div>
+	    	
+	    	<!-- 페이지네이션 -->
 	    	<div id="online_ex_pagination">
 	    		<img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전">
 	    		<div>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
-	    			<p></p>
+	    			<c:forEach var="exvo" items="${exhibitionList}">
+	    				<p><img src="${url}/upload/${exvo.member_no}/author/exhibition/${exvo.no}/${exvo.work_thumbnail}"></p>	    			
+	    			</c:forEach>
 	    		</div>
 	    		<img id="online_ex_next" src="/img/exhibition/arrow_right.png" alt="다음">
 	    	</div>
@@ -248,24 +246,30 @@ $(function(){
     
     <!-- 작품 상세 페이지 모달 -->
 	<div id="ex_detail_bg" class="modal">
-    	<div id="ed_detail_wrap" class="modal_wrap">
+    	<div id="ex_detail_wrap" class="modal_wrap">
     		<h3>작품 상세</h3>
+    		<div id="ex_reg_detail">
+    			<h4>${exhibition.subject}</h4>
+    			<p>${exhibition.content}</p>
+    		</div>
     		<ul>
+    			<c:forEach var="wk" items="${exhibition.workList}">
     			<li>
-    				<ul>
-	    				<li><figure class="ex_detail_img"><img src="/img/exhibition/test_img.jpg"></figure></li>    		
-		    			<li class="workDetail_info">
-		    				<ul>
-								<li>작가 : ${vo.author}</li>
-								<li>작품명 : </li>
-								<li>전시기간 : </li>
+	    			<ul>
+		    			<li><figure class="ex_detail_img"><img src="${url}/upload/${exhibition.member_no}/author/exhibition/${wk.exhibition_no}/${wk.work_thumbnail}"></figure></li>    		
+			    		<li class="ex_detail_info">
+			    			<ul>
+								<li>작가 : ${exhibition.author}</li>
+								<li>작품명 : ${wk.work_subject} </li>
+								<li>전시기간 : ${exhibition.start_date} - ${exhibition.end_date}</li>
 								<li>작품설명</li>
-								<li><p></p></li>
+								<li><p>${wk.work_content}</p></li>
 							</ul>
 						</li>
-    				</ul>
-    			</li> 		
-    		</ul>
+						</ul>
+	    		</li>
+   				</c:forEach>
+	    	</ul>
     		<i class="fa-solid fa-xmark"></i>
     	</div>
     </div>

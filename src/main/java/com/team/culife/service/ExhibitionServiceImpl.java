@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.team.culife.dao.ExhibitionDAO;
 import com.team.culife.vo.ExhibitionVO;
+import com.team.culife.vo.ExhibitionWorkVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.WorkVO;
@@ -70,15 +71,33 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	}
 
 	@Override
-	public int exhibitionTotalRecord(PagingVO vo) {
-		return dao.exhibitionTotalRecord(vo);
+	public List<ExhibitionVO> exhibitionList(PagingVO pVO) {
+		return dao.exhibitionList(pVO);
 	}
 
 	@Override
+	public int exhibitionTotalRecord(PagingVO pVO) {
+		return dao.exhibitionTotalRecord(pVO);
+	}
+
+	@Override
+	public ExhibitionVO exhibitionPosterSelect(String work_thumbnail) {
+		return dao.exhibitionPosterSelect(work_thumbnail);
+	}
+
+	@Override
+	public WorkVO exhibitionWorkSelect(int exhibition_no) {
+		return dao.exhibitionWorkSelect(exhibition_no);
+	}
+
+	@Override
+	public ExhibitionWorkVO exhibitionWorkSelectAll(int no) {
+		return dao.exhibitionWorkSelectAll(no);
+	}
+  
+  @Override
 	public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo) {
 		return dao.exhibitionSelectAll(vo);
 	}
-	
-
 	
 }
