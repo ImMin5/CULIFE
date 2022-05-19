@@ -16,6 +16,7 @@ import com.team.culife.service.ExhibitionService;
 import com.team.culife.service.MemberService;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.ExhibitionVO;
+import com.team.culife.vo.ExhibitionWorkVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.WorkVO;
@@ -29,26 +30,47 @@ public class OnlineExhibitionController {
 	AuthorService aService;
 	@Inject
 	ExhibitionService eService;
-
+	
 	
 	@GetMapping("onlineList")
-	public ModelAndView onlineList(HttpSession session) {
+	public ModelAndView onlineList(HttpSession session, @RequestParam(value="currentPage", required=false, defaultValue="1")int currentPage) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
+		//exihibition 가져올 때 param로 받아서 페이지 리로딩
+		//ExhibitionWorkVO exwvo = eService.exhibitionWorkSelectAll(*<exhibitionList.get(0).getNo()>); *<> : 선택한 사진의 exhibition_no를 params
 		
 		try {
+			PagingVO pVO = new PagingVO();
+			pVO.setCurrentPage(currentPage);
+			pVO.setRecordPerPage(6);
+			pVO.setTotalRecord(eService.exhibitionTotalRecord(pVO));
+			System.out.println("pvo -->" + pVO.getTotalRecord());
+			List<ExhibitionVO> exhibitionList = eService.exhibitionList(pVO);
+			for(ExhibitionVO e : exhibitionList) {
+				e.setMember_no(aService.authorSelectByNo(e.getAuthor_no()).getMember_no());
+					System.out.println(e.getSubject());
+			}
+			if(exhibitionList.size() > 0) {
+		
+				ExhibitionWorkVO exwvo = eService.exhibitionWorkSelectAll(exhibitionList.get(0).getNo());
+				AuthorVO authorVO = aService.authorSelectByNo(exwvo.getAuthor_no());
+				exwvo.setMember_no(authorVO.getMember_no());
+				exwvo.setAuthor(authorVO.getAuthor());
+				mav.addObject("exhibition", exwvo);
+			}
+			mav.addObject("exhibitionList",exhibitionList);
+			
+			mav.addObject("pVO", pVO);
 			if(memberNo != null) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
 				AuthorVO avo = aService.authorNoSelect(memberNo);
 				ExhibitionVO evo = eService.exhibitionSelectByEndDate(avo.getNo());
 				if(evo != null)
 					mav.addObject("workList", eService.workSelectByExhibitionNo(evo.getNo()));
-				mav.addObject("mvo", mvo);
-				session.setAttribute("logNo", mvo.getNo());
-				session.setAttribute("logNickname", mvo.getNickname());
-				session.setAttribute("grade",mvo.getGrade());
-				
-				
+					mav.addObject("mvo", mvo);
+					session.setAttribute("logNo", mvo.getNo());
+					session.setAttribute("logNickname", mvo.getNickname());
+					session.setAttribute("grade",mvo.getGrade());
 				
 				mav.setViewName("online_exhibition/onlineList");
 			} else {
