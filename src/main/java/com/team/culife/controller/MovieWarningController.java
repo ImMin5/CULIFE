@@ -15,7 +15,7 @@ public class MovieWarningController {
 	@Autowired
 	private MovieWarningService mwarningService;
 	
-	@GetMapping("/mwarning/{review_no")
+	@GetMapping("/mwarning/{review_no}")
 	public int mwarning(MovieWarningVO vo, @PathVariable int review_no, HttpSession session) {
 		vo.setMember_no((Integer)session.getAttribute("logNo"));
 		vo.setReview_no(review_no);
