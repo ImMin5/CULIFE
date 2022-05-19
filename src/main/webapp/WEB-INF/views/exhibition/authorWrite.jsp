@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <c:set var="url" value="<%=request.getContextPath()%>"/>
-<link rel="stylesheet" href="/css/exhibition/authorWrite.css" type="text/css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
+
+<link rel="stylesheet" href="/css/exhibition/authorWrite.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
 let authorch = false;
@@ -94,7 +95,7 @@ function authorSubmit() {
 	else if (author_msg == '') {
 		alert("자기소개를 입력해 주세요")
 	}
-	else if (author_status != '' ) {
+	else if (author_status == 0 ) {
 		alert("작가 신청 심사 중입니다.")
 	}
 	else {
@@ -167,15 +168,13 @@ function authorSubmit() {
 									<textarea type="text" class="form-control" name="author_msg" id="authorMsg"></textarea>
 								</div>
 							</div>
-						</div>
-						<div>
+						
 							<input type="button" id="memberForm_member_edit_btn" class="btn btn-outline-secondary" value="작가 신청" onclick="authorSubmit()" />
 						</div>
 					</form>
 				</div>
 			</div>
 			<!-- mypage_container end -->
-		</div>
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
 				<h1 class="h1">${mvo.nickname}님

@@ -85,6 +85,7 @@ $(function(){
     		error : function(error){
     			console.log(error);
     		}
+
     	})
     });
   //스크롤 위치 
