@@ -69,12 +69,12 @@ $(document).ready(function () {
 							<li>`+subTitle+`</li>
 						</ul>
 						<ul>
-							<li>`+start+`</li>
-							<li>`+end+`</li>
+							<li>공연기간 : `+start+``+~end+`</li>
+			
 						</ul>
 						<ul>
+						<li>문의사항 : `+phone+`</li>
 						<li>`+url+`</li>
-						<li>`+phone+`</li>
 						</ul>
 						<ul>
 						<li>`+price+`</li>
@@ -84,7 +84,7 @@ $(document).ready(function () {
 							<li>`+contents2+`</li>
 						</ul>
 						<ul>
-							<li>`+place+`</li>
+							<li>장소 : `+place+`</li>
 						</ul>
 						<ul>
 							<li id='map'></li>
@@ -175,9 +175,12 @@ var score_star;
 			            </div>`
 					tag += "<textarea name='content' style='width:400px'>"+vo.content+"</textarea>";
 					if(vo.spo_check==1){
-						tag += "<input type='checkbox' name='spo_check' id='spo_check' value='1' checked/>";
+						tag += "<input type='radio' name='spo_check' id='spo_check' value='1' checked/>";
+					
+					
 					}else{
-						tag += "<input type='checkbox' name='spo_check' id='spo_check' value='1'/>";
+						tag += "<input type='radio' name='spo_check' id='spo_check' value='1'/>";
+					
 					}
 					tag += "<input type='submit' value='수정'/>";									
 					tag += "</form></div>";
@@ -392,7 +395,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		<div id="map" style="width: 500px; height: 400px;"></div>		
 		<div id="review">
 			<form method="post" id="reviewFrm" action="/review/reviewWriteOk">	
-			<input type="text" name="score_star" id="score_star">		
+			<input type="hidden" name="score_star" id="score_star">		
 					<div class="rating">
 		                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
 		                <input type="checkbox" name="score_star2" id="rating1" value="1" class="rate_radio" title="1점">
@@ -410,7 +413,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		            <input type="hidden" name="poster" value="${vo.poster}">  
 		            <input type="hidden" name="seq" value="${vo.seq}">  
 		            <textarea name="content" id="input_review" placeholder="리뷰를 남겨주세요." ></textarea>
-					<input type="checkbox" name="spo_check" id="spo_check" value="1"/>					
+					<input type="checkbox" name="spo_check" id="spo_check" value="1"/>		
+					<label for="spo_check">스포체크</label>			
 					<input type="submit" id="submit" value="등록"/>
 			</form>
 		</div>

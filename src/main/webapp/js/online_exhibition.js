@@ -1,14 +1,23 @@
+let is_paging= true;
+let is_loading = false;
+let currentPage = 1;
+let totalPage = 1; 
+
 /*토글 메뉴*/
 	$(document).ready(function(){
 		$('#online_ex_search').addClass('searchHide');
+		//검색 클릭
 	    $('#online_ex_searchIcon').on('click',function(){
 	        $('#online_ex_search').removeClass('searchHide').addClass('searchShow');
+	        currentPage = 1;
+	 		search();
 	    }); 
 	});
 	
 	$(document).ready(function(){
 	    $('#online_search_close').on('click',function(){
 	        $('#online_ex_search').removeClass('searchShow').addClass('searchHide');
+	    	
 	    }); 
 	});
 
@@ -54,7 +63,7 @@ $(document).ready(function(){
 				workCount++;
 					var addWork = 
 						/* 임시 */
-		               `<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
+		               `<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
 						<ul id="ex_work_box">
 							<li class="exhibitionWorkContent">
 								<ul>
@@ -91,15 +100,73 @@ $(document).ready(function(){
 	});	
 });
 
-$(document).ready(function(){
-	$(".ex_detail_img").on('click', (function(){
-		var a = $(this).children().attr("src");
-		$(".pop").replaceWith("<img class='pop' src='" + a + "'/>");
-		$("#imgPopup").css({"display":"block"});
-	}))	
-	$("#imgPopup > .fa-xmark").click(function(){
-		$("#ex_detail_bg").css({"display" : "block"});
-		$('footer').css({"display" : "none"});
-		$("#imgPopup").css({"display":"none"})
-	});	
+//작품 검색 카테고리 변경 시 
+$(document).on("change","select[name=ex_search]",function(){
+	currentPage = 1;
+	search();
 })
+//작품 검색
+$(document).on("keyup","#ex_searchWord",function(){
+	currentPage = 1;
+	is_paging = false;
+	search();
+})
+
+
+function search(){
+	var url = "/online_exhibition/onlineList/search";
+	var category = $("#ex_search").val();
+	var container = $("#modal_search");
+	var searchWord = $("#ex_searchWord").val();
+
+	if(currentPage != 1 && parseInt(totalPage) < parseInt(currentPage)){
+		is_loading=false;
+		return;
+	}
+	$.ajax({
+		url:url,
+		type : "GET",
+		dataType :"JSON",
+		data : {
+			category: category,
+			currentPage : currentPage,
+			searchWord : searchWord,
+		},
+		success : function(data){
+			if(!is_paging){
+				container.empty();	
+			}
+			if(data.items == null) return;
+			data.items.forEach(function(element, index){
+				container.append(`
+					<tr>
+						<td>${element.subject}</td>
+						<td>${element.author}</td>
+						<td>${element.start_date} ~ ${element.end_date}</td>
+					</tr>
+				`)
+			});
+			if(is_paging){
+				currentPage = parseInt(data.vo.currentPage)+1;
+				totalPage = data.vo.totalPage;
+			}
+			else{
+				currentPage = 2;
+				totalPage = data.vo.totalPage;
+			}
+			is_loading = false;
+			
+		},error : function(error){
+			console.log(error);
+			is_loading = false;
+		}
+	});
+}
+//페이지 네이션
+function pagination(){
+	is_paging = true;
+	if(!is_loading){
+		is_loading = true;
+		search();
+	}
+}	

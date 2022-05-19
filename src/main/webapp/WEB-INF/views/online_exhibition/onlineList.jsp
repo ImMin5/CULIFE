@@ -54,8 +54,7 @@ $(function(){
                 type : "POST",
                 data : data,
                 async : false,
-                success : function(){
-        			
+                success : function(data){
                 },
                 error : function(){
                     
@@ -66,13 +65,37 @@ $(function(){
     });
     $("#submitDel_btn").on("click", function(){
     	var len = $("form[name=ex_work_form]").length;
-    	console.log(len)
-    	
+    	var form = $("#ex_work_form"+len);
+    	var work_no = form.attr("data-work_no");
+    	if(work_no < 0){
+    		form.remove();
+    		return;
+    	}												
+    	console.log($("#ex_work_form"+len).remove());
     	var url = "/exhibition/workDel";
     	$.ajax({
     		url: url,
-    		type : "POST"
+    		type : "POST",
+    		data : {
+    			"work_no" : work_no,
+    		},
+    		success: function(){
+    			form.remove();
+    		},
+    		error : function(error){
+    			console.log(error);
+    		}
+
     	})
+    });
+  //스크롤 위치 
+    $("#table_container").scroll(function(){
+    	var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+    	var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+    	var contentH = $(".table").height(); //문서 전체 내용을 갖는 div의 높이
+    	if(scrollT + scrollH +1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
+    	     pagination();
+    	}
     });
 })
 </script>
@@ -87,13 +110,23 @@ $(function(){
     	<div id="online_ex_search">
     		<h3>전시작품 검색</h3>
 	    	<form id="ex_searchFrm">
-		    	<select name="ex_search">
-		    		<option>작품명</option>
-		    		<option>작가</option>
+		    	<select id="ex_search" name="ex_search">
+		    		<option value="exhibition_subject">전시명</option>
+		    		<option value="author">작가</option>
 		    	</select>
 		    	<input type="text" name="ex_searchWord" id="ex_searchWord"/>
 		        <input type="submit" value="검색"/>
 		    </form>
+		    <div id="table_container" style="height:6vh; overflow:scroll;">
+			    <table >
+			    	<th>전시이름</th>
+			    	<th>작가명</th>
+			    	<th>전시기간</th>
+			    	<tbody id="modal_search">
+			    		
+			    	</tbody>
+			    </table>
+		    </div>
 		    <ol>
 		    	<li><a href="">&#60;</a></li> <!-- < 기호 -->
 		    	<li><a href="">1</a></li>
@@ -187,7 +220,7 @@ $(function(){
     		<div id="form_box">
 				<c:if test="${workList != null}">
 					<c:forEach var="vo" items="${workList}" varStatus="status">
-			    		<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
+			    		<form name="ex_work_form" id="ex_work_form${status.count}" method="post" action="/workCreateOk" data-work_no="${vo.no}" enctype="multipart/form-data">
 							<ul id="ex_work_box">
 								<li class="exhibitionWorkContent">
 									<ul>
