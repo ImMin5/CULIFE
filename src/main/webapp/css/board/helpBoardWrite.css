@@ -1,0 +1,42 @@
+@charset "UTF-8";
+.ck-editor__editable {
+    min-height: 400px;
+}
+#freeBoardTitle,#helpBoardTitle{
+	margin-right:10px;
+	width:100%;
+	font-size:2.3rem;
+	margin-bottom:15px;
+}
+.container{/* 본문 */
+	width: 1200px;
+	height:100%;
+	margin: 0px auto;
+	padding:120px 0 202px 0;
+	text-align:center;
+}
+body{
+	background-color:black;
+}
+h1{
+	color:white;
+	font-size:5rem;
+	text-align:center;
+	padding-bottom:10px;
+}
+#freeBoardTitle,#helpBoardTitle{
+	margin-right:10px;
+}
+#writeBtn{
+	background-color: gray;
+	color:white;
+	padding:10px 30px;
+}
+#resetBtn, #backList {
+	background-color: gray;
+	color:white;
+	padding:10px 30px;
+}
+#writeok{
+	display:inline-block;
+}

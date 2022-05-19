@@ -10,8 +10,8 @@ body{
 }
 #header{
 	width:100vw; height:100px;
-	background-color:rgba(0,0,0,0.5);
-	text-align:center;
+	background-color: black;
+	text-align: center;
 }
 
 #nav {width:100vw; height:100px; margin-top:-90px;}
@@ -31,14 +31,14 @@ body{
 }
 
 #nav > ul > li > ul{
-	background-color:rgba(0,0,0,0.5);
+	background-color: black;
 	opacity: 1;
 }
 #admin_section1 > li:nth-child(2) > ul a {
-	color:#222; font-size: 2rem;
+	color: white; font-size: 2rem; 
 }
 #admin_section2 > li:nth-child(1) > ul a {
-	color:#222; font-size: 2rem;
+	color: white; font-size: 2rem;
 }
 .adminTopMenu_drop{
 	position: relative;
@@ -49,14 +49,23 @@ body{
 	text-align: center;
 	line-height: 50px;
 	font-weight:bold;
+	background-color:rgba(0,0,0,0.8);
+	transition: 0.3s;
+	border-bottom: 1px solid white;
 }
+
 .adminTopMenu_drop > li:hover{
 	background-color:rgba(255,255,255,0.8);
 }
 #nav > ul > li > a:hover {color:red}
 
 footer{
-	position: fixed;
+}
+.img_top{
+	width: 100%;
+	height: 200px;
+	margin-top: 10px;
+	background-color: red;
 }
 /*  -------------------------------------------   */
 
@@ -272,6 +281,9 @@ li{
 	border-bottom: 1px solid black;
 	width: 15%;
 }
+.adminReviewList li:nth-child(7n+1){
+	width: 10%;
+}
 .adminReviewList li:nth-child(7n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -279,7 +291,7 @@ li{
 .adminReviewList li:nth-child(7n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 30%;
+	width: 35%;
 	text-align: left;
 }
 .adminReviewList li:nth-child(3){
@@ -305,6 +317,9 @@ li{
 	border-bottom: 1px solid black;
 	width: 15%;
 }
+.adminWarningList li:nth-child(7n+1){
+	width: 10%;
+}
 .adminWarningList li:nth-child(7n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -318,14 +333,10 @@ li{
 .adminWarningList li:nth-child(3){
 	text-align: center;
 }
-.adminWarningList li:nth-child(7n+5), .adminWarningList li:nth-child(7n){
+.adminWarningList li:nth-child(7n+5), .adminWarningList li:nth-child(7n+6), .adminWarningList li:nth-child(7n){
 	width: 10%;
 
 }
-.adminWarningList li:nth-child(7n+6){
-	width: 5%;
-}
-
 /* 감상평관리 목록*/
 .adminExReplyList{
 	width: 1200px;
@@ -364,7 +375,7 @@ li{
 .paging li{
 	float:left; 
 	width: 3%;
-	text-align: center;
+	text-align: center;	
 }
 .paging li:first-child{
 	margin-left: 480px;
@@ -377,6 +388,7 @@ li{
 .paging li:last-child input{
 	float: right;
 }
+
 #resetList{
 	margin-right: 10px;
 }
@@ -385,7 +397,6 @@ li{
 }
 /* 검색 */
 .mini_top{
-	margin-top: 20px;
 	z-index: 100;
 	overflow: auto;
 }
@@ -438,4 +449,40 @@ li{
 	color: white;
 	font-weight: bold;
 }
+/* admin top img */
+.admin_gallery_wrap{
+	margin: 0;
+}
+.admin_gallery{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	height: 400px;
+	width: 1200px;
+}
+.admin_gallery li{
+	width: 1200px;
+	height: 400px;
+	transition: 0.3s;
+	position: relative;
+	overflow: hidden;
+}
 
+.admin_gallery li:hover {
+	filter: grayscale(0.4);
+}
+.admin_gallery_content{
+	position: absolute;
+	background-color: rgb(0,0,0,0.4);
+	color:white;
+	text-align: center;
+	height: 400px;
+	width: 200px;
+	line-height: 200px;
+	left: -200px;
+	transition: 0.3s;
+	font-size: 1.3em;
+}
+.admin_gallery li:hover .admin_gallery_content{
+	left: 0px;
+}

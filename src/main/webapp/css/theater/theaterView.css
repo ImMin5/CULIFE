@@ -1,5 +1,15 @@
 @charset "UTF-8";
 
+@font-face {
+   font-family: 'RixYeoljeongdo_Regular';
+   src:
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff')
+      format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+ 
+
 #detail_container{
 	text-align: center;
 	background-color:black;
@@ -17,14 +27,15 @@
 }
 
 #detail{
-	margin:0 auto;
-	background-color:white;
-	width:800px;
-	height:1000px;
+	margin:250px auto;
+	background-color:black;
+	width:1200px;
+
 	padding:5px;
-	border: 1px solid white;
+/* 	border: 1px solid white; */
 	background-clip: content-box;
 	border-radius: 40px;
+	box-shadow: 0px 0px 170px -45px rgba(203, 39, 39, 0.753);
 }
 #detail>li{
 	width:300px;
@@ -32,25 +43,73 @@
 }
 
 #thePoster{
-	width:200px;
+	width:400px;
+	height: 480px;
+	margin-bottom: 90px;
+	border-radius: 8px;
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5); 
+}
+#midDetail ul {
+	color: white;
+}
+#midDetail ul:nth-child(1) li:nth-child(1)  {
+	font-family: 'RixYeoljeongdo_Regular';
+	font-size: 50px;
+    margin-top: 30px;
+    padding: 50px 160px 30px 160px;
+}
+
+#midDetail ul:nth-child(2) li  {
+	font-size: 24px;
+}
+
+#midDetail ul:nth-child(3) li:nth-child(1)  {
+	margin-top: 10px;
+
+    font-size: 24px;
+}
+
+#midDetail ul:nth-child(3) li:nth-child(2)  {
+	margin: 10px;
+} 
+
+#midDetail ul:nth-child(4) li {
+	margin: 5px;
+	color: rgb(197, 129, 129);
+	font-size: 25px;
+}
+
+#midDetail ul:nth-child(6) li {
+	margin-top: 50px;
+	font-family: 'RixYeoljeongdo_Regular';
+	font-size: 30px;
 }
 
 #map{
 	margin:0 auto;
-	padding-top:100px;
+	padding-top:20px;
+
 }
 
 #review{
 	margin:0 auto;
 	padding-top:50px;
+	position: relative;
 }
 
-.input_review{
-	width:600px;
-	height:50px;
+#input_review{
+	width:700px;
+	height:100px;
+	background: #222;
+	color: #eee;
+	border: none;
+	font-size: 22px;
+    border: thin solid #444;
+    resize: none;
 }
 .rating{
 	margin:0 auto;
+	margin-bottom: 20px;
 }
 .rating .rate_radio {
     display: inline-block;
@@ -58,23 +117,97 @@
     opacity: 0.001;
     width: 60px;
     height: 60px;
-    background-color: white;
+    background-color: black;
     cursor: pointer;
     vertical-align: top;
     display: none;
 }
 .rating .rate_radio + label {
-
+    position: relative;
+    left: 80px;
     display: inline-block;
-    margin-left: -3px;
-    width: 30px;
-    height: 30px;
-    background-image: url('/img/theater/star.png');
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    background-image: url('/img/theater/star_3.SVG');
     background-repeat: no-repeat;
-    background-size: 30.4px 30.4px;
+    background-size: 50.4px 50.4px;
     cursor: pointer;
     background-color: white;
+    
 }
 .rating .rate_radio:checked + label {
     background-color: gold;
 }
+input[id="spo_check"] {
+  display: none;
+}
+input[id="spo_check"]:checked + label[for="spo_check"]:before {
+  box-shadow: inset 0 0 0 16px #E74C3C;
+  transition: box-shadow 0.2s ease-out;
+}
+input[id="spo_check"]:checked:focus + label[for="spo_check"] {
+  text-decoration: underline;
+}
+input[id="spo_check"]:checked:focus + label[for="spo_check"]:before {
+  outline: 0;
+}
+input[id="spo_check"]:focus + label[for="spo_check"]:before {
+  outline: 1px solid #E74C3C;
+}
+
+label[for="spo_check"] {
+  line-height: 60px;
+  padding-left: 40px;
+  position: absolute;
+  font-size: 30px;
+  color: white;
+  top: 50px;
+  left: 290px;
+}
+
+label[for="spo_check"]:before {
+  background-color: white;
+  box-shadow: inset 0 0 0 0 #E74C3C;
+  content: "";
+  display: block;
+  height: 24px;
+  width: 24px;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  transition: box-shadow 0.15s ease-in;
+  border: thin solid #444;
+
+}
+
+#submit {
+  position: absolute;
+  top: 60px;
+  right: 250px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  font-size: 19px;
+  font-weight: 600;
+  transition: 0.25s;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #6e6e6e;
+}
+
+#submit:hover {
+  letter-spacing: 2px;
+  transform: scale(1.1);
+  cursor: pointer;
+  background-color: #a3a1a1;
+  color: #e3dede;
+  
+}
+
+#submit:active {
+  transform: scale(1.5);
+}
+

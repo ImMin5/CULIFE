@@ -1,9 +1,16 @@
 <c:set var="url" value="<%=request.getContextPath()%>"/>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <script>
 	$(function(){
+		//글자수 계산
+		$("#author_msg").on("keyup",function(){
+			var length= $(this).val().length;
+			console.log(length);
+			$("#max_text_length").text("작가소개 "+ length+"/100");
+		})
 		$("#thumbnail_member_btn").on("click",function(){
 			$("#formFile_member").trigger("click");
 		})
@@ -74,8 +81,8 @@
 						  	
 						</div>
 						<div class="form-floating mb-3"  style="margin:0 auto; width:50%; font-size:2.1rem;">
-							<textarea class="form-control" name="author_msg" id="floatingTextarea" style="padding-top:30px; font-size:2.4rem; height:100px;">${avo.author_msg}</textarea>
-							<label for="floatingTextarea">작가소개</label>
+							<textarea class="form-control" name="author_msg" id="author_msg" maxlength="100" style="resize:none; padding-top:30px; font-size:2.4rem; height:100px;">${avo.author_msg}</textarea>
+							<label id="max_text_length" for="floatingTextarea">작가소개 ${fn:length(avo.author_msg)}/100</label>
 						</div>
 						
 						<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center; font-size:2.1rem;">

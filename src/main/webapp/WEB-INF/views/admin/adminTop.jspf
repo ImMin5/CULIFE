@@ -33,16 +33,16 @@
 		$("header").remove();
 		$(".adminTopMenu_drop").css("display","none");		
 		$("#dropA").mouseenter(function(){
-			$("#dropAA").stop().slideDown();
+			$("#dropAA").stop().slideDown(100);
 		});
 		$("#dropA").mouseleave(function(){
-			$("#dropAA").stop().slideUp();
+			$("#dropAA").stop().slideUp(100);
 		});
 		$("#dropB").mouseenter(function(){
-			$("#dropBB").stop().slideDown();
+			$("#dropBB").stop().slideDown(100);
 		});
 		$("#dropB").mouseleave(function(){
-			$("#dropBB").stop().slideUp();
+			$("#dropBB").stop().slideUp(100);
 		});
 	});
 </script>

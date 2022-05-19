@@ -52,7 +52,7 @@
   	</resultMap>
   	
   	<select id="authorFanSelectAll" resultMap="authorMap">
-  		select b.no no, b.author author, b.sns_link sns_link, b.author_thumbnail author_thumbnail, b.debut_year debut_year, b.create_date create_date
+  		select b.no no, b.member_no, b.author author, b.sns_link sns_link, b.author_thumbnail author_thumbnail, b.debut_year debut_year, b.create_date create_date
   		from author_fan a
   		join author b
   		on a.member_no=${member_no} and a.author_no	= b.no  and b.author_status = 1
