@@ -19,7 +19,7 @@
 		<ul>
 			<li id="author_profile">
 				<h2 class="hidden">상세정보</h2>
-				<img src="/img/exhibition/test_img.jpg">
+				<img src="${url}/upload/${vo.member_no}/author/${vo.author_thumbnail}">
 				<ul>
 					<li>작가명 : ${vo.author}</li>
 					<li>데뷔년도 : ${vo.debut_year}</li>
@@ -30,23 +30,47 @@
 			<li id="author_works">
 				<h2>작가의 작품</h2>
 				<ul>
-					<li><img src="/img/exhibition/test_img.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
-					<li><img src="/img/exhibition/test_img_1.jpg"></li>
+					<c:forEach var="vv" items="${workList}">
+						<li>
+							<img src="${url}/upload/${vo.member_no}/author/exhibition/${vv.exhibition_no}/${vv.work_thumbnail}"
+							data-member_no="${vo.member_no}"
+							data-exhibition_no="${vv.exhibition_no }" data-work_thumbnail="${vv.work_thumbnail}" data-work_subject="${vv.work_subject}" data-start_date="${vv.start_date }" data-end_date="${vv.end_date}" data-work_content="${vv.work_content}" >
+							</li>
+					</c:forEach>
 				</ul>
 				<!-- 페이지네이션 -->
 				<div class="pagination">
 					<ol>
-				    	<li><a href="">&#60;</a></li> <!-- < 기호 -->
-				    	<li><a href="">1</a></li>
-				    	<li><a href="">2</a></li>
-				    	<li><a href="">3</a></li>
-				    	<li><a href="">&#62;</a></li> <!-- > 기호 -->
+						<!-- 이전페이지  -->
+						<c:choose> 
+							<c:when test="${pvo.currentPage==1 }">
+				    			<li><a href="">&#60;</a></li> <!-- < 기호 -->
+				    		</c:when>
+				    		<c:otherwise>
+				    				<li><a href="${url}/online_exhibition/onlineAuthorView?no=${vo.no}&currentPage=${pvo.currentPage-1}">&#60;</a></li> <!-- < 기호 -->
+				    		</c:otherwise>
+				    	</c:choose>
+				    	<!-- 페이지 번호 -->
+				    	<c:forEach var="p" begin="${pvo.startPage}" end="${pvo.startPage+pvo.onePageCount-1}">
+				    		<c:if test ="${p <= pvo.totalPage}">
+								<c:if test="${p==pvo.currentPage }">
+									<li><a href="${url}/online_exhibition/onlineAuthorView?no=${vo.no}&currentPage=${p}">${p}</a></li>
+								</c:if>
+								<c:if test="${p!=pvo.currentPage }">
+									<li><a href="${url}/online_exhibition/onlineAuthorView?no=${vo.no}&currentPage=${p}">${p}</a></li>
+								</c:if>
+							</c:if>
+						</c:forEach>
+						<!-- 다음페이지 -->
+						<c:choose> 
+							<c:when test="${pvo.currentPage==pvo.totalPage }">
+				    				<li><a href="">&#62;</a></li> <!-- > 기호 -->
+				    		</c:when>
+				    		<c:otherwise>
+				    				<li><a href="${url}/online_exhibition/onlineAuthorView?no=${vo.no}&currentPage=${pvo.currentPage+1}">&#62;</a></li> <!-- < 기호 -->
+				    		</c:otherwise>
+				    	</c:choose>
+				    
 				    </ol>
 				</div>
 			</li>
@@ -61,46 +85,18 @@
     		<ul>
     			<li>
     				<ul>
-	    				<li><figure class="workDetail_img"><img src="/img/exhibition/test_img.jpg"></figure></li>    		
+	    				<li><figure class="workDetail_img"><img id="modal_work_thumbnail" src="/img/exhibition/test_img.jpg"></figure></li>    		
 		    			<li class="workDetail_info">
 		    				<ul>
 								<li>작가 : ${vo.author}</li>
-								<li>작품명 : </li>
-								<li>전시기간 : </li>
+								<li id="modal_subject">작품명 : </li>
+								<li id="modal_start_date">전시기간 : </li>
 								<li>작품설명</li>
-								<li><p></p></li>
+								<li><p id="modal_content" ></p></li>
 							</ul>
 						</li>
     				</ul>
     			</li> 
-    			<li>
-    				<ul>
-	    				<li><figure class="workDetail_img"><img src="/img/exhibition/test_img.jpg"></figure></li>    		
-		    			<li class="workDetail_info">
-		    				<ul>
-								<li>작가 : </li>
-								<li>작품명 : </li>
-								<li>전시기간 : </li>
-								<li>작품설명</li>
-								<li><p></p></li>
-							</ul>
-						</li>
-    				</ul>
-    			</li>
-    			<li>
-    				<ul>
-	    				<li><figure class="workDetail_img"><img src="/img/exhibition/test_img.jpg"></figure></li>    		
-		    			<li class="workDetail_info">
-		    				<ul>
-								<li>작가 : </li>
-								<li>작품명 : </li>
-								<li>전시기간 : </li>
-								<li>작품설명</li>
-								<li><p></p></li>
-							</ul>
-						</li>
-    				</ul>
-    			</li> 		
     		</ul>
     		<i class="fa-solid fa-xmark"></i>
     	</div>

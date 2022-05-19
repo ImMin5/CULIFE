@@ -33,7 +33,7 @@
 			<c:forEach var="vo" items="${list}">
 				<li>
 					<span class="hidden">${vo.no}</span>
-					<img src="<c:url value='${url}/upload/"회원번호"/author/${vo.author_thumbnail }'/>">
+					<img src="<c:url value='${url}/upload/${vo.member_no}/author/${vo.author_thumbnail }'/>">
 					<div class="author_details">
 						<h2>${vo.author}</h2>
 						<p>${vo.author_msg }</p>

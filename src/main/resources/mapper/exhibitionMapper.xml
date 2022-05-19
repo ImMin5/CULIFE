@@ -29,10 +29,22 @@
 	<update id="workUpdate">
 		update work set work_subject=#{work_subject}, work_content=#{work_content}, work_thumbnail=#{work_thumbnail} where no=${no}
 	</update>
+	<select id="workTotalRecord" resultType="int">
+		select count(a.no) from exhibition a
+		join work w
+		on a.author_no=${member_no} and a.no = w.exhibition_no and date_format(now(),'%Y-%m-%d') >= a.start_date 
+	</select>
+	<select id="workSelectByAuthorNo" resultType="com.team.culife.vo.WorkVO">
+		select a.no, w.exhibition_no, w.work_subject, w.work_thumbnail, a.start_date, a.end_date, w.work_content, w.write_date  from exhibition a
+		join work w
+		on a.author_no=${member_no} and a.no = w.exhibition_no and date_format(now(),'%Y-%m-%d') >= a.start_date 
+		order by a.start_date desc
+  		limit ${recordPerPage} offset ${offsetIndex}
+	</select>
 	<select id="workSelectMaxWriteDate" resultType="com.team.culife.vo.WorkVO">
 		select no, exhibition_no, work_subject, work_thumbnail, work_content, max(write_date) 
 		from work 
-		where write_date = (select max(write_date) from work where exhibition_no=${exhibition_no});
+		where no = (select max(no) from work where exhibition_no=${exhibition_no});
 	</select> 
 	<delete id="workDelete">
 		delete from work

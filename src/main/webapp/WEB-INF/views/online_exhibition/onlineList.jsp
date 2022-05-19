@@ -55,7 +55,7 @@ $(function(){
                 data : data,
                 async : false,
                 success : function(){
-        			
+
                 },
                 error : function(){
                     
@@ -66,12 +66,27 @@ $(function(){
     });
     $("#submitDel_btn").on("click", function(){
     	var len = $("form[name=ex_work_form]").length;
-    	console.log(len)
-    	
+    	var form = $("#ex_work_form"+len);
+    	var work_no = form.attr("data-work_no");
+    	if(work_no < 0){
+    		form.remove();
+    		return;
+    	}												
+    	console.log($("#ex_work_form"+len).remove());
     	var url = "/exhibition/workDel";
     	$.ajax({
     		url: url,
-    		type : "POST"
+    		type : "POST",
+    		data : {
+    			"work_no" : work_no,
+    		},
+    		success: function(){
+    			form.remove();
+    		},
+    		error : function(error){
+    			console.log(error);
+    		}
+
     	})
     });
 })
@@ -177,7 +192,7 @@ $(function(){
     		<div id="form_box">
 				<c:if test="${workList != null}">
 					<c:forEach var="vo" items="${workList}" varStatus="status">
-			    		<form name="ex_work_form" id="ex_work_form" method="post" action="/workCreateOk" enctype="multipart/form-data">
+			    		<form name="ex_work_form" id="ex_work_form${status.count}" method="post" action="/workCreateOk" data-work_no="${vo.no}" enctype="multipart/form-data">
 							<ul id="ex_work_box">
 								<li class="exhibitionWorkContent">
 									<ul>

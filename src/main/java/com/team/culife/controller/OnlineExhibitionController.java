@@ -100,12 +100,26 @@ public class OnlineExhibitionController {
 	}
 		
 	@GetMapping("onlineAuthorView")
-	public ModelAndView onlineAuthorView(int no) {
+	public ModelAndView onlineAuthorView(int no,
+			@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage) {
 		ModelAndView mav = new ModelAndView();
 				
-		mav.addObject("vo", aService.authorListSelect(no));
-		/* mav.addObject("evo", eService.exhibitionListSelect(no)); */
-		mav.setViewName("/online_exhibition/onlineAuthorView");
+		
+		try {
+			PagingVO pvo = new PagingVO();
+			pvo.setRecordPerPage(8);
+			pvo.setCurrentPage(currentPage);
+			pvo.setMember_no(no); //작가 고유 번호
+			pvo.setTotalRecord(eService.workTotalRecord(pvo));
+			mav.addObject("vo", aService.authorListSelect(no));
+			mav.addObject("workList", eService.workSelectByAuthorNo(pvo));
+			mav.addObject("pvo",pvo);
+			/* mav.addObject("evo", eService.exhibitionListSelect(no)); */
+			mav.setViewName("/online_exhibition/onlineAuthorView");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 		return mav;
 	}

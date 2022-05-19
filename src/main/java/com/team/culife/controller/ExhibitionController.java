@@ -65,6 +65,7 @@ public class ExhibitionController {
 		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
+		AuthorVO avo = authorService.authorNoSelect(memberNo);
 		ResponseEntity<String> entity = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html",Charset.forName("UTF-8")));
@@ -72,38 +73,77 @@ public class ExhibitionController {
 		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
 		System.out.println("path --> " +path);
 		
+		System.out.println("Author_status()"+avo.getAuthor_status());
 		try {
-			MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-			MultipartFile newFile = (MultipartFile) mr.getFile("file");
-			
-			if(newFile != null) { //새로업로드된 파일이 있으면
-				String newUploadFilename = newFile.getOriginalFilename();	
-					if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-						File f = new File(path, newUploadFilename);
-						//폴더가 존재하지 않을 경우 폴더 생성
-						if(!f.exists()) {
-							try {
-								System.out.println(f.mkdirs());
-							}catch(Exception e) {e.printStackTrace();}
-						}
-
-						// 업로드
-						try {
-							//기존에 있던 썸네일 파일 삭제
-							if(vo.getAuthor_thumbnail() != null) {
-								File deleteFile = new File(path,vo.getAuthor_thumbnail());
-								deleteFile.delete();
+			if(avo.getAuthor_status() == null) {
+				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
+				MultipartFile newFile = (MultipartFile) mr.getFile("file");
+				
+				if(newFile != null) { //새로업로드된 파일이 있으면
+					String newUploadFilename = newFile.getOriginalFilename();	
+						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
+							File f = new File(path, newUploadFilename);
+							//폴더가 존재하지 않을 경우 폴더 생성
+							if(!f.exists()) {
+								try {
+									System.out.println(f.mkdirs());
+								}catch(Exception e) {e.printStackTrace();}
 							}
-							vo.setAuthor_thumbnail(newUploadFilename);
-							newFile.transferTo(f);
-							//작가 신청 등록 완료
-							authorService.authorWrite(vo);
-						} catch(Exception ee) {ee.printStackTrace();}
-							
-					}
-			} // if newFile != null end
-			String msg = "작가 신청되었습니다.";
-			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+
+							// 업로드
+							try {
+								//기존에 있던 썸네일 파일 삭제
+								if(vo.getAuthor_thumbnail() != null) {
+									File deleteFile = new File(path,vo.getAuthor_thumbnail());
+									deleteFile.delete();
+								}
+								vo.setAuthor_thumbnail(newUploadFilename);
+								newFile.transferTo(f);
+								//작가 신청 등록 완료
+								authorService.authorWrite(vo);
+							} catch(Exception ee) {ee.printStackTrace();}
+								
+						}
+				} // if newFile != null end
+				String msg = "작가 신청되었습니다.";
+				entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+			} else if(avo.getAuthor_status() == 2) {
+				if(avo.getAuthor_status() != null) {
+					MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
+					MultipartFile newFile = (MultipartFile) mr.getFile("file");
+					
+					if(newFile != null) { //새로업로드된 파일이 있으면
+						String newUploadFilename = newFile.getOriginalFilename();	
+							if(newUploadFilename!=null && !newUploadFilename.equals("")) {
+								File f = new File(path, newUploadFilename);
+								//폴더가 존재하지 않을 경우 폴더 생성
+								if(!f.exists()) {
+									try {
+										System.out.println(f.mkdirs());
+									}catch(Exception e) {e.printStackTrace();}
+								}
+
+								// 업로드
+								try {
+									//기존에 있던 썸네일 파일 삭제
+									if(vo.getAuthor_thumbnail() != null) {
+										File deleteFile = new File(path,vo.getAuthor_thumbnail());
+										deleteFile.delete();
+									}
+									vo.setAuthor_thumbnail(newUploadFilename);
+									newFile.transferTo(f);
+									//작가 재신청
+									authorService.authorReUpdate(vo);
+								} catch(Exception ee) {ee.printStackTrace();}
+									
+							}
+					} // if newFile != null end
+					String msg = "작가 신청되었습니다.";
+					entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+				}
+			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			String msg = "작가등록 실패";
