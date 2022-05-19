@@ -117,6 +117,8 @@ $(function(){
 	    		</ul>
 	    		<button class="workView_btn" type="button">V I E W</button>
 	    	</div>
+	    	
+	    	<!-- 페이지네이션 -->
 	    	<div id="online_ex_pagination">
 	    		<img id="online_ex_prev" src="/img/exhibition/arrow_left.png" alt="이전">
 	    		<div>

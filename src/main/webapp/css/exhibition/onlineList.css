@@ -151,6 +151,9 @@
 }
 #online_ex_pagination #online_ex_prev {left:0}
 #online_ex_pagination #online_ex_next {right:0}
+
+#online_ex_pagination > div > p {display:inline-block;}
+#online_ex_pagination > div > p > img{width:100px; height:100px; cursor:pointer}
 /* 전시리시트 페이지네이션 - end */
 
 /* 전시등록 모달 - start */

@@ -36,10 +36,8 @@ public class OnlineExhibitionController {
 	public ModelAndView onlineList(HttpSession session, @RequestParam(value="currentPage", required=false, defaultValue="1")int currentPage) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		
-		
-		
-		
+		//exihibition 가져올 때 param로 받아서 페이지 리로딩
+		//ExhibitionWorkVO exwvo = eService.exhibitionWorkSelectAll(*<exhibitionList.get(0).getNo()>); *<> : 선택한 사진의 exhibition_no를 params
 		
 		try {
 			PagingVO pVO = new PagingVO();
@@ -50,7 +48,7 @@ public class OnlineExhibitionController {
 			List<ExhibitionVO> exhibitionList = eService.exhibitionList(pVO);
 			for(ExhibitionVO e : exhibitionList) {
 				e.setMember_no(aService.authorSelectByNo(e.getAuthor_no()).getMember_no());
-				//e.setMember_no(3);
+					System.out.println(e.getSubject());
 			}
 			if(exhibitionList.size() > 0) {
 		

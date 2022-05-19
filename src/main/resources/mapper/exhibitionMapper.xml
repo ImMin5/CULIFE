@@ -39,10 +39,10 @@
 			where no = ${no};
 	</delete>
 	<select id="exhibitionList" resultType="com.team.culife.vo.ExhibitionVO">
-		select w.work_thumbnail, e.no , e.author_no from work w
+		select e.no, e.subject, e.content, w.work_thumbnail , e.author_no from work w
 		join exhibition e
 		on e.no = w.exhibition_no
-		where start_date >= date_format(now(), '%Y-%m-%d') and e.end_date >= date_format(now(), '%Y-%m-%d')
+		where date_format(now(), '%Y-%m-%d') >= e.start_date and e.end_date >= date_format(now(), '%Y-%m-%d')
 		group by e.no
 		order by e.start_date
 		limit ${recordPerPage} offset ${offsetIndex}
@@ -61,7 +61,7 @@
 		<if test="category == 'author' and searchWord != null">
 			and a.author like '%${searchWord}%'
 		</if>
-		where e.start_date >= date_format(now(), '%Y-%m-%d') and e.end_date >= date_format(now(), '%Y-%m-%d')
+		where date_format(now(), '%Y-%m-%d') >= e.start_date and e.end_date >= date_format(now(), '%Y-%m-%d')
 		
 	</select>
 	
