@@ -23,8 +23,8 @@ public class ExhibitionReviewServiceImpl implements ExhibitionReviewService {
 	}
 
 	@Override
-	public List<ExhibitionReviewVO> select_ExhibitionReviewList(int no) {
-		return dao.select_ExhibitionReviewList(no);
+	public List<ExhibitionReviewVO> select_ExhibitionReviewList(int exhibition_no) {
+		return dao.select_ExhibitionReviewList(exhibition_no);
 	}
 
 	@Override

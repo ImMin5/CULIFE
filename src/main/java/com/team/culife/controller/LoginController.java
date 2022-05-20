@@ -193,9 +193,7 @@ public class LoginController {
 				session.setAttribute("logNickname", Orimvo.getNickname());
 				session.setAttribute("grade",Orimvo.getGrade());
 				result.put("msg", "로그인 성공");
-				System.out.println("로그인 성공 ---> "+ Orimvo.getNickname());
-			
-				
+				System.out.println("로그인 성공 ---> "+ Orimvo.getNickname());				
 			}
 			entity = new ResponseEntity<HashMap<String,String>>(result,HttpStatus.OK);
 		}catch(Exception e) {
