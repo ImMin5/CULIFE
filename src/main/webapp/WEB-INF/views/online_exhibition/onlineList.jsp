@@ -106,12 +106,10 @@ $(function(){
 		function select_ExhibitionReviewList(){
 			let url = "/ex_review/reviewList";
 			let data = "exhibition_no="+$('#exhibition_no').val();
-			console.log(data);
 			$.ajax({
 				url:url,
 				data:data,
 				success:function(result){
-					alert(result);
 					let sucResult = $(result);
 					
 					let body = "<ul>";
@@ -133,7 +131,6 @@ $(function(){
 						body += "<hr/></li>";
 					});
 					body += "</ul>"
-					alert(body);
 					$("#ex_reviewList").html(body);
 					
 				},error:function(){
