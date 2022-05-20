@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.AlertService;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.BoardService;
 import com.team.culife.service.LoginService;
@@ -56,6 +57,9 @@ public class MemberController {
 	@Inject
 	BoardService boardService;
 	
+	@Inject
+	AlertService alertService;
+	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
 	public ModelAndView mypage(HttpSession session) {
@@ -66,7 +70,8 @@ public class MemberController {
 			
 			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				session.setAttribute("grade",mvo.getGrade());	
+				session.setAttribute("grade",mvo.getGrade());
+				mav.addObject("alertList",alertService.alertSelectByMemberNo(memberNo));
 				mav.addObject("mvo", mvo);
 				mav.setViewName("mypage/mypage");
 			}
