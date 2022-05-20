@@ -2,10 +2,10 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${url}/css/movie/movieView.css"
-	type="text/css" />
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	
+
 <script>
 $(function(){
 	mreviewListAll();
@@ -23,8 +23,6 @@ function editForm(idx){
 			success:function(result){
 				//alert(JSON.stringify(result))
 				var score = result.star_avg;
-					$('#mstarAvg').html("<h1>"+score+"</h1>");
-					console.log(score)
 					$('#avg').html(score);
 				var cnt = result.review_cnt;
 					$("#mreviewCnt").html("<h1>"+cnt+"</h1>") 
@@ -56,9 +54,9 @@ function editForm(idx){
 					
 				if(vo.member_no=='${logNo}'){
 					tag +="<div class='stars_edit'>"
-					tag += "<form method='post'  action='/mreview/mreviewWriteOk'>"
+					tag += "<form method='post'  action='/mreview/mreviewWriteOk' id='editFrm'>"
 					tag += "<input type='hidden' name='no' value='"+vo.no+"'/>";
-					tag += "<input type='hidden' name='score_star' value='"+vo.score_star+"' id='score_star_edit'>";
+					tag += "<input type='hidden' name='score_star' id='score_star_edit'>";
 					
 					tag += "<div class='stars'>	"
 						if(vo.spo_check==1){
@@ -85,15 +83,15 @@ function editForm(idx){
 						str5="checked";
 					}
 					tag += `
-						<input class="star star-5" id="star-5-2" type="radio" `+str5+` name="score_star" value="1" title="1점"/>
+						<input class="star star-5" id="star-5-2" type="radio" `+str5+` name="score_star" value="5" title="5점"/>
 				        <label class="star star-5" for="star-5-2"></label>
-				        <input class="star star-4" id="star-4-2" type="radio" `+str4+` name="score_star" value="2" title="2점"/>
+				        <input class="star star-4" id="star-4-2" type="radio" `+str4+` name="score_star" value="4" title="4점"/>
 				        <label class="star star-4" for="star-4-2"></label>
 				        <input class="star star-3" id="star-3-2" type="radio" `+str3+` name="score_star" value="3" title="3점"/>
 				        <label class="star star-3" for="star-3-2"></label>
-				        <input class="star star-2" id="star-2-2" type="radio" `+str2+` name="score_star" value="4" title="4점"/>
+				        <input class="star star-2" id="star-2-2" type="radio" `+str2+` name="score_star" value="2" title="2점"/>
 				        <label class="star star-2" for="star-2-2"></label>
-				        <input class="star star-1" id="star-1-2" type="radio" `+str1+` name="score_star" value="5" title="5점"/>
+				        <input class="star star-1" id="star-1-2" type="radio" `+str1+` name="score_star" value="1" title="1점"/>
 				        <label class="star star-1" for ="star-1-2"></label>
 				       </div>`
 				    tag += "<div class='Ereview_box'>"
@@ -151,13 +149,11 @@ $(document).on('click','#mreviewList input[value=수정]', function(){
 	$('#mDiv').css("display","none");	
 	$('#reviewOne').css("display","none");
 	$('.stars_edit').css("display","block");
-	//$('.review_box').css("display","block");
-			//$(this).parent().next().css("display","block");
-			//$("#mreview").css("display","none");
 });
-$(document).on('submit','#mreviewList form',function(){
+$(document).on('submit','#editFrm',function(){
 	event.preventDefault();
 	var params = $(this).serialize();
+	//alert(params)
 	var url = '/mreview/mreviewEditOk';
 	$.ajax({
 		url:url,
@@ -172,21 +168,28 @@ $(document).on('submit','#mreviewList form',function(){
 	});
 });
 $(document).ready(function(){
-	$("input[name='score_star']:radio").click(function () {
-		var editStar = $(this).val();
-		/* $("input[name='score_star']:radio").each(function(i, obj){
-			console.log(editStar+": "+$(obj).val());
-			if(editStar>=$(obj).val()){
-				console.log(">>>"+$(obj).val())
-				$(obj).prop("checked", false)
-				//$('~:radio',obj).css('background-color','yellow')
-			}else{
-				$('~:radio',obj).css('background-color','#444')
-			}
-		}); */
+	$("input[name='score_star']:radio").click(function () { 
+		//alert('a')
+		$("input:radio[name='score_star']").removeAttr('checked');
 		
+		var editStar = $(this).val();
+		$("input:radio[name='score_star']:radio[value='"+editStar+"']").prop("checked",true);
+		//alert(editStar)
+		console.log(editStar);			
+		$('#score_star_edit').val(editStar)
 	});
-});		
+});	
+
+/* $("input[name='score_star']:radio").each(function(i, obj){
+console.log(editStar+": "+$(obj).val());
+if(editStar>=$(obj).val()){
+	console.log(">>>"+$(obj).val())
+	$(obj).prop("checked", false)
+	//$('~:radio',obj).css('background-color','yellow')
+}else{
+	$('~:radio',obj).css('background-color','#444')
+}
+}); */
 //영화리뷰삭제
 $(document).on('click','#mreviewList input[value=삭제]', function(){
 	if(confirm('리뷰를 삭제하시겠습니까?')){
@@ -207,7 +210,7 @@ $(document).on('click','#mreviewList input[value=삭제]', function(){
 //영화리뷰신고기능
 function warning(no){
 	if(confirm('해당 댓글을 신고하시겠습니까?')){
-		//alert(no);
+		alert(no);
 		var params = no;
 		$.ajax({
 			type:'get',
@@ -258,15 +261,15 @@ function warning(no){
 	      	<input type="hidden" name="movie_id" id="movie_id" value="${vo.movie_id}"/>
 	      	 <input type="checkbox" name="checkbox" id="checkbox" />
       		 <label for="checkbox">스포체크</label>
-	        <input class="star star-5" id="star-5-2" type="radio" name="score_star" value="5" title="1점"/>
+	        <input class="star star-5" id="star-5-2" type="radio" name="score_star" value="5" title="5점"/>
 	        <label class="star star-5" for="star-5-2"></label>
-	        <input class="star star-4" id="star-4-2" type="radio" name="score_star" value="4" title="2점"/>
+	        <input class="star star-4" id="star-4-2" type="radio" name="score_star" value="4" title="4점"/>
 	        <label class="star star-4" for="star-4-2"></label>
 	        <input class="star star-3" id="star-3-2" type="radio" name="score_star" value="3" title="3점"/>
 	        <label class="star star-3" for="star-3-2"></label>
-	        <input class="star star-2" id="star-2-2" type="radio" name="score_star" value="2" title="4점"/>
+	        <input class="star star-2" id="star-2-2" type="radio" name="score_star" value="2" title="2점"/>
 	        <label class="star star-2" for="star-2-2"></label>
-	        <input class="star star-1" id="star-1-2" type="radio" name="score_star" value="1" title="5점"/>
+	        <input class="star star-1" id="star-1-2" type="radio" name="score_star" value="1" title="1점"/>
 	        <label class="star star-1" for ="star-1-2"></label>
 	        <div class="review_box">
 	          <textarea id="content" class="review" col="30" name="content" placeholder="평점을 남겨주세요."></textarea>
@@ -277,8 +280,7 @@ function warning(no){
 	      </c:if>
 	    </div>
 	    <div id="mstarAvg"></div>
-	    <div id="mreviewList"></div>
-	   
+	    <div id="mreviewList"></div>	   
   	</div>
       
    </div>
