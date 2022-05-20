@@ -30,9 +30,9 @@ public class ExhibitionReviewController {
 	
 	// 댓글 목록보이기
 	@GetMapping("/ex_review/reviewList")
-	public List<ExhibitionReviewVO> select_ExhibitionReviewList(int no){
+	public List<ExhibitionReviewVO> select_ExhibitionReviewList(int exhibition_no){
 
-		return service.select_ExhibitionReviewList(no);
+		return service.select_ExhibitionReviewList(exhibition_no);
 	}
 	
 	// 댓글 수정하기
