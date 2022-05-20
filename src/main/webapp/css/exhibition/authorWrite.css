@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.container{
+.container:not(#mypage_sidebar_container){
 	position :relative;
 	height: 600px;
 }
