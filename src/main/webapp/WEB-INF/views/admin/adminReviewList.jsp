@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
+<style>
+	.admin_gallery li:nth-child(1) {
+		background: url(/img/admin/5.jpg) no-repeat center center;
+	}
+</style>
 <script>
 $(function () {	
 	$("#allCheck").click(function () {
@@ -37,11 +42,19 @@ $(function () {
 		}
 	});	
 });
-
 </script>
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
+	<div class="admin_gallery_wrap">
+		<ul class="admin_gallery">
+			<li>
+				<div class="admin_gallery_content">
+					<h2>리뷰관리</h2>
+				</div>
+			</li>
+		</ul>
+	</div>
 	<ul class='mini_top'>
 		<li>리뷰관리</li>
 		<li>
@@ -53,7 +66,6 @@ $(function () {
 						<option value='title'>작품명</option>
 						<option value='content'>리뷰내용</option>
 						<option value='nickname'>작성자</option>
-						<option value='warning_count'>신고</option>
 					</select>
 					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
 					<input type="submit" value="검색" id="searchBtn"/>
@@ -84,7 +96,7 @@ $(function () {
 			</li>
 			<li>${vo.nickname }</li>
 			<li>${vo.write_date }</li>
-			<li>${vo.warning_count}</li>
+			<li>${vo.cnt }</li>
 			<li>
 				<c:if test="${vo.category eq '영화' }">
 					<input type="checkbox" name="movie_noList" value="${vo.no}" class="chk"/>

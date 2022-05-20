@@ -10,7 +10,7 @@
 	<c:if test="${vo.category=='help'}">
 		<script>
 			alert('🟢 글이 등록되었습니다.');
-			location.href='/board/helpBoardList';
+			location.href='/board/help/helpBoardList';
 		</script>
 	</c:if>
 </c:if>

@@ -66,6 +66,7 @@ public class MemberController {
 			
 			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				session.setAttribute("grade",mvo.getGrade());	
 				mav.addObject("mvo", mvo);
 				mav.setViewName("mypage/mypage");
 			}
@@ -103,21 +104,20 @@ public class MemberController {
 	
 	//마이페이지 - 작가 정보 뷰 
 	@GetMapping("/mypage/author")
-	public ModelAndView mypageAuthor(HttpSession session, HttpServletRequest request, AuthorVO vo, String author) {
+	public ModelAndView mypageAuthor(HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		MemberVO mvo = memberService.memberSelectByNo(memberNo);
-		AuthorVO avo = authorService.authorSelectByName(author);
-
-		mav.addObject("mvo", mvo);
-		mav.addObject("avo", avo);
-		System.out.println(avo.getAuthor());
-		try {
+		
+		try {	
 			if(memberNo == null) {
 				mav.setViewName("redirect:/");
 			}
 			else {
 				//작가 정보 넣기
+				MemberVO mvo = memberService.memberSelectByNo(memberNo);
+				AuthorVO avo = authorService.authorNoSelect(mvo.getNo());
+				mav.addObject("mvo", mvo);
+				mav.addObject("avo", avo);
 				mav.setViewName("mypage/my_author");
 			}
 			
@@ -177,8 +177,8 @@ public class MemberController {
 	//마이페이지 - 작성글
 	@GetMapping("/mypage/board")
 	public ModelAndView mypageBoard(HttpSession session, @RequestParam(value="category", required=false, defaultValue="free")String category,
-			@RequestParam(value="pageNo", required=false, defaultValue="1") int pageNo,
-			@RequestParam(value="pageCount", required=false, defaultValue="9") int pageCount,
+			@RequestParam(value="pageNo", required=false, defaultValue="1") int currentPage,
+			@RequestParam(value="pageCount", required=false, defaultValue="10") int pageCount,
 			@RequestParam(value="searchWord", required=false) String searchWord) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
@@ -191,11 +191,16 @@ public class MemberController {
 				PagingVO pvo = new PagingVO();
 				// 전체 리스트 업데이트
 				pvo.setRecordPerPage(pageCount);
-				pvo.setCurrentPage(pageNo);
+				pvo.setCurrentPage(currentPage);
 				pvo.setMember_no(memberNo);
 				pvo.setCategory(category);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+				if(pvo.getTotalPage() < currentPage) {
+					pvo.setCurrentPage(pvo.getTotalPage());
+					pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+				}
+				
 				List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
 				mav.addObject("boardList", list);
 				mav.addObject("pvo", pvo);
@@ -361,6 +366,7 @@ public class MemberController {
 			System.out.println("MemberNo --->" + memberNo);
 			//로그인 확인
 			if(memberNo == null) {
+				result.put("status","201");
 				result.put("msg", "로그인 후 이용해 주세요.");
 			}
 			else {
