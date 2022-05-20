@@ -154,7 +154,7 @@ function editForm(idx){
 					}else{
 						tag += "<br/>" + vo.content + "</div>";
 					}
-					if(vo.member_no!='${logNo}'){
+					if(logNo != "" && logNo !=vo.member_no){
 						tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";
 					}
 					
