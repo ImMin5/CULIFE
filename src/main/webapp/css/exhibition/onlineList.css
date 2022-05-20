@@ -7,6 +7,18 @@
 	position:relative; z-index:-2;
 	overflow:hidden
 }
+/* 오디오 플레이리스트 */
+#online_exhibition_container > audio {
+	position:absolute;
+	left:50px; top:150px;
+	height:30px
+}
+audio::-webkit-media-controls-panel {
+	background:linear-gradient(0deg, #F09819 0%, 
+		#EDDE5D 100%);
+	height:30px
+}
+/* ***************** */
 #online_exhibition_container > a {
 	width:100px; height:40px;
 	padding:10px;
@@ -559,7 +571,8 @@
 	min-height:50vh; max-height:90vh;
 	position:absolute;
 	left:50%; top:50%;
-	transform:translate(-50%,-50%);
+	transform:translate(-50%,-50%) scale(0.1);
+	transition:all 1s;
 }
 #imgPopup > .fa-xmark {
 	position:absolute;

@@ -99,5 +99,5 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo) {
 		return dao.exhibitionSelectAll(vo);
 	}
-	
+
 }

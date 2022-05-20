@@ -45,7 +45,6 @@ public class AdminController {
 		mav.addObject("pVO", pVO);
 		// 회원목록 불러오기
 		mav.addObject("memberList", service.memberList(pVO));
-		
 		mav.setViewName("/admin/memberList");
 		return mav;
 	}

@@ -70,11 +70,11 @@
             .then(function (res) {
               const movies = res.results;
               movies.map(function (movie) {
-                //console.log(movie.title);
+                const obj = ('/movie/movieMstarAvg?movieId='+movie.id);
                 const div = document.createElement("div");
                 div.className = "boxSlides_slide";
                 const output = `
-                          <img src= ${'${base_url + movie.poster_path}'} loading="lazy" data-id=${'${movie.id}'} onClick= 'openView(this)' >
+                          <img src= ${'${base_url + movie.poster_path}'} loading="lazy" data-id=${'${movie.id}'} onClick= 'openView(this)' >                         
                      `;
                 div.innerHTML = output;
                 section.appendChild(div);
@@ -105,7 +105,7 @@
         });
       
 
-      function fetchMovie1(page) {
+       function fetchMovie1(page) {
        // 역대 흥행작 API
          const url ="https://api.themoviedb.org/3/movie/top_rated?api_key="+key+"&language=ko-KR&region=KR&page=1";
         fetch(url)
@@ -113,7 +113,7 @@
           .then(function (res) {
             const movies = res.results;
             movies.map(function (movie) {
-              //console.log(movie.title);
+              //console.log(movie.title);              
               const img = document.createElement("img");
               img.className = "item";
               img.src = base_url + movie.poster_path;
@@ -126,7 +126,7 @@
           .catch((err) => console.log(err));
       }
 
-      function fetchMovie2(page) {
+        function fetchMovie2(page) {
           // 인기 상영중 API
           const url ="https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key="+key+"&language=ko-KR&page=1"; 
           fetch(url)
@@ -134,7 +134,7 @@
             .then(function (res) {
               const movies = res.results;
               movies.map(function (movie) {
-                //console.log(movie.title);
+                //console.log(movie.title);                
                 const img = document.createElement("img");
                 img.className = "item";
                 img.src = base_url + movie.poster_path;

@@ -99,8 +99,118 @@ $(function(){
     });
 })
 </script>
+<script>
+	// 댓글 리스트 선택
+	$(function(){
+		
+		function select_ExhibitionReviewList(){
+			let url = "/ex_review/reviewList";
+			let data = "exhibition_no="+$('#exhibition_no').val();
+			$.ajax({
+				url:url,
+				data:data,
+				success:function(result){
+					let sucResult = $(result);
+					
+					let body = "<ul>";
+					sucResult.each(function(idx,obj){
+						body += "<li><div><span>"+obj.nickname+"  (" + obj.write_date + ")</span>"
+						if(obj.member_no == ${logNo}){
+							body += "<span><input type='button' class='btn' value='수정'>";
+							body += "<input type='button' class='btn' value='삭제' title="+obj.no+","+ obj.member_no+">";
+						}
+						body += "<br/>" +obj.content+ "</span></div>"
+						
+						if(obj.nickname == "${logNickname}"){
+							body += "<div style='display:none'><form method='post'>";
+							body += "<input type='hidden' name='member_no' value="+obj.member_no+">";
+							body += "<input type='hidden' name='no' value="+obj.no+">";
+							body += "<textarea name='content'>"+obj.content+"</textarea>";
+							body += "<input type='submit' class='btn' value='수정하기'></form></div>";
+						}
+						body += "<hr/></li>";
+					});
+					body += "</ul>"
+					$("#ex_reviewList").html(body);
+					
+				},error:function(){
+					console.log("리스트 보이기 실패!");
+				}
+			});
+		}
+	
+		// 댓글 등록하기
+		$(document).on('submit',"#ex_reviewForm", function(){
+			//event.preventDefault();
+	
+			if($("#ex_reviewComent").val()==""){ // 댓글 입력 안함
+				alert("댓글을 입력 후에 등록해주세요");
+			}else{ // 댓글 입력
+				let data = $("#ex_reviewForm").serialize(); // form데이터 보내기
+				$.ajax({
+					url :'/ex_review/writeOk',
+					data : data,
+					type : 'POST',
+					success : function(result){
+						$("#ex_reviewComent").val("");
+						select_ExhibitionReviewList();
+					},error : function(e){
+						alert("로그인 후 이용해주세요");
+					}
+				});
+			}
+			return false;
+		});
+			
+	
+		// 수정버튼 누르면 수정폼 보이게 하기
+		$(document).on('click','#ex_reviewList input[value=수정]',function(){ // 수정버튼을 누르면      
+			$(this).parent().parent().css("display","none");                    // 댓글 폼 안보이게
+			$(this).parent().parent().next().css("display", "block");  // 수정폼 보이게
+		});
+		
+		// 수정하기 DB연결
+		$(document).on('submit','#ex_reviewList form',function(){
+			event.preventDefault();
+			
+			$.ajax({
+				url:'/ex_review/editOk',
+				data: $(this).serialize(),
+				type: 'POST',
+				success:function(){
+					select_ExhibitionReviewList();
+				},error:function(){
+					console.log('수정에러');
+				}
+			});
+		});
+	
+		// 댓글 삭제하기 
+		$(document).on('click', "#ex_reviewList input[value=삭제]", function(){
+			if(confirm('댓글을 삭제하시겠어요?')){
+				let ex_reviewData = $(this).attr("title").split(",");
+				
+				let data = "exhibition_no="+ex_reviewData[0]+"&member_no="+ex_reviewData[1];
+				$.ajax({
+					url:'/ex_review/delOk',
+					data:data,
+					success:function(){
+						select_ExhibitionReviewList();
+					},error:function(){
+						console.log('삭제에러');
+					}
+				});
+			}
+		});
+		
+		select_ExhibitionReviewList();
+	});
+</script>    
     <div id="online_exhibition_container">
     	<h2 class="hidden">온라인 전시회</h2>
+    	<audio controls="controls" autoplay loop id="audio_player" 
+    	src="/img/exhibition/audio/𝗖. 𝗗𝗲𝗯𝘂𝘀𝘀𝘆 - Suite Bergamasque, L.75 - Ⅲ. Clair de lune .mp3"
+    	 onended="nextPlay()"></audio>
     	<a href="/online_exhibition/onlineAuthorList">작가목록</a>
 	    <c:if test="${grade == '1'}"> <!-- 작가 : 1 -->
 		   	<a href="javascript:;" id="reg_ex">전시등록</a>
@@ -294,11 +404,20 @@ $(function(){
 					</ul>
 	    		</li>
    				</c:forEach>
+   				<li id="ex_review">
+   					<h4>감상평</h4>
+					<form method="post" id="ex_reviewForm">
+					<input type="hidden" name="exhibition_no" id="exhibition_no" value="${exhibition.no}">
+					<div id="ex_review_box">
+						<textarea name="content" id="ex_reviewComent" class="ex_reivewComent" placeholder="내용을 입력하세요"></textarea>
+						<span id="ex_reviewBtn"><input type="submit" id="ex_reviewInsert" value="댓글 등록"/></span>
+					</div>
+					</form>
+				</li>
+				<!-- 댓글 목록 표시 -->
+				<li id="ex_reviewList" style="background-color:red"></li>
 	    	</ul>
-	    	<div id="ex_review">
-	    	
-	    	</div>
-    		<i class="fa-solid fa-xmark"></i>
+	    	<i class="fa-solid fa-xmark"></i>
     	</div>
     </div>
     

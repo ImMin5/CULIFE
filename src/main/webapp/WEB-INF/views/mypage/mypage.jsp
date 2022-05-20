@@ -148,15 +148,12 @@
 					</c:if>
 					<c:if test="${grade == 1}">
 						<li><a href="${url}/mypage/author">작가 정보</a></li>
-					</c:if>
-					
-					
+					</c:if>					
 				</ul>
 				<hr/>
 				<ul>
 					<li><a class="selected_menu" href="${url}/mypage/member">내정보</a></li>
-					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
-					
+					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>					
 				</ul>
 			</div>
 			

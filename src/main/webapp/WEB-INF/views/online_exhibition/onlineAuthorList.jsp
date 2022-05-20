@@ -11,6 +11,8 @@
 		-ms-user-select:none; 
 		user-select:none
 	}
+	html {-ms-overflow-style: none;}
+	html::-webkit-scrollbar{display:none}
 </style>
 <script>
 	$(document).ready(function(){

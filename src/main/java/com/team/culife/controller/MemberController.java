@@ -65,7 +65,6 @@ public class MemberController {
 	public ModelAndView mypage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		
 		try {
 			
 			if(memberNo != null ) {
