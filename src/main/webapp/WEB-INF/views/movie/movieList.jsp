@@ -70,15 +70,11 @@
             .then(function (res) {
               const movies = res.results;
               movies.map(function (movie) {
-                //console.log(movie.title);
-                //const obj = await fetch('/movie/movieMstarAvg?movieId='+movie.id)
-                //const mstar=await obj.json();
-                //console.log(mstar[movie.id])
+                const obj = ('/movie/movieMstarAvg?movieId='+movie.id);
                 const div = document.createElement("div");
                 div.className = "boxSlides_slide";
                 const output = `
-                          <img src= ${'${base_url + movie.poster_path}'} loading="lazy" data-id=${'${movie.id}'} onClick= 'openView(this)' >
-                          //<li style="color:white">${'${mstar[movie.id]}'}</li>
+                          <img src= ${'${base_url + movie.poster_path}'} loading="lazy" data-id=${'${movie.id}'} onClick= 'openView(this)' >                         
                      `;
                 div.innerHTML = output;
                 section.appendChild(div);
