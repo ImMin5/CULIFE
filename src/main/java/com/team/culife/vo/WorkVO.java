@@ -12,4 +12,6 @@ public class WorkVO {
 	private String work_thumbnail;
 	private String work_content;
 	private String write_date;
+	private String start_date;
+	private String end_date;
 }

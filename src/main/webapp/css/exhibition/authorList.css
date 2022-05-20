@@ -1,5 +1,12 @@
 @charset "UTF-8";
-
+html::-webkit-scrollbar{width:20px}
+html::-webkit-scrollbar-track {
+	background-color: #f9e9d2;
+}
+html::-webkit-scrollbar-thumb {
+	background-color: orange;
+	border-radius:10px;	
+}
 #authorList_container {
 	width:100vw; height:100vh;
 	background-color:#F6F5F0;
@@ -155,7 +162,7 @@
 	color:#777;
 	overflow:hidden;
 	text-overflow:ellipsis;
-	white-space:nowrap;
+	white-space:pre-wrap;
 }
 .author_details > a {
 	display:block;

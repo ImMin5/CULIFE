@@ -1,5 +1,8 @@
 package com.team.culife.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.MovieReviewService;
 import com.team.culife.service.MovieService;
 
 @RestController
@@ -17,24 +21,38 @@ public class MovieController {
    @Inject
    MovieService service;
 
-   //영화 메인페이지이동
+	@Inject
+	MovieReviewService service2;
+   //�쁺�솕 硫붿씤�럹�씠吏��씠�룞
    @GetMapping("movieList")
    public ModelAndView movieList(HttpSession session) {
       ModelAndView mav = new ModelAndView();
+      //double mstar_avg = service2.MstarAvg(movieId);
+     // mav.addObject("mstar_avg",mstar_avg);
       mav.setViewName("movie/movieList");
       return mav;
    }
 
-   //영화 세부페이지이동
+   //�쁺�솕 �꽭遺��럹�씠吏��씠�룞
    @GetMapping("movieView")
    public ModelAndView movieView(int movieId) {
       ModelAndView mav = new ModelAndView();
+  	  double mstar_avg = service2.MstarAvg(movieId);
       mav.addObject("movieId",movieId);
+      mav.addObject("mstar_avg",mstar_avg);
       mav.setViewName("movie/movieView");
       return mav;
    }
    
-   //영화 검색페이지이동
+	/* list 평점불러오기
+	 * @GetMapping("movieMstarAvg") public Map<Integer, Double> movieMstarAvg(int
+	 * movieId) { double mstar_avg = service2.MstarAvg(movieId);
+	 * System.out.println(movieId+": "+mstar_avg); Map<Integer,Double> map=new
+	 * HashMap<>(); map.put(movieId, mstar_avg); return map; }
+	 */
+   
+  
+   //�쁺�솕 寃��깋�럹�씠吏��씠�룞
    @GetMapping("movieSearch")
    public ModelAndView movieSearch(String searchMovie) {
       ModelAndView mav = new ModelAndView();

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/css/board/freeBoardWrite.css" type="text/css"/>
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="//cdn.ckeditor.com/4.18.0/full/ckeditor.js"></script>
+<script src="/js/board/freeBoardWrite.js"></script>
 <!-- js파일 참조시키기 -->
 <div class="container">
 <br/>
@@ -8,12 +9,10 @@
 <h1>자유 게시판 글쓰기폼</h1>
 <input type="text" class="form-control" name="subject" id="freeBoardTitle" placeholder="글 제목을 입력하세요." />
 <textarea name="content" id="editor"></textarea>
-    <script>
-    ClassicEditor
-        .create( document.querySelector('#editor'))
-        .catch( error => {
-            console.error( error );
-        } );
+	<script>
+    window.onload = function(){
+       ck = CKEDITOR.replace("editor");
+    };
     </script>
     <br>
     <div class="writeok">

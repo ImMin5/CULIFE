@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.team.culife.dao.ExhibitionDAO;
 import com.team.culife.vo.ExhibitionVO;
+import com.team.culife.vo.ExhibitionWorkVO;
 import com.team.culife.vo.MemberVO;
+import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.WorkVO;
 
 @Service
@@ -48,7 +50,54 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	public int workUpdate(WorkVO vo) {
 		return dao.workUpdate(vo);
 	}
-	
 
+	@Override
+	public int workTotalRecord(PagingVO vo) {
+		return dao.workTotalRecord(vo);
+	}
+
+	@Override
+	public List<WorkVO> workSelectByAuthorNo(PagingVO vo) {
+		return dao.workSelectByAuthorNo(vo);
+	}
 	
+	public WorkVO workSelectMaxWriteDate(int exhibition_no) {
+		return dao.workSelectMaxWriteDate(exhibition_no);
+	}
+
+	@Override
+	public int workDelete(WorkVO vo) {
+		return dao.workDelete(vo);
+	}
+
+	@Override
+	public List<ExhibitionVO> exhibitionList(PagingVO pVO) {
+		return dao.exhibitionList(pVO);
+	}
+
+	@Override
+	public int exhibitionTotalRecord(PagingVO pVO) {
+		return dao.exhibitionTotalRecord(pVO);
+	}
+
+	@Override
+	public ExhibitionVO exhibitionPosterSelect(String work_thumbnail) {
+		return dao.exhibitionPosterSelect(work_thumbnail);
+	}
+
+	@Override
+	public WorkVO exhibitionWorkSelect(int exhibition_no) {
+		return dao.exhibitionWorkSelect(exhibition_no);
+	}
+
+	@Override
+	public ExhibitionWorkVO exhibitionWorkSelectAll(int no) {
+		return dao.exhibitionWorkSelectAll(no);
+	}
+  
+  @Override
+	public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo) {
+		return dao.exhibitionSelectAll(vo);
+	}
+
 }

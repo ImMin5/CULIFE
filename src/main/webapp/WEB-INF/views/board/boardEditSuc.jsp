@@ -3,14 +3,14 @@
 <c:if test="${cnt>0}">
 	<c:if test="${vo.category=='free'}">
 		<script>
-			alert('🟢 글이 수정되었습니다.');
+			alert('🟢 글이 수정되었습니다.2');
 			location.href="/board/freeBoardView?no="+${vo.no}+"";
 		</script>
 	</c:if>
 	<c:if test="${vo.category=='help'}">
 		<script>
-			alert('🟢 글이 수정되었습니다.');
-			location.href="/board/helpBoardView?no="+${vo.no}+"";
+			alert('🟢 글이 수정되었습니다.1');
+			location.href="/board/help/helpBoardView?no="+${vo.no}+"";
 		</script>
 	</c:if>
 </c:if>
