@@ -28,7 +28,6 @@ public class BoardController {
 	@GetMapping("freeBoardList")
 	public ModelAndView freeboardList(PagingVO pVO) {
 		ModelAndView mav = new ModelAndView();
-		
 		mav.addObject("list", service.selectList(pVO));
 		mav.setViewName("/board/freeBoardList");
 		return mav;
