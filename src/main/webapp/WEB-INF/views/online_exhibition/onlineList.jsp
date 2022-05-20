@@ -114,19 +114,20 @@ $(function(){
 					
 					let body = "<ul>";
 					sucResult.each(function(idx,obj){
-						body += "<li><div><span>"+obj.nickname+"  (" + obj.write_date + ")</span>"
+						body += "<li class='ex_review_wrap'><div class='ex_reivew_coment'><p>"+obj.nickname+"</p><span>"+ obj.write_date + "</span>"
+						body += "<em>" +obj.content+ "</em>"
 						if(obj.member_no == ${logNo}){
-							body += "<span><input type='button' class='btn' value='수정'>";
+							body += "<div><input type='button' class='btn' value='수정'>";
 							body += "<input type='button' class='btn' value='삭제' title="+obj.no+","+ obj.member_no+">";
 						}
-						body += "<br/>" +obj.content+ "</span></div>"
+						body += "<br/></div></div>"
 						
 						if(obj.nickname == "${logNickname}"){
-							body += "<div style='display:none'><form method='post'>";
+							body += "<div style='display:none' class='ex_edit'><form method='post'>";
 							body += "<input type='hidden' name='member_no' value="+obj.member_no+">";
 							body += "<input type='hidden' name='no' value="+obj.no+">";
-							body += "<textarea name='content'>"+obj.content+"</textarea>";
-							body += "<input type='submit' class='btn' value='수정하기'></form></div>";
+							body += "<textarea name='content' class='ex_edit_txt'>"+obj.content+"</textarea>";
+							body += "<input type='submit' class='ex_edit_btn' value='수정하기'></form></div>";
 						}
 						body += "<hr/></li>";
 					});
@@ -405,17 +406,21 @@ $(function(){
 	    		</li>
    				</c:forEach>
    				<li id="ex_review">
-   					<h4>감상평</h4>
-					<form method="post" id="ex_reviewForm">
-					<input type="hidden" name="exhibition_no" id="exhibition_no" value="${exhibition.no}">
-					<div id="ex_review_box">
-						<textarea name="content" id="ex_reviewComent" class="ex_reivewComent" placeholder="내용을 입력하세요"></textarea>
-						<span id="ex_reviewBtn"><input type="submit" id="ex_reviewInsert" value="댓글 등록"/></span>
-					</div>
-					</form>
+   					<h4>&nbsp;&nbsp;감상평</h4>
+   					<span id="review_close">▼</span>
+   					<span id="review_open">▲</span>
 				</li>
 				<!-- 댓글 목록 표시 -->
-				<li id="ex_reviewList" style="background-color:red"></li>
+				<li id="ex_reviewList"></li>
+	    		<li id="ex_reviewForm_wrap">
+		    		<form method="post" id="ex_reviewForm">
+						<input type="hidden" name="exhibition_no" id="exhibition_no" value="${exhibition.no}">
+						<div id="ex_review_box">
+							<textarea name="content" id="ex_reviewComent" class="ex_reivewComent" placeholder="내용을 입력하세요"></textarea>
+							<span id="ex_reviewBtn"><input type="submit" id="ex_reviewInsert" value="등록"/></span>
+						</div>
+					</form>
+	    		</li>
 	    	</ul>
 	    	<i class="fa-solid fa-xmark"></i>
     	</div>
