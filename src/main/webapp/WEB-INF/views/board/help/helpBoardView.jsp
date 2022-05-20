@@ -32,8 +32,8 @@ $(function(){
 						body += "<div style='display:none'><form method='post'>";
 						body += "<input type='hidden' name='member_no' value="+obj.member_no+">";
 						body += "<input type='hidden' name='reply_no' value="+obj.reply_no+">";
-						body += "<textarea name='content'>"+obj.content+"</textarea>";
-						body += "<input type='submit' class='btn' value='수정하기'></form></div>";
+						body += "<textarea name='content' id='content'>"+obj.content+"</textarea>";
+						body += "<div id='editBtn'><input type='submit' class='btn' value='수정하기'></div></form></div>";
 					}
 					body += "<hr/></li>";
 				});

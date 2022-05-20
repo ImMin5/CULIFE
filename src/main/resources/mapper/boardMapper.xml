@@ -19,7 +19,7 @@
 	
 	<select id='helpselectList' resultType="BoardVO">
 		select b.no, b.subject, b.member_no,m.nickname,b.view,date_format(b.write_date,'%y-%m-%d %H:%i') write_date 
-		from board b join member m on b.member_no = m.no where category='free' 
+		from board b join member m on b.member_no = m.no where category='help' 
 		<if test="searchWord != null" >
 			and ${searchKey} like '%${searchWord}%' 
 		</if>

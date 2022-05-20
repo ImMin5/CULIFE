@@ -3,6 +3,7 @@
     min-height: 400px;
 }
 #freeBoardTitle,#helpBoardTitle{
+	border-radius:10px;
 	margin-right:10px;
 	width:100%;
 	font-size:2.3rem;
@@ -25,14 +26,17 @@ h1{
 	padding-bottom:10px;
 }
 #freeBoardTitle,#helpBoardTitle{
+	border-radius:10px;
 	margin-right:10px;
 }
 #writeBtn{
+	border-radius:10px;
 	background-color: gray;
 	color:white;
 	padding:10px 30px;
 }
 #backList {
+	border-radius:10px;
 	background-color: gray;
 	color:white;
 	padding:10px 30px;

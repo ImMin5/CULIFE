@@ -33,8 +33,8 @@ $(function(){
 						body += "<div style='display:none'><form method='post'>";
 						body += "<input type='hidden' name='member_no' value="+obj.member_no+">";
 						body += "<input type='hidden' name='reply_no' value="+obj.reply_no+">";
-						body += "<textarea name='content'>"+obj.content+"</textarea>";
-						body += "<input type='submit' class='btn' value='수정하기'></form></div>";
+						body += "<textarea name='content' id='content'>"+obj.content+"</textarea>";
+						body += "<div><input type='submit' class='btn' value='수정하기'></div></form></div>";
 					}
 					body += "<hr/></li>";
 				});
@@ -120,7 +120,7 @@ $(function(){
 	<br>
 	<ul>
 	<div class="parent">
-		<div class="child1">작성자 : ${viewVo.member_no}</div>
+		<div class="child1">작성자 : ${viewVo.nickname}</div>
 		<div class="child2"><h1>제목 : ${viewVo.subject}</h1></div>
 		<div class="child1">조회수 : ${viewVo.view}</div>
 	</div>
@@ -147,8 +147,7 @@ $(function(){
 		<div id="commentLine">
 			<textarea name="content" id="coment" class="freeBoardComent" rows="4"
 				cols="80" placeholder="내용을 입력하세요"></textarea>
-			<span id="replyBtn"><input type="submit"
-				id="replyInsert" value="댓글 등록"/></span>
+			<div><input type="submit" id="replyInsert" value="댓글 등록"/></div>
 		</div>
 	</form>
 	<!-- 댓글 목록 표시 -->

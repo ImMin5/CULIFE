@@ -5,7 +5,15 @@ h1{
 	color:white;
 }
 li{
+	float:left;
 	color:white;
+}
+.page{
+	padding-top:3%;
+	margin-left:43%;
+}
+.paging li{
+	margin-left:20px;
 }
 .freeboardList{
 	text-align:center;	
@@ -46,7 +54,6 @@ li{
 	text-align:center;	
 }
 .helpboardList li{
-	float:left;
 	height:40px;
 	line-height:40px;
 	border-bottom:1px solid #ddd;
@@ -86,14 +93,53 @@ li{
 }
 body{
 	background-color: black;
-	}
-#search{ /* 검색 */
-	margin:20px 0 0 10px;
-	color:white;
-	background:gray;
 }
-#write{ /* 글쓰기 */
-	margin:20px 10px 0 0;
+ul{
+	list-style:none;
+}
+
+#searchFrm{
+	padding-top:3%;
+}
+#searchkey{ /* 게시글번호/제목/작성자 옵션*/
+	border-radius:10px;
+    position: relative;
+    width:144px;
+    height: 34px;
+    padding: 4px 36px 1px 17px;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#search{ /* 검색 */
+	border-radius:10px;
+    display: inline-block;
+    position: relative;
+    height: 34px;
+    box-sizing: border-box;
+    border: solid 1px;
+    vertical-align: top;
+}
+#searchBtn{ /* 검색버튼 */
+	border-radius:10px;
+	display: inline-block;
+    width: 56px;
+    height: 34px;
+    background-color: gray;
+    border: 0;
+    color: #fff;
+}
+#write_div{
+	padding-bottom:70px;
+}
+#write{/* 글쓰기버튼 */
+	border-radius:10px;
+	display: inline-block;
+    position: relative;
+    height: 34px;
+    box-sizing: border-box;
+    background:gray;
+    color:white;
 }
 #page{
 	text-align:center;
