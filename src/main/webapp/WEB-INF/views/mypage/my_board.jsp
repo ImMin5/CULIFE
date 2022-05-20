@@ -3,11 +3,6 @@
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage_board.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<style>
-.tr_record{
-	height:2vh;
-}
-</style>
 <script>
 	$(function(){
 		
@@ -68,7 +63,15 @@
 			  			</thead>
 			  			<tbody>
 			  				<c:forEach var="vo" items="${boardList}">
-				  				<tr class="tr_record" onclick="location.href='${url}/board/boardList/${vo.no}'">
+			  					<c:choose>
+			  						<c:when test ="${pvo.category == 'free' }">
+			  							<tr class="tr_record" onclick="location.href='${url}/board/freeBoardView?no=${vo.no}'">
+			  						</c:when>
+			  						<c:otherwise>
+			  							<tr class="tr_record" onclick="location.href='${url}/board/help/helpBoardView?no=${vo.no}'">
+			  						</c:otherwise>
+			  					</c:choose>
+				  			
 				  					<th scope="row">${vo.no}</td>
 				  					<td>${vo.subject}</td>
 				  					<td>${vo.nickname}</td>
@@ -105,16 +108,16 @@
 				    <!-- 페이지 번호 -->
 				    <!-- totalPage 가 onePageCount 보다 클때 -->
 				    <c:choose>
-				    	<c:when test="${pvo.totalPage > pvo.onePageCount and pvo.startPage - pvo.onePageCount/2 > 0 and pvo.startPage <= pvo.totalPage}">
+				    	<c:when test="${pvo.totalPage > pvo.onePageCount and pvo.currentPage - pvo.onePageCount/2 > 0 and pvo.currentPage <= pvo.totalPage}">
 				    		<c:choose>
 				    			<c:when test="${pvo.totalPage- pvo.onePageCount/2 == pvo.currentPage}">
 				    				<c:set var="endPage" value="${pvo.totalPage}"/>
 				    			</c:when>
 				    			<c:otherwise>
-				    				<c:set var="endPage" value="${pvo.startPage+pvo.onePageCount/2}"/>
+				    				<c:set var="endPage" value="${pvo.currentPage+pvo.onePageCount/2}"/>
 				    			</c:otherwise>		
 				    		</c:choose>
-				    		<c:forEach var="p" begin="${pvo.startPage- pvo.onePageCount/2 + 1}" end="${endPage}">
+				    		<c:forEach var="p" begin="${pvo.currentPage- pvo.onePageCount/2 + 1}" end="${endPage}">
 						    	<c:choose>
 							    	<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
 								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">

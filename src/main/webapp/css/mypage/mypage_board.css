@@ -1,15 +1,17 @@
 #mypage_board_contatiner{
 	margin-top:10px;
 	font-size:2rem;
-	height:65vh;
+	height:67vh;
 }
 .table{
-	max-height:55vh;
+	max-height:60vh;
 	text-align:center;
 }
-
+.tr_record{
+	height:5vh;
+}
 .table-responsive{
-	height:55vh;
+	height:57vh;
 	text-align:center;
 }
 

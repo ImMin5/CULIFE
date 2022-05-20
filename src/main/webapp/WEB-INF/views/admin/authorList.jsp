@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
+<style>
+	.admin_gallery li:nth-child(1) {
+		background: url(/img/admin/2.jpg) no-repeat center center;
+	}
+</style>
 <script>
 $(function () {	
 	//모달창-취소버튼: 모달창on, 취소사유확인close, 취소사유입력on
@@ -32,7 +37,7 @@ $(function () {
 					tag += '<input type="hidden" name="no" value="'+vo.no+'" id="cancel_no"/>';
 					/* 취소일때 - 취소사유확인 */
 					if(vo.author_status == 2){
-						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" readonly="readonly" style="width:86.5%; resize:none">취소사유: '+vo.msg+'</textarea>';
+						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" readonly="readonly" style="width:86.5%; resize:none">'+vo.msg+'</textarea>';
 					}
 					/* 신청일때 - 걍 취소*/
 					if(vo.author_status == 0 && vo.msg == null || vo.author_status == 1){
@@ -40,7 +45,7 @@ $(function () {
 					}
 					/* 재신청일때 - 취소사유보여주고 재설정 */
 					if(vo.author_status == 0 && vo.msg != null){
-						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" style="width:86.5%; resize:none" onkeyup="alert("감자")">취소사유: '+vo.msg+'</textarea>';
+						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" style="width:86.5%; resize:none" onkeyup="alert("감자")">'+vo.msg+'</textarea>';
 					}
 					if(vo.author_status == 0){
 						tag += '<div class="btn_wrap">'
@@ -116,10 +121,20 @@ $(function () {
 		}
 	});	
 });
+
 </script>
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
+	<div class="admin_gallery_wrap">
+		<ul class="admin_gallery">
+			<li>
+				<div class="admin_gallery_content">
+					<h2>작가관리</h2>
+				</div>
+			</li>
+		</ul>
+	</div>
 	<ul class='mini_top'>
 		<li>작가관리</li>
 		<li>

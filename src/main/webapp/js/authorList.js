@@ -18,6 +18,9 @@ $(document).ready(function(){
 			if($('.finder__input').val().length > 0){
 				$('.finder').addClass('active');
 				$('#authorSearchFrm').unbind().submit();
+			} else if($('.finder__input').val().length == 0){
+				$('#authorSearchFrm').unbind().submit();
+				location.href="/online_exhibition/onlineAuthorList";
 			}
 		}, 1000);
 	})
