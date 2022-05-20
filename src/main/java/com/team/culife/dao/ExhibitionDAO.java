@@ -32,5 +32,5 @@ public interface ExhibitionDAO {
 	public ExhibitionVO exhibitionPosterSelect(String work_thumbnail);
 	public WorkVO exhibitionWorkSelect(int exhibition_no);
 	public ExhibitionWorkVO exhibitionWorkSelectAll(int no);
-  public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo);
+    public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo);
 }
