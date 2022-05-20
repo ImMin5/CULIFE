@@ -190,3 +190,16 @@ function pagination(){
 		search();
 	}
 }	
+
+/* 오디오 연속 재생 */
+function nextPlay(){
+
+document.getElementById('audio_player').src = "/img/exhibition/audio/𝗙. 𝗖𝗵𝗼𝗽𝗶𝗻 - Nocturne Op.9 No.2 in E flat Major.mp3"; 
+
+var media = document.getElementById('audio_player');
+
+media.currentTime = 0;
+
+media.play();
+
+}
