@@ -607,3 +607,6 @@ label[for="spo_check"]:before {
   transform: scale(1.5);
 }
 
+.stars_edit{
+	display:none;
+}

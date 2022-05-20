@@ -1,5 +1,8 @@
 package com.team.culife.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -24,6 +27,8 @@ public class MovieController {
    @GetMapping("movieList")
    public ModelAndView movieList(HttpSession session) {
       ModelAndView mav = new ModelAndView();
+      //double mstar_avg = service2.MstarAvg(movieId);
+     // mav.addObject("mstar_avg",mstar_avg);
       mav.setViewName("movie/movieList");
       return mav;
    }
@@ -32,13 +37,21 @@ public class MovieController {
    @GetMapping("movieView")
    public ModelAndView movieView(int movieId) {
       ModelAndView mav = new ModelAndView();
-  	double mstar_avg = service2.MstarAvg(movieId);
+  	  double mstar_avg = service2.MstarAvg(movieId);
       mav.addObject("movieId",movieId);
       mav.addObject("mstar_avg",mstar_avg);
       mav.setViewName("movie/movieView");
       return mav;
    }
    
+	/* list 평점불러오기
+	 * @GetMapping("movieMstarAvg") public Map<Integer, Double> movieMstarAvg(int
+	 * movieId) { double mstar_avg = service2.MstarAvg(movieId);
+	 * System.out.println(movieId+": "+mstar_avg); Map<Integer,Double> map=new
+	 * HashMap<>(); map.put(movieId, mstar_avg); return map; }
+	 */
+   
+  
    //�쁺�솕 寃��깋�럹�씠吏��씠�룞
    @GetMapping("movieSearch")
    public ModelAndView movieSearch(String searchMovie) {
