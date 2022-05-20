@@ -53,7 +53,7 @@
     		<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
     	</section>
 		<section id="home_entertain">
-			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
+			<h2>영화, 연극, 콘서트, 뮤지컬을 한 곳에서</h2>
 			<ul>
 				<li onmouseover="movieplay('/img/Reality - From La Boum_cut.mp3')" onmouseleave="movieplay('')">
 					<a href="">영화</a>
@@ -63,7 +63,7 @@
 					<audio id='movie_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>				
 				<li onmouseover="musicalplay('/img/웃는남자_일단와_cut.mp3')" onmouseleave="musicalplay('')">
-					<a href="">연극 / 뮤지컬</a>
+					<a href="">공연<br/>(연극 / 콘서트 / 뮤지컬)</a>
 					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>

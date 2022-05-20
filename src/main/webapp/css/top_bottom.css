@@ -210,13 +210,13 @@ nav > ul > li:nth-child(2) > ul a {
 	transition:all 0.5s;
 }
 #gnb_musical a em {
-	width:300px; height:40px;
+	width:400px; height:80px;
 	display:block;
 	position:absolute; 
-	left:75px; top:130px;
+	left:25px; top:110px;
 	color:#fff; font-size:2.4rem;	
 	line-height:40px; font-weight:bold;
-	letter-spacing:10px
+	letter-spacing:10px;
 }
 #gnb_musical video {
 	width:450px; height:300px;

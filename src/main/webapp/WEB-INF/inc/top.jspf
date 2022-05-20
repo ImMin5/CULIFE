@@ -64,7 +64,7 @@
         				</li>
         				<li id="gnb_musical">
         					<a href="${url}/theater/theaterList">
-        						<em>연극 / 뮤지컬</em>
+        						<em>공연<br/>(연극/콘서트/뮤지컬)</em>
         						<video src="/img/gnb_musical_video.mp4" id="gnb_musical_video" muted loop></video>
         						<span id="gnb_musical_line1"></span>
         						<span id="gnb_musical_line2"></span>

@@ -16,6 +16,8 @@ function editForm(idx){
 	function mreviewListAll(){
 		var url = "/mreview/mreviewList";
 		var params = "movie_id=" + movieId;
+		var logNo = '${logNo}';
+		console.log(logNo);
 		$.ajax({
 			url:url,
 			data:params,
@@ -47,11 +49,13 @@ function editForm(idx){
 					}else{
 						tag += "<br/>" + vo.content + "</div>";
 					}
-					if(vo.member_no!='${logNo}'){
-						tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";
-					}
 					
+				if(logNo != "" && logNo !=vo.member_no){
+					tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";						
+				}					
+				
 				if(vo.member_no=='${logNo}'){
+					
 					tag +="<div class='stars_edit'>"
 					tag += "<form method='post'  action='/mreview/mreviewWriteOk' id='editFrm'>"
 					tag += "<input type='hidden' name='no' value='"+vo.no+"'/>";
@@ -209,7 +213,7 @@ $(document).on('click','#mreviewList input[value=삭제]', function(){
 //영화리뷰신고기능
 function warning(no){
 	if(confirm('해당 댓글을 신고하시겠습니까?')){
-		alert(no);
+		//alert(no);
 		var params = no;
 		$.ajax({
 			type:'get',
