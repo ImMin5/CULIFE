@@ -1,5 +1,7 @@
 package com.team.culife.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -145,7 +147,9 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 
 		vo.setMember_no((Integer) session.getAttribute("logNo"));
-		mav.addObject("list", service.helpselectList(pVO));
+		List<BoardVO> list = service.helpselectList(pVO);
+		System.out.println("list -->" + list);
+		mav.addObject("list", list);
 		
 		// 문의사항 목록 페이징
 		int total = service.boardTotalRecord(pVO);

@@ -15,19 +15,26 @@
 		<li>닉네임</li>
 		<li>조회수</li>
 		<li>작성일</li>
-		<c:forEach var="vo" items="${list}">
-			<li>${vo.no }</li>
-			<li><a href="/board/help/helpBoardView?no=${vo.no}">${vo.subject}</a></li>
-			<li>${vo.nickname }</li>
-			<li>${vo.view }</li>
-			<li>${vo.write_date }</li>
-		</c:forEach>
+		<c:choose>
+			<c:when test="${!empty list}">
+				<c:forEach var="vo" items="${list}">
+					<li>${vo.no }</li>
+					<li><a href="/board/help/helpBoardView?no=${vo.no}">${vo.subject}</a></li>
+					<li>${vo.nickname }</li>
+					<li>${vo.view }</li>
+					<li>${vo.write_date }</li>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<div id="nullresult">검색된 결과가 없습니다.</div>
+			</c:otherwise>
+		</c:choose>
 		</ul>
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<div class="page">
 		<ul class="paging">
 			<!--  이전페이지 -->
-			<c:if test="${pVO.currentPage == 1 }">
+			<c:if test="${pVO.currentPage == 1 && !empty list}">
 				<li>◀</li>
 			</c:if>
 			<c:if test="${pVO.currentPage > 1 }">

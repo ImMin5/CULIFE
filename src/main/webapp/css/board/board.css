@@ -8,6 +8,11 @@ li{
 	float:left;
 	color:white;
 }
+#nullresult{
+	color:white;
+	padding-top:150px;
+}
+
 .page{
 	padding-top:3%;
 	margin-left:43%;

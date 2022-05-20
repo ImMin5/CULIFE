@@ -8,7 +8,8 @@
 	<h1>자유게시판</h1>
 	<br> <br> <br> <br> <br>
 	<div id="write_div">
-		<button id="write" style='float: right'	onclick="location.href='freeBoardWrite'">글쓰기</button>
+		<button id="write" style='float: right'
+			onclick="location.href='freeBoardWrite'">글쓰기</button>
 	</div>
 	<ul class='freeboardList'>
 		<li></li>
@@ -17,21 +18,31 @@
 		<li>닉네임</li>
 		<li>조회수</li>
 		<li>작성일</li>
-		<c:forEach var="vo" items="${list}">
-			<li>${vo.no }</li>
-			<li><a href="/board/freeBoardView?no=${vo.no}">${vo.subject}</a></li>
-			<li>${vo.nickname }</li>
-			<!--  -->
-			<li>${vo.view }</li>
-			<li>${vo.write_date }</li>
-		</c:forEach>
+		<c:choose>
+			<c:when test="${!empty list}">
+				<c:forEach var="vo" items="${list}">
+					<li>${vo.no }</li>
+					<li><a href="/board/freeBoardView?no=${vo.no}">${vo.subject}</a></li>
+					<li>${vo.nickname }</li>
+					<li>${vo.view }</li>
+					<li>${vo.write_date }</li>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<div id="nullresult">검색된 결과가 없습니다.</div>
+			</c:otherwise>
+		</c:choose>
 	</ul>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br>
+	<br><br><br><br>
+	<br><br><br><br><br><br>
+	<br><br><br><br><br><br>	
+	<br><br><br><br><br><br>	
 	<!-- 페이징 -->
 	<div class="page">
 		<ul class="paging">
 			<!--  이전페이지 -->
-			<c:if test="${pVO.currentPage == 1 }">
+			<c:if test="${pVO.currentPage == 1 && !empty list}">
 				<li>◀</li>
 			</c:if>
 			<c:if test="${pVO.currentPage > 1 }">
@@ -47,8 +58,7 @@
 					<c:if test="${p!=pVO.currentPage}">
 						<li>
 					</c:if>
-					<a
-						href="/board/freeBoardList?category=${pVO.category}&currentPage=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a>
+					<a href="/board/freeBoardList?category=${pVO.category}&currentPage=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a>
 					</li>
 				</c:if>
 			</c:forEach>
