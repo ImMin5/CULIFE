@@ -94,6 +94,7 @@ $(document).ready(function(){
 
 /* 작품보기 - 모달 띄우기*/
 $(document).ready(function(){
+	$("#ex_detail_bg").css({"display" : "block"});
 	$(".workView_btn").click(function(){
 		$("#ex_detail_bg").css({"display" : "block"});
 		$('footer').css({"display" : "none"});
@@ -191,15 +192,17 @@ function pagination(){
 	}
 }	
 
-/* 오디오 연속 재생 */
-function nextPlay(){
-
-document.getElementById('audio_player').src = "/img/exhibition/audio/𝗙. 𝗖𝗵𝗼𝗽𝗶𝗻 - Nocturne Op.9 No.2 in E flat Major.mp3"; 
-
-var media = document.getElementById('audio_player');
-
-media.currentTime = 0;
-
-media.play();
-
-}
+/* 감상평 열기/닫기 */
+$(document).ready(function(){
+	$('#review_close').css({"display":"none"});
+	$('#review_open').click(function(){
+		$('#review_close').css({"display":"block"});
+		$('#review_open').css({"display":"none"});
+		$('#ex_reviewList').css({"display":"none"});
+	})
+	$('#review_close').click(function(){
+		$('#review_open').css({"display":"block"});
+		$('#review_close').css({"display":"none"});
+		$('#ex_reviewList').css({"display":"block"});
+	})
+})
