@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="/css/board/helpBoardView.css"	type="text/css" />
 <link rel="stylesheet" href="/css/board/boardViewReply.css"	type="text/css" />
 <script>
+  if('${msg}'=='guest'){
+    	alert('본인또는 관리자가 아닙니다.');history.back();
+    }
 $(function(){
 	$("#helpBoardDel").click(function(){
 		if(confirm("삭제하시겠어요?")){
@@ -21,12 +24,12 @@ $(function(){
 				
 				let body = "<ul>";
 				sucResult.each(function(idx,obj){
-					body += "<li><div><span>"+obj.nickname+"  (" + obj.write_date + ")</span>"
+					body += "<li><div><span>"+obj.nickname+"  (" + obj.write_date + ")&nbsp;</span>"
 					if(obj.member_no == ${logNo}){
 						body += "<span><input type='button' class='btn' value='수정'>";
 						body += "<input type='button' class='btn' value='삭제' title="+obj.reply_no+","+ obj.member_no+">";
 					}
-					body += "<br/>" +obj.content+ "</span></div>"
+					body += "<br><br>" +obj.content+ "</span></div>"
 					
 					if(obj.nickname == "${logNickname}"){
 						body += "<div style='display:none'><form method='post'>";
@@ -119,7 +122,7 @@ $(function(){
 	<br>
 	<ul>
 	<div class="parent">
-		<div class="child1">작성자 : ${viewVo.member_no}</div>
+		<div class="child1">작성자 : ${viewVo.nickname}</div>
 		<div class="child2"><h1>제목 : ${viewVo.subject}</h1></div>
 		<div class="child1">조회수 : ${viewVo.view}</div>
 	</div>

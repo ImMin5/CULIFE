@@ -27,10 +27,11 @@ public class BoardController {
 
 	// 자유게시판
 	@GetMapping("freeBoardList")
-	public ModelAndView freeboardList(PagingVO pVO) {
+	public ModelAndView freeboardList(PagingVO pVO, BoardVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("list", service.freeselectList(pVO));
+		vo.setNickname((String)session.getAttribute("nickName"));
 
 		// 자유게시판 목록 페이징
 		int total = service.boardTotalRecord(pVO);
@@ -140,9 +141,10 @@ public class BoardController {
 
 	// 문의사항게시판
 	@GetMapping("/help/helpBoardList")
-	public ModelAndView helpboardList(PagingVO pVO) {
+	public ModelAndView helpboardList(PagingVO pVO, BoardVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 
+		vo.setMember_no((Integer) session.getAttribute("logNo"));
 		mav.addObject("list", service.helpselectList(pVO));
 		
 		// 문의사항 목록 페이징
@@ -166,16 +168,24 @@ public class BoardController {
 
 	// 문의사항 상세페이지 뷰
 	@GetMapping("/help/helpBoardView")
-	public ModelAndView helpView(int no, String userid, HttpSession session) {
+	public ModelAndView helpView(int no, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		int member_no = (Integer) session.getAttribute("logNo");
+		int grade = (Integer) session.getAttribute("grade");
+		BoardVO vo = service.selectView(no);
 		
-		// 조회수 증가
-		service.updateViews(no);
-
-		// 상세페이지 보이기(뷰 보이기)
-		mav.addObject("viewVo", service.selectView(no));
+		if(vo.getMember_no() == member_no || grade == 2) {
+			// 상세페이지 보이기(뷰 보이기)
+			mav.addObject("viewVo", vo);
+			// 조회수 증가
+			service.updateViews(no);
+		}
+		else {
+			String msg = "guest";
+			mav.addObject("msg", msg);
+		}
 		mav.setViewName("board/help/helpBoardView");
-
+		
 		return mav;
 	}
 

@@ -27,8 +27,6 @@
 		</c:forEach>
 	</ul>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<button id="write" style='float: right'
-		onclick="location.href='freeBoardWrite'">글쓰기</button>
 	<!-- 페이징 -->
 	<div class="page">
 		<ul class="paging">

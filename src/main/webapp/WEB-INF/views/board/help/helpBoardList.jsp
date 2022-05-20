@@ -24,7 +24,6 @@
 		</c:forEach>
 		</ul>
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<button id="write" style='float:right' onclick="location.href='helpBoardWrite'">글쓰기</button>
 			<div class="page">
 		<ul class="paging">
 			<!--  이전페이지 -->
@@ -60,7 +59,7 @@
 		</ul>
 	</div>
 	<div>
-		<form method="get" action="/board/helpBoardList" id='searchFrm'>
+		<form method="get" action="/board/help/helpBoardList" id='searchFrm'>
 			<input type="hidden" name="category" value="help"> <select
 				name="searchKey" id="searchkey">
 				<option value='b.no'>게시글번호</option>
