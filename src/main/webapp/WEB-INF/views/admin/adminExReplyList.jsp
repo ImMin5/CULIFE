@@ -47,6 +47,24 @@ $(function () {
 	$(document).on('mouseleave','.test li', function (e) {
 		$(e.target).parent().children('li').css("background-color","white");
 	});
+	$(document).on('click','.test li', function (e) {
+		if($(e.target).parent().children('li').hasClass('extends_li')){
+			$(e.target).parent().children('li').css("height","50px");
+			$(e.target).parent().children('li').css("white-space","nowrap");
+			$(e.target).parent().children('li').css("line-height","50px");
+			$(e.target).parent().children('li').css("text-overflow","ellipsis");
+			$(e.target).parent().children('li').css("overflow","hidden");
+			$(e.target).parent().children('li').removeClass('extends_li');
+		}else{
+			$(e.target).parent().children('li').css("height","80px");
+			$(e.target).parent().children('li').css("white-space","normal");
+			$(e.target).parent().children('li').css("line-height","80px");
+			$(e.target).parent().children('li:nth-child(3)').css("line-height","40px");
+			$(e.target).parent().children('li').css("text-overflow","none");
+			$(e.target).parent().children('li').css("overflow","auto");
+			$(e.target).parent().children('li').addClass('extends_li');
+		}
+	});
 	
 	$(".select_pageNum a").attr("style","color:white");
 
@@ -97,7 +115,7 @@ $(function () {
 		<ul class="test">
 			<li>${vo.no }</li>
 			<li>${vo.subject }</li>
-			<li><a href='#'>${vo.content }</a></li>
+			<li>${vo.content }</li>
 			<li>${vo.nickname }</li>
 			<li>${vo.write_date }</li>
 			<li><input type="checkbox" name="noList" value="${vo.no}" class="chk"/></li>
