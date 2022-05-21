@@ -14,10 +14,6 @@
 	ul {margin-bottom: 0;}
 </style>
 <script>
-// 댓글 수정 버튼 클릭
-$("button[name=review_edit_btn]").on("click",function(){
-	
-});
 //모달 띄우기 
 /* 작품보기 - 모달 띄우기*/
 function exhibition_modal(){
@@ -26,6 +22,44 @@ function exhibition_modal(){
 };
 
 $(function(){
+
+	// 댓글 수정 버튼 클릭
+	$("button[name=review_edit_btn]").on("click",function(){
+		var type = $(this).attr("data-type");
+		var no = $(this).attr("data-no");
+		
+		if(type =="edit"){
+			var review_content = $("#review_content"+no).text();
+			$(this).text("저장");
+			$(this).attr("data-type","save");
+			$("#review_content"+no).replaceWith("<input id='review_content"+no+"' value='"+review_content +"'/>");
+		}else if(type == "save"){
+			var review_content = $("#review_content"+no).val();
+			var review_btn = $(this);
+			var url ="${url}/ex_review";
+			$.ajax({
+				url : url,
+				type:"PATCH",
+				data : {
+					no : no,
+					content : review_content,
+				},
+				success : function(data){
+					console.log(data);
+					review_btn.text("수정");
+					review_btn.attr("data-type","edit");
+					$("#review_content"+no).replaceWith("<p id='review_content"+no+"'>"+review_content +"</p>");
+					alert(data.msg);
+				},
+				error: function(error){
+					console.log(error);
+					//location.reload();
+				}
+				
+			});
+		}
+	});
+	
 	//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
@@ -40,6 +74,8 @@ $(function(){
 		//전시회 정보 불러오기
 		$("button[name=exhibition_modal_btn]").on("click",function(){
 			var no = $(this).attr("data-no");
+			var review_no = $(this).attr("data-review_no");
+			var review_content = $("#review_content"+review_no).text();
 			var author = $(this).attr("data-author");
 			var url ="${url}/exhibitionwithwork/"+ no;
 			$.ajax({
@@ -51,11 +87,11 @@ $(function(){
 					console.log(data.items[0].subject);
 					$("#modal_exhibition_subject").text(data.items[0].subject);
 					$("#modal_exhibition_content").text(data.items[0].content);
+					$("#modal_exhibition_review").text("내가 남긴 댓글 : " + review_content);
 					var modal_work_container = $("#modal_exhibition_workList");
 					modal_work_container.empty();
 					data.items[0].workList.forEach(function(element, index){
 						console.log(element);
-			
 						modal_work_container.append(`
 								<li>
 				    			<ul>
@@ -101,7 +137,7 @@ $(function(){
 			  				<tr>	
 			  					<th style="width:5%">번호</th>
 			  					<th>전시명</th>
-			  					<th>내용</th>
+			  					<th style="width:40%">내용</th>
 			  					<th>닉네임</th>
 			  					<th style="width:18%">작성일</th>
 			  					<th>비고</th>
@@ -112,11 +148,11 @@ $(function(){
 				  				<tr class="tr_record">
 				  					<th scope="row">${vo.no}</td>
 				  					<td>${vo.subject}</td>
-				  					<td ><input id="review_content${vo.no}" value="${vo.content}" style="border:none; background-color:none;" readonly/></td>
+				  					<td ><p id="review_content${vo.no}"  >${vo.content}</p></td>
 				  					
 				  					<td>${logNickname}</td>
 				  					<td>${vo.write_date}</td>
-				  					<td ><button class="btn" name="review_edit_btn" data-no="${vo.no}">수정</button><button class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}">보기</button></td>
+				  					<td ><button class="btn" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button><button class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button></td>
 				  				</tr>
 			  				</c:forEach>
 			  				
@@ -161,18 +197,18 @@ $(function(){
 						    	<c:choose>
 							    	<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
 								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
-								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/review?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								    	</c:if>
 								    	<c:if test="${p!=pvo.currentPage && p<=pvo.totalPage}">	
-								    		<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a class="page-link" href=${url}/mypage/review?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								   		</c:if>
 								   	</c:when>
 							    	<c:otherwise>
 								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
-								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/review?currrentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								    	</c:if>
 								    	<c:if test="${p!=pvo.currentPage && p<= pvo.totalPage}">	
-								    		<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a class="page-link" href=${url}/mypage/review?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								   		</c:if>
 								   	</c:otherwise>
 							   	</c:choose>
@@ -186,13 +222,14 @@ $(function(){
 				    			<c:otherwise>
 				    				<c:set var="endPage" value="${pvo.onePageCount}"/>
 				    			</c:otherwise>
+				    			
 				    		</c:choose>
 				    		<c:forEach var="p" begin="1" end="${endPage}">
 					    		<c:if test="${p==pvo.currentPage }">
-					    			<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+					    			<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/review?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								</c:if>
 								<c:if test="${p!=pvo.currentPage }">	
-									<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+									<li class="page-item"><a class="page-link" href=${url}/mypage/review?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								</c:if>
 							</c:forEach>
 				    	</c:otherwise>
@@ -202,7 +239,7 @@ $(function(){
 					<c:choose>
 						<c:when test="${pvo.currentPage < pvo.totalPage }">
 							<li class="page-item">
-							      <a class="page-link" href="${url}/mypage/board?pageNo=${pvo.currentPage+1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Next">
+							      <a class="page-link" href="${url}/mypage/review?currentPage=${pvo.currentPage+1}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Next">
 							        <span aria-hidden="true">&raquo;</span>
 							      </a>
 							</li>
@@ -257,6 +294,7 @@ $(function(){
     		<div id="ex_reg_detail">
     			<h4 id="modal_exhibition_subject"></h4>
     			<p id="modal_exhibition_content"></p>
+    			<p id="modal_exhibition_review"></p>
     		</div>
     		<ul id="modal_exhibition_workList">
 	    	</ul>
