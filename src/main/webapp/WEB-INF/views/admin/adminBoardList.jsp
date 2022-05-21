@@ -96,7 +96,7 @@ $(function () {
 		<c:forEach var="vo" items="${adminBoardList}">
 		<ul class="test">
 			<li>${vo.no }</li>
-			<li><a href='#'>${vo.subject }</a></li>
+			<li><a href='/board/freeBoardView?no=${vo.no}'>${vo.subject }</a></li>
 			<li>${vo.nickname }</li>
 			<li>${vo.view }</li>
 			<li>${vo.write_date }</li>
