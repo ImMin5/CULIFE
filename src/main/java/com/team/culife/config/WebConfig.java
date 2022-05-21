@@ -3,8 +3,10 @@ package com.team.culife.config;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.team.culife.intercepter.AdminInterceptor;
@@ -13,8 +15,15 @@ import com.team.culife.intercepter.LoginInterceptor;
 
 
 
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
+	@Value("${uploadPath}")
+	private String uploadPath;
+	
+	@Value("${resourcePath}")
+	private String resourcePath;
+	
 	//로그인해야만 접속가능한 매퍼주소.
 	private static final List<String> LOGIN_URL = Arrays.asList(
 			"/예시1/**");
@@ -38,5 +47,9 @@ public class WebConfig implements WebMvcConfigurer{
 		//registry.addInterceptor(new AuthorInterceptor()).addPathPatterns(AUTHOR_URL);
 		//registry.addInterceptor(new AdminInterceptor()).addPathPatterns(ADMIN_URL);
 
+	}
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler(uploadPath).addResourceLocations(resourcePath);
 	}
 }

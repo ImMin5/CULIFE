@@ -1,6 +1,10 @@
 package com.team.culife.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +29,7 @@ import com.team.culife.service.AlertService;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.BoardService;
 import com.team.culife.service.ExhibitionReviewService;
+import com.team.culife.service.FileService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
 import com.team.culife.service.MovieService;
@@ -65,6 +70,9 @@ public class MemberController {
 	
 	@Inject
 	ExhibitionReviewService exhibitionReviewService;
+	
+	@Inject
+	FileService fileService;
 	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
@@ -280,44 +288,42 @@ public class MemberController {
 	}
 	
 	//회원 썸네일 업로드
-	@PostMapping("/mypage/member/thumbnail")
-	public ResponseEntity<HashMap<String,String>> memberThumbnailEdit(MemberVO mvo, HttpServletRequest request ,HttpSession session){
+	@PostMapping("/upload/mypage/member/thumbnail")
+	public ResponseEntity<HashMap<String,String>> memberThumbnailEdit(MemberVO mvo, @RequestParam("file") MultipartFile newFile ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/thumbnail");
-		System.out.println("path --> " +path);
+		String path = "/upload/"+memberNo+"/thumbnail/";
 		
 		try {
 			if(memberNo != null) {
 				System.out.println("th "+ mvo.getThumbnail());
 				
-				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-				MultipartFile newFile = (MultipartFile) mr.getFile("file");
-				
 				if(newFile != null) { //새로업로드된 파일이 있으면
 					String newUploadFilename = newFile.getOriginalFilename();	
 						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-							File f = new File(path, newUploadFilename);
+							File f = new File(path);
 							//폴더가 존재하지 않을 경우 폴더 생성
 							if(!f.exists()) {
 								try {
-									System.out.println(f.mkdirs());
+									//새로 경로를 만듬 성공하면 true
+									f.mkdirs();
 								}catch(Exception e) {e.printStackTrace();}
 							}
-
 							// 업로드
 							try {
 								//기존에 있던 썸네일 파일 삭제
 								
 								mvo = memberService.memberSelectByNo(memberNo);
 								if(mvo.getThumbnail() != null) {
-									File deleteFile = new File(path,mvo.getThumbnail());
-									deleteFile.delete();
+									//파일 삭제
+									fileService.deleteImageFile(mvo.getThumbnail(), path);
 								}
+								//DB 업데이트
 								mvo.setThumbnail(newUploadFilename);
-								System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
-								newFile.transferTo(f);
+								memberService.memberUpdate(mvo);
+								//파일 업로드
+								fileService.uploadImage(newFile, path);
 							} catch(Exception ee) {ee.printStackTrace();}
 								
 						}
@@ -526,7 +532,7 @@ public class MemberController {
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
+		String path ="/upload/"+memberNo+"/author";
 		System.out.println("path --> " +path);
 		
 		try {
@@ -684,5 +690,17 @@ public class MemberController {
 			
 			return entity;
 			
-		}	
+		}
+		
+		//업로드 테스트
+		@PostMapping("/upload/img")
+		public String uploadImage(@RequestParam("file") MultipartFile imageFile) {
+			try {
+				String path = "/upload/";
+				fileService.uploadImage(imageFile, path);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return "ok";
+		}
 }

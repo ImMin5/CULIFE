@@ -53,9 +53,8 @@
 		
 		//프로필 이지미 바꾸기 요청
 		$("#memberForm_member_edit_btn").on("click",function(){
-			var url = "${url}/mypage/member/thumbnail";
+			var url = "/upload/mypage/member/thumbnail";
 			var data = new FormData($("#memberForm")[0]);
-			console.log(data.thumbnail);
 			$.ajax({
 				url : url,
 				processData: false,
