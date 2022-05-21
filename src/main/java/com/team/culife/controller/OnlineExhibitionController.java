@@ -51,8 +51,9 @@ public class OnlineExhibitionController {
 			System.out.println("pvo -->" + pVO.getTotalRecord());
 			List<ExhibitionVO> exhibitionList = eService.exhibitionList(pVO);
 			for(ExhibitionVO e : exhibitionList) {
-				e.setMember_no(aService.authorSelectByNo(e.getAuthor_no()).getMember_no());
-					System.out.println(e.getSubject());
+				AuthorVO avo = aService.authorSelectByNo(e.getAuthor_no());
+				e.setAuthor(avo.getAuthor());
+				e.setMember_no(avo.getMember_no());
 			}
 			if(exhibitionList.size() > 0) {
 		

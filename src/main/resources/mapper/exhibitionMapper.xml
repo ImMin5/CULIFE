@@ -105,7 +105,7 @@
 		on e.no = w.exhibition_no and e.no=#{param1}
 	</select>
   
-    	<select id="exhibitionSelectAll" resultType="com.team.culife.vo.ExhibitionVO">
+    <select id="exhibitionSelectAll" resultType="com.team.culife.vo.ExhibitionVO">
   		select e.no, e.subject, e.content, a.author, e.start_date, e.end_date from exhibition e
   		join author a
   		on e.author_no = a.no 
