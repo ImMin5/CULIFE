@@ -140,7 +140,7 @@ public class ExhibitionController {
 									
 							}
 					} // if newFile != null end
-					String msg = "작가 재 신청되었습니다.";
+					String msg = "작가 재신청되었습니다.";
 					entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 				}
 			else if(avo.getAuthor_status() == 0) {
@@ -162,7 +162,7 @@ public class ExhibitionController {
 		return cnt;
 	}
 
-	@PostMapping("exhibitionWriteOk")
+	@PostMapping("exhibition/exhibitionWriteOk")
 	@ResponseBody
 	public ResponseEntity<String> exhibitionWriteOk(ExhibitionVO evo, String author, HttpServletRequest request, HttpSession session){
 		ModelAndView mav = new ModelAndView();
@@ -171,12 +171,14 @@ public class ExhibitionController {
 		AuthorVO avo = authorService.authorNoSelect(memberNo);
 		evo.setAuthor_no(avo.getNo());
 		Integer AuthorNO = avo.getNo();
+		System.out.println("AuthorNO)->"+AuthorNO);
 		String msg = "";
 		ResponseEntity<String> entity = null;
 
 		try {
 			ExhibitionVO Evo = exhibitionService.exhibitionSelectByEndDate(AuthorNO);
 			System.out.println("Evo " + Evo);
+			System.out.println("evo " + evo);
 			if(Evo != null) {
 				System.out.println("evo --> " + Evo.getStart_date() + " " + Evo.getEnd_date());
 				System.out.println(Evo);
@@ -184,40 +186,13 @@ public class ExhibitionController {
 						+ "location.href='/online_exhibition/onlineList'</script>";
 				entity = new ResponseEntity<String>(msg, HttpStatus.OK);
 			} else {
-				SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-				String todayfm = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
-				
-				Date startDate = dateFormat.parse(evo.getStart_date());
-				Date endDate = dateFormat.parse(evo.getEnd_date());
-				Date today = new Date(dateFormat.parse(todayfm).getTime());
-				
-				int start_end = startDate.compareTo(endDate);
-				int today_start = today.compareTo(startDate);
-				
-				if(today_start > 0) { // start날짜가 오늘보다 이전일 경우
-					System.out.println("nowDate => " + today);
-					System.out.println("startDate => " + startDate);
-					msg = "<script>alert('전시 등록은 오늘 이후 날짜부터 가능합니다.'); "
-							+ "location.href='/online_exhibition/onlineList'</script>";
-					entity = new ResponseEntity<String>(msg, HttpStatus.OK);
-				} else if(start_end > 0) { // start_date가 End_date보다 큰 경우
-					System.out.println("evo --> " + evo.getStart_date() + " " + evo.getEnd_date());
-					System.out.println("start > end");
-					System.out.println("nowDate => " + today);
-					msg = "<script>alert('전시 시작일과 종료일을 확인 후 재등록 바랍니다.'); "
-							+ "location.href='/online_exhibition/onlineList'</script>";
-					entity = new ResponseEntity<String>(msg, HttpStatus.OK);
-				} else {
-					System.out.println("evo --> " + evo.getStart_date() + " " + evo.getEnd_date());
-					exhibitionService.exhibitionWrite(evo);
-					System.out.println("전시 등록 완료");
-					msg = "<script>alert('전시 등록 완료되었습니다!'); "
-							+ "location.href='/online_exhibition/onlineList'</script>";
-					entity = new ResponseEntity<String>(msg, HttpStatus.OK);
-				}
+				System.out.println("evo --> " + evo.getStart_date() + " " + evo.getEnd_date());
+				exhibitionService.exhibitionWrite(evo);
+				System.out.println("전시 등록 완료");
+				msg = "<script>alert('전시 등록 완료되었습니다!'); " + "location.href='/online_exhibition/onlineList'</script>";
+				entity = new ResponseEntity<String>(msg, HttpStatus.OK);
+
 			}
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -232,7 +207,8 @@ public class ExhibitionController {
 		mav.setViewName("exhibition/workEdit");
 		return mav;
 	}
-	@PostMapping("workCreateOk")
+	@PostMapping("exhibition/workCreateOk")
+	@ResponseBody
 	public ResponseEntity<String> workCreateOk(HttpServletRequest request, HttpSession session, WorkVO wvo) {
 		ModelAndView mav = new ModelAndView();
 		ResponseEntity<String> entity = null;
@@ -243,7 +219,8 @@ public class ExhibitionController {
 		try {
 			AuthorVO avo = authorService.authorNoSelect(memberNo);
 			ExhibitionVO evo = exhibitionService.exhibitionSelectByEndDate(avo.getNo());
-			
+			System.out.println(wvo.getWork_content());
+			System.out.println(wvo.getWork_subject());
 				//작품 등록
 				if(evo != null) {
 					int workCount = exhibitionService.workSelectByExhibitionNo(evo.getNo()).size();
