@@ -3,6 +3,7 @@ package com.team.culife.service;
 import java.util.List;
 
 import com.team.culife.vo.ExhibitionReviewVO;
+import com.team.culife.vo.PagingVO;
 
 public interface ExhibitionReviewService {
 
@@ -17,6 +18,9 @@ public interface ExhibitionReviewService {
 		
 	// 댓글 삭제하기
 	public int delete_ExhibitionReview(int exhibition_no, int member_no);
+	
+	public int exhibitionReviewTotalRecord(PagingVO vo);
+	public List<ExhibitionReviewVO> exhibitionReviewSelectByMemberNo(PagingVO vo);
 
 }
 

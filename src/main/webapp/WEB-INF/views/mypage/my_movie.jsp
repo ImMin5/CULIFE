@@ -115,7 +115,7 @@ let is_loading = false;
 				  		<input type="text" class="form-control" id="search_word" placeholder="검색" style=" font-size:2.3rem;">
 				  		<select id="select_container">
 							<option value="movie" selected>영화</option>
-						 	<option value="theater">연극/뮤지컬</option>
+						 	<option value="theater">공연</option>
 						</select>
 					</div>
 				</div>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.team.culife.dao.ExhibitionReviewDAO;
 import com.team.culife.dao.ReplyDAO;
 import com.team.culife.vo.ExhibitionReviewVO;
+import com.team.culife.vo.PagingVO;
 import com.team.culife.vo.ReplyVO;
 
 @Service
@@ -35,6 +36,16 @@ public class ExhibitionReviewServiceImpl implements ExhibitionReviewService {
 	@Override
 	public int delete_ExhibitionReview(int exhibition_no, int member_no) {
 		return dao.delete_ExhibitionReview(exhibition_no, member_no);
+	}
+
+	@Override
+	public int exhibitionReviewTotalRecord(PagingVO vo) {
+		return dao.exhibitionReviewTotalRecord(vo);
+	}
+
+	@Override
+	public List<ExhibitionReviewVO> exhibitionReviewSelectByMemberNo(PagingVO vo) {
+		return dao.exhibitionReviewSelectByMemberNo(vo);
 	}
 
 	
