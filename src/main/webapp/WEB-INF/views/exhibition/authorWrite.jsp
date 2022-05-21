@@ -103,10 +103,10 @@ function authorSubmit() {
 		alert("프로필사진을 첨부해 주세요")
 	}
 	else if (debut_year == '' ) {
-		alert("데뷔년도를 입력해 주세요")
+		alert("데뷔 연도를 입력해 주세요")
 	}  
 	else if (!pattern_num.test(debut_year)) {
-		alert("데뷔년도에 숫자만 입력해 주세요")
+		alert("데뷔 연도에 숫자만 입력해 주세요")
 	} 
 	else if (author_msg == '') {
 		alert("자기소개를 입력해 주세요")
@@ -169,7 +169,7 @@ function authorSubmit() {
 
 						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
 							  <input type="text" class="form-control" name="debut_year" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018'style=" font-size:2rem; height:70px;">
-							  <label >데뷔년도</label>
+							  <label >데뷔 연도</label>
 						</div>
 						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
 							  <textarea class="form-control" name="author_msg" id="authorMsg" style=" font-size:2rem; height:100px; resize: none; padding-top: 25px;"></textarea>
