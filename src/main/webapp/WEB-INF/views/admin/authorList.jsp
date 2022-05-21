@@ -25,7 +25,7 @@ $(function () {
 				success: function(vo) {
 					var tag = '<ul>';
 					tag += '<li>작가신청</li>';
-					tag += '<li><img src="'+vo.author_thumbnail+'" id="preview" style="width: 170px; height: 170px;" /></li>';
+					tag += '<li><img src="/upload/'+vo.member_no+'/author/thumbnail/'+vo.author_thumbnail+'" id="preview" style="width: 170px; height: 170px;" /></li>';
 					tag += '<li>작가명: '+vo.author+'</li>';
 					tag += '<li>SNS주소: <a href="'+vo.sns_link+'" target="_blank">'+vo.sns_link+'</a></li>';
 					tag += '<li>데뷔년도: '+vo.debut_year+'</li>';
@@ -35,6 +35,7 @@ $(function () {
 					tag += '</ul>';
 					tag += '<form method="get" action="/admin/authorDelete" class="author_delete">';
 					tag += '<input type="hidden" name="no" value="'+vo.no+'" id="cancel_no"/>';
+					tag += '<input type="hidden" name="member_no" value="'+vo.member_no+'" id="cacel_member_no"/>';
 					/* 취소일때 - 취소사유확인 */
 					if(vo.author_status == 2){
 						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" readonly="readonly" style="width:86.5%; resize:none">'+vo.msg+'</textarea>';
@@ -86,10 +87,17 @@ $(function () {
 		};
 	});
 	
-	//모달창 닫기
+	//모달창 닫기(1)
 	$(document).on('click','.modalclose', function (e) {
 		$(".modal").css("display","none");
 		$(".modal_info").css("display","none");
+	});
+	//모달창 닫기(2)
+	$(document).on('click','.modal', function (e) {
+		if($(e.target).hasClass('modal')){
+			$(".modal").css("display","none");
+			$(".modal_info").css("display","none");
+		}
 	});
 	
 	//작가 승인
@@ -98,7 +106,8 @@ $(function () {
 		$.ajax({
 			url: url,
 			data: {
-				no: $(this).attr('title')
+				no: $(this).attr('title'),
+				member_no: $("#cacel_member_no").val()
 			},
 			success: function(vo) {
 				alert("승인이 완료되었습니다.");
@@ -120,6 +129,15 @@ $(function () {
 			return false;
 		}
 	});	
+	
+	$(document).on('mouseover','.test li', function (e) {
+		$(e.target).parent().children('li').css("background-color","rgb(0,0,0,0.1)");
+	});
+	$(document).on('mouseleave','.test li', function (e) {
+		$(e.target).parent().children('li').css("background-color","white");
+	});
+	$(".select_pageNum a").attr("style","color:white");
+
 });
 
 </script>
@@ -161,8 +179,13 @@ $(function () {
 		<li class='list_title'>신청날짜</li>
 		<li class='list_title'>상태</li>
 		<li class='list_title'>설정</li>
+		<c:if test="${empty authorList}">
+			<div class="noanswer_img">
+			</div>
+		</c:if>	
 		
 		<c:forEach var="vo" items="${authorList}">
+		<ul class="test">
 		<li>${vo.no}</li>
 		<li>${vo.member_no}</li>
 		<li>${vo.author}</li>
@@ -176,34 +199,25 @@ $(function () {
 			<c:if test="${vo.author_status == 2}">취소</c:if>
 		</li>
 		<li>
-			<!-- <c:if test="${vo.author_status == 0}">
-			<form method="get" action="/admin/authorUpgrade" class='author_upgrade'>
-				<input type="hidden" name="no" value="${vo.no}"/>
-				<input type="submit" value="승인" class="author_ok"/>
-			</form>
-			</c:if> -->
-			<!-- <form method="get" action="/admin/authorDelete" class='author_delete'>
-				<input type="hidden" name="no" value="${vo.no}"/>
-				<input type="submit" value="취소"/>
-			</form> -->
 			<input type="button" value="상세보기" class="modalup_info" title="${vo.no}"/>
 		</li>
+		</ul>
 		</c:forEach>
 	</ul>
-	
+	<input type="button" value="목록" id="resetList" onclick="location.href='/admin/authorList'"/>
 	<!-- 페이징 -->
 	<ul class="paging">
 	<!--  이전페이지 -->
 	<c:if test="${pVO.pageNum == 1 }">
-		<li>◀</li>
+		<li class="arrow_prev"></li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/authorList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+		<li class="arrow_prev"><a href="/admin/authorList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">&nbsp;&nbsp;&nbsp;</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
 			<c:if test="${p==pVO.pageNum}">
-				<li style="font-weight: bold;">
+				<li class="select_pageNum" style="font-weight: bold; background-color: #42454c;">
 			</c:if>
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
@@ -213,23 +227,21 @@ $(function () {
 	</c:forEach>
 	<!--  다음페이지 -->
 	<c:if test="${pVO.pageNum == pVO.totalPage }">
-		<li>▶</li>
+		<li class="arrow_next"></li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/authorList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+		<li class="arrow_next"><a href="/admin/authorList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">&nbsp;&nbsp;&nbsp;</a></li>
 	</c:if>
-		<li><input type="button" value="목록" id="resetList" onclick="location.href='/admin/authorList'"/></li>
 	</ul>
 </div> <!-- div:admin_container -->
 </div>
 
 <!--  div:modal -->	
-<div class="modal">
+<div class="modal" id="modal">
 	<div class="modal_body">
 		<div class="modal_info">
 		</div>
 	</div>
-	
 </div><!--  div:modal -->	
 
 </body>

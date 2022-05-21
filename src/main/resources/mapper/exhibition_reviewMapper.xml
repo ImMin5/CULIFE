@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.culife.dao.ExhibitionReviewDAO">
+	<insert id="insert_ExhibitionReview">
+		insert into exhibition_reply(no, exhibition_no, member_no, content) 
+		values(${no}, ${exhibition_no}, ${member_no}, #{content})
+	</insert>
+	
+	<select id="select_ExhibitionReviewList" resultType="ExhibitionReviewVO">
+		select e.exhibition_no, e.no, e.member_no, e.content, m.nickname, date_format(e.write_date, "%Y.%m.%d") write_date
+		from exhibition_reply e join member m on e.member_no = m.no where e.exhibition_no = ${exhibition_no}
+		order by exhibition_no desc
+	</select>
+	
+	<update id="update_ExhibitionReview">
+		update exhibition_reply set content=#{content} where no=${no} and member_no=#{member_no}
+	</update>
+	
+	<delete id="delete_ExhibitionReview">
+		delete from exhibition_reply where no=#{param1} and member_no=#{param2}
+	</delete>
+	<select id="exhibitionReviewTotalRecord" resultType="int">
+		select count(no) cnt from exhibition_reply
+  		where member_no=${member_no}
+  		<if test='searchWord != null'>
+  			and (content like '%${searchWord}%') 
+  		</if>
+	</select>
+	<select id="exhibitionReviewSelectByMemberNo" resultType="com.team.culife.vo.ExhibitionReviewVO">
+		select er.no, er.exhibition_no, er.member_no, er.content, er.write_date, e.subject from exhibition_reply er
+		join exhibition e
+		on er.exhibition_no = e.no and member_no=${member_no}
+  		<if test='searchWord != null'>
+  			where er.content like '%${searchWord}%'  or e.subject like '%${searchWord}%'
+  		</if>
+  		order by write_date
+  		limit ${recordPerPage} offset ${offsetIndex}
+	</select>
+</mapper>

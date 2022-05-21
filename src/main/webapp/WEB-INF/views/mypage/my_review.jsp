@@ -2,15 +2,31 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage_board.css">
+
+<link rel="stylesheet" href="/css/exhibition/onlineList.css">
+<script src="/js/modal.js"></script>
+<script src="/js/mypage/my_review.js "></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <style>
-.tr_record{
-	height:2vh;
-}
+	.tr_record{height:2vh;}
+	footer {position:fixed; left:0; bottom:0; background-color:black;}
+	ul {margin-bottom: 0;}
 </style>
 <script>
-	$(function(){
-		//글자색 바꾸기
+// 댓글 수정 버튼 클릭
+$("button[name=review_edit_btn]").on("click",function(){
+	
+});
+//모달 띄우기 
+/* 작품보기 - 모달 띄우기*/
+function exhibition_modal(){
+	$("#ex_detail_bg").css({"display" : "block"});
+	$('footer').css({"display" : "none"});
+};
+
+$(function(){
+	//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
 		$("#search_word").on("keyup",function(key){
@@ -20,6 +36,49 @@
 	            
 	        }
     	});
+		
+		//전시회 정보 불러오기
+		$("button[name=exhibition_modal_btn]").on("click",function(){
+			var no = $(this).attr("data-no");
+			var author = $(this).attr("data-author");
+			var url ="${url}/exhibitionwithwork/"+ no;
+			$.ajax({
+				url : url,
+				tpye : "GET",
+				dataType:"JSON",
+				success: function(data){
+					console.log(data);
+					console.log(data.items[0].subject);
+					$("#modal_exhibition_subject").text(data.items[0].subject);
+					$("#modal_exhibition_content").text(data.items[0].content);
+					var modal_work_container = $("#modal_exhibition_workList");
+					modal_work_container.empty();
+					data.items[0].workList.forEach(function(element, index){
+						console.log(element);
+			
+						modal_work_container.append(`
+								<li>
+				    			<ul>
+					    			<li><figure class="ex_detail_img"><img class="ex_work_thumbnail" src="${url}/upload/${'${data.items[0].member_no}'}/author/exhibition/${'${element.exhibition_no}'}/${'${element.work_thumbnail}'}"></figure></li>    		
+						    		<li class="ex_detail_info">
+						    			<ul>
+											<li>작가 : ${'${data.items[0].author}'}</li>
+											<li>작품명 : ${'${element.work_subject}'} </li>
+											<li>전시기간 : ${'${data.items[0].start_date}'} - ${'${data.items[0].end_date}'}</li>
+											<li>작품설명</li>
+											<li><p>${'${element.work_content}'}</p></li>
+										</ul>
+									</li>
+								</ul>
+				    		</li>
+						`);
+					});
+					exhibition_modal();
+				},error : function(){
+					
+				}
+			})
+		})
 
 		
 	});
@@ -38,22 +97,26 @@
 			<div id="mypage_board_contatiner" class="container">
 				<div class="table-responsive">
 			  		<table class="table table-striped table-hover">
-			  			<thead class="sticky-top" style="background-color:gray">
+			  			<thead class="sticky-top" style="background-color:gray; z-index:-10;">
 			  				<tr>	
-			  					<th style="width:5%">번호</td>
-			  					<th>전시명</td>
-			  					<th>닉네임</td>
-			  					<th style="width:18%">작성일</td>
+			  					<th style="width:5%">번호</th>
+			  					<th>전시명</th>
+			  					<th>내용</th>
+			  					<th>닉네임</th>
+			  					<th style="width:18%">작성일</th>
+			  					<th>비고</th>
 			  				</tr>
 			  			</thead>
 			  			<tbody>
 			  				<c:forEach var="vo" items="${reviewList}">
-				  				<tr class="tr_record" onclick="location.href='${url}/board/boardList/${vo.no}'">
+				  				<tr class="tr_record">
 				  					<th scope="row">${vo.no}</td>
 				  					<td>${vo.subject}</td>
-				  					<td>${vo.nickname}</td>
-				  					<td>${vo.view}</td>
+				  					<td ><input id="review_content${vo.no}" value="${vo.content}" style="border:none; background-color:none;" readonly/></td>
+				  					
+				  					<td>${logNickname}</td>
 				  					<td>${vo.write_date}</td>
+				  					<td ><button class="btn" name="review_edit_btn" data-no="${vo.no}">수정</button><button class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}">보기</button></td>
 				  				</tr>
 			  				</c:forEach>
 			  				
@@ -61,7 +124,7 @@
 			  			</tbody>
 					</table>
 				</div>
-				<!-- 페이징 -->
+						<!-- 페이징 -->
 				<nav id="mypage_board_pagination" class="container">
 				  <ul class="pagination">
 				  <!-- 이전 페이지 -->
@@ -85,16 +148,16 @@
 				    <!-- 페이지 번호 -->
 				    <!-- totalPage 가 onePageCount 보다 클때 -->
 				    <c:choose>
-				    	<c:when test="${pvo.totalPage > pvo.onePageCount and pvo.startPage - pvo.onePageCount/2 > 0 and pvo.startPage <= pvo.totalPage}">
+				    	<c:when test="${pvo.totalPage > pvo.onePageCount and pvo.currentPage - pvo.onePageCount/2 > 0 and pvo.currentPage <= pvo.totalPage}">
 				    		<c:choose>
 				    			<c:when test="${pvo.totalPage- pvo.onePageCount/2 == pvo.currentPage}">
 				    				<c:set var="endPage" value="${pvo.totalPage}"/>
 				    			</c:when>
 				    			<c:otherwise>
-				    				<c:set var="endPage" value="${pvo.startPage+pvo.onePageCount/2}"/>
+				    				<c:set var="endPage" value="${pvo.currentPage+pvo.onePageCount/2}"/>
 				    			</c:otherwise>		
 				    		</c:choose>
-				    		<c:forEach var="p" begin="${pvo.startPage- pvo.onePageCount/2 + 1}" end="${endPage}">
+				    		<c:forEach var="p" begin="${pvo.currentPage- pvo.onePageCount/2 + 1}" end="${endPage}">
 						    	<c:choose>
 							    	<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
 								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
@@ -186,3 +249,17 @@
 		
 	</div>
 </main>
+
+ <!-- 작품 상세 페이지 모달 -->
+	<div id="ex_detail_bg" class="modal" style="z-index:1500;">
+    	<div id="ex_detail_wrap" class="modal_wrap">
+    		<h3>작품 상세</h3>
+    		<div id="ex_reg_detail">
+    			<h4 id="modal_exhibition_subject"></h4>
+    			<p id="modal_exhibition_content"></p>
+    		</div>
+    		<ul id="modal_exhibition_workList">
+	    	</ul>
+	    	<i class="fa-solid fa-xmark"></i>
+    	</div>
+    </div>

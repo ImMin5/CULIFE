@@ -23,6 +23,8 @@ public interface AdminService {
 	public int memberBan(MemberVO mVO);
 	//회원상태: 정지날짜설정
 	public int memberBanDate(MemberBanVO mbVO);	
+	//회원상태: 정지날짜설정(업데이트)
+	public int memberBanDateUp(MemberBanVO mbVO);
 	//회원상태: member_ban에서 삭제
 	public int memberBanDel(MemberBanVO mbVO);
 	

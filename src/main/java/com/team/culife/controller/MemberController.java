@@ -21,8 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.AlertService;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.BoardService;
+import com.team.culife.service.ExhibitionReviewService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
 import com.team.culife.service.MovieService;
@@ -30,6 +32,7 @@ import com.team.culife.service.ReviewService;
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
+import com.team.culife.vo.ExhibitionReviewVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.MovieVO;
 import com.team.culife.vo.PageResponseBody;
@@ -56,17 +59,23 @@ public class MemberController {
 	@Inject
 	BoardService boardService;
 	
+	@Inject
+	AlertService alertService;
+	
+	@Inject
+	ExhibitionReviewService exhibitionReviewService;
+	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
 	public ModelAndView mypage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		
 		try {
 			
 			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				session.setAttribute("grade",mvo.getGrade());	
+				session.setAttribute("grade",mvo.getGrade());
+				mav.addObject("alertList",alertService.alertSelectByMemberNo(memberNo));
 				mav.addObject("mvo", mvo);
 				mav.setViewName("mypage/mypage");
 			}
@@ -180,9 +189,50 @@ public class MemberController {
 			@RequestParam(value="pageNo", required=false, defaultValue="1") int currentPage,
 			@RequestParam(value="pageCount", required=false, defaultValue="10") int pageCount,
 			@RequestParam(value="searchWord", required=false) String searchWord) {
+			ModelAndView mav = new ModelAndView();
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			
+			try {
+				if(memberNo == null) {
+					mav.setViewName("redirect:/");
+				}
+				else {
+					PagingVO pvo = new PagingVO();
+					// 전체 리스트 업데이트
+					pvo.setRecordPerPage(pageCount);
+					pvo.setCurrentPage(currentPage);
+					pvo.setMember_no(memberNo);
+					pvo.setCategory(category);
+					if(searchWord != null)pvo.setSearchWord(searchWord);
+					pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					if(pvo.getTotalPage() >0  && pvo.getTotalPage() < currentPage) {
+						pvo.setCurrentPage(pvo.getTotalPage());
+						pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					}
+					
+					List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
+					mav.addObject("boardList", list);
+					mav.addObject("pvo", pvo);
+					mav.setViewName("mypage/my_board");
+					
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				mav.setViewName("redirect:/");
+			}
+			
+		return mav;
+	}
+		
+	//마이페이지 감상평
+	@GetMapping("/mypage/review")
+	public ModelAndView mypageReview(HttpSession session, 
+			@RequestParam(value="pageNo", required=false, defaultValue="1") int currentPage,
+			@RequestParam(value="pageCount", required=false, defaultValue="10") int pageCount,
+			@RequestParam(value="searchWord", required=false) String searchWord) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		
 		try {
 			if(memberNo == null) {
 				mav.setViewName("redirect:/");
@@ -193,34 +243,19 @@ public class MemberController {
 				pvo.setRecordPerPage(pageCount);
 				pvo.setCurrentPage(currentPage);
 				pvo.setMember_no(memberNo);
-				pvo.setCategory(category);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
-				pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
-				if(pvo.getTotalPage() < currentPage) {
+				pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
+				if(pvo.getTotalPage() >0  &&  pvo.getTotalPage() < currentPage) {
 					pvo.setCurrentPage(pvo.getTotalPage());
-					pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
 				}
 				
-				List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
-				mav.addObject("boardList", list);
+				List<ExhibitionReviewVO> list = exhibitionReviewService.exhibitionReviewSelectByMemberNo(pvo);
+				mav.addObject("reviewList", list);
 				mav.addObject("pvo", pvo);
-				mav.setViewName("mypage/my_board");
-				
+				mav.setViewName("mypage/my_review");
 			}
 			
-		}catch(Exception e) {
-			e.printStackTrace();
-			mav.setViewName("redirect:/");
-		}
-		
-		return mav;
-	}
-	//마이페이지 감상평
-	@GetMapping("/mypage/review")
-	public ModelAndView mypageReview() {
-		ModelAndView mav = new ModelAndView();
-		try {
-			mav.setViewName("mypage/my_review");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

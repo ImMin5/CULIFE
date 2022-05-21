@@ -50,6 +50,10 @@ public class AdminServiceImpl implements AdminService{
 	public int memberBanDate(MemberBanVO mbVO) {
 		return dao.memberBanDate(mbVO);
 	}
+	@Override
+	public int memberBanDateUp(MemberBanVO mbVO) {
+		return dao.memberBanDateUp(mbVO);
+	}
 	
 	//작가목록
 	@Override
@@ -158,6 +162,7 @@ public class AdminServiceImpl implements AdminService{
 	public int adminExReplyDel(AdminReviewVO arVO) {
 		return dao.adminExReplyDel(arVO);
 	}
+	
 	
 	
 	

@@ -4,15 +4,15 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
 <style>
-	.memberList>li{position:relative;}
-	.memberList img{
+	.test>li{position:relative;}
+	.test img{
 		background-color: gray;
 		position: absolute;
 		left: 120px;
 		top: -40px;
 		border: 1px solid black;
 		z-index: 999999 !important;
-		display:none;
+		display: none;
 	}
 	.admin_gallery li:nth-child(1) {
 		background: url(/img/admin/1.jpg) no-repeat center center;
@@ -27,19 +27,23 @@ $(function () {
 		}
 	});	
 	
-	$(".noimg").mouseover(function(){
-		var point = $(this).offset();
-		alert(point.top);
-	});
-	
-	/*이*/
-	$(".memberList>li:nth-child(8n+2)").hover(function(){
+	/*썸네일*/
+	$(".test li:nth-child(8n+2)").hover(function(){
 			$(this).children("img").css("display","block");
 		},
 		function(){
-			$(".memberList img").css("display","none");
+			$(".test img").css("display","none");
 		}		
 	);
+	
+	$(document).on('mouseover','.test li', function (e) {
+		$(e.target).parent().children('li').css("background-color","rgb(0,0,0,0.1)");
+	});
+	$(document).on('mouseleave','.test li', function (e) {
+		$(e.target).parent().children('li').css("background-color","white");
+	});
+	
+	$(".select_pageNum a").attr("style","color:white");
 });	
 </script>
 <div class="wrap">
@@ -82,8 +86,12 @@ $(function () {
 		<li class='list_title'>정지기간</li>
 		<li class='list_title'>회원상태</li>
 		<li class='list_title'>설정</li>
-
+		<c:if test="${empty memberList}">
+			<div class="noanswer_img">
+			</div>
+		</c:if>		
 		<c:forEach var="vo" items="${memberList}">
+		<ul class="test">
 			<li>${vo.no}</li>
 			<li>${vo.kakao_id}
 			<c:if test="${vo.thumbnail eq Null}">
@@ -119,6 +127,7 @@ $(function () {
 			<li>
 				<form method="get" action="/admin/memberStatus" class='statusFrm'>
 					<input type="hidden" name="no" value="${vo.no}"/>
+					<input type="hidden" name="end_date" value="${vo.end_date}"/>
 					<select name="memberStatus">
 						<option value="ok">정상</option>
 						<option value="7">7일정지</option>
@@ -128,21 +137,25 @@ $(function () {
 					<input type="submit" value="적용"/>
 				</form>
 			</li>
+		</ul>
    		</c:forEach>
 	</ul>
+	
+	<input type="button" value="목록" id="resetList" onclick="location.href='/admin/memberList'"/>
+	
 	<!-- 페이징 -->
 	<ul class="paging">
 	<!--  이전페이지 -->
 	<c:if test="${pVO.pageNum == 1 }">
-		<li>◀</li>
+		<li class="arrow_prev"></li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/memberList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+		<li class="arrow_prev"><a href="/admin/memberList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">&nbsp;&nbsp;&nbsp;</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
 			<c:if test="${p==pVO.pageNum}">
-				<li style="font-weight: bold;">
+				<li class="select_pageNum" style="font-weight: bold; background-color: #42454c;">
 			</c:if>
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
@@ -152,12 +165,11 @@ $(function () {
 	</c:forEach>
 	<!--  다음페이지 -->
 	<c:if test="${pVO.pageNum == pVO.totalPage }">
-		<li>▶</li>
+		<li class="arrow_next"></li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/memberList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+		<li class="arrow_next"><a href="/admin/memberList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">&nbsp;&nbsp;&nbsp;</a></li>
 	</c:if>
-		<li><input type="button" value="목록" id="resetList" onclick="location.href='/admin/memberList'"/></li>
 	</ul>
 </div><!-- class='adminList_container' -->
 </div>

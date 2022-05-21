@@ -59,8 +59,6 @@ body{
 }
 #nav > ul > li > a:hover {color:red}
 
-footer{
-}
 .img_top{
 	width: 100%;
 	height: 200px;
@@ -100,6 +98,8 @@ li{
 /*  -------------------------------------------   */
 .list_title{
 	background-color: #d3d3d3;
+	font-weight: bold;
+	text-align: center;
 }
 /* 회원목록 */
 .memberList{
@@ -108,16 +108,15 @@ li{
 }
 .memberList li{
 	float: left;
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	border-bottom: 1px solid black;
 	text-align: center;
 	width: 12.5%;
 }
 .memberList li:nth-child(8n){
 	float: left;
-	height: 40px;
-	line-height: 40px;
+	line-height: 50px;
 	border-bottom: 1px solid black;
 	width: 12.5%;
 }
@@ -127,10 +126,19 @@ li{
 .memberList li:nth-child(8n+3){
 	width: 18%;
 }
+.memberList li input[type=submit]{
+	border-radius: 5px;
+	background-color: rgb(0,0,0,0.1);
+	border: 1px solid black;
+	color: black;
+}
+.memberList li input[type=submit]:hover{
+	background-color: gray;
+	color: white;
+}
 #thumbnail_member{
 	width: 70px;
 	height: 70px;
-
 }
 /* 작가목록 */
 .authorList{
@@ -140,15 +148,24 @@ li{
 }
 .authorList li{
 	float: left;
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	border-bottom: 1px solid black;
 	text-align: center;
 	width: 13%;
 }
+.authorList li input[type=button]{
+	border-radius: 5px;
+	background-color: rgb(0,0,0,0.1);
+	border: 1px solid black;
+	color: black;
+}
+.authorList li input[type=button]:hover{
+	background-color: gray;
+	color: white;
+}
 .authorList li:nth-child(8n){
-	height: 40px;
-	line-height: 40px;
+	line-height: 50px;
 }
 .authorList li:nth-child(8n+1), .authorList li:nth-child(8n+2), .authorList li:nth-child(8n+4){
 	width: 7%;
@@ -158,13 +175,16 @@ li{
 	text-overflow: ellipsis;
 	width: 20%;
 }
-
-
+.authorList ul li:nth-child(8n+5){
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 20%;
+	text-align: left;
+}
 .authorList li:nth-child(8n) input{
 	text-align: center;
 	margin-top: 7px;
 }
-
 /* 작가목록 - 모달창*/
 .modal{
 	position: absolute;
@@ -177,7 +197,6 @@ li{
 }
 .modal_body{
 	position: relative;
-	background-color: red;
 	width: 500px;
 	height: 500px;
 	top: 25%;
@@ -186,8 +205,9 @@ li{
 }
 .modal_info{
 	background-color: white;
-	text-align: center;
+	border-radius: 10px;
 	border: 2px solid gray;
+	text-align: center;
 }
 .modal_info li{
 	padding-top: 10px;
@@ -195,6 +215,12 @@ li{
 .modal_info li:first-child{
 	font-size: 1.3em;
 	font-weight: bold;
+}
+.modal_info li:nth-child(3), .modal_info li:nth-child(4), .modal_info li:nth-child(5){
+	text-align: left;
+	margin-left: 35px;
+	width: 87%;
+	padding-bottom: 5px;
 }
 .modal_info li:nth-child(4){
 	text-overflow: ellipsis;
@@ -215,10 +241,19 @@ li{
 .btn_wrap{
 	text-align: center;
 }
-.modal_info input{
+.modal_info input[type=button]{
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-bottom: 10px;
+	background-color: gray;
+	border: 2px solid gray;
+	border-radius: 5px;
+	font-weight: bold;
+}
+.modal_info input[type=button]:hover{
+	background-color: gray;
+	border: 2px solid gray;
+	color: white;
 }
 /* 자유게시판 목록*/
 .adminBoardList{
@@ -228,12 +263,12 @@ li{
 }
 .adminBoardList li{
 	float: left;
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	border-bottom: 1px solid black;
 	width: 10%;
 }
-.adminBoardList li:nth-child(6n+2){
+.adminBoardList li:nth-child(6n+2), .adminBoardList ul li:nth-child(6n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 50%;
@@ -251,12 +286,12 @@ li{
 }
 .adminHelpList li{
 	float: left;
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	border-bottom: 1px solid black;
 	width: 10%;
 }
-.adminHelpList li:nth-child(6n+2){
+.adminHelpList ul li:nth-child(6n+2), .adminHelpList li:nth-child(6n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 45%;
@@ -276,8 +311,8 @@ li{
 }
 .adminReviewList li{
 	float: left;
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	border-bottom: 1px solid black;
 	width: 15%;
 }
@@ -288,7 +323,7 @@ li{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.adminReviewList li:nth-child(7n+3){
+.adminReviewList ul li:nth-child(7n+3), .adminReviewList li:nth-child(7n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 35%;
@@ -310,21 +345,21 @@ li{
 	overflow: auto;
 	text-align: center;	
 }
-.adminWarningList li{
+.adminWarningList ul li,.adminWarningList li{
 	float: left;
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	border-bottom: 1px solid black;
 	width: 15%;
 }
-.adminWarningList li:nth-child(7n+1){
+.adminWarningList ul li:nth-child(7n+1), .adminWarningList li:nth-child(7n+1){
 	width: 10%;
 }
-.adminWarningList li:nth-child(7n+2){
+.adminWarningList ul li:nth-child(7n+2), .adminWarningList li:nth-child(7n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.adminWarningList li:nth-child(7n+3){
+.adminWarningList ul li:nth-child(7n+3), .adminWarningList li:nth-child(7n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
 	text-align: left;
@@ -333,7 +368,7 @@ li{
 .adminWarningList li:nth-child(3){
 	text-align: center;
 }
-.adminWarningList li:nth-child(7n+5), .adminWarningList li:nth-child(7n+6), .adminWarningList li:nth-child(7n){
+.adminWarningList ul li:nth-child(7n+5), .adminWarningList ul li:nth-child(7n+6), .adminWarningList ul li:nth-child(7n),.adminWarningList li:nth-child(7n+5), .adminWarningList li:nth-child(7n+6), .adminWarningList li:nth-child(7n){
 	width: 10%;
 
 }
@@ -345,8 +380,8 @@ li{
 }
 .adminExReplyList li{
 	float: left;
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	border-bottom: 1px solid black;
 	width: 10%;
 }
@@ -355,7 +390,7 @@ li{
 	text-overflow: ellipsis;
 	width: 20%;
 }
-.adminExReplyList li:nth-child(6n+3){
+.adminExReplyList ul li:nth-child(6n+3), .adminExReplyList li:nth-child(6n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 40%;
@@ -374,27 +409,43 @@ li{
 }
 .paging li{
 	float:left; 
-	width: 3%;
-	text-align: center;	
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color:#fff;	
+	border: 1px solid #e6e6e6;
+	margin-right: 5px;
+}
+.paging li a{ 
+	width: 28px;
+	height: 28px;
 }
 .paging li:first-child{
 	margin-left: 480px;
 }
-.paging li:last-child{
+.arrow_prev{
+	background: url(/img/admin/page_prev.png) no-repeat center center;
+	margin-left: 0px;
+}
+.arrow_next{
+	background: url(/img/admin/page_next.png) no-repeat center center;
+	margin-left: 0px;
+}
+#resetList, #multiDel{
+	border-radius: 5px;
 	float: right;
-	width: 10%;
+	margin-top: 10px;
 	margin-right: 12px;
+	background-color: rgb(0,0,0,0.1);
+	border: 1px solid black;
+	color: black;
 }
-.paging li:last-child input{
-	float: right;
-}
+#resetList:hover, #multiDel:hover{
+	background-color: gray;
+	color: white;
+}	
 
-#resetList{
-	margin-right: 10px;
-}
-#multiDel{
-	margin-right: 22px;
-}
 /* 검색 */
 .mini_top{
 	z-index: 100;
@@ -459,6 +510,7 @@ li{
 	margin: 0;
 	height: 400px;
 	width: 1200px;
+	margin-top: 10px;
 }
 .admin_gallery li{
 	width: 1200px;
@@ -467,22 +519,20 @@ li{
 	position: relative;
 	overflow: hidden;
 }
-
-.admin_gallery li:hover {
-	filter: grayscale(0.4);
-}
 .admin_gallery_content{
 	position: absolute;
 	background-color: rgb(0,0,0,0.4);
 	color:white;
 	text-align: center;
 	height: 400px;
-	width: 200px;
-	line-height: 200px;
-	left: -200px;
-	transition: 0.3s;
-	font-size: 1.3em;
+	width: 100%;
+	line-height: 400px;
+	font-size: 2.5em;
+	font-weight: bold;
 }
-.admin_gallery li:hover .admin_gallery_content{
-	left: 0px;
+
+.noanswer_img{
+	background: url(/img/admin/noanswer1.jpg) no-repeat center center;
+	width: 100%;
+	height: 500px;
 }

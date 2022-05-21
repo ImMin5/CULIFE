@@ -18,5 +18,6 @@ public class ExhibitionVO {
 	private int exhibition_no;
 	private String work_thumbnail;
 	private int member_no;
-  private String author;
+	private String author;
+	private String nickname;
 }

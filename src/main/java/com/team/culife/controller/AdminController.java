@@ -1,5 +1,7 @@
 package com.team.culife.controller;
 
+import java.io.Console;
+
 import javax.inject.Inject;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.culife.service.AdminService;
+import com.team.culife.service.AlertService;
 import com.team.culife.vo.AdminPagingVO;
 import com.team.culife.vo.AdminReviewVO;
 import com.team.culife.vo.AuthorVO;
@@ -20,6 +23,8 @@ import com.team.culife.vo.MemberVO;
 public class AdminController {
 	@Inject
 	AdminService service;
+	@Inject
+	AlertService arservice;
 
 	// choi0429-관리자 접속 기본페이지(회원관리)
 	@GetMapping("/memberList")
@@ -45,7 +50,6 @@ public class AdminController {
 		mav.addObject("pVO", pVO);
 		// 회원목록 불러오기
 		mav.addObject("memberList", service.memberList(pVO));
-		
 		mav.setViewName("/admin/memberList");
 		return mav;
 	}
@@ -64,17 +68,26 @@ public class AdminController {
 		} else if (memberStatus.equals("7")) {
 			// 회원상태가 7일때
 			// member에서 status = 1으로 변경
-			service.memberBan(mVO);
+			service.memberBan(mVO);			
 			// member_ban에서 ban날짜 설정
 			mbVO.setAdd_date(Integer.parseInt(memberStatus));
-			service.memberBanDate(mbVO);
+			if(mbVO.getEnd_date() == "") {
+				service.memberBanDate(mbVO);
+			}else if(mbVO.getEnd_date() != "") {
+				service.memberBanDateUp(mbVO);
+			}
+			
 		} else if (memberStatus.equals("30")) {
 			// 회원상태가 30일때
 			// member에서 status = 1으로 변경
 			service.memberBan(mVO);
 			// member_ban에서 ban날짜 설정
 			mbVO.setAdd_date(Integer.parseInt(memberStatus));
-			service.memberBanDate(mbVO);
+			if(mbVO.getEnd_date() == "") {
+				service.memberBanDate(mbVO);
+			}else if(mbVO.getEnd_date() != "") {
+				service.memberBanDateUp(mbVO);
+			}
 		} else if (memberStatus.equals("del")) {
 			service.memberDel(mVO);
 		}
@@ -109,6 +122,9 @@ public class AdminController {
 	@GetMapping("/authorUpgrade")
 	public ModelAndView authorUpgrade(AuthorVO aVO) {
 		ModelAndView mav = new ModelAndView();
+		int member_no = aVO.getMember_no();
+		String content = "작가신청이 승인되었습니다.";
+		arservice.alertInsert(member_no, content);
 		service.authorUpgrade(aVO);
 		mav.setViewName("redirect:/admin/authorList");
 		return mav;
@@ -118,6 +134,9 @@ public class AdminController {
 	@GetMapping("/authorDelete")
 	public ModelAndView authorDelete(AuthorVO aVO) {
 		ModelAndView mav = new ModelAndView();
+		int member_no = aVO.getMember_no();
+		String content = aVO.getMsg();
+		arservice.alertInsert(member_no, content);
 		service.authorDown(aVO);
 		mav.setViewName("redirect:/admin/authorList");
 		return mav;

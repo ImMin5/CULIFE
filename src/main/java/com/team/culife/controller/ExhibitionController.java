@@ -3,6 +3,7 @@ package com.team.culife.controller;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +29,9 @@ import com.team.culife.service.ExhibitionService;
 import com.team.culife.service.MemberService;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.ExhibitionVO;
+import com.team.culife.vo.ExhibitionWorkVO;
 import com.team.culife.vo.MemberVO;
+import com.team.culife.vo.PageResponseBody;
 import com.team.culife.vo.WorkVO;
 
 @RestController
@@ -338,6 +342,30 @@ public class ExhibitionController {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
+		return entity;
+	}
+	@GetMapping("exhibitionwithwork/{no}")
+	public PageResponseBody<ExhibitionWorkVO> getExhibition(@PathVariable("no") int no, HttpSession session) {
+		PageResponseBody<ExhibitionWorkVO> entity = null;
+		HashMap<String,String> result = new HashMap<String,String>();
+		
+		try {
+			result.put("status","200");
+			List<ExhibitionWorkVO> list = new ArrayList<ExhibitionWorkVO>();
+			list.add(exhibitionService.exhibitionWorkSelectAll(no));
+			AuthorVO authorVO = authorService.authorSelectByNo(list.get(0).getAuthor_no());
+			list.get(0).setMember_no(authorVO.getMember_no());
+			list.get(0).setAuthor(authorVO.getAuthor());
+			entity = new PageResponseBody<ExhibitionWorkVO>();
+			entity.setItems(list);
+			
+		}catch(Exception e) {
+			result.put("status","400");
+			e.printStackTrace();
+			entity = new PageResponseBody<ExhibitionWorkVO>();
+			
+		}
+		
 		return entity;
 	}
 }

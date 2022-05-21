@@ -41,6 +41,15 @@ $(function () {
 			return false;
 		}
 	});	
+	$(document).on('mouseover','.test li', function (e) {
+		$(e.target).parent().children('li').css("background-color","rgb(0,0,0,0.1)");
+	});
+	$(document).on('mouseleave','.test li', function (e) {
+		$(e.target).parent().children('li').css("background-color","white");
+	});
+	
+	$(".select_pageNum a").attr("style","color:white");
+
 });
 </script>
 <div class="wrap">
@@ -82,8 +91,12 @@ $(function () {
 		<li class='list_title'>작성일</li>
 		<li class='list_title'>신고</li>
 		<li class='list_title'>전체선택<input type="checkbox" id="allCheck"/></li>
-		
+		<c:if test="${empty adminReviewList}">
+			<div class="noanswer_img">
+			</div>
+		</c:if>				
 		<c:forEach var="vo" items="${adminReviewList}">
+		<ul class="test">
 			<li>${vo.category }</li>
 			<li>${vo.title }</li>
 			<li>
@@ -105,23 +118,27 @@ $(function () {
 					<input type="checkbox" name="noList" value="${vo.no}" class="chk"/>
 				</c:if>
 			</li>
+		</ul>
 		</c:forEach>
 	</ul>
 	</form>
+
+	<input type="button" value="삭제" id="multiDel"/>
+	<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminReviewList'"/>		
 	
 	<!-- 페이징 -->
 	<ul class="paging">
 	<!--  이전페이지 -->
 	<c:if test="${pVO.pageNum == 1 }">
-		<li>◀</li>
+		<li class="arrow_prev"></li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/adminReviewList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+		<li class="arrow_prev"><a href="/admin/adminReviewList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">&nbsp;&nbsp;&nbsp;</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
 			<c:if test="${p==pVO.pageNum}">
-				<li style="font-weight: bold;">
+				<li class="select_pageNum" style="font-weight: bold; background-color: #42454c;">
 			</c:if>
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
@@ -131,15 +148,11 @@ $(function () {
 	</c:forEach>
 	<!--  다음페이지 -->
 	<c:if test="${pVO.pageNum == pVO.totalPage }">
-		<li>▶</li>
+		<li class="arrow_next"></li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/adminReviewList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+		<li class="arrow_next"><a href="/admin/adminReviewList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">&nbsp;&nbsp;&nbsp;</a></li>
 	</c:if>
-		<li>
-			<input type="button" value="삭제" id="multiDel"/>
-			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminReviewList'"/>		
-		</li>
 	</ul>
 </div> <!-- div:admin_container -->
 </div>

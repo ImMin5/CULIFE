@@ -1,5 +1,7 @@
 package com.team.culife.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -22,124 +24,144 @@ import com.team.culife.vo.PagingVO;
 public class BoardController {
 	@Inject
 	BoardService service;
-	@Inject 
+	@Inject
 	MemberService memberService;
-	
-	//자유게시판
+
+	// 자유게시판
 	@GetMapping("freeBoardList")
-	public ModelAndView freeboardList(PagingVO pVO) {
+	public ModelAndView freeboardList(PagingVO pVO, BoardVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
+
 		mav.addObject("list", service.freeselectList(pVO));
+		vo.setNickname((String)session.getAttribute("nickName"));
+
+		// 자유게시판 목록 페이징
+		int total = service.boardTotalRecord(pVO);
+
+		pVO.setTotalRecord(total);
+		mav.addObject("pVO", pVO);
+
 		mav.setViewName("/board/freeBoardList");
 		return mav;
 	}
-	
-	//자유게시판 게시글 등록 폼
+
+	// 자유게시판 게시글 등록 폼
 	@GetMapping("freeBoardWrite")
 	public ModelAndView freeBoardWrite() {
 		ModelAndView mav = new ModelAndView();
-		
+
 		mav.setViewName("board/freeBoardWrite");
 		return mav;
 	}
-	
-	//자유게시판 상세페이지 뷰
+
+	// 자유게시판 상세페이지 뷰
 	@GetMapping("freeBoardView")
 	public ModelAndView freeView(int no, String userid, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
+
 		// 조회수 증가
 		service.updateViews(no);
-		  
-		//상세페이지 보이기(뷰 보이기) 
+
+		// 상세페이지 보이기(뷰 보이기)
 		mav.addObject("viewVo", service.selectView(no));
 		mav.setViewName("/board/freeBoardView");
-		
+
 		return mav;
 	}
-	
-	//자유게시판 글등록 DB연결
+
+	// 자유게시판 글등록 DB연결
 	@PostMapping("freeBoardWriteOk")
-	public ModelAndView freeWriteOk(BoardVO vo, HttpSession session){
+	public ModelAndView freeWriteOk(BoardVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
-		// 현재 session에 있는 ID와 카테고리
+			// 현재 session에 있는 ID와 카테고리
 
-		vo.setMember_no((Integer)session.getAttribute("logNo")); 
-		vo.setNickname((String)session.getAttribute("logNickname")); 
-		vo.setCategory("free");
-			
-		mav.addObject("cnt",service.boardInsert(vo));
+			vo.setMember_no((Integer) session.getAttribute("logNo"));
+			vo.setNickname((String) session.getAttribute("logNickname"));
+			vo.setCategory("free");
 
-		mav.addObject("vo", vo);
-		mav.setViewName("board/boardWriteSuc");
-		}catch(Exception e) {
+			mav.addObject("cnt", service.boardInsert(vo));
+
+			mav.addObject("vo", vo);
+			mav.setViewName("board/boardWriteSuc");
+		} catch (Exception e) {
 			e.printStackTrace();
 			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
-	//자유게시판 글 수정 폼
+
+	// 자유게시판 글 수정 폼
 	@GetMapping("freeBoardEdit")
 	public ModelAndView freeEdit(int no) {
 		ModelAndView mav = new ModelAndView();
 		BoardVO bvo = service.selectEditView(no);
-		
+
 		mav.addObject("bvo", bvo);
 		mav.setViewName("board/freeBoardEdit");
 		return mav;
 	}
-	
-	//자유게시판 글 수정DB
+
+	// 자유게시판 글 수정DB
 	@PostMapping("freeBoardEditOk")
-	public ModelAndView freeBoardEditOk(BoardVO vo, HttpSession session){
+	public ModelAndView freeBoardEditOk(BoardVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
-		vo.setMember_no((Integer)session.getAttribute("logNo"));
+
+		vo.setMember_no((Integer) session.getAttribute("logNo"));
 		vo.setCategory("free");
-	
-			int cnt = service.updateEditView(vo);
-			
-			mav.addObject("cnt", cnt);
-			mav.addObject("vo", vo);
-			mav.setViewName("board/boardEditSuc");
-			
-			return mav;
+
+		int cnt = service.updateEditView(vo);
+
+		mav.addObject("cnt", cnt);
+		mav.addObject("vo", vo);
+		mav.setViewName("board/boardEditSuc");
+
+		return mav;
 	}
-	//자유게시판 글 삭제하기
+
+	// 자유게시판 글 삭제하기
 	@GetMapping("freeBoardDel")
 	public ResponseEntity<String> freeBoardDel(int no, HttpSession session) {
-		
-		int member_no = (Integer)session.getAttribute("logNo");
+
+		int member_no = (Integer) session.getAttribute("logNo");
 		ResponseEntity<String> entity = null;
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "text/html; charset=utf-8");
 
 		// 삭제
-			int result = service.deleteView(no, member_no);
-			if(result>0) {				
-				String msg ="<script>alert('글이 삭제되었습니다.');";
-				msg +="location.href='/board/freeBoardList';</script>";
-				entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
-			}else {
-				entity = new ResponseEntity<String>(failMsg(), headers, HttpStatus.BAD_REQUEST);
+		int result = service.deleteView(no, member_no);
+		if (result > 0) {
+			String msg = "<script>alert('글이 삭제되었습니다.');";
+			msg += "location.href='/board/freeBoardList';</script>";
+			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>(failMsg(), headers, HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
 
-
-	//문의사항게시판
+	// 문의사항게시판
 	@GetMapping("/help/helpBoardList")
-	public ModelAndView helpboardList(PagingVO pVO) {	
+	public ModelAndView helpboardList(PagingVO pVO, BoardVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+
+		vo.setMember_no((Integer) session.getAttribute("logNo"));
+		List<BoardVO> list = service.helpselectList(pVO);
+		System.out.println("list -->" + list);
+		mav.addObject("list", list);
 		
-		mav.addObject("list", service.helpselectList(pVO));
+		// 문의사항 목록 페이징
+		int total = service.boardTotalRecord(pVO);
+
+		pVO.setTotalRecord(total);
+		mav.addObject("pVO", pVO);
+		
 		mav.setViewName("board/help/helpBoardList");
-		return mav;	
+		return mav;
 	}
-	//문의사항 게시글 등록 폼
+
+	// 문의사항 게시글 등록 폼
 	@GetMapping("/help/helpBoardWrite")
 	public ModelAndView helpBoardWrite() {
 		ModelAndView mav = new ModelAndView();
@@ -147,90 +169,101 @@ public class BoardController {
 		mav.setViewName("board/help/helpBoardWrite");
 		return mav;
 	}
+
 	// 문의사항 상세페이지 뷰
 	@GetMapping("/help/helpBoardView")
-	public ModelAndView helpView(int no, String userid, HttpSession session) {
+	public ModelAndView helpView(int no, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		int member_no = (Integer) session.getAttribute("logNo");
+		int grade = (Integer) session.getAttribute("grade");
+		BoardVO vo = service.selectView(no);
 		
-		// 조회수 증가
-		service.updateViews(no);
-			
-		// 상세페이지 보이기(뷰 보이기)
-		mav.addObject("viewVo", service.selectView(no));
+		if(vo.getMember_no() == member_no || grade == 2) {
+			// 상세페이지 보이기(뷰 보이기)
+			mav.addObject("viewVo", vo);
+			// 조회수 증가
+			service.updateViews(no);
+		}
+		else {
+			String msg = "guest";
+			mav.addObject("msg", msg);
+		}
 		mav.setViewName("board/help/helpBoardView");
 		
 		return mav;
 	}
-	//문의게시판 글등록 DB연결
-		@PostMapping("/help/helpBoardWriteOk")
-		public ModelAndView helpWriteOk(BoardVO vo, HttpSession session){
-			ModelAndView mav = new ModelAndView();
-			try {
+
+	// 문의게시판 글등록 DB연결
+	@PostMapping("/help/helpBoardWriteOk")
+	public ModelAndView helpWriteOk(BoardVO vo, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		try {
 			// 현재 session에 있는 ID와 카테고리
 
-			vo.setMember_no((Integer)session.getAttribute("logNo")); 
-			vo.setNickname((String)session.getAttribute("logNickname")); 
+			vo.setMember_no((Integer) session.getAttribute("logNo"));
+			vo.setNickname((String) session.getAttribute("logNickname"));
 			vo.setCategory("help");
-				
-			mav.addObject("cnt",service.boardInsert(vo));
+
+			mav.addObject("cnt", service.boardInsert(vo));
 			mav.addObject("vo", vo);
 
 			mav.setViewName("board/boardWriteSuc");
-			}catch(Exception e) {
-				e.printStackTrace();
-				mav.setViewName("redirect:/");
-			}
-			return mav;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
 		}
-		//문의사항 글 수정 폼
-		@GetMapping("/help/helpBoardEdit")
-		public ModelAndView helpEdit(int no) {
-			ModelAndView mav = new ModelAndView();
-			BoardVO bvo = service.selectEditView(no);
-			
-			mav.addObject("bvo", bvo);
-			mav.setViewName("board/help/helpBoardEdit");
-			return mav;
-		}
-		
-		//문의사항 글 수정DB
-		@PostMapping("/help/helpBoardEditOk")
-		public ModelAndView helpBoardEditOk(BoardVO vo, HttpSession session){
-			ModelAndView mav = new ModelAndView();
-			
-			vo.setMember_no((Integer)session.getAttribute("logNo"));
-			vo.setCategory("help");
-		
-				int cnt = service.updateEditView(vo);
-				
-				mav.addObject("cnt", cnt);
-				mav.addObject("vo", vo);
-				mav.setViewName("board/boardEditSuc");
-				
-				return mav;
-		}
-		//문의사항 글 삭제하기
-		@GetMapping("/help/helpBoardDel")
-		public ResponseEntity<String> helpBoardDel(int no, HttpSession session) {
-			System.out.println("마바사");
-			int member_no = (Integer)session.getAttribute("logNo");
-			ResponseEntity<String> entity = null;
-			
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-Type", "text/html; charset=utf-8");
+		return mav;
+	}
 
-			// 삭제
-				int result = service.deleteView(no, member_no);
-				if(result>0) {				
-					String msg ="<script>alert('글이 삭제되었습니다.');";
-					msg +="location.href='/board/help/helpBoardList';</script>";
-					entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
-				}else {
-					entity = new ResponseEntity<String>(failMsg(), headers, HttpStatus.BAD_REQUEST);
-			}
-			return entity;
+	// 문의사항 글 수정 폼
+	@GetMapping("/help/helpBoardEdit")
+	public ModelAndView helpEdit(int no) {
+		ModelAndView mav = new ModelAndView();
+		BoardVO bvo = service.selectEditView(no);
+
+		mav.addObject("bvo", bvo);
+		mav.setViewName("board/help/helpBoardEdit");
+		return mav;
+	}
+
+	// 문의사항 글 수정DB
+	@PostMapping("/help/helpBoardEditOk")
+	public ModelAndView helpBoardEditOk(BoardVO vo, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		vo.setMember_no((Integer) session.getAttribute("logNo"));
+		vo.setCategory("help");
+
+		int cnt = service.updateEditView(vo);
+
+		mav.addObject("cnt", cnt);
+		mav.addObject("vo", vo);
+		mav.setViewName("board/boardEditSuc");
+
+		return mav;
+	}
+
+	// 문의사항 글 삭제하기
+	@GetMapping("/help/helpBoardDel")
+	public ResponseEntity<String> helpBoardDel(int no, HttpSession session) {
+		int member_no = (Integer) session.getAttribute("logNo");
+		ResponseEntity<String> entity = null;
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "text/html; charset=utf-8");
+
+		// 삭제
+		int result = service.deleteView(no, member_no);
+		if (result > 0) {
+			String msg = "<script>alert('글이 삭제되었습니다.');";
+			msg += "location.href='/board/help/helpBoardList';</script>";
+			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>(failMsg(), headers, HttpStatus.BAD_REQUEST);
 		}
-		
+		return entity;
+	}
+
 	public static String failMsg() {
 		String msg = "<script>alret('글 삭제에 실패했습니다.');history.back();</script>";
 		return msg;

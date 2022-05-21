@@ -12,12 +12,17 @@ public class AuthorInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         
-        int grade = (int)session.getAttribute("grade");
-		System.out.println(grade);
+        int grade;
+        if(session.getAttribute("grade") != null) {
+        	grade = (Integer)session.getAttribute("grade");
+        }else {
+        	grade = 3;
+        }
+        
 
-		if(grade != 0 && grade == 1) { //로그인 상태
+		if(grade == 1) { //로그인 상태
 			return true;
-		} else { // 로그아웃상태
+		}else { // 로그아웃상태
 			response.sendRedirect(request.getContextPath()+"/");
 			return false;
 		}

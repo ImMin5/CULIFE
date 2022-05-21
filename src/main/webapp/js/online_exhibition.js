@@ -10,14 +10,16 @@ let totalPage = 1;
 	    $('#online_ex_searchIcon').on('click',function(){
 	        $('#online_ex_search').removeClass('searchHide').addClass('searchShow');
 	        currentPage = 1;
-	 		search();
+	        $("#modal_search").empty();
+	        search();
+	        $('footer').css({"display" : "none"});
 	    }); 
 	});
 	
 	$(document).ready(function(){
 	    $('#online_search_close').on('click',function(){
 	        $('#online_ex_search').removeClass('searchShow').addClass('searchHide');
-	    	
+	    	$('footer').css({"display" : "block"});
 	    }); 
 	});
 
@@ -48,7 +50,7 @@ $(document).ready(function(){
 		$('footer').css({"display" : "none"});
 	});	
 });
-//작푸등록시 등록 작품 수 판별
+//작품등록시 등록 작품 수 판별
 $(document).ready(function(){
 	console.log("reg_work22222");
 var workCount = $("form[name=ex_work_form]").length;
@@ -223,3 +225,18 @@ function pagination(){
 		search();
 	}
 }	
+
+/* 감상평 열기/닫기 */
+$(document).ready(function(){
+	$('#review_close').css({"display":"none"});
+	$('#review_open').click(function(){
+		$('#review_close').css({"display":"block"});
+		$('#review_open').css({"display":"none"});
+		$('#ex_reviewList').css({"display":"none"});
+	})
+	$('#review_close').click(function(){
+		$('#review_open').css({"display":"block"});
+		$('#review_close').css({"display":"none"});
+		$('#ex_reviewList').css({"display":"block"});
+	})
+})
