@@ -9,7 +9,7 @@
 	</insert>
 	
 	<select id="select_ExhibitionReviewList" resultType="ExhibitionReviewVO">
-		select e.exhibition_no, e.no, e.member_no, e.content, m.nickname, date_format(e.write_date, "%y.%m.%d") write_date
+		select e.exhibition_no, e.no, e.member_no, e.content, m.nickname, date_format(e.write_date, "%Y.%m.%d") write_date
 		from exhibition_reply e join member m on e.member_no = m.no where e.exhibition_no = ${exhibition_no}
 		order by exhibition_no desc
 	</select>

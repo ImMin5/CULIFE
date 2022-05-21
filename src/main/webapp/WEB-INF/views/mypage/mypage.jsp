@@ -2,6 +2,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<style>
+	footer {position:fixed; left:0; bottom:0; background-color:black;}
+	ul {margin-bottom: 0;}
+</style>
 <script>
 	$(function(){
 		
@@ -72,7 +76,7 @@
 			<div id="mypage_container" >
 				<form id="memberForm">
 				<div id="mypage_member_thumbnail_group" class="row">
-					<div class="col">
+					<div class="col" id="mypage_col2">
 						<!-- 회원 대표 사진 -->
 						<div id="mypage_member_thumbnail_container">
 						<c:if test="${mvo.thumbnail == Null}">
@@ -88,16 +92,16 @@
 							<input type="text" name="thumbnail">
 							<input class="form-control" type="file" multiple="multiple" name="file" id="formFile_member" >
 						</div>
-						<div class="form-floating mb-3" style="margin:0 auto; width:50%; font-size:2.1rem;" >
+						<div class="form-floating mb-3" style="margin:30px auto; width:50%; font-size:2.1rem;" >
 						  	<input type="email" class="form-control" value="${mvo.email}" placeholder="name@example.com" style=" font-size:2.4rem; height:75px;" readonly>
 						  	<label >이메일</label>
 						</div>
-						<div class="form-floating mb-3" style="margin:0 auto; width:50%; font-size:2.1rem;">
+						<div class="form-floating mb-3" style="margin:30px auto; width:50%; font-size:2.1rem;">
 	  						<input type="text" class="form-control" id="" value="${mvo.nickname}" placeholder="닉네임" readonly style=" font-size:2.4rem; height:75px;">
 						  	<label >닉네임</label>
 						  	
 						</div>
-						<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center; font-size:2.1rem;">
+						<div class=" mb-3" style="margin:30px auto; width:50%; text-align:center; font-size:2.1rem;">
 						  <button id="memberForm_member_edit_btn" class="btn btn-outline-secondary"  style="font-size:2.1rem;" type="button">수정</button>
 						  <button id="memberForm_member_delete_btn" class="btn btn-outline-secondary" style="font-size:2.1rem;"  type="button">회원 탈퇴</button>
 						</div>

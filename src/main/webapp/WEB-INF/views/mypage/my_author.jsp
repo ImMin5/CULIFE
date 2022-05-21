@@ -3,6 +3,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
+<style>
+	footer {position:fixed; left:0; bottom:0; background-color:black;}
+	ul {margin-bottom: 0;}
+</style>
 <script>
 	$(function(){
 		//글자수 계산
@@ -55,7 +59,7 @@
 			<div id="mypage_container" >
 				<form id="memberForm">
 				<div id="mypage_member_thumbnail_group" class="row">
-					<div class="col">
+					<div class="col" id="my_page_col">
 						<!-- 작가 대표 사진 -->
 						<div id="mypage_member_thumbnail_container">
 							<img id="thumbnail_member" src="${url}/upload/${logNo}/author/${avo.author_thumbnail}"/>
@@ -85,7 +89,7 @@
 							<label id="max_text_length" for="floatingTextarea">작가소개 ${fn:length(avo.author_msg)}/100</label>
 						</div>
 						
-						<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center; font-size:2.1rem;">
+						<div class=" mb-3" style="margin:30px auto; width:50%; text-align:center; font-size:2.1rem;">
 						  <button id="authorForm_author_edit_btn" class="btn btn-outline-secondary"  style="font-size:2.1rem;" type="button">수정</button>
 				
 						</div>

@@ -167,7 +167,11 @@ h2 {
 	font-size:2.4rem; font-weight:500;
 	line-height:calc(100vh/2.7);
 	background-color:blule;
-	display:block
+	display:block;
+}
+#home_entertain ul li:nth-child(2) a {
+	line-height:5vh; 
+	padding:calc((100vh/2.7 - 10vh)/2) 0;
 }
 #home_entertain ul li span {
 	width:calc(100vw/3.5); height:calc(100vh/2.7);
