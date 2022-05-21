@@ -2,7 +2,6 @@ package com.team.culife.controller;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.security.Provider.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpHeaders;
@@ -51,14 +49,15 @@ public class ExhibitionController {
 		ModelAndView mav = new ModelAndView();
 		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		
 		MemberVO mvo = memberService.memberSelectByNo(memberNo);
 		AuthorVO avo = authorService.authorNoSelect(memberNo);
+		session.setAttribute("grade",mvo.getGrade());	
 		mav.addObject("mvo", mvo);
 		mav.addObject("avo", avo);
-		System.out.println(mvo.getNickname());
-		System.out.println(mvo.getNo());
-		 
+		
+		if(mvo.getGrade() == 1) {
+			mav.setViewName("mypage/my_author");
+		}
 		mav.setViewName("exhibition/authorWrite");
 		return mav;
 	}
@@ -69,7 +68,7 @@ public class ExhibitionController {
 		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
-		AuthorVO avo = authorService.authorNoSelect(memberNo);
+		
 		ResponseEntity<String> entity = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html",Charset.forName("UTF-8")));
@@ -77,9 +76,11 @@ public class ExhibitionController {
 		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
 		System.out.println("path --> " +path);
 		
-		System.out.println("Author_status()"+avo.getAuthor_status());
+		//System.out.println("Author_status()"+avo.getAuthor_status());
 		try {
-			if(avo.getAuthor_status() == null) {
+			AuthorVO avo = authorService.authorNoSelect(memberNo);
+			if(avo == null) {
+				System.out.println("처음신청");
 				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
 				MultipartFile newFile = (MultipartFile) mr.getFile("file");
 				
@@ -111,8 +112,10 @@ public class ExhibitionController {
 				} // if newFile != null end
 				String msg = "작가 신청되었습니다.";
 				entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
-			} else if(avo.getAuthor_status() == 2) {
-				if(avo.getAuthor_status() != null) {
+			} 
+			else if(avo.getAuthor_status() == 2) {
+				System.out.println("Author_status2() "+avo.getAuthor_status());
+				System.out.println("재신청");
 					MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
 					MultipartFile newFile = (MultipartFile) mr.getFile("file");
 					
@@ -142,12 +145,13 @@ public class ExhibitionController {
 									
 							}
 					} // if newFile != null end
-					String msg = "작가 신청되었습니다.";
+					String msg = "작가 재신청되었습니다.";
 					entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 				}
+			else if(avo.getAuthor_status() == 0) {
+				String msg = "작가 승인 심사중입니다.";
+				entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 			}
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			String msg = "작가등록 실패";
@@ -163,19 +167,7 @@ public class ExhibitionController {
 		return cnt;
 	}
 
-	/*
-	@GetMapping("exhibitionWrite")
-	public ModelAndView exhibitionApply(HttpSession session, HttpServletRequest request, ExhibitionVO vo) {
-		vo.setAuthor_no((Integer)request.getSession().getAttribute("authorNo"));
-		Integer memberNo = (Integer)session.getAttribute("logNo");
-		System.out.println("author_no " + vo.getAuthor_no());
-		System.out.println("member_no " + memberNo);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("exhibition/exhibitionWrite");
-		return mav;
-	}
-	*/
-	@PostMapping("exhibitionWriteOk")
+	@PostMapping("exhibition/exhibitionWriteOk")
 	@ResponseBody
 	public ResponseEntity<String> exhibitionWriteOk(ExhibitionVO evo, String author, HttpServletRequest request, HttpSession session){
 		ModelAndView mav = new ModelAndView();
@@ -184,29 +176,28 @@ public class ExhibitionController {
 		AuthorVO avo = authorService.authorNoSelect(memberNo);
 		evo.setAuthor_no(avo.getNo());
 		Integer AuthorNO = avo.getNo();
+		System.out.println("AuthorNO)->"+AuthorNO);
 		String msg = "";
 		ResponseEntity<String> entity = null;
-		
+
 		try {
 			ExhibitionVO Evo = exhibitionService.exhibitionSelectByEndDate(AuthorNO);
 			System.out.println("Evo " + Evo);
+			System.out.println("evo " + evo);
 			if(Evo != null) {
 				System.out.println("evo --> " + Evo.getStart_date() + " " + Evo.getEnd_date());
 				System.out.println(Evo);
 				 msg = "<script>alert('이미 전시 등록 완료되었습니다.'); "
 						+ "location.href='/online_exhibition/onlineList'</script>";
 				entity = new ResponseEntity<String>(msg, HttpStatus.OK);
-			}
-			else {
-			
-				System.out.println("전시 등록 롼료");
+			} else {
+				System.out.println("evo --> " + evo.getStart_date() + " " + evo.getEnd_date());
 				exhibitionService.exhibitionWrite(evo);
-				 msg = "<script>alert('전시 등록 완료.'); "
-						+ "location.href='/online_exhibition/onlineList'</script>";
+				System.out.println("전시 등록 완료");
+				msg = "<script>alert('전시 등록 완료되었습니다!'); " + "location.href='/online_exhibition/onlineList'</script>";
 				entity = new ResponseEntity<String>(msg, HttpStatus.OK);
+
 			}
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -221,7 +212,8 @@ public class ExhibitionController {
 		mav.setViewName("exhibition/workEdit");
 		return mav;
 	}
-	@PostMapping("workCreateOk")
+	@PostMapping("exhibition/workCreateOk")
+	@ResponseBody
 	public ResponseEntity<String> workCreateOk(HttpServletRequest request, HttpSession session, WorkVO wvo) {
 		ModelAndView mav = new ModelAndView();
 		ResponseEntity<String> entity = null;
@@ -232,7 +224,8 @@ public class ExhibitionController {
 		try {
 			AuthorVO avo = authorService.authorNoSelect(memberNo);
 			ExhibitionVO evo = exhibitionService.exhibitionSelectByEndDate(avo.getNo());
-			
+			System.out.println(wvo.getWork_content());
+			System.out.println(wvo.getWork_subject());
 				//작품 등록
 				if(evo != null) {
 					int workCount = exhibitionService.workSelectByExhibitionNo(evo.getNo()).size();
@@ -241,6 +234,8 @@ public class ExhibitionController {
 					if(workCount >5) {
 						System.out.println("workCount ---> " + workCount);
 						//msg 작성
+						String msg = "최대 5개의 작품을 등록 할 수 있습니다.";
+						entity = new ResponseEntity<String>(msg, HttpStatus.OK);
 						return entity;
 					}
 					MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
@@ -348,10 +343,7 @@ public class ExhibitionController {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
-		
-		
 		return entity;
-		
 	}
 	@GetMapping("exhibitionwithwork/{no}")
 	public PageResponseBody<ExhibitionWorkVO> getExhibition(@PathVariable("no") int no, HttpSession session) {

@@ -23,33 +23,48 @@
 	#modal_search::-webkit-scrollbar{display:none}
 </style>
 <script>
+
 $(function(){
 	//프로필 이미지 미리
 	$(document).on("change","input[name=filename]", function(){
-	            console.log($(this));
-	            var count = $(this).attr("data-count");
-	            console.log(count);
-	            console.log($(this).val());
-	            //fileReader
-	            var reader = new FileReader();
-	            reader.onload = function(e) {
-	                  document.getElementById("workPreview"+count).src = e.target.result;
-	            };
-	            reader.readAsDataURL(this.files[0]);
-	            var format = this.files[0].name.split(".").pop();
-	            $("#work_thumbnail"+count).val(count+"."+format);
+		console.log($(this));
+		var count = $(this).attr("data-count");
+		console.log(count);
+		console.log($(this).val());
+		//fileReader
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			document.getElementById("workPreview"+count).src = e.target.result;
+		};
+		reader.readAsDataURL(this.files[0]);
+		var format = this.files[0].name.split(".").pop();
+		$("#work_thumbnail"+count).val(count+"."+format);
 	});
 	
 	
-    $("#submit_btn").on("click", function(){
-    	console.log("fffff")
-        var len = $("form[name=ex_work_form]").length;
-        for(var i=0; i<len;i++){
-            var url = "${url}/workCreateOk";
-            var data = new FormData($("form[name=ex_work_form]")[i]);
+	$("#submit_btn").on("click", function(){
+		var len = $("form[name=ex_work_form]").length;
+        for(var i=1; i<=len;i++){
+            var url = "${url}/exhibition/workCreateOk";
+            var data = new FormData($("form[name=ex_work_form]")[i-1]);
             console.log(data)
-            
-            $.ajax({
+			console.log("i => " + i + " work_subject => "+$("#work_subject"+i).val())
+			console.log("i => " + i + " work_content => "+$("#work_content"+i).val())
+			console.log("i => " + i + " work_file => "+$("#work_thumbnail"+i).val())
+			
+            if($("#work_subject"+i).val() == ""){
+            	alert(i+"작품 명을 입력해 주세요.");
+    			return false;
+            }
+            if($("#work_content"+i).val() == ""){
+            	alert(i+"작품 설명을 입력해 주세요.");
+    			return false;
+            }
+            if($("#work_thumbnail"+i).val() == ""){
+            	alert(i+"파일을 입력해 주세요.");
+    			return false;
+            }
+           $.ajax({
                 url: url,
                 processData: false,
                 contentType: false,
@@ -65,6 +80,7 @@ $(function(){
         }
         location.reload();
     });
+
     $("#submitDel_btn").on("click", function(){
     	var len = $("form[name=ex_work_form]").length;
     	var form = $("#ex_work_form"+len);
@@ -99,6 +115,42 @@ $(function(){
     	     pagination();
     	}
     });
+	
+
+	//전시 등록
+	$("#ex_reg_form").submit(function(){
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		var day = ('0' + today.getDate()).slice(-2);
+		var dateString = year + '-' + month  + '-' + day;
+
+		if(dateString > $("#startDate").val() == true){
+			alert("전시 시작일은 내일부터 가능합니다.");
+			return false;
+		}
+		if($("#startDate").val() > $("#endDate").val() == true){
+			alert("전시 시작일과 종료일을 확인 후 재등록 바랍니다.");
+			return false;
+		}
+		if($("#startDate").val()==""){
+			alert("전시 시작 날짜를 입력해 주세요.");
+			return false;
+		}
+		if($("#endDate").val()==""){
+			alert("전시 마감 날짜를 입력해 주세요.");
+			return false;
+		}
+		if($("#subject").val()==""){
+			alert("전시 명을 입력해 주세요.");
+			return false;
+		}
+		if($("#content").val()==""){
+			alert("전시 내용을 입력해 주세요");
+			return false;
+		}
+	return true;
+  })
 })
 </script>
 <script>
@@ -214,14 +266,14 @@ $(function(){
     	<audio controls="controls" autoplay loop id="audio_player" 
     	src="/img/exhibition/audio/𝗖. 𝗗𝗲𝗯𝘂𝘀𝘀𝘆 - Suite Bergamasque, L.75 - Ⅲ. Clair de lune .mp3"
     	 onended="nextPlay()"></audio>
-    	<a href="/online_exhibition/onlineAuthorList">작가목록</a>
+    	<a href="/online_exhibition/onlineAuthorList">작가 목록</a>
 	    <c:if test="${grade == '1'}"> <!-- 작가 : 1 -->
-		   	<a href="javascript:;" id="reg_ex">전시등록</a>
-		   	<a href="javascript:;" id="reg_work">작품등록</a>
+		   	<a href="javascript:;" id="reg_ex">전시 등록</a>
+		   	<a href="javascript:;" id="reg_work">작품 등록</a>
 		</c:if>
 	    <img id="online_ex_searchIcon" src="/img/exhibition/magnifying_glass.png" alt="검색 아이콘">
     	<div id="online_ex_search">
-    		<h3>전시작품 검색</h3>
+    		<h3>전시 작품 검색</h3>
 	    	<form id="ex_searchFrm">
 		    	<select id="ex_search" name="ex_search">
 		    		<option value="exhibition_subject">전시명</option>
@@ -308,14 +360,14 @@ $(function(){
     <!-- 전시등록 모달 -->
     <div id="exhibition_reg_bg" class="modal">
     	<div id="exhibition_wrap" class="modal_wrap">
-    		<h3>전시등록</h3>
+    		<h3>전시 등록</h3>
     		<ul>
     			<li>
     				<figure id="ex_reg_img"></figure>
     				<span>어서오세요 작가님,<br/>즐거운 전시회 시간을 가져보세요.</span>
     			</li>    		
     			<li>
-    				<form id="ex_reg_form" method="post" action="/exhibitionWriteOk" enctype="multipart/form-data">
+    				<form id="ex_reg_form" method="post" action="/exhibition/exhibitionWriteOk" enctype="multipart/form-data">
 						<ul class="exhibitionWriteContent">
 							<li class="exhibitionWriteTitle">
 								<p>전시 기간</p>
@@ -323,15 +375,15 @@ $(function(){
 							</li>
 							<li class="exhibitionWriteDate">
 								<p>전시명</p>
-								<input type="text" name="subject">
+								<input type="text" name="subject" id="subject">
 							</li>
 							<li class="exhibitionWriteContent">
 								<p>전시 설명</p>
-								<textarea name="content"></textarea>
+								<textarea name="content" id="content"></textarea>
 							</li>
 							<li class="exhibitionWriteType">
 								<p>전시 유형</p>
-								<div><input id="exhibitionRadio" type="radio" name="type" value="1"> <span>그림 전시</span>
+								<div><input id="exhibitionRadio" type="radio" name="type" value="1" checked> <span>그림 전시</span>
 								<input id="exhibitionRadio" type="radio" name="type" value="2"> <span>글 전시</span></div>
 							</li>
 						</ul>
@@ -346,12 +398,12 @@ $(function(){
     <!-- 작품등록 모달 -->
     <div id="ex_work_bg" class="modal">
     	<div id="ex_work_wrap" class="modal_wrap" style="overflow:auto;">
-    		<h3>작품등록</h3>
-    		<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품추가</a>
+    		<h3>작품 등록</h3>
+    		<a href="javascript:;" id="addWork"><i class="fa-solid fa-plus"></i>작품 추가</a>
     		<div id="form_box">
 				<c:if test="${workList != null}">
 					<c:forEach var="vo" items="${workList}" varStatus="status">
-			    		<form name="ex_work_form" id="ex_work_form${status.count}" method="post" action="/workCreateOk" data-work_no="${vo.no}" enctype="multipart/form-data">
+			    		<form name="ex_work_form" id="ex_work_form${status.count}" method="post" action="/exhibition/workCreateOk" data-work_no="${vo.no}" enctype="multipart/form-data">
 							<ul id="ex_work_box">
 								<li class="exhibitionWorkContent">
 									<ul>
@@ -365,12 +417,12 @@ $(function(){
 											
 										</li>
 										<li class="exhibitionApplyTitle">
-											<p>작품명</p>
-											<input type="text" name="work_subject" value="${vo.work_subject}">
+											<p>작품 명</p>
+											<input type="text" name="work_subject" value="${vo.work_subject}" id="work_subject${status.count}">
 										</li>
 										<li class="exhibitionApplyContent">
 											<p>작품 설명</p>
-											<textarea name="work_content">${vo.work_content}</textarea>
+											<textarea name="work_content" id="work_content${status.count}">${vo.work_content}</textarea>
 										</li>
 									</ul>
 								</li>
@@ -401,9 +453,9 @@ $(function(){
 			    		<li class="ex_detail_info">
 			    			<ul>
 								<li>작가 : ${exhibition.author}</li>
-								<li>작품명 : ${wk.work_subject} </li>
-								<li>전시기간 : ${exhibition.start_date} - ${exhibition.end_date}</li>
-								<li>작품설명</li>
+								<li>작품 명 : ${wk.work_subject} </li>
+								<li>전시 기간 : ${exhibition.start_date} - ${exhibition.end_date}</li>
+								<li>작품 설명</li>
 								<li><p>${wk.work_content}</p></li>
 							</ul>
 						</li>

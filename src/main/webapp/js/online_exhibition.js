@@ -52,45 +52,78 @@ $(document).ready(function(){
 });
 //작품등록시 등록 작품 수 판별
 $(document).ready(function(){
+	console.log("reg_work22222");
+var workCount = $("form[name=ex_work_form]").length;
+var addWork = 
+	/* 임시 */
+`<form name="ex_work_form" id="ex_work_form${workCount+1}" method="post" action="/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
+	<ul id="ex_work_box">
+		<li class="exhibitionWorkContent">
+			<ul>
+				<li class="workThumbnail">
+					<p class="hidden">작품 썸네일</p>
+					<figure><img src="" id="workPreview${workCount+1}" name="workPreview${workCount+1}"/></figure>
+					<input type="hidden" name="no" value=""/>
+					<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${workCount+1}" value=""readonly>
+					<input type="file" name="filename" id="work_file${workCount+1}" class="workFile" data-count="${workCount+1}"/>
+					<label for="work_file${workCount+1}">파일찾기</label> 
+											
+				</li>
+				<li class="exhibitionApplyTitle">
+					<p>작품명</p>
+					<input type="text" name="work_subject" value="" id="work_subject${workCount+1}">
+				</li>
+				<li class="exhibitionApplyContent">
+					<p>작품 설명</p>
+					<textarea name="work_content" id="work_content${workCount+1}"></textarea>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</form>	`
+if (workCount == 0){
+	$("#form_box").append(addWork);
+}
 
-	$("#addWork").on("click", function(){
-		var url = "/exhibition/work/count";
-		var workCount = $("form[name=ex_work_form]").length;
-		
-		if(workCount >=5){
-			alert("최대 5개 까지 등록할 수 있습니다.");
-			return;
-		}
-		console.log(workCount);
-				workCount++;
-					var addWork = 
-						/* 임시 */
-		               `<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
-						<ul id="ex_work_box">
-							<li class="exhibitionWorkContent">
-								<ul>
-									<li class="workThumbnail">
-										<p class="hidden">작품 썸네일</p>
-										<figure><img src="" id="workPreview${workCount}" name="workPreview${workCount}"/></figure>
-										<input type="hidden" name="no" value=""/>
-										<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${workCount}" value=""readonly>
-										<input type="file" name="filename" id="work_file${workCount}" class="workFile" data-count="${workCount}"/>
-										<label for="work_file${workCount}">파일찾기</label> 
-										
-									</li>
-									<li class="exhibitionApplyTitle">
-										<p>작품명</p>
-										<input type="text" name="work_subject" value="">
-									</li>
-									<li class="exhibitionApplyContent">
-										<p>작품 설명</p>
-										<textarea name="work_content"></textarea>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</form>	`
-           			 $("#form_box").append(addWork);
+
+$("#addWork").on("click", function() {
+	var url = "/exhibition/work/count";
+	var workCount = $("form[name=ex_work_form]").length;
+
+	if (workCount >= 5) {
+		alert("최대 5개 까지 등록할 수 있습니다.");
+		return;
+	}
+	console.log(workCount);
+	workCount++;
+	var addWork =
+		/* 임시 */
+		`<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
+			<ul id="ex_work_box">
+				<li class="exhibitionWorkContent">
+					<ul>
+						<li class="workThumbnail">
+							<p class="hidden">작품 썸네일</p>
+							<figure><img src="" id="workPreview${workCount}" name="workPreview${workCount}"/></figure>
+							<input type="hidden" name="no" value=""/>
+							<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${workCount}" value=""readonly>
+							<input type="file" name="filename" id="work_file${workCount}" class="workFile" data-count="${workCount}"/>
+							<label for="work_file${workCount}">파일찾기</label> 
+													
+						</li>
+						<li class="exhibitionApplyTitle">
+							<p>작품 명</p>
+							<input type="text" name="work_subject" id="work_subject${workCount}">
+						</li>
+						<li class="exhibitionApplyContent">
+							<p>작품 설명</p>
+							<textarea name="work_content" id="work_content${workCount}"></textarea>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</form>	`
+		$("#form_box").append(addWork);
 	});	
 });
 
