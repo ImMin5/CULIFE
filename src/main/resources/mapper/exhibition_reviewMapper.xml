@@ -21,4 +21,21 @@
 	<delete id="delete_ExhibitionReview">
 		delete from exhibition_reply where no=#{param1} and member_no=#{param2}
 	</delete>
+	<select id="exhibitionReviewTotalRecord" resultType="int">
+		select count(no) cnt from exhibition_reply
+  		where member_no=${member_no}
+  		<if test='searchWord != null'>
+  			and (content like '%${searchWord}%') 
+  		</if>
+	</select>
+	<select id="exhibitionReviewSelectByMemberNo" resultType="com.team.culife.vo.ExhibitionReviewVO">
+		select er.no, er.exhibition_no, er.member_no, er.content, er.write_date, e.subject from exhibition_reply er
+		join exhibition e
+		on er.exhibition_no = e.no and member_no=${member_no}
+  		<if test='searchWord != null'>
+  			where er.content like '%${searchWord}%'  or e.subject like '%${searchWord}%'
+  		</if>
+  		order by write_date
+  		limit ${recordPerPage} offset ${offsetIndex}
+	</select>
 </mapper>

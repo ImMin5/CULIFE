@@ -10,16 +10,14 @@ let totalPage = 1;
 	    $('#online_ex_searchIcon').on('click',function(){
 	        $('#online_ex_search').removeClass('searchHide').addClass('searchShow');
 	        currentPage = 1;
-	        $("#modal_search").empty();
-	        search();
-	        $('footer').css({"display" : "none"});
+	 		search();
 	    }); 
 	});
 	
 	$(document).ready(function(){
 	    $('#online_search_close').on('click',function(){
 	        $('#online_ex_search').removeClass('searchShow').addClass('searchHide');
-	    	$('footer').css({"display" : "block"});
+	    	
 	    }); 
 	});
 
@@ -37,12 +35,6 @@ function randomNum(min, max){
 	var randNum = Math.floor(Math.random()*(max-min+1)+min); 
 	return randNum;
 }
-document.addEventListener('DOMContentLoaded', () => {
-	var i=randomNum(0, 8);
-	var imgTag = "<img src='/img/exhibition/ex_reg/"+i+".jpg'>;";
-	document.getElementById("ex_reg_img").innerHTML = imgTag;
-})
-
 /* 작품 등록 버튼 - 모달 띄우기*/
 $(document).ready(function(){
 	$("#reg_work").click(function(){
@@ -50,7 +42,7 @@ $(document).ready(function(){
 		$('footer').css({"display" : "none"});
 	});	
 });
-//작품등록시 등록 작품 수 판별
+//작푸등록시 등록 작품 수 판별
 $(document).ready(function(){
 
 	$("#addWork").on("click", function(){
@@ -93,15 +85,6 @@ $(document).ready(function(){
            			 $("#form_box").append(addWork);
 	});	
 });
-
-/* 작품보기 - 모달 띄우기*/
-$(document).ready(function(){
-	$(".workView_btn").click(function(){
-		$("#ex_detail_bg").css({"display" : "block"});
-		$('footer').css({"display" : "none"});
-	});	
-});
-
 
 /* 작품보기 이미지 줌인 */
 $(document).ready(function(){
@@ -193,17 +176,3 @@ function pagination(){
 	}
 }	
 
-/* 감상평 열기/닫기 */
-$(document).ready(function(){
-	$('#review_close').css({"display":"none"});
-	$('#review_open').click(function(){
-		$('#review_close').css({"display":"block"});
-		$('#review_open').css({"display":"none"});
-		$('#ex_reviewList').css({"display":"none"});
-	})
-	$('#review_close').click(function(){
-		$('#review_open').css({"display":"block"});
-		$('#review_close').css({"display":"none"});
-		$('#ex_reviewList').css({"display":"block"});
-	})
-})
