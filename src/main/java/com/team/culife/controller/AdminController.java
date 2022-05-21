@@ -63,17 +63,26 @@ public class AdminController {
 		} else if (memberStatus.equals("7")) {
 			// 회원상태가 7일때
 			// member에서 status = 1으로 변경
-			service.memberBan(mVO);
+			service.memberBan(mVO);			
 			// member_ban에서 ban날짜 설정
 			mbVO.setAdd_date(Integer.parseInt(memberStatus));
-			service.memberBanDate(mbVO);
+			if(mbVO.getEnd_date() == "") {
+				service.memberBanDate(mbVO);
+			}else if(mbVO.getEnd_date() != "") {
+				service.memberBanDateUp(mbVO);
+			}
+			
 		} else if (memberStatus.equals("30")) {
 			// 회원상태가 30일때
 			// member에서 status = 1으로 변경
 			service.memberBan(mVO);
 			// member_ban에서 ban날짜 설정
 			mbVO.setAdd_date(Integer.parseInt(memberStatus));
-			service.memberBanDate(mbVO);
+			if(mbVO.getEnd_date() == "") {
+				service.memberBanDate(mbVO);
+			}else if(mbVO.getEnd_date() != "") {
+				service.memberBanDateUp(mbVO);
+			}
 		} else if (memberStatus.equals("del")) {
 			service.memberDel(mVO);
 		}

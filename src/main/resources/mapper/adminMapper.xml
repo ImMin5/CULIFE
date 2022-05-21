@@ -43,6 +43,9 @@
   	<insert id='memberBanDate'>
   	insert into member_ban(member_no, end_date) values (#{no}, date_add(now(), interval #{add_date} day));
   	</insert>
+  	<update id='memberBanDateUp'>
+  	update member_ban set end_date =  date_add(now(), interval #{add_date} day) where member_no = #{no};
+  	</update>
   	<!-- 회원상태: member_ban에서 삭제 -->
   	<delete id='memberBanDel'>
   	delete from member_ban where member_no = #{member_no}
@@ -109,7 +112,7 @@
   	</update>
   	<!-- 작가정보 불러오기 -->
   	<select id='adminAuthorInfo' resultType="com.team.culife.vo.AuthorVO">
-  	 select no, author, sns_link, author_thumbnail, debut_year, author_msg, msg , author_status  
+  	 select no, author, sns_link, author_thumbnail, debut_year, author_msg, msg , author_status, member_no   
   	 from author where no = #{param} 
   	</select>
   	
