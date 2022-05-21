@@ -29,6 +29,7 @@ import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
 import com.team.culife.service.MovieService;
 import com.team.culife.service.ReviewService;
+import com.team.culife.vo.AlertVO;
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
@@ -653,4 +654,35 @@ public class MemberController {
 			}
 			return entity;
 		}
+	
+	//알림 가져오기 
+		@GetMapping("/mypage/alert")
+		public PageResponseBody<AlertVO> getMyAlert(HttpSession session){
+			PageResponseBody<AlertVO> entity = new PageResponseBody<AlertVO>();
+			HashMap<String,String> result = new HashMap<String,String>();
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			
+			try {
+				result.put("status","200");
+				if(memberNo != null) {
+					result.put("msg","알림 불러오기 성공.");
+					result.put("redirect","/");
+					entity.setItems(alertService.alertSelectByMemberNo(memberNo));
+					entity.setMsg(result);
+				}
+				else {
+					result.put("msg","로그인 후 이용해 주세요.");
+					entity.setMsg(result);
+				}
+				
+			}catch(Exception e) {
+				result.put("status","400");
+				result.put("msg","알림 서비스 Error... 관리자에게 문의하세요.");
+				entity.setMsg(result);
+				e.printStackTrace();
+			}
+			
+			return entity;
+			
+		}	
 }
