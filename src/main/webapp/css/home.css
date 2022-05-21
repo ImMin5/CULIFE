@@ -315,21 +315,21 @@ h2 {
 	position:absolute; right:0; top:34vh; 
 	line-height:30px
 }
-#home_author {width:40%}
+#home_help {width:40%}
 
-#home_author p {
-	width:250px; height:250px;
+#home_help p {
+	width:300px; height:300px;
 	display:block;
 	border-radius:50%;
 	margin:0 auto 50px auto;
 	background:url(../img/main_visual_1.png);
-	background-size:250px 250px;
+	background-size:300px 300px;
 }
-#home_author img {
+#home_help img {
 	width:200px; height:60px;
-	margin-top:calc(190px/2)
+	margin-top:calc(240px/2)
 }
-#home_author button {
+#home_help button {
 	border:none;
 	background-color:rgba(250,113,114,0.5);
 	color:#fff;
@@ -340,6 +340,6 @@ h2 {
 	font-size:1.8rem;
 	transition:all 0.5s
 }
-#home_author button:hover{background-color:rgba(250,113,114,1);}
+#home_help button:hover{background-color:rgba(250,113,114,1);}
 /* main - section 4 - end */
 /* ***************************************************** */
