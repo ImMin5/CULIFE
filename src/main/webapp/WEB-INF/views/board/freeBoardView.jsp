@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="/css/board/freeBoardView.css"	type="text/css" />
+<link rel="stylesheet" href="/css/board/freeBoardView.css" type="text/css" />
 <link rel="stylesheet" href="/css/board/boardViewReply.css"	type="text/css" />
+	
 <script>
 $(function(){
 	$("#freeBoardDel").click(function(){
@@ -9,6 +10,7 @@ $(function(){
 			location.href="/board/freeBoardDel?no=${viewVo.no}";
 		}
 	});
+	
 	// 댓글 등록한 뒤 필요한 댓글 리스트 선택하는 메서드
 	function selectReplyList(){
 		let url = "/reply/replyList";
@@ -22,19 +24,19 @@ $(function(){
 				
 				let body = "<ul>";
 				sucResult.each(function(idx,obj){
-					body += "<li><div><span>"+obj.nickname+"  (" + obj.write_date + ")</span>"
+					body += "<li><div><span>"+obj.nickname+"  (" + obj.write_date + ")&nbsp;</span>"
 					if(obj.member_no == ${logNo}){
 						body += "<span><input type='button' class='btn' value='수정'>";
 						body += "<input type='button' class='btn' value='삭제' title="+obj.reply_no+","+ obj.member_no+">";
 					}
-					body += "<br/>" +obj.content+ "</span></div>"
+					body += "<br/><br>" +obj.content+ "</span></div>"
 					
 					if(obj.nickname == "${logNickname}"){
 						body += "<div style='display:none'><form method='post'>";
 						body += "<input type='hidden' name='member_no' value="+obj.member_no+">";
 						body += "<input type='hidden' name='reply_no' value="+obj.reply_no+">";
-						body += "<textarea name='content'>"+obj.content+"</textarea>";
-						body += "<input type='submit' class='btn' value='수정하기'></form></div>";
+						body += "<textarea name='content' id='content'>"+obj.content+"</textarea>";
+						body += "<div><input type='submit' class='btn' value='수정하기'></div></form></div>";
 					}
 					body += "<hr/></li>";
 				});
@@ -49,7 +51,6 @@ $(function(){
 
 	// 댓글 등록하기
 	$(document).on('submit',"#replyForm", function(){
-		//event.preventDefault();
 
 		if($("#coment").val()==""){ // 댓글 입력 안함
 			alert("댓글을 입력 후에 등록해주세요");
@@ -119,39 +120,44 @@ $(function(){
 	<!-- 글내용 -->
 	<br>
 	<ul>
-	<div class="parent">
-		<div class="child1">작성자 : ${viewVo.member_no}</div>
-		<div class="child2"><h1>제목 : ${viewVo.subject}</h1></div>
-		<div class="child1">조회수 : ${viewVo.view}</div>
-	</div>
-	<hr/>
-	<div class="edel">
-	<a href="/board/freeBoardEdit?no=${viewVo.no}" class="btn" id="freeBoardEdit">수정</a>
-	<span id="btnSpace"></span><input type="button" class="btn" id="freeBoardDel" value="삭제"/>
-	</div>
+		<div class="parent">
+			<div class="child1">작성자 : ${viewVo.nickname}</div>
+			<div class="child2">
+				<h1>제목 : ${viewVo.subject}</h1>
+			</div>
+			<div class="child1">조회수 : ${viewVo.view}</div>
+		</div>
+		<hr />
+		<c:if test="${logNo==viewVo.member_no}">
+			<div class="edel">
+				<a href="/board/freeBoardEdit?no=${viewVo.no}" class="btn"
+					id="freeBoardEdit">수정</a> <span id="btnSpace"></span>
+				<input type="button" class="btn" id="freeBoardDel" value="삭제" />
+			</div>
+		</c:if>
 		<br>
 		<li>글 내용</li>
 		<br>
 		<div class="freeContent">
-		<div>${viewVo.content}</div>
+			<div>${viewVo.content}</div>
 		</div>
 	</ul>
 	<!-- 댓글 -->
 	<hr />
 	<div id="replyLine">
-	<br>
-		<i class="fa fa-comment fa-lg"></i><span class="iconValue">댓글</span>
+		<br> <i class="fa fa-comment fa-lg"></i><span class="iconValue">댓글</span>
 	</div>
 	<form method="post" id="replyForm">
 		<input type="hidden" name="no" id="no" value="${viewVo.no}">
 		<div id="commentLine">
 			<textarea name="content" id="coment" class="freeBoardComent" rows="4"
 				cols="80" placeholder="내용을 입력하세요"></textarea>
-			<span id="replyBtn"><input type="submit"
-				id="replyInsert" value="댓글 등록"/></span>
+			<div>
+				<input type="submit" id="replyInsert" value="댓글 등록" />
+			</div>
 		</div>
 	</form>
 	<!-- 댓글 목록 표시 -->
 	<div id="replyList"></div>
 </div>
-<br />
+<br>

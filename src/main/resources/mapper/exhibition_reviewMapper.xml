@@ -2,23 +2,23 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.team.culife.dao.ReplyDAO">
+<mapper namespace="com.team.culife.dao.ExhibitionReviewDAO">
 	<insert id="insert_ExhibitionReview">
-		insert into exhibition_reply(no, member_no, content) 
-		values(${no}, ${member_no}, #{content})
+		insert into exhibition_reply(no, exhibition_no, member_no, content) 
+		values(${no}, ${exhibition_no}, ${member_no}, #{content})
 	</insert>
 	
-	<select id="select_ExhibitionReviewList" resultType="ReplyVO">
-		select br.reply_no, br.no, br.member_no, br.content, m.nickname, date_format(br.write_date, "%m/%d %H:%i") write_date
-		from exhibition_reply br join member m on br.member_no = m.no where br.no = ${no}
-		order by reply_no desc
+	<select id="select_ExhibitionReviewList" resultType="ExhibitionReviewVO">
+		select e.exhibition_no, e.no, e.member_no, e.content, m.nickname, date_format(e.write_date, "%Y.%m.%d") write_date
+		from exhibition_reply e join member m on e.member_no = m.no where e.exhibition_no = ${exhibition_no}
+		order by exhibition_no desc
 	</select>
 	
 	<update id="update_ExhibitionReview">
-		update exhibition_reply set content=#{content} where exhibition_no=${exhibition_no} and member_no=#{member_no}
+		update exhibition_reply set content=#{content} where no=${no} and member_no=#{member_no}
 	</update>
 	
 	<delete id="delete_ExhibitionReview">
-		delete from exhibition_reply where exhibition_no=#{param1} and member_no=#{param2}
+		delete from exhibition_reply where no=#{param1} and member_no=#{param2}
 	</delete>
 </mapper>

@@ -18,7 +18,7 @@ $(function(){
 	});
 	
 	$("#backList").click(function(){
-		location.href="/board/freeBoardList";
+		location.href="/board/freeBoardList?category=free";
 	});
 	
 });

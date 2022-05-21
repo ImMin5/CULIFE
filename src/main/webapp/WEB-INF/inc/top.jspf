@@ -64,7 +64,7 @@
         				</li>
         				<li id="gnb_musical">
         					<a href="${url}/theater/theaterList">
-        						<em>연극 / 뮤지컬</em>
+        						<em>공연<br/>(연극/콘서트/뮤지컬)</em>
         						<video src="/img/gnb_musical_video.mp4" id="gnb_musical_video" muted loop></video>
         						<span id="gnb_musical_line1"></span>
         						<span id="gnb_musical_line2"></span>
@@ -78,10 +78,10 @@
         	<ul id="nav_section2">
         		<li><a href="/online_exhibition/onlineList">온라인 전시회</a></li>
         		<li id="gnb_commu">
-        			<a href="/board/freeBoardList">커뮤니티</a>
+        			<a href="/board/freeBoardList?category=free&currentPage=1">커뮤니티</a>
         			<ul>
-        				<li><a href="/board/freeBoardList">자유게시판</a></li>
-        				<li><a href="/board/help/helpBoardList">문의사항</a></li>
+        				<li><a href="/board/freeBoardList?category=free&currentPage=1">자유게시판</a></li>
+        				<li><a href="/board/help/helpBoardList?category=help">문의사항</a></li>
         			</ul>
         		</li>
         	</ul>

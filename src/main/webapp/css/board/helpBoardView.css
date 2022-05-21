@@ -26,12 +26,14 @@ hr{
 }
 /*버튼*/
 #helpBoardEdit{
+	border-radius:10px;
 	background-color: gray;
 	color:white;
 	padding:10px 10px;
 }
 
 #helpBoardDel{
+	border-radius:10px;
 	background-color: gray;
 	color:white;
 	padding:10px 10px;
@@ -62,7 +64,11 @@ hr{
 #commentLine, #replyLine{
 	padding-left:13.75%;	
 }
+#commentLine{
+	height:130px;
+}
 .helpBoardComent{
+	float:left;
 	padding: 12px;
 	border: none;
 	border-radius:10px;
@@ -74,4 +80,16 @@ hr{
 }
 .iconValue{
 	margin-left:10px;
+}
+#replyInsert{
+	margin-top:18px;
+	border-radius:10px;
+	height:100px;
+}
+.btn{
+	border-radius:10px;
+}
+#content{
+	height:90px;
+	width:450px;
 }

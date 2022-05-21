@@ -7,6 +7,18 @@
 	position:relative; z-index:-2;
 	overflow:hidden
 }
+/* 오디오 플레이리스트 */
+#online_exhibition_container > audio {
+	position:absolute;
+	left:50px; top:150px;
+	height:30px
+}
+audio::-webkit-media-controls-panel {
+	background:linear-gradient(0deg, #F09819 0%, 
+		#EDDE5D 100%);
+	height:30px
+}
+/* ***************** */
 #online_exhibition_container > a {
 	width:100px; height:40px;
 	padding:10px;
@@ -492,7 +504,7 @@
 	background-color: orange;
 	border-radius:5px;	
 }
-#ex_detail_wrap > ul > li {
+#ex_detail_wrap > ul > li:not(#ex_review, #ex_reviewList, #ex_reviewForm_wrap) {
 	width:100%; height:600px;
 	display:block;
 	padding:20px 0 10px 0;
@@ -579,4 +591,98 @@
 
 /* 이미지 상세 모달 - end */
 
-#table_container {height:500px}
+/* 감상평 - start */
+#ex_review {height:90px; display:table; position:relative}
+#ex_review > h4 {
+	width:1030px;
+	font-size:2.4rem;
+	padding:20px;
+	line-height:50px;
+	letter-spacing:5px;
+	font-weight:bold;
+}
+#ex_review > h4::after {
+	content:"";
+	width:100%;
+	border-bottom:2px solid #999;
+	display:block;
+}
+#ex_review > span {
+	position:absolute; right:50px; top:30px;
+	font-size:2rem;
+	line-height:50px;
+	cursor:pointer
+}
+#ex_reviewList {padding:0 20px; font-size:1.8rem}
+.ex_review_wrap{line-height:25px;}
+.ex_reivew_coment {
+	width:100%;
+	min-height:80px; height:auto;
+	padding:10px 0;
+	position:relative;
+}
+.ex_review_wrap > .ex_reivew_coment > p { /* 닉네임 */
+	width:200px;
+	position:absolute; left:50px; top:10px;
+}
+.ex_review_wrap > .ex_reivew_coment > span { /* 날짜 */
+	width:200px;
+	display:block;
+	position:absolute; left:50px; bottom:10px;
+	font-size:1.6rem; color:#999;
+} 
+.ex_review_wrap > .ex_reivew_coment > em { /* 감상평 */
+	width:610px;
+	display:block;
+	font-style: normal;
+	margin-left:270px;
+	white-space:pre-wrap;
+}
+.ex_review_wrap > .ex_reivew_coment > div { /* 수정/삭제 */
+	position:absolute; right:50px; bottom:10px;
+}
+.ex_review_wrap > .ex_reivew_coment > div > input {
+	border:none;
+	background-color:transparent;
+	cursor:pointer;
+	color:#999
+}
+#ex_reviewForm_wrap {height:120px; padding: 20px 50px}
+#ex_review_box > textarea {
+	resize:none;
+	width:835px; height:100px; 
+	border: 2px solid #c0c0c0;
+	border-radius:10px;
+	padding:0 10px;
+	line-height:25px;
+	float:left;
+	margin-right:20px
+}
+#ex_reviewBtn {float:left}
+#ex_reviewBtn > input {
+	width:80px; height:104px;
+	border: none;
+	border-radius:10px;
+	cursor:pointer;
+	background-color:#b4b4b4
+}
+
+.ex_edit_txt {
+	resize:none;
+	width:815px; height:100px; 
+	border: 2px solid #c0c0c0;
+	border-radius:10px;
+	padding:0 10px;
+	margin-left:40px
+}
+.ex_edit_btn {
+	width:80px; height:104px;
+	border: none;
+	border-radius:10px;
+	cursor:pointer;
+	background-color:#b4b4b4;
+	float:right;
+	margin-right:50px
+}
+/* 감상평 - end */
+

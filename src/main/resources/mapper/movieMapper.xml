@@ -12,7 +12,7 @@
   		</if>
   	</select>
   	<select id="movieReviewSelectByMemberNo" resultType="com.team.culife.vo.MovieVO">
-  		select no, member_no, movie_id, content, movie_title, score_star, poster_path, vote_count, write_date, spo_check, warning_count
+  		select no, member_no, movie_id, content, movie_title, score_star, poster_path, vote_count, write_date, spo_check
   		from movie_review
   		where member_no=${member_no}
   		<if test='searchWord != null'>

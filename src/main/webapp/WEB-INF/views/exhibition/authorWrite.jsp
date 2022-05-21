@@ -6,6 +6,22 @@
 
 <link rel="stylesheet" href="/css/exhibition/authorWrite.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<style>
+	footer {position:fixed; left:0; bottom:0; background-color:black;}
+	ul {margin-bottom: 0;}
+	#mypage_sidebar{
+		background-color:rgba(0,0,0,0.5);
+		color:white;
+		text-align:center;
+		font-size:2.4rem;
+		height:100%;
+		position:fixed; right:0;
+	}
+	#mypage_sidebar>#mypage_sidebar_container{
+		position:relative; top:50%;
+		transform:translateY(-50%)
+	}
+</style>
 <script>
 let authorch = false;
 
@@ -169,7 +185,7 @@ function authorSubmit() {
 								</div>
 							</div>
 						
-							<input type="button" id="memberForm_member_edit_btn" class="btn btn-outline-secondary" value="작가 신청" onclick="authorSubmit()" />
+							<input type="button" id="memberForm_member_edit_btn" class="btn btn-outline-secondary" value="작가 신청" onclick="authorSubmit()" style="display:block; margin:30px auto 0 auto; font-size:1.6rem"/>
 						</div>
 					</form>
 				</div>
