@@ -19,6 +19,8 @@
 		border-color:orange;
 	    outline: none;
 	}
+	#modal_search {-ms-overflow-style: none;}
+	#modal_search::-webkit-scrollbar{display:none}
 </style>
 <script>
 $(function(){
@@ -89,7 +91,7 @@ $(function(){
     	})
     });
   //스크롤 위치 
-    $("#table_container").scroll(function(){
+    $("#modal_search").scroll(function(){
     	var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
     	var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
     	var contentH = $(".table").height(); //문서 전체 내용을 갖는 div의 높이
@@ -226,12 +228,16 @@ $(function(){
 		    		<option value="author">작가</option>
 		    	</select>
 		    	<input type="text" name="ex_searchWord" id="ex_searchWord"/>
-		   .</form>
-		    <div id="table_container" style="height:60vh; overflow:scroll;">
-			    <table >
-			    	<th>전시이름</th>
-			    	<th>작가명</th>
-			    	<th>전시기간</th>
+		   </form>
+		    <div id="table_container">
+			    <table>
+			    	<tbody>
+				    	<tr>
+					    	<th>전시이름</th>
+					    	<th>작가명</th>
+					    	<th>전시기간</th>
+				    	</tr>
+				    </tbody>
 			    	<tbody id="modal_search">
 			    		
 			    	</tbody>
@@ -256,7 +262,7 @@ $(function(){
 		    					<img src="${url}/upload/${exhibition.member_no}/author/exhibition/${exhibition.no}/${exhibition.workList[0].work_thumbnail}" alt="첫번째 작품">
 		    				</c:when>
 		    				<c:otherwise>
-		    					<img/>
+		    					<img src="/img/exhibition/texture_img.png"/>
 		    				</c:otherwise>
 	    				</c:choose>
 	    			</li>
@@ -264,11 +270,10 @@ $(function(){
 	    				<span></span>
 	    				<c:choose>
 		    				<c:when test="${exhibition.workList[1] != null}">
-		    				
 		    					<img src="${url}/upload/${exhibition.member_no}/author/exhibition/${exhibition.no}/${exhibition.workList[1].work_thumbnail}" alt="두번째 작품">
 		    				</c:when>
 		    				<c:otherwise>
-		    					<img/>
+		    					<img src="/img/exhibition/texture_img.png"/>
 		    				</c:otherwise>
 	    				</c:choose>
 	    				
@@ -287,7 +292,7 @@ $(function(){
 		        </c:if>
 	    		<div>
 	    			<c:forEach var="exvo" items="${exhibitionList}" varStatus="status">
-	    				<p><img onclick="location.href='${url}/online_exhibition/onlineList?currentPage=${pVO.currentPage}&select=${status.count}'" src="${url}/upload/${exvo.member_no}/author/exhibition/${exvo.no}/${exvo.work_thumbnail}"></p>	    			
+	    				<p onclick="location.href='${url}/online_exhibition/onlineList?currentPage=${pVO.currentPage}&select=${status.count}'"><span>${exvo.author}</span><img src="${url}/upload/${exvo.member_no}/author/exhibition/${exvo.no}/${exvo.work_thumbnail}"></p>	    			
 	    			</c:forEach>
 	    		</div>
 	    		<c:if test="${pVO.currentPage==pVO.totalPage}">

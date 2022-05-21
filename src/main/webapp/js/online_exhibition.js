@@ -10,14 +10,16 @@ let totalPage = 1;
 	    $('#online_ex_searchIcon').on('click',function(){
 	        $('#online_ex_search').removeClass('searchHide').addClass('searchShow');
 	        currentPage = 1;
-	 		search();
+	        $("#modal_search").empty();
+	        search();
+	        $('footer').css({"display" : "none"});
 	    }); 
 	});
 	
 	$(document).ready(function(){
 	    $('#online_search_close').on('click',function(){
 	        $('#online_ex_search').removeClass('searchShow').addClass('searchHide');
-	    	
+	    	$('footer').css({"display" : "block"});
 	    }); 
 	});
 
@@ -48,7 +50,7 @@ $(document).ready(function(){
 		$('footer').css({"display" : "none"});
 	});	
 });
-//작푸등록시 등록 작품 수 판별
+//작품등록시 등록 작품 수 판별
 $(document).ready(function(){
 
 	$("#addWork").on("click", function(){
@@ -94,7 +96,6 @@ $(document).ready(function(){
 
 /* 작품보기 - 모달 띄우기*/
 $(document).ready(function(){
-	$("#ex_detail_bg").css({"display" : "block"});
 	$(".workView_btn").click(function(){
 		$("#ex_detail_bg").css({"display" : "block"});
 		$('footer').css({"display" : "none"});
