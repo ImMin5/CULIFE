@@ -22,10 +22,11 @@
 		delete from exhibition_reply where no=#{param1} and member_no=#{param2}
 	</delete>
 	<select id="exhibitionReviewTotalRecord" resultType="int">
-		select count(no) cnt from exhibition_reply
-  		where member_no=${member_no}
+		select count(er.no) cnt from exhibition_reply er
+		join exhibition e
+		on er.exhibition_no = e.no and member_no=${member_no}
   		<if test='searchWord != null'>
-  			and (content like '%${searchWord}%') 
+  			where er.content like '%${searchWord}%'  or e.subject like '%${searchWord}%'
   		</if>
 	</select>
 	<select id="exhibitionReviewSelectByMemberNo" resultType="com.team.culife.vo.ExhibitionReviewVO">

@@ -245,6 +245,7 @@ public class MemberController {
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
+				System.out.println("total recprd -->" + pvo.getTotalRecord());
 				if(pvo.getTotalPage() >0  &&  pvo.getTotalPage() < currentPage) {
 					pvo.setCurrentPage(pvo.getTotalPage());
 					pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
