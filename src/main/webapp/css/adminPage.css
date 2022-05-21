@@ -174,12 +174,14 @@ li{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 20%;
+	white-space: nowrap;
 }
 .authorList ul li:nth-child(8n+5){
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 20%;
 	text-align: left;
+	white-space: nowrap;
 }
 .authorList li:nth-child(8n) input{
 	text-align: center;
@@ -273,6 +275,7 @@ li{
 	text-overflow: ellipsis;
 	width: 50%;
 	text-align: left;
+	white-space: nowrap;
 }
 .adminBoardList li:nth-child(2){
 	text-align: center;
@@ -296,6 +299,7 @@ li{
 	text-overflow: ellipsis;
 	width: 45%;
 	text-align: left;
+	white-space: nowrap;
 }
 .adminHelpList li:nth-child(2){
 	text-align: center;
@@ -322,11 +326,13 @@ li{
 .adminReviewList li:nth-child(7n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .adminReviewList ul li:nth-child(7n+3), .adminReviewList li:nth-child(7n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 35%;
+	white-space: nowrap;
 	text-align: left;
 }
 .adminReviewList li:nth-child(3){
@@ -358,11 +364,13 @@ li{
 .adminWarningList ul li:nth-child(7n+2), .adminWarningList li:nth-child(7n+2){
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .adminWarningList ul li:nth-child(7n+3), .adminWarningList li:nth-child(7n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
 	text-align: left;
+	white-space: nowrap;
 	width: 30%;
 }
 .adminWarningList li:nth-child(3){
@@ -393,6 +401,7 @@ li{
 .adminExReplyList ul li:nth-child(6n+3), .adminExReplyList li:nth-child(6n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 	width: 40%;
 	text-align: left;
 }
