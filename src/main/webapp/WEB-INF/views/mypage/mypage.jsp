@@ -1,6 +1,7 @@
 <c:set var="url" value="<%=request.getContextPath()%>"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
+<script src="/js/mypage/alert.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <style>
 	footer {position:fixed; left:0; bottom:0; background-color:black;}
@@ -126,14 +127,9 @@
 						<div class="col-2">
 							<div class="btn-group">
 								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b style="font-size:2rem;">(${alertList.size()})</b>	
+								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
 								  </button>
-								  <ul style="width:15vw;" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
-								    <c:forEach var="vo" items="${alertList}" varStatus="status">
-								    	<c:if test="${status.count >1}"><li><hr class="dropdown-divider"></li></c:if>
-								    	<li style="width:15vw; font-size:1.4rem;">${vo.content}<small style="color:gray"> ${vo.create_date} days ago</small></li>
-								    	
-								    </c:forEach>
+								  <ul style="width:15vw;" id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
 								  </ul>
 							</div>				
 						</div>
