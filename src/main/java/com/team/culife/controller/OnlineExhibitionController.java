@@ -136,26 +136,6 @@ public class OnlineExhibitionController {
 		
 		return mav;
 	}
-	/*
-	 * //작가 검색 기능
-	 * 
-	 * @GetMapping("authorSearch") public ModelAndView search(String searchKey,
-	 * String searchWord) { ModelAndView mav = new ModelAndView();
-	 * mav.setViewName("online_exhibition/authorSearch"); return mav; }
-	 * 
-	 * @ResponseBody //Ajax
-	 * 
-	 * @RequestMapping("authorSearchList") public List<AuthorVO>
-	 * searchMoreView(@RequestParam(value="startPage", required=false)String
-	 * startPage, String category, String searchWord) throws Exception { int start =
-	 * Integer.parseInt(startPage); int end = 7;
-	 * System.out.println("category -> "+category);
-	 * System.out.println("searchWord -> "+searchWord); return
-	 * aService.authorSearch(category, "%"+searchWord+"%", start, end, 6); }
-	 * 
-	 * @GetMapping("onlineAuthorView") public String onlineAuthorView() { return
-	 * "online_exhibition/onlineAuthorView"; }
-	 */
 	
 	@GetMapping("/onlineList/search")
 	@ResponseBody
@@ -165,7 +145,7 @@ public class OnlineExhibitionController {
 			@RequestParam(value="currentPage",required = false, defaultValue = "1")int currentPage){
 		PageResponseBody<ExhibitionVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
-		int pageCount = 5;
+		int pageCount = 10;
 		try {
 			System.out.println("current--->"+ currentPage);
 			PagingVO pvo = new PagingVO();
