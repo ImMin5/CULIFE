@@ -127,8 +127,6 @@ public class ExhibitionController {
 				entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 			} 
 			else if(avo.getAuthor_status() == 2) {
-				System.out.println("Author_status2() "+avo.getAuthor_status());
-				System.out.println("재신청");
 					//MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
 					//MultipartFile newFile = (MultipartFile) mr.getFile("file");
 					

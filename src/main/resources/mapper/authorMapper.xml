@@ -55,6 +55,6 @@
 		where no = #{param1};
  	</select>
 	<update id="authorReUpdate">
-  		update author set author=#{author}, sns_link=#{sns_link}, author_thumbnail=#{author_thumbnail}, debut_year=#{debut_year}, author_status=0, author_msg=#{author_msg} where no=${no}
+  		update author set author=#{author}, sns_link=#{sns_link}, author_thumbnail=#{author_thumbnail}, debut_year=#{debut_year}, author_status=0, author_msg=#{author_msg} where member_no=${member_no}
   </update>
 </mapper>
