@@ -64,7 +64,7 @@ $(document).ready(function () {
 						<ul>
 							<li>`+title+`</li>
 							<li>`+subTitle+`</li>
-							<div id="starAvg"></div>//별점위치수정
+							<div id="starAvg"></div>
 						</ul>
 						<ul>
 							<li>공연기간 : `+start+``+~end+`</li>
@@ -126,7 +126,7 @@ function editForm(idx){
 			success:function(result){
 				//alert(JSON.stringify(result))
 				var score = result.star_avg;
-					$('#starAvg').html("<h1>평점 : "+score+"</h1>") //별점 평균 불러오기
+					$('#starAvg').html("<h1>"+"<i class='fa-solid fa-star'>"+"</i>"+score+"</h1>") //별점 평균 불러오기
 				var cnt = result.review_cnt;
 					$("#reviewCnt").html("<h1>"+cnt+"</h1>") //리뷰 개수 불러오기
 				//alert(score)
@@ -142,8 +142,8 @@ function editForm(idx){
 					tag += " ("+vo.score_star+")";
 					
 					if(vo.member_no=='${logNo}'){
-						tag += "<input type='button' value='수정'/>"; 
-						tag += "<input type='button' value='삭제' title='"+vo.no+"'/>";	
+						tag += "<input type='button' value='수정' class='review_edit'/>"; 
+						tag += "<input type='button' value='삭제' title='"+vo.no+"' class='review_delete'/>";	
 					}
 					//console.log("vo.spo_check: "+vo.spo_check)
 					if(vo.spo_check==1){
@@ -200,7 +200,7 @@ function editForm(idx){
 			      	tag += "<div class='Ereview_box'>"
 				    tag += "<textarea class='review' name='content'>"+vo.content+"</textarea>";				    
 				    tag += "<label class='review' for='review'></label>"
-					tag += "<input type='submit' value='수정'/>";									
+					tag += "<input type='submit' value='수정' class='review_edit_edit'/>";									
 					tag += "</form></div>";
 				}
 				tag += "<hr/></li>";
