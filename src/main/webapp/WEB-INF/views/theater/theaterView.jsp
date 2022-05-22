@@ -64,7 +64,7 @@ $(document).ready(function () {
 						<ul>
 							<li>`+title+`</li>
 							<li>`+subTitle+`</li>
-							<div id="starAvg"></div>
+							<div id="starAvg"></div>//별점위치수정
 						</ul>
 						<ul>
 							<li>공연기간 : `+start+``+~end+`</li>
