@@ -45,7 +45,6 @@
 				type : "POST",
 				data : data,
 				success:function(data){
-					console.log(data);
 					alert(data.msg);
 				},error : function(error){
 					alert(error);

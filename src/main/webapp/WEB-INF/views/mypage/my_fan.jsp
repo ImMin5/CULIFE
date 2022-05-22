@@ -44,27 +44,7 @@ let is_paging= true;
       			document.getElementById('thumbnail_member').src = e.target.result;
     		};
     		reader.readAsDataURL(this.files[0]);
-    		console.log(this.files[0].name)
     		$("[name=thumbnail]").val(this.files[0].name);
-		});
-		
-		//프로필 이지미 바꾸기 요청
-		$("#memberForm_member_edit_btn").on("click",function(){
-			var url = "${url}/mypage/member/thumbnail";
-			var data = new FormData($("#memberForm")[0]);
-			console.log(data.thumbnail);
-			$.ajax({
-				url : url,
-				processData: false,
-				contentType: false,
-				type : "POST",
-				data : data,
-				success:function(data){
-					console.log(data);
-				},error : function(error){
-					alert(error);
-				}
-			});
 		});
 		
 		//팔로우
@@ -81,7 +61,6 @@ let is_paging= true;
 					author:author
 				},
 				success : function(data){
-					console.log(data);
 					if(data.status=="200"){
 						button.attr("name","follow");
 						button.attr("class", "btn btn-primary");
@@ -168,7 +147,6 @@ let is_paging= true;
 					searchWord : searchWord,
 				},
 				success : function(data){
-					console.log(data);
 					if(!is_paging)table.empty();
 					if(data.items == null) return;
 					data.items.forEach(function(element, index){

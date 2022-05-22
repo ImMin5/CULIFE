@@ -136,6 +136,7 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView();
 		int member_no = aVO.getMember_no();
 		String content = aVO.getMsg();
+		System.out.println("승인 취소 memberNo-->" + aVO.getMember_no());
 		arservice.alertInsert(member_no, content);
 		service.authorDown(aVO);
 		mav.setViewName("redirect:/admin/authorList");

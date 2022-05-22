@@ -1,7 +1,6 @@
 @charset "UTF-8";
 .container:not(#mypage_sidebar_container){
 	position :relative;
-	height: 600px;
 }
 .authorWriteThumbnail {
 	margin : 0 auto;
