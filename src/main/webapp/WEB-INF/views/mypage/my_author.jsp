@@ -35,7 +35,7 @@
 		
 		//작가 정보 수정
 		$("#authorForm_author_edit_btn").on("click",function(){
-			var url = "${url}/mypage/author/info";
+			var url = "${url}/upload/mypage/author/info";
 			var data = new FormData($("#memberForm")[0]);
 			console.log(data.thumbnail);
 			$.ajax({
