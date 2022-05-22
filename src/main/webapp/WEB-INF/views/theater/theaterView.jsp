@@ -140,7 +140,9 @@ function editForm(idx){
                tag+= "★";
                }
                tag += " ("+vo.score_star+")";
-               
+               if('${logNo}' != "" && '${logNo}' !=vo.member_no){
+                   tag += "<input class='warning' type='button' value='신고' onclick='warning(" + vo.no +")'/>";
+                }
                if(vo.member_no=='${logNo}'){
                   tag += "<input type='button' value='수정' class='review_edit'/>"; 
                   tag += "<input type='button' value='삭제' title='"+vo.no+"' class='review_delete'/>" ;  
@@ -149,17 +151,15 @@ function editForm(idx){
                //console.log("vo.spo_check: "+vo.spo_check)
                if(vo.spo_check==1){
             	   tag+="<li style='color:#e75959; font-size:23px; padding-bottom:5px;'>스포일러</li>"
-                  tag+="<div id='spocontent' class='spo'>"+ vo.content +"</div>";
+            		tag+="<div id='spocontent"+vo.no+"' class='spo'>"+ vo.content +"</div>";
                   if(vo.spo_check==1){
-                	   tag+="<input id='more' class='more' type='button' value='댓글보기' name='readspo' onclick='more()'/>";
+                	  tag+="<input id='more' class='more' type='button' value='리뷰보기' name='readspo' data-review_no='"+vo.no+"'/>";
                    }
                   tag+="<hr class='hr_style'/>"+ "</div>"                  
                }else{
                   tag += "<br/>" + vo.content + "<hr class='hr_style'/>" +"</div>";
                }
-               if('${logNo}' != "" && '${logNo}' !=vo.member_no){
-                  tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";
-               }
+               
                
                
                
@@ -212,7 +212,7 @@ function editForm(idx){
                tag += "</form></div>";
             }
             
-            tag += "<hr class='hr_style'/></li>";
+            //tag += "<hr class='hr_style'/></li>";
             score_star = vo.score_star;      
             //alert(score_star)
          }); 
@@ -333,18 +333,21 @@ function warning(no){
 }
 
 //스포블러처리
-function more(){
-	//console.log("aa")
-	//document.getElementById("spocontent").style.display = "block";
-	var con = document.getElementById("spocontent");
-	if(con.style.display=='none'){
-		con.style.display = 'block';
-		document.getElementById("more").value="댓글보기";
-	}else{
-		con.style.display = 'none';
-		document.getElementById("more").value="숨기기";
-	}
-} 
+$(function(){
+	reviewListAll();
+	$(document).on("click","input[name=readspo]",function(){
+        var review_no = $(this).attr("data-review_no");
+        var spocontent_element = $("#spocontent"+review_no)
+        if(spocontent_element.css("display") == "block"){
+            spocontent_element.css("display","none");
+            $(this).val("리뷰보기");
+        }
+        else{
+            spocontent_element.css("display","block");
+            $(this).val("리뷰숨기기");
+        }
+	});
+});
 </script>
 <div id="detail_container">
    <div id="topDetail"></div>
