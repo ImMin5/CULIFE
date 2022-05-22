@@ -259,6 +259,24 @@ input[id="spo_check"]:focus + label[for="spo_check"]:before {
   outline: 1px solid #E74C3C;
 }
 
+.spo{
+	 display:none;
+} 
+.more{	
+    top: 0px;
+    right: 0px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.25s;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #6e6e6e;
+    cursor: pointer;
+}
+
 label[for="spo_check"] {
   position: absolute;
   left: 170px;
@@ -328,8 +346,14 @@ label[for="spo_check"]:before {
 
 #reviewOne {
     position: relative;
-    font-size: 20px;
-    margin: 20px;
+    padding-top:5px;
+	position: relative;
+	font-size: 20px;
+	margin: 10px;
+}
+
+#spocontent{
+	font-size:20px;
 }
 
 .review_edit {

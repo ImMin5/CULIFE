@@ -148,8 +148,12 @@ function editForm(idx){
                }
                //console.log("vo.spo_check: "+vo.spo_check)
                if(vo.spo_check==1){
-                  tag+="<h2>스포일러</h2>"
-                  tag+="<div class='spo'>"+ vo.content +"<hr class='hr_style'/>"+ "</div></div>"
+            	   tag+="<li style='color:#e75959; font-size:23px; padding-bottom:5px;'>스포일러</li>"
+                  tag+="<div id='spocontent' class='spo'>"+ vo.content +"</div>";
+                  if(vo.spo_check==1){
+                	   tag+="<input id='more' class='more' type='button' value='댓글보기' name='readspo' onclick='more()'/>";
+                   }
+                  tag+="<hr class='hr_style'/>"+ "</div>"                  
                }else{
                   tag += "<br/>" + vo.content + "<hr class='hr_style'/>" +"</div>";
                }
@@ -203,9 +207,11 @@ function editForm(idx){
                   tag += "<div class='Ereview_box'>"
                 tag += "<textarea class='review' name='content'>"+vo.content+"</textarea>";                
                 tag += "<label class='review' for='review'></label>"
-               tag += "<input type='submit' value='수정' class='review_edit_edit'/>";                           
+               tag += "<input type='submit' value='수정' class='review_edit_edit'/>";
+               
                tag += "</form></div>";
             }
+            
             tag += "<hr class='hr_style'/></li>";
             score_star = vo.score_star;      
             //alert(score_star)
@@ -246,17 +252,18 @@ $(function(){
             }
          });
       }
-   });
+   });   
 })
 
 //리뷰 수정
 $(document).on('click','#reviewList input[value=수정]', function(){
    $('#mDiv').css("display","none");   
-   $('#reviewOne').css("display","none");
+   $('#reviewOne').css("display","none");   
    $('.stars_edit').css("display","block");
 });
 $(document).on('submit','#editFrm', function(){
    event.preventDefault();
+   $("#score_star_edit").val($("input[name=score_star]:checked").val());
    var params = $(this).serialize();
     //console.log(params);
    var url = "/review/reviewEditOk";
@@ -280,8 +287,8 @@ $(document).ready(function(){
       var editStar = $(this).val();
       $("input:radio[name='score_star']:radio[value='"+editStar+"']").prop("checked",true);
       //alert(editStar)
-      console.log(editStar);         
-      $('#score_star_edit').val(editStar)
+      //console.log(editStar);         
+      $('#score_star_edit').val(editStar);
    });
 });   
 //리뷰삭제
@@ -324,6 +331,20 @@ function warning(no){
       });
    }
 }
+
+//스포블러처리
+function more(){
+	//console.log("aa")
+	//document.getElementById("spocontent").style.display = "block";
+	var con = document.getElementById("spocontent");
+	if(con.style.display=='none'){
+		con.style.display = 'block';
+		document.getElementById("more").value="댓글보기";
+	}else{
+		con.style.display = 'none';
+		document.getElementById("more").value="숨기기";
+	}
+} 
 </script>
 <div id="detail_container">
    <div id="topDetail"></div>
