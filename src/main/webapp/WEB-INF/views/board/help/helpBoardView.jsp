@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/css/board/boardViewReply.css"	type="text/css" />
 <script>
   if('${msg}'=='guest'){
-    	alert('본인또는 관리자가 아닙니다.');history.back();
+    	alert('본인 또는 관리자가 아닙니다.');history.back();
     }
 $(function(){
 	$("#helpBoardDel").click(function(){
