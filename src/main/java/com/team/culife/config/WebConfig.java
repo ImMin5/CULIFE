@@ -45,7 +45,7 @@ public class WebConfig implements WebMvcConfigurer{
 		//인터셉터 적용
 		//registry.addInterceptor(new LoginInterceptor()).addPathPatterns(LOGIN_URL);
 		//registry.addInterceptor(new AuthorInterceptor()).addPathPatterns(AUTHOR_URL);
-		//registry.addInterceptor(new AdminInterceptor()).addPathPatterns(ADMIN_URL);
+		registry.addInterceptor(new AdminInterceptor()).addPathPatterns(ADMIN_URL);
 
 	}
 	@Override

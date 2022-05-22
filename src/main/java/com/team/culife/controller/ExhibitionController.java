@@ -157,7 +157,7 @@ public class ExhibitionController {
 									fileService.uploadImage(newFile, path);
 									//newFile.transferTo(f);
 									//작가 재신청
-									authorService.authorReUpdate(vo);
+									System.out.println("신청 결과 -->"+ authorService.authorReUpdate(vo));
 								} catch(Exception ee) {ee.printStackTrace();}
 									
 							}

@@ -47,8 +47,7 @@ function editForm(idx){
 						tag+="<li style='color:#e75959; font-size:23px; padding-bottom:5px;'>스포일러</li>"
 						tag+="<div id='spocontent' class='spo'>"+ vo.content +"</div>";
 						if(vo.spo_check==1){
-		                	   tag+="<input id='more' class='more' type='button' value='댓글보기' name='readspo' onclick='more()'/>";
-		                   }
+		             tag+="<input id='more' class='more' type='button' value='댓글보기' name='readspo' onclick='more()'/>";		                 
 					}else{
 						tag += "<br/>" + vo.content + "</div>";
 					}
