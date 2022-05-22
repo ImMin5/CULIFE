@@ -72,12 +72,14 @@ $(function(){
                 data : data,
                 async : false,
                 success : function(data){
+                	
                 },
                 error : function(){
                     
                 }
             });
         }
+        alert("작품이 등록되었습니다. \n등록하신 작품은 작품등록 페이지에서 언제든 수정 가능합니다.");
         location.reload();
     });
 

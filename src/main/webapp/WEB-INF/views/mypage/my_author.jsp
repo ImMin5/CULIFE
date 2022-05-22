@@ -7,6 +7,14 @@
 <style>
 	footer {position:fixed; left:0; bottom:0; background-color:black;}
 	ul {margin-bottom: 0;}
+	#max_text_length {
+		background-color:white;
+		height:40px; width:117%;
+		line-height:30px;
+		margin-top:5px;
+		opacity: 1 !important;
+		color:#888
+	}
 </style>
 <script>
 	$(function(){

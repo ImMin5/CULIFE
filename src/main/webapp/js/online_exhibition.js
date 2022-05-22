@@ -322,6 +322,25 @@ function getExhibitionWork(exhibition_no){
 					$('#ex_reviewList').css({"display":"block"});
 				});
 			});
+			
+			/* 작품보기 이미지 줌인 */
+			$(document).ready(function(){
+				$(".ex_detail_img").on('click', (function(){
+					var a = $(this).children().attr("src");
+					$(".pop").replaceWith("<img class='pop' src='" + a + "'/>");
+					$("#imgPopup").css({"display":"block"});
+					setTimeout(function(){
+						$(".pop").css({
+						"transform" : "translate(-50%,-50%) scale(1)",
+						})
+					})		
+				}))	
+				$("#imgPopup > .fa-xmark").click(function(){
+					$("#ex_detail_bg").css({"display" : "block"});
+					$('footer').css({"display" : "none"});
+					$("#imgPopup").css({"display":"none"});
+				});	
+			})
 			select_ExhibitionReviewList(item.no);
 			},error: function(error){
 			

@@ -1,6 +1,12 @@
 <c:set var="url" value="<%=request.getContextPath()%>"/>
 <style>
-
+@font-face {
+    font-family: 'SuncheonR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/SuncheonR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+a {font-family: 'SuncheonR' !important;}
 body{
 	width:100wv;
 	height:100vh;
