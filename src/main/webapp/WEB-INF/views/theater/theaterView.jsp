@@ -334,7 +334,7 @@ function warning(no){
 	    	<div class="stars" id="mDiv">
 	    	<c:if test="${logNo != null}">
 				<form method="post" id="reviewFrm" action="/review/reviewWriteOk">						
-					<input type="checkbox" name="checkbox" id="checkbox" />
+					<input type="checkbox" name="spo_check" id="checkbox" value='1'/>
       		 		<label for="checkbox">스포체크</label>	 
 				    <input class="star star-5" id="star-5-2" type="radio" name="score_star" value="5" title="5점"/>
 			        <label class="star star-5" for="star-5-2"></label>
