@@ -162,7 +162,7 @@ $(function(){
 		$(document).on("click","p[name=get_exhibition]",function(){
 			var exhibition_no = $(this).attr("data-exhibition_no");
 			getExhibitionWork(exhibition_no);
-			select_ExhibitionReviewList(exhibition_no);
+			/* select_ExhibitionReviewList(exhibition_no); */
 		});
 		
 		// 댓글 리스트 선택
