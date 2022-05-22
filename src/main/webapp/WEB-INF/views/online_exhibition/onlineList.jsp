@@ -220,8 +220,7 @@ $(function(){
 					type : 'POST',
 					success : function(result){
 						$("#ex_reviewComent").val("");
-						select_ExhibitionReviewList(result);
-						console.log(result);
+						select_ExhibitionReviewList(exhibition_no);
 					},error : function(e){
 						alert("로그인 후 이용해주세요");
 					}
