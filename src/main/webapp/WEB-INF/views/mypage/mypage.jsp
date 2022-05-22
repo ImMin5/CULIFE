@@ -1,6 +1,7 @@
 <c:set var="url" value="<%=request.getContextPath()%>"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
+<script src="/js/mypage/alert.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <style>
 	footer {position:fixed; left:0; bottom:0; background-color:black;}
@@ -8,7 +9,14 @@
 </style>
 <script>
 	$(function(){
+		
+		//알람버튼 클릭
+
+		
+		//선택된 메뉴 색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
+		
+		//썸네일 바꾸기 버튼 클릭
 		$("#thumbnail_member_btn").on("click",function(){
 			$("#formFile_member").trigger("click");
 		})
@@ -109,7 +117,26 @@
 		</div>
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
-				<h1 class="h1">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
+				<div class="container">
+					<div class="row">
+						<div class="col-1">
+						</div>
+						<div class="col-7">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${mvo.nickname}님 반갑습니다.</h1>
+						</div>
+						<div class="col-2">
+							<div class="btn-group">
+								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
+								  </button>
+								  <ul style="width:15vw;" id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  </ul>
+							</div>				
+						</div>
+					</div>
+				</div>
+				
+						
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>

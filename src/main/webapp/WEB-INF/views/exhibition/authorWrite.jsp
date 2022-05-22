@@ -6,6 +6,22 @@
 
 <link rel="stylesheet" href="/css/exhibition/authorWrite.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<style>
+	footer {position:fixed; left:0; bottom:0; background-color:black;}
+	ul {margin-bottom: 0;}
+	#mypage_sidebar{
+		background-color:rgba(0,0,0,0.5);
+		color:white;
+		text-align:center;
+		font-size:2.4rem;
+		height:100%;
+		position:fixed; right:0;
+	}
+	#mypage_sidebar>#mypage_sidebar_container{
+		position:relative; top:50%;
+		transform:translateY(-50%)
+	}
+</style>
 <script>
 let authorch = false;
 
@@ -87,17 +103,17 @@ function authorSubmit() {
 		alert("프로필사진을 첨부해 주세요")
 	}
 	else if (debut_year == '' ) {
-		alert("데뷔년도를 입력해 주세요")
+		alert("데뷔 연도를 입력해 주세요")
 	}  
 	else if (!pattern_num.test(debut_year)) {
-		alert("데뷔년도에 숫자만 입력해 주세요")
+		alert("데뷔 연도에 숫자만 입력해 주세요")
 	} 
 	else if (author_msg == '') {
 		alert("자기소개를 입력해 주세요")
 	}
-	else if (author_status == 0 ) {
+	/* else if (author_status != '' ) {
 		alert("작가 신청 심사 중입니다.")
-	}
+	} */
 	else {
 		var data = new FormData($("#authorWrite")[0]);
 		$.ajax({
@@ -132,48 +148,40 @@ function authorSubmit() {
 						<div class="authorWriteThumbnail">
 							<img src="/img/member/default_thumbnail.png" id="preview"
 								style="width: 170px; height: 170px;" /> 
-							<img class="thumbnail_btn" id="thumbnail_btn" src="${url}/img/member/thumbnail_btn.png"/>
+							<img class="thumbnail_btn" id="thumbnail_btn" src="${url}/img/member/thumbnail_btn.png" style="cursor: pointer;"/>
 							<input type="file" multiple="multiple" name="file" class="files" id="authorThumbnail"
 								style="display:none;">
 						</div>
-						<div class="authorWriteContent">
-								<label>닉네임</label>
-								<input type="text" value="${mvo.nickname}" class="form-control" readonly>
-								
-
-							</div>
-							<div class="authorWriteName">
-								<div>작가명</div>
-								<div>
-									<input type="text" class="form-control" name="author" id="authorWriteName" placeholder='작가명 입력'>
-								</div>
-								<span id="chk"></span>
-							</div>
-							<div class="authorWriteSNS">
-								<div>SNS 주소</div>
-								<div>
-									<input type="text" class="form-control" name="sns_link" id="authorWriteSNS">
-								</div>
-							</div>
-
-							<div class="authorDebutYear">
-								<div>데뷔년도</div>
-								<div>
-									<input type="text" class="form-control" name="debut_year" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018'>
-								</div>
-							</div>
-							<div class="authorMsg">
-								<div>자기소개</div>
-								<div>
-									<textarea type="text" class="form-control" name="author_msg" id="authorMsg"></textarea>
-								</div>
-							</div>
 						
-							<input type="button" id="memberForm_member_edit_btn" class="btn btn-outline-secondary" value="작가 신청" onclick="authorSubmit()" />
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:2rem;" >
+						  	<input type="text" value="${mvo.nickname}" class="form-control" style=" font-size:2.4rem; height:70px;" readonly>
+						  	<label >닉네임</label>
+						</div>
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
+						  	<input type="text" class="form-control" name="author" id="authorWriteName" placeholder='작가명 입력' style=" font-size:2rem; height:70px;">
+						  	<label >작가 이름</label>
+						  	<span id="chk"></span>
+						</div>
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
+							  <input type="text" class="form-control" name="sns_link" id="authorWriteSNS" placeholder='데뷔년도 입력 ex) 2018'style=" font-size:2rem; height:70px;">
+							  <label >SNS 주소</label>
+						</div>
+
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
+							  <input type="text" class="form-control" name="debut_year" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018'style=" font-size:2rem; height:70px;">
+							  <label >데뷔 연도</label>
+						</div>
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
+							  <textarea class="form-control" name="author_msg" id="authorMsg" style=" font-size:2rem; height:100px; resize: none; padding-top: 25px;"></textarea>
+							  <label for="floatingTextarea">자기소개</label>
+						</div>
+						<div class="mb-3" style="margin:0 auto; width:65%; text-align:center; font-size:1.8rem;">
+							<input type="button" id="memberForm_member_edit_btn" class="btn btn-outline-secondary" value="작가 신청" onclick="authorSubmit()" style="display:block; margin:30px auto 0 auto; font-size:1.6rem"/>
 						</div>
 					</form>
 				</div>
 			</div>
+		</div>
 			<!-- mypage_container end -->
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">

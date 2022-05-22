@@ -25,7 +25,7 @@ $(function () {
 				success: function(vo) {
 					var tag = '<ul>';
 					tag += '<li>작가신청</li>';
-					tag += '<li><img src="'+vo.author_thumbnail+'" id="preview" style="width: 170px; height: 170px;" /></li>';
+					tag += '<li><img src="/upload/'+vo.member_no+'/author/thumbnail/'+vo.author_thumbnail+'" id="preview" style="width: 170px; height: 170px;" /></li>';
 					tag += '<li>작가명: '+vo.author+'</li>';
 					tag += '<li>SNS주소: <a href="'+vo.sns_link+'" target="_blank">'+vo.sns_link+'</a></li>';
 					tag += '<li>데뷔년도: '+vo.debut_year+'</li>';
@@ -35,6 +35,7 @@ $(function () {
 					tag += '</ul>';
 					tag += '<form method="get" action="/admin/authorDelete" class="author_delete">';
 					tag += '<input type="hidden" name="no" value="'+vo.no+'" id="cancel_no"/>';
+					tag += '<input type="hidden" name="member_no" value="'+vo.member_no+'" id="cacel_member_no"/>';
 					/* 취소일때 - 취소사유확인 */
 					if(vo.author_status == 2){
 						tag += '<textarea name="msg" rows="10" cols="70" id="textBox2" readonly="readonly" style="width:86.5%; resize:none">'+vo.msg+'</textarea>';
@@ -105,7 +106,8 @@ $(function () {
 		$.ajax({
 			url: url,
 			data: {
-				no: $(this).attr('title')
+				no: $(this).attr('title'),
+				member_no: $("#cacel_member_no").val()
 			},
 			success: function(vo) {
 				alert("승인이 완료되었습니다.");

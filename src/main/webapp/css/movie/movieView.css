@@ -125,7 +125,7 @@ body {
 }
 
 .header_review_start i {
-   margin-top: 7px;
+   margin-top: 10px;
    color: #fd4;
    font-size: 22px;
 }
@@ -583,7 +583,7 @@ label[for="spo_check"]:before {
   padding: 10px 20px;
   border-radius: 15px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  font-size: 19px;
+  font-size: 23px;
   font-weight: 600;
   transition: 0.25s;
   border: none;
@@ -595,7 +595,7 @@ label[for="spo_check"]:before {
   letter-spacing: 2px;
   transform: scale(1.1);
   cursor: pointer;
-  background-color: #a3a1a1;
+/*   background-color: #a3a1a1; */
   color: #e3dede;
   
 }
@@ -606,4 +606,142 @@ label[for="spo_check"]:before {
 
 .stars_edit{
 	display:none;
+}
+
+#reviewOne:nth-child(3) {
+	position: absolute;
+    top: 2px;
+    right: 2px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
+    font-size: 19px;
+    font-weight: 600;
+    transition: 0.25s;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #6e6e6e;
+}
+
+#reviewOne {
+	position: relative;
+	font-size: 20px;
+	margin-top: 20px;
+}
+
+.review_edit {
+	position: absolute;
+    top: 0px;
+    right: 60px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
+    font-size: 23px;
+    font-weight: 600;
+    transition: 0.25s;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #6e6e6e;
+	cursor: pointer;
+}
+
+.review_edit:hover,
+.review_delete:hover {
+  letter-spacing: 2px;
+  transform: scale(1.2);
+  cursor: pointer;
+/*   background-color: #a3a1a1; */
+  color: #e3dede;
+  
+}
+
+.review_delete {
+	position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
+    font-size: 23px;
+    font-weight: 600;
+    transition: 0.25s;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #6e6e6e;
+	cursor: pointer;
+}
+
+.Ereview_box {
+	margin: 0 auto;
+	width: 80%;
+
+}
+
+.review_edit_edit {
+    margin-top : 5px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
+    font-size: 23px;
+    font-weight: 600;
+    transition: 0.25s;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #6e6e6e;
+	cursor: pointer;
+}
+
+
+
+.reviewOne {
+	margin-top: 15px;
+}
+
+.review_edit_edit:hover {
+  letter-spacing: 2px;
+  transform: scale(1.1);
+  cursor: pointer;
+  background-color: #a3a1a1;
+  color: #e3dede;
+  
+}
+
+
+.hr_style {
+	margin-top: 10px;
+	width: 97%;
+	height: 1px;
+  	border-width: 0 0 1px;
+  	color: #e3dede;
+    border-image: linear-gradient(90deg, rgba(135, 206, 235, 0), #e3dede 50%, rgba(135, 206, 235, 0) 100%) 0 0 100%;
+ 	border-style: solid;
+}
+
+#mreviewList>ul>li {
+    position: relative;
+}
+
+#mreviewList>ul>li>input[type="button"] {
+	margin-top: 5px;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
+    font-size: 23px;
+    font-weight: 600;
+    transition: 0.25s;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #6e6e6e;
+    cursor: pointer;
+}
+
+#mreviewList>ul>li>input[type="button"]:hover {
+	letter-spacing: 2px;
+	transform: scale(1.1);
+	cursor: pointer;
+	background-color: #a3a1a1;
+    color: #e3dede;
 }

@@ -21,15 +21,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.AlertService;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.BoardService;
+import com.team.culife.service.ExhibitionReviewService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
 import com.team.culife.service.MovieService;
 import com.team.culife.service.ReviewService;
+import com.team.culife.vo.AlertVO;
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
+import com.team.culife.vo.ExhibitionReviewVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.MovieVO;
 import com.team.culife.vo.PageResponseBody;
@@ -56,6 +60,12 @@ public class MemberController {
 	@Inject
 	BoardService boardService;
 	
+	@Inject
+	AlertService alertService;
+	
+	@Inject
+	ExhibitionReviewService exhibitionReviewService;
+	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
 	public ModelAndView mypage(HttpSession session) {
@@ -65,7 +75,8 @@ public class MemberController {
 			
 			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				session.setAttribute("grade",mvo.getGrade());	
+				session.setAttribute("grade",mvo.getGrade());
+				mav.addObject("alertList",alertService.alertSelectByMemberNo(memberNo));
 				mav.addObject("mvo", mvo);
 				mav.setViewName("mypage/mypage");
 			}
@@ -179,9 +190,50 @@ public class MemberController {
 			@RequestParam(value="pageNo", required=false, defaultValue="1") int currentPage,
 			@RequestParam(value="pageCount", required=false, defaultValue="10") int pageCount,
 			@RequestParam(value="searchWord", required=false) String searchWord) {
+			ModelAndView mav = new ModelAndView();
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			
+			try {
+				if(memberNo == null) {
+					mav.setViewName("redirect:/");
+				}
+				else {
+					PagingVO pvo = new PagingVO();
+					// 전체 리스트 업데이트
+					pvo.setRecordPerPage(pageCount);
+					pvo.setCurrentPage(currentPage);
+					pvo.setMember_no(memberNo);
+					pvo.setCategory(category);
+					if(searchWord != null)pvo.setSearchWord(searchWord);
+					pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					if(pvo.getTotalPage() >0  && pvo.getTotalPage() < currentPage) {
+						pvo.setCurrentPage(pvo.getTotalPage());
+						pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					}
+					
+					List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
+					mav.addObject("boardList", list);
+					mav.addObject("pvo", pvo);
+					mav.setViewName("mypage/my_board");
+					
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				mav.setViewName("redirect:/");
+			}
+			
+		return mav;
+	}
+		
+	//마이페이지 감상평
+	@GetMapping("/mypage/review")
+	public ModelAndView mypageReview(HttpSession session, 
+			@RequestParam(value="pageNo", required=false, defaultValue="1") int currentPage,
+			@RequestParam(value="pageCount", required=false, defaultValue="10") int pageCount,
+			@RequestParam(value="searchWord", required=false) String searchWord) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		
 		try {
 			if(memberNo == null) {
 				mav.setViewName("redirect:/");
@@ -192,34 +244,20 @@ public class MemberController {
 				pvo.setRecordPerPage(pageCount);
 				pvo.setCurrentPage(currentPage);
 				pvo.setMember_no(memberNo);
-				pvo.setCategory(category);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
-				pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
-				if(pvo.getTotalPage() < currentPage) {
+				pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
+				System.out.println("total recprd -->" + pvo.getTotalRecord());
+				if(pvo.getTotalPage() >0  &&  pvo.getTotalPage() < currentPage) {
 					pvo.setCurrentPage(pvo.getTotalPage());
-					pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
 				}
 				
-				List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
-				mav.addObject("boardList", list);
+				List<ExhibitionReviewVO> list = exhibitionReviewService.exhibitionReviewSelectByMemberNo(pvo);
+				mav.addObject("reviewList", list);
 				mav.addObject("pvo", pvo);
-				mav.setViewName("mypage/my_board");
-				
+				mav.setViewName("mypage/my_review");
 			}
 			
-		}catch(Exception e) {
-			e.printStackTrace();
-			mav.setViewName("redirect:/");
-		}
-		
-		return mav;
-	}
-	//마이페이지 감상평
-	@GetMapping("/mypage/review")
-	public ModelAndView mypageReview() {
-		ModelAndView mav = new ModelAndView();
-		try {
-			mav.setViewName("mypage/my_review");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -616,4 +654,35 @@ public class MemberController {
 			}
 			return entity;
 		}
+	
+	//알림 가져오기 
+		@GetMapping("/mypage/alert")
+		public PageResponseBody<AlertVO> getMyAlert(HttpSession session){
+			PageResponseBody<AlertVO> entity = new PageResponseBody<AlertVO>();
+			HashMap<String,String> result = new HashMap<String,String>();
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			
+			try {
+				result.put("status","200");
+				if(memberNo != null) {
+					result.put("msg","알림 불러오기 성공.");
+					result.put("redirect","/");
+					entity.setItems(alertService.alertSelectByMemberNo(memberNo));
+					entity.setMsg(result);
+				}
+				else {
+					result.put("msg","로그인 후 이용해 주세요.");
+					entity.setMsg(result);
+				}
+				
+			}catch(Exception e) {
+				result.put("status","400");
+				result.put("msg","알림 서비스 Error... 관리자에게 문의하세요.");
+				entity.setMsg(result);
+				e.printStackTrace();
+			}
+			
+			return entity;
+			
+		}	
 }

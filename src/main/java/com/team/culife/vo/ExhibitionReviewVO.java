@@ -11,6 +11,7 @@ public class ExhibitionReviewVO {
 	private String write_date;
 	private List<Integer> exhibition_noList;
 	private String nickname;
+	private String subject;
 	
 	public int getExhibition_no() {
 		return exhibition_no;
@@ -53,6 +54,12 @@ public class ExhibitionReviewVO {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 	
 }

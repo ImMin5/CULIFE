@@ -36,8 +36,7 @@ public class OnlineExhibitionController {
 	ExhibitionService eService;
 	
 	@GetMapping("onlineList")
-	public ModelAndView onlineList(HttpSession session, @RequestParam(value="currentPage", required=false, defaultValue="1")int currentPage,
-			@RequestParam(value="select", required=false, defaultValue="1")int select) {
+	public ModelAndView onlineList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		//exihibition 가져올 때 param로 받아서 페이지 리로딩
@@ -46,25 +45,19 @@ public class OnlineExhibitionController {
 		try {
 			PagingVO pVO = new PagingVO();
 			pVO.setRecordPerPage(6);
-			pVO.setCurrentPage(currentPage);
+			pVO.setCurrentPage(1);
 			pVO.setTotalRecord(eService.exhibitionTotalRecord(pVO));
-			System.out.println("pvo -->" + pVO.getTotalRecord());
+			/* System.out.println("pvo -->" + pVO.getTotalRecord()); */
 			List<ExhibitionVO> exhibitionList = eService.exhibitionList(pVO);
 			for(ExhibitionVO e : exhibitionList) {
-				e.setMember_no(aService.authorSelectByNo(e.getAuthor_no()).getMember_no());
-					System.out.println(e.getSubject());
+				AuthorVO avo = aService.authorSelectByNo(e.getAuthor_no());
+				e.setAuthor(avo.getAuthor());
+				e.setMember_no(avo.getMember_no());
 			}
-			if(exhibitionList.size() > 0) {
-		
-				ExhibitionWorkVO exwvo = eService.exhibitionWorkSelectAll(exhibitionList.get(select-1).getNo());
-				AuthorVO authorVO = aService.authorSelectByNo(exwvo.getAuthor_no());
-				exwvo.setMember_no(authorVO.getMember_no());
-				exwvo.setAuthor(authorVO.getAuthor());
-				mav.addObject("exhibition", exwvo);
-			}
-			mav.addObject("exhibitionList",exhibitionList);
+			
 			
 			mav.addObject("pVO", pVO);
+			/* System.out.println("pvo total -->" + pVO.getTotalPage()); */
 			if(memberNo != null) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
 				AuthorVO avo = aService.authorNoSelect(memberNo);
@@ -75,10 +68,9 @@ public class OnlineExhibitionController {
 					session.setAttribute("logNo", mvo.getNo());
 					session.setAttribute("logNickname", mvo.getNickname());
 					session.setAttribute("grade",mvo.getGrade());
-				
-				mav.setViewName("online_exhibition/onlineList");
+			
 			} else {
-				System.out.println("로그인 바람");
+				System.out.println("로그인을 해주세요.");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -135,26 +127,6 @@ public class OnlineExhibitionController {
 		
 		return mav;
 	}
-	/*
-	 * //작가 검색 기능
-	 * 
-	 * @GetMapping("authorSearch") public ModelAndView search(String searchKey,
-	 * String searchWord) { ModelAndView mav = new ModelAndView();
-	 * mav.setViewName("online_exhibition/authorSearch"); return mav; }
-	 * 
-	 * @ResponseBody //Ajax
-	 * 
-	 * @RequestMapping("authorSearchList") public List<AuthorVO>
-	 * searchMoreView(@RequestParam(value="startPage", required=false)String
-	 * startPage, String category, String searchWord) throws Exception { int start =
-	 * Integer.parseInt(startPage); int end = 7;
-	 * System.out.println("category -> "+category);
-	 * System.out.println("searchWord -> "+searchWord); return
-	 * aService.authorSearch(category, "%"+searchWord+"%", start, end, 6); }
-	 * 
-	 * @GetMapping("onlineAuthorView") public String onlineAuthorView() { return
-	 * "online_exhibition/onlineAuthorView"; }
-	 */
 	
 	@GetMapping("/onlineList/search")
 	@ResponseBody
@@ -164,22 +136,66 @@ public class OnlineExhibitionController {
 			@RequestParam(value="currentPage",required = false, defaultValue = "1")int currentPage){
 		PageResponseBody<ExhibitionVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
-		int pageCount = 5;
+		int pageCount = 10;
 		try {
-			System.out.println("current--->"+ currentPage);
+			/* System.out.println("current--->"+ currentPage); */
 			PagingVO pvo = new PagingVO();
 			pvo.setCategory(category);
 			pvo.setRecordPerPage(pageCount);
 			pvo.setCurrentPage(currentPage);
 			if(searchWord != null) pvo.setSearchWord(searchWord);
 			pvo.setTotalRecord(eService.exhibitionTotalRecord(pvo));
-			System.out.println("pvo offset--->" + pvo.getOffsetIndex());
+			/* System.out.println("pvo offset--->" + pvo.getOffsetIndex()); */
 			List<ExhibitionVO> list = eService.exhibitionSelectAll(pvo);
 			
-			System.out.println("exhibition size --->" + pvo.getTotalRecord());
+			/* System.out.println("exhibition size --->" + pvo.getTotalRecord()); */
 			entity = new PageResponseBody<ExhibitionVO>();
 			entity.setItems(list);
 			entity.setVo(pvo);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new PageResponseBody<ExhibitionVO>();
+		}
+		
+		return entity;
+	}
+	
+	@GetMapping("/onlineListPaging")
+	@ResponseBody
+	public PageResponseBody<ExhibitionVO> onlineExhibitionSearch(HttpSession session,
+			@RequestParam(value="currentPage",required = false, defaultValue = "1")int currentPage,
+			@RequestParam(value="select", required=false, defaultValue="1")int select){
+		
+		PageResponseBody<ExhibitionVO> entity = null;
+		ModelAndView mav = new ModelAndView();
+		int pageCount = 6;
+		try {
+			PagingVO pVO = new PagingVO();
+			pVO.setRecordPerPage(pageCount);
+			pVO.setCurrentPage(currentPage);
+			pVO.setTotalRecord(eService.exhibitionTotalRecord(pVO));
+			/* System.out.println("pvo -->" + pVO.getTotalRecord()); */
+			List<ExhibitionVO> exhibitionList = eService.exhibitionList(pVO);
+			for(ExhibitionVO e : exhibitionList) {
+				AuthorVO avo = aService.authorSelectByNo(e.getAuthor_no());
+				e.setAuthor(avo.getAuthor());
+				e.setMember_no(avo.getMember_no());
+			}
+			if(exhibitionList.size() > 0) {
+		
+				ExhibitionWorkVO exwvo = eService.exhibitionWorkSelectAll(exhibitionList.get(select-1).getNo());
+				AuthorVO authorVO = aService.authorSelectByNo(exwvo.getAuthor_no());
+				exwvo.setMember_no(authorVO.getMember_no());
+				exwvo.setAuthor(authorVO.getAuthor());
+				mav.addObject("exhibition", exwvo);
+			}
+			mav.addObject("exhibitionList",exhibitionList);
+			
+			mav.addObject("pVO", pVO);		
+			entity = new PageResponseBody<ExhibitionVO>();
+			entity.setItems(exhibitionList);
+			entity.setVo(pVO);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

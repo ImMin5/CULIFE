@@ -48,36 +48,90 @@ audio::-webkit-media-controls-panel {
 }
 /* 전시 작품 검색 - start */
 #online_ex_search {
-	width:20vw; height:70vh;
+	width: 800px; height:70vh;
 	background-color:#fff;
-	z-index:-1;
-	transition:all 1s;
-	position:absolute; right:-1000px; top:100px;
+	z-index:5;
+	transition:all 2s;
+	position:absolute; right:50%; top:100px;
+	overflow:hidden;
+	transform:translateX(400%);
 }
 #online_ex_search h3 {
 	font-size:2.4rem; line-height:50px;
-	margin: 35px 0 0 13%
+	margin: 35px 0 0 50px
 }
 #online_ex_search > #online_search_close {
-	position:absolute; right:2.6vw; top:50px;
+	position:absolute; right:50px; top:50px;
 	cursor:pointer
 }
 #ex_searchFrm {
 	display:block;
-	width:15vw; height:30px;
+	width:600px; height:30px;
 	margin:35px auto 0 auto;
 }
 #ex_searchFrm >* {height:30px; line-height:30px;}
-#ex_searchFrm > select {width:25%; float:left;}
-#ex_searchFrm > input {width:20%; margin:0; padding:0; float:right}
+#ex_searchFrm > select {
+	width:100px; 
+	float:left; 
+	text-align:center;
+	cursor:pointer
+}
+#ex_searchFrm > input {margin:0; padding:0; float:right}
 #ex_searchFrm > #ex_searchWord {
-	width:45%; height:26px; 
-	float:left;
-	margin:0 4%;
+	width:450px; height:26px; 
+	float:right; padding:0 10px
 }
 
-.searchHide {transform:translateX(0px)}
-.searchShow {transform:translateX(-1000px)}
+.searchHide {transform:translateX(0%)}
+.searchShow {transform:translateX(50%) !important;}
+
+#table_container {
+	width:700px; height:54.5vh;
+	text-align:center;
+	padding:0 50px;
+}
+
+#table_container > table > tbody > tr {display:block}
+#table_container > table > tbody > tr > th {
+	font-size:2rem; line-height:50px;
+	font-weight:bold;
+	padding-top:10px;
+	border-bottom:1px solid #c0c0c0;
+	margin:0 10px;
+	float:left
+}
+#table_container > table > tbody > tr > th:nth-child(1) {
+	width:230px;
+}
+#table_container > table > tbody > tr > th:nth-child(2) {
+	width:180px;
+}
+#table_container > table > tbody > tr > th:nth-child(3) {
+	width:230px;
+}
+#modal_search {
+	height:45vh; 
+	overflow-y:auto; 
+	overflow-x:hidden;
+	display:block
+}
+#modal_search > tr {
+	width:700px; display:block;
+	margin-top:20px; height:30px;
+}
+#modal_search > tr > td {
+	margin:0 10px; float:left;
+	font-size:1.8rem;
+	line-height:30px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	height:30px
+}
+#modal_search > tr > td:nth-child(1) {width:230px}
+#modal_search > tr > td:nth-child(2) {width:180px}
+#modal_search > tr > td:nth-child(3) {width:230px}
+
 /* 전시 작품 검색 - end */
 
 /* 전시 작품 list - start */
@@ -108,7 +162,7 @@ audio::-webkit-media-controls-panel {
 	background:url(/img/exhibition/painting_frame_skew_shadow.png);
 	background-size:100% 100%;
 	position:absolute; right:15%; top:13%;
-	z-index:2;
+	z-index:1;
 }
 #room ul li:nth-child(2) span::after {
 	content:"";
@@ -118,10 +172,10 @@ audio::-webkit-media-controls-panel {
 	position:absolute; right:22%; top:3%;
 }
 #room ul li:nth-child(2) img {
-	width:6.5vw; height:18vh;
+	width:6.5vw; height:16.5vh;
 	transform:skew(5deg) rotate(10deg);
-	position:absolute; right:24%; top:20%;
-	z-index:1;
+	position:absolute; right:24.5%; top:20.5%;
+	z-index:2;
 }
 .workView_btn {
     border: 3px solid #fce205;
@@ -175,16 +229,26 @@ audio::-webkit-media-controls-panel {
 	height:20vh;
 	display:inline-block;
 	margin:0 1vh;
+	position:relative;
+	transition:all 0.5s;
+	cursor:pointer;
+}
+#online_ex_pagination > div > p > span {
+	width:15vh; height:15vh; 
+	color:#fff; background-color:rgba(0,0,0,0.3);
+	display:block;
+	position:absolute; left:0; top:2.5vh;
+	text-align:center;
+	line-height:15vh;
+	font-size:2.4rem;
+	transition:all 0.5s;
 }
 #online_ex_pagination > div > p > img{
 	width:15vh; height:15vh; 
-	cursor:pointer;
 	margin-top:2.5vh;
-	transition:all 0.5s;
 }
-#online_ex_pagination > div > p > img:hover{
-	transform:scale(1.2)
-}
+#online_ex_pagination > div > p:hover{transform:scale(1.2)}
+#online_ex_pagination > div > p:hover span{opacity:0}
 /* 전시리시트 페이지네이션 - end */
 
 /* 전시등록 모달 - start */
@@ -504,7 +568,7 @@ audio::-webkit-media-controls-panel {
 	background-color: orange;
 	border-radius:5px;	
 }
-#ex_detail_wrap > ul > li {
+#ex_detail_wrap > ul > li:not(#ex_review, #ex_reviewList, #ex_reviewForm_wrap) {
 	width:100%; height:600px;
 	display:block;
 	padding:20px 0 10px 0;
@@ -591,4 +655,98 @@ audio::-webkit-media-controls-panel {
 
 /* 이미지 상세 모달 - end */
 
-#table_container {height:500px}
+/* 감상평 - start */
+#ex_review {height:90px; display:table; position:relative}
+#ex_review > h4 {
+	width:1030px;
+	font-size:2.4rem;
+	padding:20px;
+	line-height:50px;
+	letter-spacing:5px;
+	font-weight:bold;
+}
+#ex_review > h4::after {
+	content:"";
+	width:100%;
+	border-bottom:2px solid #999;
+	display:block;
+}
+#ex_review > span {
+	position:absolute; right:50px; top:30px;
+	font-size:2rem;
+	line-height:50px;
+	cursor:pointer
+}
+#ex_reviewList {padding:0 20px; font-size:1.8rem}
+.ex_review_wrap{line-height:25px;}
+.ex_reivew_coment {
+	width:100%;
+	min-height:80px; height:auto;
+	padding:10px 0;
+	position:relative;
+}
+.ex_review_wrap > .ex_reivew_coment > p { /* 닉네임 */
+	width:200px;
+	position:absolute; left:50px; top:10px;
+}
+.ex_review_wrap > .ex_reivew_coment > span { /* 날짜 */
+	width:200px;
+	display:block;
+	position:absolute; left:50px; bottom:10px;
+	font-size:1.6rem; color:#999;
+} 
+.ex_review_wrap > .ex_reivew_coment > em { /* 감상평 */
+	width:610px;
+	display:block;
+	font-style: normal;
+	margin-left:270px;
+	white-space:pre-wrap;
+}
+.ex_review_wrap > .ex_reivew_coment > div { /* 수정/삭제 */
+	position:absolute; right:50px; bottom:10px;
+}
+.ex_review_wrap > .ex_reivew_coment > div > input {
+	border:none;
+	background-color:transparent;
+	cursor:pointer;
+	color:#999
+}
+#ex_reviewForm_wrap {height:120px; padding: 20px 50px}
+#ex_review_box > textarea {
+	resize:none;
+	width:835px; height:100px; 
+	border: 2px solid #c0c0c0;
+	border-radius:10px;
+	padding:0 10px;
+	line-height:25px;
+	float:left;
+	margin-right:20px
+}
+#ex_reviewBtn {float:left}
+#ex_reviewBtn > input {
+	width:80px; height:104px;
+	border: none;
+	border-radius:10px;
+	cursor:pointer;
+	background-color:#b4b4b4
+}
+
+.ex_edit_txt {
+	resize:none;
+	width:815px; height:100px; 
+	border: 2px solid #c0c0c0;
+	border-radius:10px;
+	padding:0 10px;
+	margin-left:40px
+}
+.ex_edit_btn {
+	width:80px; height:104px;
+	border: none;
+	border-radius:10px;
+	cursor:pointer;
+	background-color:#b4b4b4;
+	float:right;
+	margin-right:50px
+}
+/* 감상평 - end */
+

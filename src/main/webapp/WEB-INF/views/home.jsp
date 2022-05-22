@@ -12,6 +12,8 @@
 <script src="/js/home.js"></script>
 <style>
 	footer {position:absolute; left:0; bottom:0}
+	html {-ms-overflow-style: none;}
+	html::-webkit-scrollbar{display:none}
 </style>
 <script>
 	/*스크롤 무빙*/
@@ -89,44 +91,22 @@
 				<div id="home_commu">
 					<h2>자유게시판</h2>
 					<ul>
+						<c:forEach var="vo" items="${list}">
 						<li>
 							<ul>
-								<li>제목</li>
-								<li>작성자</li>
-								<li>날짜</li>
+								<li>${vo.subject}</li>
+								<li>${vo.nickname }</li>
+								<li>${vo.write_date }</li>
 							</ul>
-							<a href=""></a>
+							<a href="/board/freeBoardView?no=${vo.no}"></a>
 						</li>
-						<li>
-							<ul>
-								<li>제목</li>
-								<li>작성자</li>
-								<li>날짜</li>
-							</ul>
-							<a href=""></a>
-						</li>
-						<li>
-							<ul>
-								<li>제목</li>
-								<li>작성자</li>
-								<li>날짜</li>
-							</ul>
-							<a href=""></a>
-						</li>
-						<li>
-							<ul>
-								<li>제목</li>
-								<li>작성자</li>
-								<li>날짜</li>
-							</ul>
-							<a href=""></a>
-						</li>
+						</c:forEach>
 					</ul>
-					<a href="">+ 더보기</a>
+					<a href="/board/freeBoardList">+ 더보기</a>
 				</div>
-				<div id="home_author">
+				<div id="home_help">
 					<p><img src="/img/logo_w.png" alt="로고"></p>
-					<button>문의하기</button>
+					<button onclick="location.href='/board/help/helpBoardWrite'">문의하기</button>
 				</div>
 			</div>
 		</section>

@@ -2,8 +2,8 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${url}/css/movie/movieView.css">
-
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
 <script>
 $(function(){
@@ -40,8 +40,8 @@ function editForm(idx){
 					tag += " ("+vo.score_star+")";
 					
 					if(vo.member_no=='${logNo}'){
-						tag += "<input type='button' value='수정'/>"; 
-						tag += "<input type='button' value='삭제' title='"+vo.no+"'/>";	
+						tag += "<input type='button' value='수정' class='review_edit'/>"; 
+						tag += "<input type='button' value='삭제' class='review_delete' title='"+vo.no+"'/>";	
 					}
 					if(vo.spo_check==1){
 						tag+="<h2>스포일러</h2>"
@@ -101,13 +101,13 @@ function editForm(idx){
 				    tag += "<textarea class='review' name='content'>"+vo.content+"</textarea>";				    
 				    tag += "<label class='review' for='review'></label>"
 				    	
-					tag += "<input type='submit' value='수정'/>";	
+					tag += "<input type='submit' value='수정' class='review_edit_edit' />";	
 				    tag += "</div>"		
 				    tag += "</form>"
 				    tag += "</div>"
 				    
 				}
-				tag += "<hr/></li>";
+				tag += "<hr class='hr_style'/></li>";
 				score_star = vo.score_star;	
 				});
 				tag+="</ul>";
@@ -262,7 +262,7 @@ function warning(no){
 	      	<input type="hidden" name="poster_path" id="poster_path" value="${vo.poster_path}"/>
 	      	<input type="hidden" name="vote_count" id="vote_count" value="${vo.vote_count}"/>
 	      	<input type="hidden" name="movie_id" id="movie_id" value="${vo.movie_id}"/>
-	      	 <input type="checkbox" name="checkbox" id="checkbox" />
+	      	 <input type="checkbox" name="spo_check" id="checkbox" value='1'/>
       		 <label for="checkbox">스포체크</label>
 	        <input class="star star-5" id="star-5-2" type="radio" name="score_star" value="5" title="5점"/>
 	        <label class="star star-5" for="star-5-2"></label>
@@ -328,7 +328,7 @@ function warning(no){
                     <span class="minutes">${'${res.runtime}'}분</span>
                     <p class="type">장르 : ${'${res.genres[0].name}'}</p>
                     <h4>개봉 : ${'${res.release_date}'}</h4>
-                    <p class="header_review_start"><i class="fa-solid fa-star">${mstar_avg}</i></p>
+                    <p class="header_review_start"><i class="fa-solid fa-star">  ${mstar_avg}</i></p>
                   </div>
                   <div class="movie_desc">
                     <p class="text">

@@ -4,7 +4,7 @@ server:
 spring:
     profiles:
         default : dev
-      
+    
     # 서버 자동시작 
     mvc:
         view:
@@ -27,3 +27,6 @@ mybatis:
 open-api : 
     REST_API_KEY : bGFsMgfetTesJMZeNF1L5u09m2jGU6Mb7aGHayrsC3xvl9nPNmiAMjSNF4Z5ORdBpygtVN1rdtd5iANyX0A1Kg%3D%3D
     ADMIN_KEY : 2ab06edefb73f2388c9cdf6dd90b35b8
+   
+resourcePath : file:///culife/upload/
+uploadPath : /upload/**

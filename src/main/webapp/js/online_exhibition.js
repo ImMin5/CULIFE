@@ -10,14 +10,16 @@ let totalPage = 1;
 	    $('#online_ex_searchIcon').on('click',function(){
 	        $('#online_ex_search').removeClass('searchHide').addClass('searchShow');
 	        currentPage = 1;
-	 		search();
+	        $("#modal_search").empty();
+	        search();
+	        $('footer').css({"display" : "none"});
 	    }); 
 	});
 	
 	$(document).ready(function(){
 	    $('#online_search_close').on('click',function(){
 	        $('#online_ex_search').removeClass('searchShow').addClass('searchHide');
-	    	
+	    	$('footer').css({"display" : "block"});
 	    }); 
 	});
 
@@ -48,47 +50,77 @@ $(document).ready(function(){
 		$('footer').css({"display" : "none"});
 	});	
 });
-//작푸등록시 등록 작품 수 판별
+//작품등록시 등록 작품 수 판별
 $(document).ready(function(){
+var workCount = $("form[name=ex_work_form]").length;
+var addWork = 
+	/* 임시 */
+`<form name="ex_work_form" id="ex_work_form${workCount+1}" method="post" action="/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
+	<ul id="ex_work_box">
+		<li class="exhibitionWorkContent">
+			<ul>
+				<li class="workThumbnail">
+					<p class="hidden">작품 썸네일</p>
+					<figure><img src="" id="workPreview${workCount+1}" name="workPreview${workCount+1}"/></figure>
+					<input type="hidden" name="no" value=""/>
+					<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${workCount+1}" value=""readonly>
+					<input type="file" name="filename" id="work_file${workCount+1}" class="workFile" data-count="${workCount+1}"/>
+					<label for="work_file${workCount+1}">파일찾기</label> 
+											
+				</li>
+				<li class="exhibitionApplyTitle">
+					<p>작품명</p>
+					<input type="text" name="work_subject" value="" id="work_subject${workCount+1}">
+				</li>
+				<li class="exhibitionApplyContent">
+					<p>작품 설명</p>
+					<textarea name="work_content" id="work_content${workCount+1}"></textarea>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</form>	`
+if (workCount == 0){
+	$("#form_box").append(addWork);
+}
+$("#addWork").on("click", function() {
+	var url = "/exhibition/work/count";
+	var workCount = $("form[name=ex_work_form]").length;
 
-	$("#addWork").on("click", function(){
-		var url = "/exhibition/work/count";
-		var workCount = $("form[name=ex_work_form]").length;
-		
-		if(workCount >=5){
-			alert("최대 5개 까지 등록할 수 있습니다.");
-			return;
-		}
-		console.log(workCount);
-				workCount++;
-					var addWork = 
-						/* 임시 */
-		               `<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
-						<ul id="ex_work_box">
-							<li class="exhibitionWorkContent">
-								<ul>
-									<li class="workThumbnail">
-										<p class="hidden">작품 썸네일</p>
-										<figure><img src="" id="workPreview${workCount}" name="workPreview${workCount}"/></figure>
-										<input type="hidden" name="no" value=""/>
-										<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${workCount}" value=""readonly>
-										<input type="file" name="filename" id="work_file${workCount}" class="workFile" data-count="${workCount}"/>
-										<label for="work_file${workCount}">파일찾기</label> 
-										
-									</li>
-									<li class="exhibitionApplyTitle">
-										<p>작품명</p>
-										<input type="text" name="work_subject" value="">
-									</li>
-									<li class="exhibitionApplyContent">
-										<p>작품 설명</p>
-										<textarea name="work_content"></textarea>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</form>	`
-           			 $("#form_box").append(addWork);
+	if (workCount >= 5) {
+		alert("최대 5개 까지 등록할 수 있습니다.");
+		return;
+	}
+	/*console.log(workCount);*/
+	workCount++;
+	var addWork =
+		/* 임시 */
+		`<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
+			<ul id="ex_work_box">
+				<li class="exhibitionWorkContent">
+					<ul>
+						<li class="workThumbnail">
+							<p class="hidden">작품 썸네일</p>
+							<figure><img src="" id="workPreview${workCount}" name="workPreview${workCount}"/></figure>
+							<input type="hidden" name="no" value=""/>
+							<input class="work_upload-name" name="work_thumbnail" placeholder="첨부파일" id="work_thumbnail${workCount}" value=""readonly>
+							<input type="file" name="filename" id="work_file${workCount}" class="workFile" data-count="${workCount}"/>
+							<label for="work_file${workCount}">파일찾기</label> 
+													
+						</li>
+						<li class="exhibitionApplyTitle">
+							<p>작품 명</p>
+							<input type="text" name="work_subject" id="work_subject${workCount}">
+						</li>
+						<li class="exhibitionApplyContent">
+							<p>작품 설명</p>
+							<textarea name="work_content" id="work_content${workCount}"></textarea>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</form>	`
+		$("#form_box").append(addWork);
 	});	
 });
 
@@ -157,6 +189,7 @@ function search(){
 				container.empty();	
 			}
 			if(data.items == null) return;
+			/*console.log(data);*/
 			data.items.forEach(function(element, index){
 				container.append(`
 					<tr>
@@ -191,15 +224,106 @@ function pagination(){
 	}
 }	
 
-/* 오디오 연속 재생 */
-function nextPlay(){
 
-document.getElementById('audio_player').src = "/img/exhibition/audio/𝗙. 𝗖𝗵𝗼𝗽𝗶𝗻 - Nocturne Op.9 No.2 in E flat Major.mp3"; 
-
-var media = document.getElementById('audio_player');
-
-media.currentTime = 0;
-
-media.play();
-
+let current_page = 1;
+/* 온라인 전시회 리스트 페이징 */
+function onlineListPaging(page_num,total_page){
+	let url = "/online_exhibition/onlineListPaging";
+	if(current_page + page_num < 1) return;
+	else if(current_page + page_num > total_page)return;
+	/*console.log("cuurent page ",current_page);*/
+	$.ajax({
+		url:url,
+		type : "GET",
+		dataType :"JSON",
+		data : {
+			currentPage : current_page+page_num,
+		},
+		success : function(data){
+			$("#ex_pagination_box").empty();
+			/*console.log(data);*/
+			
+			let paging = "";
+						
+			data.items.forEach(function(e, index){
+				paging += '<p name="get_exhibition" data-exhibition_no='+e.no+'><span>'+e.author+'</span><img src="/upload/'+e.member_no+'/author/exhibition/'+e.no+'/'+e.work_thumbnail+'"></p>';
+			});
+			
+			$('#ex_pagination_box').html(paging);
+			//성공했을 떄 페이지 변화
+			current_page = current_page +  page_num;
+		}, error:function() {
+			console.log("페이징 보이기 실패!");
+		}
+	});
+	
 }
+
+//전시회 작품 불러오기
+function getExhibitionWork(exhibition_no){
+	var url ="/exhibitionwithwork/"+ exhibition_no;
+	$.ajax({
+		url : url,
+		type : "GET",
+		success : function(data){
+			var item = data.items[0];
+			/*console.log(data);
+			console.log(item.workList[1]);*/
+						
+			/* 전시회 리스트 미리보기 */
+			$("#exhibition_thumnail_first").attr("src", "/upload/"+item.member_no+"/author/exhibition/"+item.no+"/"+item.workList[0].work_thumbnail);
+			if(item.workList[1] != null){
+				$("#exhibition_thumnail_second").attr("src", "/upload/"+item.member_no+"/author/exhibition/"+item.no+"/"+item.workList[1].work_thumbnail);
+			}
+			if(item.workList[1] == undefined){
+				$("#exhibition_thumnail_second").attr("src", "/img/exhibition/texture_img.png");
+			}
+			
+			$("#ex_reg_subject").html(item.subject);
+			$("#ex_reg_content").html(item.content);
+			var wList = "";
+			$.each(data.items[0].workList,function(index, i){
+				wList += "<li><ul><li>";
+				wList += "<figure class='ex_detail_img'><img class='ex_work_thumbnail' src='/upload/"+item.member_no+"/author/exhibition/"+item.no+"/"+i.work_thumbnail+"'></figure></li>";
+				wList += "<li class='ex_detail_info'><ul>";
+				wList += "<li>작가 : "+item.author+"</li>";
+				wList += "<li>작품 명 : "+i.work_subject+"</li>";
+				wList += "<li>전시 기간 : "+item.start_date+"-"+item.end_date+"</li>";
+				wList += "<li>작품 설명</li><li><p>"+i.work_content+"</p></li></ul></li></ul></li>"
+			});
+			wList += '<li id="ex_review">';
+			wList += '<h4>&nbsp;&nbsp;감상평</h4><span id="review_close">▼</span><span id="review_open">▲</span>';
+			wList += '</li>';
+			/*<!-- 댓글 목록 표시 -->*/
+			wList += '<li id="ex_reviewList"></li>';
+			
+			wList += '<li id="ex_reviewForm_wrap">';
+			wList += '<form method="post" id="ex_reviewForm">';
+			wList += '<input type="hidden" name="exhibition_no" id="exhibition_no" value="'+item.no+'">';
+			wList += '<div id="ex_review_box">';
+			wList += '<textarea name="content" id="ex_reviewComent" class="ex_reivewComent" placeholder="내용을 입력하세요"></textarea>';
+			wList += '<span id="ex_reviewBtn"><input type="submit" id="ex_reviewInsert" value="등록"/></span>';
+			wList += '</div></form></li>'
+			$('#ex_reg_detail_work').html(wList);
+			
+			/* 감상평 열기/닫기 */
+			$(document).ready(function(){
+				$('#review_close').css({"display":"none"});
+				$('#review_open').click(function(){
+					$('#review_close').css({"display":"block"});
+					$('#review_open').css({"display":"none"});
+					$('#ex_reviewList').css({"display":"none"});
+				})
+				$('#review_close').click(function(){
+					$('#review_open').css({"display":"block"});
+					$('#review_close').css({"display":"none"});
+					$('#ex_reviewList').css({"display":"block"});
+				})
+			})
+			},error: function(error){
+			
+		}
+	})
+	
+}
+

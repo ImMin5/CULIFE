@@ -135,3 +135,22 @@ a:visited{
 	position:absolute;
 	top:50%; transform:translateY(-50%);
 }
+#authorWrite {
+	position:absolute;left:50%; top:50%;
+	transform:translate(-50%, -50%);
+	font-size:1.8rem
+}
+#authorWrite > div:not(.authorWriteThumbnail) {
+	width:500px;
+	margin:10px auto 0 auto;
+	line-height:30px;
+}
+#authorWrite > div input, span{
+	font-size:1.6rem; line-height:25px
+}
+.authorMsg > div > textarea {
+	resize:none; height:100px;
+	overflow:auto;
+	font-size:1.6rem;
+	line-height:25px
+}

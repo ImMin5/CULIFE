@@ -17,7 +17,7 @@ import com.team.culife.intercepter.LoginInterceptor;
 public class WebConfig implements WebMvcConfigurer{
 	//로그인해야만 접속가능한 매퍼주소.
 	private static final List<String> LOGIN_URL = Arrays.asList(
-			"/예시/**");
+			"/예시1/**");
 	
 	//작가등급만 접속가능한 매퍼주소.
 	private static final List<String> AUTHOR_URL = Arrays.asList(
@@ -35,7 +35,8 @@ public class WebConfig implements WebMvcConfigurer{
 		
 		//인터셉터 적용
 		//registry.addInterceptor(new LoginInterceptor()).addPathPatterns(LOGIN_URL);
-		//registry.addInterceptor(new AdminInterceptor()).addPathPatterns(ADMIN_URL);
 		//registry.addInterceptor(new AuthorInterceptor()).addPathPatterns(AUTHOR_URL);
+		//registry.addInterceptor(new AdminInterceptor()).addPathPatterns(ADMIN_URL);
+
 	}
 }

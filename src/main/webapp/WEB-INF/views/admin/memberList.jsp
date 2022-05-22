@@ -127,6 +127,7 @@ $(function () {
 			<li>
 				<form method="get" action="/admin/memberStatus" class='statusFrm'>
 					<input type="hidden" name="no" value="${vo.no}"/>
+					<input type="hidden" name="end_date" value="${vo.end_date}"/>
 					<select name="memberStatus">
 						<option value="ok">정상</option>
 						<option value="7">7일정지</option>

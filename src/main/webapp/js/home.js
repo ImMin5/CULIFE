@@ -46,7 +46,7 @@ $(window).scroll(function () {
 	var height = $(document).scrollTop();
 	var wHeight = $(window).height();
 	$(document).ready(function(){
-		console.log("scroll : "+height+" / window : "+wHeight*2);
+		/*console.log("scroll : "+height+" / window : "+wHeight*2);*/
 		if(height <= wHeight*0){$(document).ready(function(){
 			$(tab1);
 			$(function(){
