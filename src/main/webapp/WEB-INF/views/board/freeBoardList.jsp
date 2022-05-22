@@ -5,7 +5,7 @@
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 <div class="container">
 	<br> <br> <br>
-	<h1>자 유 게 시 판<h4>의견을 남겨주세요</h4></h1>
+	<h1>자 유 게 시 판<h4>자유롭게 의견을 남겨주세요</h4></h1>
 	<br> 
 	<div id="write_div">
 		<button id="write" style='float: right'
