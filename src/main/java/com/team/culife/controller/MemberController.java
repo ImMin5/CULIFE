@@ -335,6 +335,7 @@ public class MemberController {
 								mvo.setThumbnail(newUploadFilename);
 								memberService.memberUpdate(mvo);
 								//파일 업로드
+								result.put("msg", "프로필 수정 완료.");
 								System.out.println("path--->"+fileService.uploadImage(newFile, path));
 							} catch(Exception ee) {
 								result.put("msg" , "파일 업로드 오류 " + path);

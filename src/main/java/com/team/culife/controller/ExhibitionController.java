@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.AlertService;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.ExhibitionService;
 import com.team.culife.service.FileService;
@@ -48,6 +49,8 @@ public class ExhibitionController {
 	AuthorService authorService;
 	@Inject
 	FileService fileService;
+	@Inject
+	AlertService alertService;
 	
 	@Value("${prefix-path}")
 	private String prefixPath;
@@ -124,11 +127,10 @@ public class ExhibitionController {
 						}
 				} // if newFile != null end
 				String msg = "작가 신청되었습니다.";
+				alertService.alertInsert(memberNo, "작가 신청 심사중 입니다. 잠시만 기다려 주세요!");
 				entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 			} 
 			else if(avo.getAuthor_status() == 2) {
-				System.out.println("Author_status2() "+avo.getAuthor_status());
-				System.out.println("재신청");
 					//MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
 					//MultipartFile newFile = (MultipartFile) mr.getFile("file");
 					
@@ -161,6 +163,7 @@ public class ExhibitionController {
 							}
 					} // if newFile != null end
 					String msg = "작가 재신청되었습니다.";
+					alertService.alertInsert(memberNo, "작가 신청 심사중 입니다. 잠시만 기다려 주세요!");
 					entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 				}
 			else if(avo.getAuthor_status() == 0) {
