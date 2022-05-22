@@ -107,7 +107,7 @@ function editForm(idx){
 				    tag += "</div>"
 				    
 				}
-				tag += "<hr/></li>";
+				tag += "<hr class='hr_style'/></li>";
 				score_star = vo.score_star;	
 				});
 				tag+="</ul>";
