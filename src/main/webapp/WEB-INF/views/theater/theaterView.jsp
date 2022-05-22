@@ -56,10 +56,7 @@ $(document).ready(function () {
 					topDetail += `						
 						<ul>						
 							<li><img src="`+thumb+`" id="thePoster"/></li>
-						</ul>
-						<ul>						
-						<li>`+area+`</li>
-					</ul>
+						</ul>							
 					`;
 	
 					midDetail += `
@@ -67,14 +64,15 @@ $(document).ready(function () {
 						<ul>
 							<li>`+title+`</li>
 							<li>`+subTitle+`</li>
+							<div id="starAvg"></div>//별점위치수정
 						</ul>
 						<ul>
 							<li>공연기간 : `+start+``+~end+`</li>
 			
 						</ul>
 						<ul>
-						<li>문의사항 : `+phone+`</li>
-						<li>`+url+`</li>
+						<li>문의사항 : `+phone+`</li>						
+						<li><a href="`+url+`" >`+url+`</a></li>
 						</ul>
 						<ul>
 						<li>`+price+`</li>
@@ -128,7 +126,7 @@ function editForm(idx){
 			success:function(result){
 				//alert(JSON.stringify(result))
 				var score = result.star_avg;
-					$('#starAvg').html("<h1>"+score+"</h1>") //별점 평균 불러오기
+					$('#starAvg').html("<h1>평점 : "+score+"</h1>") //별점 평균 불러오기
 				var cnt = result.review_cnt;
 					$("#reviewCnt").html("<h1>"+cnt+"</h1>") //리뷰 개수 불러오기
 				//alert(score)
@@ -327,14 +325,16 @@ function warning(no){
 <div id="detail_container">
 	<div id="topDetail"></div>
 	<div id="detail">
-		<div id="midDetail"></div>
+		<div id="midDetail">
+		
+		</div>
 		<div id="map" style="width: 500px; height: 400px;"></div>
 				
 		 	<div class="review_container">
 	    	<div class="stars" id="mDiv">
 	    	<c:if test="${logNo != null}">
 				<form method="post" id="reviewFrm" action="/review/reviewWriteOk">						
-					<input type="checkbox" name="checkbox" id="checkbox" />
+					<input type="checkbox" name="spo_check" id="checkbox" value='1'/>
       		 		<label for="checkbox">스포체크</label>	 
 				    <input class="star star-5" id="star-5-2" type="radio" name="score_star" value="5" title="5점"/>
 			        <label class="star star-5" for="star-5-2"></label>
@@ -356,13 +356,9 @@ function warning(no){
 					<input type="submit" value="등록" class="review_submit" />
 			</form>
 			</c:if>
-		</div>
-			
-			<div id="starAvg"></div>
+		</div>		
 			<div id="reviewList"></div>
-			<h3>
-				리뷰 개수 : <span id="reviewCnt"></span>
-			</h3>
+			
 		</div>
 	
 </div>

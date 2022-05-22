@@ -262,7 +262,7 @@ function warning(no){
 	      	<input type="hidden" name="poster_path" id="poster_path" value="${vo.poster_path}"/>
 	      	<input type="hidden" name="vote_count" id="vote_count" value="${vo.vote_count}"/>
 	      	<input type="hidden" name="movie_id" id="movie_id" value="${vo.movie_id}"/>
-	      	 <input type="checkbox" name="checkbox" id="checkbox" />
+	      	 <input type="checkbox" name="spo_check" id="checkbox" value='1'/>
       		 <label for="checkbox">스포체크</label>
 	        <input class="star star-5" id="star-5-2" type="radio" name="score_star" value="5" title="5점"/>
 	        <label class="star star-5" for="star-5-2"></label>
