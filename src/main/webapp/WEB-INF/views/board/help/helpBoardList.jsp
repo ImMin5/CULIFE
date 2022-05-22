@@ -3,11 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="container">
-	<br><br><br><br>
-	<h1>문의사항</h1>
-	<br><br><br><br><br>
+	<br> <br> <br>
+	<h1>문 의 사 항</h1>
+	<br>
+	<h5>※이 게시판은 본인과 관리자외에는 열람이 불가능합니다.</h5>
+	<br>
 	<div id="write_div">
-		<button id="write" style='float: right'	onclick="location.href='freeBoardWrite'">글쓰기</button>
+		<button id="write" style='float: right'	onclick="location.href='helpBoardWrite'">글쓰기</button>
 	</div>
 	<ul class='helpboardList'>
 		<li></li>

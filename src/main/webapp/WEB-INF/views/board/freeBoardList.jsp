@@ -4,9 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 <div class="container">
-	<br> <br> <br> <br>
-	<h1>자유게시판</h1>
-	<br> <br> <br> <br> <br>
+	<br> <br> <br>
+	<h1>자 유 게 시 판<h4>자유롭게 의견을 남겨주세요</h4></h1>
+	<br> 
 	<div id="write_div">
 		<button id="write" style='float: right'
 			onclick="location.href='freeBoardWrite'">글쓰기</button>
