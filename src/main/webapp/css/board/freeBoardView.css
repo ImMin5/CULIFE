@@ -1,7 +1,4 @@
 @charset "UTF-8";
-footer{
-	position:fixed;
-}
 body{
 	padding-top:120px;
 	background:black;
@@ -42,7 +39,6 @@ hr{
 #btnSpace{
 	margin:20px;
 }
-
 .pb{
 	margin:20px;
 }
