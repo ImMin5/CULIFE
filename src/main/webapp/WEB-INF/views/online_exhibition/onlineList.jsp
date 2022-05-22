@@ -206,21 +206,20 @@ $(function(){
 			});
 		}
 		// 댓글 등록하기
-		$(document).on('submit',"#ex_reviewForm", function(exhibition_no){
+		$(document).on('submit',"#ex_reviewForm", function(){
 			//event.preventDefault();
-	
 			if($("#ex_reviewComent").val()==""){ // 댓글 입력 안함
 				alert("댓글을 입력 후에 등록해주세요");
 			}else{ // 댓글 입력
 				let data = $("#ex_reviewForm").serialize(); // form데이터 보내기
+				var exhibition_no = $("#exhibition_no").val();
 				$.ajax({
 					url :'/ex_review/writeOk',
 					data : data,
 					type : 'POST',
 					success : function(result){
 						$("#ex_reviewComent").val("");
-						select_ExhibitionReviewList(result);
-						console.log(result);
+						select_ExhibitionReviewList(exhibition_no);
 					},error : function(e){
 						alert("로그인 후 이용해주세요");
 					}
@@ -239,6 +238,7 @@ $(function(){
 		// 수정하기 DB연결
 		$(document).on('submit','#ex_reviewList form',function(){
 			event.preventDefault();
+			var exhibition_no = $("#exhibition_no").val();
 			console.log($("#exhibition_no").val());
 			$.ajax({
 				url:'/ex_review/editOk',
@@ -255,7 +255,7 @@ $(function(){
 	
 		// 댓글 삭제하기 
 		$(document).on('click', "#ex_reviewList input[value=삭제]", function(){
-			
+			var exhibition_no = $("#exhibition_no").val();
 			if(confirm('댓글을 삭제하시겠어요?')){
 				let ex_reviewData = $(this).attr("title").split(",");
 				let data = "exhibition_no="+ex_reviewData[0]+"&member_no="+ex_reviewData[1];
