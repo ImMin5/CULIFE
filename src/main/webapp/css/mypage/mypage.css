@@ -155,6 +155,11 @@ a:visited{
 	line-height:25px
 }
 
+/*리뷰*/
+#review_contatiner .card{
+	height:100%;
+}
+
 /*알림창*/
 #mypage_notification_ul{
 	width:18vw;	
