@@ -124,8 +124,7 @@ $(function(){
 		var month = ('0' + (today.getMonth() + 1)).slice(-2);
 		var day = ('0' + today.getDate()).slice(-2);
 		var dateString = year + '-' + month  + '-' + day;
-
-		if(dateString > $("#startDate").val() == true){
+		if(dateString >= $("#startDate").val() == true){
 			alert("전시 시작일은 내일부터 가능합니다.");
 			return false;
 		}
