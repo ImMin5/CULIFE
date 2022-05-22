@@ -6,7 +6,8 @@
 <div class="container">
 <br/>
 <form class="form-group" method="post" action="/board/freeBoardEditOk?category=free" id="freeForm">
-<h1>자유 게시판 수정폼</h1>
+<h1>자유 게시글 수정</h1>
+<br>
 <input type="hidden" name="no" value="${bvo.no}"><!-- 히든으로해줘야 cnt가 0으로 안나옴 -->
 <input type="text" class="form-control" name="subject" id="freeBoardTitle" placeholder="글 제목을 입력하세요." value="${bvo.subject }"/>
 <textarea name="content" id="editor">${bvo.content }</textarea>
