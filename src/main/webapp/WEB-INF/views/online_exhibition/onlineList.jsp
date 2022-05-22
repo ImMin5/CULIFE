@@ -45,7 +45,7 @@ $(function(){
 	$("#submit_btn").on("click", function(){
 		var len = $("form[name=ex_work_form]").length;
         for(var i=1; i<=len;i++){
-            var url = "${url}/exhibition/workCreateOk";
+            var url = "${url}/upload/exhibition/workCreateOk";
             var data = new FormData($("form[name=ex_work_form]")[i-1]);
             console.log(data)
 			console.log("i => " + i + " work_subject => "+$("#work_subject"+i).val())
@@ -78,7 +78,7 @@ $(function(){
                 }
             });
         }
-        location.reload();
+        //location.reload();
     });
 
     $("#submitDel_btn").on("click", function(){

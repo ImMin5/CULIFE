@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -73,6 +74,9 @@ public class MemberController {
 	
 	@Inject
 	FileService fileService;
+	
+	@Value("${prefix-path}")
+	private String prefixPath;
 	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
@@ -293,9 +297,12 @@ public class MemberController {
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = "/upload/"+memberNo+"/thumbnail/";
-		
+		//String path = "/home/ubuntu/culife/upload/"+ memberNo+"/thumbnail/";
+		//String path = "/upload/"+ memberNo+"/thumbnail/";
+		String path = prefixPath + memberNo+"/thumbnail/";
 		try {
+			result.put("status", "200");
+			System.out.println("first path --->" + path);
 			if(memberNo != null) {
 				System.out.println("th "+ mvo.getThumbnail());
 				
@@ -308,7 +315,12 @@ public class MemberController {
 								try {
 									//새로 경로를 만듬 성공하면 true
 									f.mkdirs();
-								}catch(Exception e) {e.printStackTrace();}
+									//Runtime.getRuntime().exec("chmod 777 -R " + path);
+									
+								}catch(Exception e) {
+									result.put("msg","파일경로 생성오류 " + path);
+									e.printStackTrace();
+								}
 							}
 							// 업로드
 							try {
@@ -323,8 +335,11 @@ public class MemberController {
 								mvo.setThumbnail(newUploadFilename);
 								memberService.memberUpdate(mvo);
 								//파일 업로드
-								fileService.uploadImage(newFile, path);
-							} catch(Exception ee) {ee.printStackTrace();}
+								System.out.println("path--->"+fileService.uploadImage(newFile, path));
+							} catch(Exception ee) {
+								result.put("msg" , "파일 업로드 오류 " + path);
+								ee.printStackTrace();
+							}
 								
 						}
 				} // if newFile != null

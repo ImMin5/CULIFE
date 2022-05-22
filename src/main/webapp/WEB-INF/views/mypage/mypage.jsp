@@ -83,9 +83,9 @@
 							<img id="thumbnail_member" src="${url}/img/member/default_thumbnail.png"/>
 						</c:if>
 						<c:if test="${mvo.thumbnail != Null}">
-							<img id="thumbnail_member" src="${url}/upload/${mvo.no}/thumbnail/${mvo.thumbnail}"/>
+							<img id="thumbnail_member" src="/upload/${mvo.no}/thumbnail/${mvo.thumbnail}"/>
 						</c:if>
-							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
+							<img class="thumbnail_btn" id="thumbnail_member_btn" src="/img/member/thumbnail_btn.png"/>
 						</div>
 						<div class="mb-3" style="display:none;">
 							<label for="formFile" class="form-label">회원 사진</label>

@@ -56,7 +56,7 @@ $(document).ready(function(){
 var workCount = $("form[name=ex_work_form]").length;
 var addWork = 
 	/* 임시 */
-`<form name="ex_work_form" id="ex_work_form${workCount+1}" method="post" action="/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
+`<form name="ex_work_form" id="ex_work_form${workCount+1}" method="post" action="/upload/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
 	<ul id="ex_work_box">
 		<li class="exhibitionWorkContent">
 			<ul>
@@ -98,7 +98,7 @@ $("#addWork").on("click", function() {
 	workCount++;
 	var addWork =
 		/* 임시 */
-		`<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
+		`<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/upload/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
 			<ul id="ex_work_box">
 				<li class="exhibitionWorkContent">
 					<ul>

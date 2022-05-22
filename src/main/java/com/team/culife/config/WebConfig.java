@@ -18,10 +18,10 @@ import com.team.culife.intercepter.LoginInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
-	@Value("${uploadPath}")
+	@Value("${upload-path}")
 	private String uploadPath;
 	
-	@Value("${resourcePath}")
+	@Value("${resource-path}")
 	private String resourcePath;
 	
 	//로그인해야만 접속가능한 매퍼주소.
