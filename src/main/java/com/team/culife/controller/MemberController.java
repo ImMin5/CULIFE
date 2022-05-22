@@ -365,7 +365,7 @@ public class MemberController {
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		String Token = (String)session.getAttribute("Token");
-		String rootPath = session.getServletContext().getRealPath("/upload/"+memberNo);
+		String rootPath = prefixPath+memberNo;
 		try {
 			result.put("status","200");
 			if(memberNo != null) {
@@ -542,12 +542,12 @@ public class MemberController {
 	}
 	
 	//작가 정보 수정
-	@PostMapping("/mypage/author/info")
-	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(AuthorVO avo, HttpServletRequest request ,HttpSession session){
+	@PostMapping("/upload/mypage/author/info")
+	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(AuthorVO avo,  @RequestParam("file") MultipartFile newFile ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path ="/upload/"+memberNo+"/author";
+		String path =prefixPath+memberNo+"/author/";
 		System.out.println("path --> " +path);
 		
 		try {
@@ -555,13 +555,10 @@ public class MemberController {
 			if(memberNo != null) {
 				System.out.println("th "+ avo.getAuthor_thumbnail());
 				
-				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-				MultipartFile newFile = (MultipartFile) mr.getFile("file");
-				
 				if(newFile != null) { //새로업로드된 파일이 있으면
 					String newUploadFilename = newFile.getOriginalFilename();	
 						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-							File f = new File(path, newUploadFilename);
+							File f = new File(path);
 							//폴더가 존재하지 않을 경우 폴더 생성
 							if(!f.exists()) {
 								try {
@@ -574,12 +571,14 @@ public class MemberController {
 								//기존에 있던 썸네일 파일 삭제
 								String oriFile = authorService.authorSelectByName(avo.getAuthor()).getAuthor_thumbnail();
 								if(oriFile != null) {
-									File deleteFile = new File(path,oriFile);
-									deleteFile.delete();
+									fileService.deleteImageFile(oriFile, path);
+									//File deleteFile = new File(path,oriFile);
+									//deleteFile.delete();
 								}
 								avo.setAuthor_thumbnail(newUploadFilename);
 								
-								newFile.transferTo(f);
+								fileService.uploadImage(newFile, path);
+								//newFile.transferTo(f);
 							} catch(Exception ee) {ee.printStackTrace();}
 								
 						}

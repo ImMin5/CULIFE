@@ -117,7 +117,7 @@ function authorSubmit() {
 	else {
 		var data = new FormData($("#authorWrite")[0]);
 		$.ajax({
-			url: '/authorWriteOk',
+			url: '/upload/authorWriteOk',
 			type: 'POST', 
 			processData: false,
 			contentType: false,
