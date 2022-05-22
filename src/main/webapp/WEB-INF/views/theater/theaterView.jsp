@@ -143,18 +143,21 @@ function editForm(idx){
                
                if(vo.member_no=='${logNo}'){
                   tag += "<input type='button' value='수정' class='review_edit'/>"; 
-                  tag += "<input type='button' value='삭제' title='"+vo.no+"' class='review_delete'/>";   
+                  tag += "<input type='button' value='삭제' title='"+vo.no+"' class='review_delete'/>" ;  
+                  
                }
                //console.log("vo.spo_check: "+vo.spo_check)
                if(vo.spo_check==1){
                   tag+="<h2>스포일러</h2>"
-                  tag+="<div class='spo'>"+ vo.content + "</div></div>"
+                  tag+="<div class='spo'>"+ vo.content +"<hr class='hr_style'/>"+ "</div></div>"
                }else{
-                  tag += "<br/>" + vo.content + "</div>";
+                  tag += "<br/>" + vo.content + "<hr class='hr_style'/>" +"</div>";
                }
                if('${logNo}' != "" && '${logNo}' !=vo.member_no){
                   tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";
                }
+               
+               
                
 
             if(vo.member_no=='${logNo}'){
