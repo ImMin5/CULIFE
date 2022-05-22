@@ -154,3 +154,8 @@ a:visited{
 	font-size:1.6rem;
 	line-height:25px
 }
+
+/*알림창*/
+#mypage_notification_ul{
+	width:18vw;	
+}
