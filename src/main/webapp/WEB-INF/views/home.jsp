@@ -46,11 +46,10 @@
 	header:hover {background-color:rgba(255,255,255,0.8);}
 	nav > ul > li > ul {background-color:rgba(255,255,255,0.8);}
 </style>
-	
 	<main id="home_main_container">
 		<h1 class="hidden">본문보기</h1>
 		<section id="home_visual">
-			<c:if test="${grade != '' }">
+			<c:if test="${grade == null }">
 				<h2 class="hidden">share your cultural life</h2>
 				<div id="three-container"></div>
 				<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
