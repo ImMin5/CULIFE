@@ -10,14 +10,11 @@
 </style>
 <script>
 	$(function(){
-		
-		console.log("${pvo.totalPage}")
 		//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
 		//게시판 타입 선택
 		$("#select_container").on("change",function(){
-			console.log("select-->",$(this).val());
 			window.location.href="${url}/mypage/board?category="+$(this).val();
 		});
 		

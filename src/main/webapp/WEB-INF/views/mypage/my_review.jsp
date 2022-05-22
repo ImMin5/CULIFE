@@ -149,18 +149,15 @@ $(function(){
 				  					<th scope="row">${vo.no}</td>
 				  					<td>${vo.subject}</td>
 				  					<td ><p id="review_content${vo.no}"  >${vo.content}</p></td>
-				  					
 				  					<td>${logNickname}</td>
 				  					<td>${vo.write_date}</td>
 				  					<td ><button class="btn" style="font-size:1.6rem;" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button><button style="font-size:1.6rem;" class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button></td>
 				  				</tr>
-			  				</c:forEach>
-			  				
-			  				
+			  				</c:forEach> 		
 			  			</tbody>
 					</table>
 				</div>
-						<!-- 페이징 -->
+				<!-- 페이징 -->
 				<nav id="mypage_board_pagination" class="container">
 				  <ul class="pagination">
 				  <!-- 이전 페이지 -->
