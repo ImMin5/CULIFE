@@ -78,6 +78,9 @@ public class MemberController {
 	@Value("${prefix-path}")
 	private String prefixPath;
 	
+	@Value("${logout-path}")
+	private String logoutUri;
+	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
 	public ModelAndView mypage(HttpSession session) {
@@ -90,6 +93,7 @@ public class MemberController {
 				session.setAttribute("grade",mvo.getGrade());
 				mav.addObject("alertList",alertService.alertSelectByMemberNo(memberNo));
 				mav.addObject("mvo", mvo);
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/mypage");
 			}
 			else {
