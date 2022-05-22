@@ -185,10 +185,24 @@ function authorSubmit() {
 			<!-- mypage_container end -->
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
-				<h1 class="h1">${mvo.nickname}님
-					반갑습니다.<img id="mypage_notification"
-						src="${url}/img/member/mypage_notification.png">
-				</h1>
+				<div class="container">
+					<div class="row">
+						<div class="col-1">
+						</div>
+						<div class="col-6">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${logNickname}님</h1>
+						</div>
+						<div class="col-3">
+							<div class="btn-group">
+								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
+								  </button>
+								  <ul style="width:15vw;" id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  </ul>
+							</div>				
+						</div>
+					</div>
+				</div>
 				<hr />
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
