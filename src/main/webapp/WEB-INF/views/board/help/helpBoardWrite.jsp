@@ -6,7 +6,8 @@
 <div class="container">
 <br/>
 <form class="form-group" method="post" action="/board/help/helpBoardWriteOk?category=help" id="helpForm">
-<h1>문의사항 게시판 글쓰기폼</h1>
+<h1>문의사항 게시글</h1>
+<br>
 <input type="text" class="form-control" name="subject" id="helpBoardTitle" placeholder="글 제목을 입력하세요." />
 <textarea name="content" id="editor"></textarea>
 	<script>
