@@ -45,7 +45,7 @@ function editForm(idx){
 					}
 					if(vo.spo_check==1){
 						tag+="<h2>스포일러</h2>"
-						tag+="<details><div class='spo'>"+ vo.content + "</div></div></details>"
+						tag+="<details><summary style='outline:none'>스포일러</summary><div class='spo'>"+ vo.content + "</div></div></details>"
 					}else{
 						tag += "<br/>" + vo.content + "</div>";
 					}
