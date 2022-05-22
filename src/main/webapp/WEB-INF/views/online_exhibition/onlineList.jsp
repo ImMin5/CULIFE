@@ -286,7 +286,7 @@ $(function(){
 </script>    
     <div id="online_exhibition_container">
     	<h2 class="hidden">온라인 전시회</h2>
-    	<audio controls="controls" loop id="audio_player" 
+    	<audio controls="controls" autoplay loop id="audio_player" 
     	src="/img/exhibition/audio/𝗖. 𝗗𝗲𝗯𝘂𝘀𝘀𝘆 - Suite Bergamasque, L.75 - Ⅲ. Clair de lune .mp3"
     	 onended="nextPlay()"></audio>
     	<a href="/online_exhibition/onlineAuthorList">작가 목록</a>
