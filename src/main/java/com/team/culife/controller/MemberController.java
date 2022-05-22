@@ -119,6 +119,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/my_fan");
 			}
 			
@@ -144,6 +145,7 @@ public class MemberController {
 				AuthorVO avo = authorService.authorNoSelect(mvo.getNo());
 				mav.addObject("mvo", mvo);
 				mav.addObject("avo", avo);
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/my_author");
 			}
 			
@@ -166,6 +168,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
 				mav.setViewName("mypage/my_movie");
 			}
@@ -188,6 +191,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
 				mav.setViewName("mypage/my_theater");
 			}
@@ -230,6 +234,7 @@ public class MemberController {
 					List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
 					mav.addObject("boardList", list);
 					mav.addObject("pvo", pvo);
+					mav.addObject("logoutUri",logoutUri);
 					mav.setViewName("mypage/my_board");
 					
 				}
@@ -271,6 +276,7 @@ public class MemberController {
 				List<ExhibitionReviewVO> list = exhibitionReviewService.exhibitionReviewSelectByMemberNo(pvo);
 				mav.addObject("reviewList", list);
 				mav.addObject("pvo", pvo);
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/my_review");
 			}
 			
