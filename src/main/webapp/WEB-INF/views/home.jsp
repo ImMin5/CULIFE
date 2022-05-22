@@ -50,22 +50,36 @@
 	<main id="home_main_container">
 		<h1 class="hidden">본문보기</h1>
 		<section id="home_visual">
-			<h2 class="hidden">share your cultural life</h2>
-			<div id="three-container"></div>
-    		<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
+			<c:if test="${grade != '' }">
+				<h2 class="hidden">share your cultural life</h2>
+				<div id="three-container"></div>
+				<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
+	        </c:if>
+	        <c:if test="${grade == '0' || grade == '1' || grade == '2'}">
+	        	<div class="text-effect">
+			        <span>W</span>
+					<span>E</span>
+					<span>L</span>
+					<span>C</span>
+					<span>O</span>
+					<span>M</span>
+					<span>E</span>
+					<span>!</span>
+			    </div>
+	        </c:if>
     	</section>
 		<section id="home_entertain">
 			<h2>영화, 연극, 콘서트, 뮤지컬을 한 곳에서</h2>
 			<ul>
 				<li onmouseover="movieplay('/img/Reality - From La Boum_cut.mp3')" onmouseleave="movieplay('')">
-					<a href="">영화</a>
+					<a href="/movie/movieList">영화</a>
 					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
 					<audio id='movie_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>				
 				<li onmouseover="musicalplay('/img/웃는남자_일단와_cut.mp3')" onmouseleave="musicalplay('')">
-					<a href="">공연<br/>(연극 / 콘서트 / 뮤지컬)</a>
+					<a href="/theater/theaterList">공연<br/>(연극 / 콘서트 / 뮤지컬)</a>
 					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
@@ -75,8 +89,7 @@
 		</section>
 		<section id="home_exhibition">
 			<h2>온라인에서 만나는 전시회 작품</h2>
-			<button class="fun-btn" id="home_author_regi">전시하기</button>
-			<button class="fun-btn" id="home_online_ex">작품보기</button>
+			<button class="fun-btn" id="home_author_regi" onclick="location.href='/online_exhibition/onlineList'">전시회 가기</button>
 			<ul>
 				<li id="home_sec3_img1"></li>
 				<li id="home_sec3_img2"></li>

@@ -102,17 +102,10 @@ $(window).scroll(function () {
 				$("#home_sec3_img6").css({"transition-delay" : "3s"})
 				$("#home_author_regi").css({
 					"position" : "absolute",
-			   		"left" : "45%",
+			   		"left" : "51%",
 			   		"bottom" : "10%",
 			   		"opacity" : "1",
 			 		"transition-delay" : "3.5s"
-				})
-				$("#home_online_ex").css({
-					"position" : "absolute",
-			   		"left" : "55%",
-			   		"bottom" : "10%",
-			   		"opacity" : "1",
-			 		"transition-delay" : "4s"
 				})
 			})
 		})}
@@ -163,3 +156,6 @@ function musicalplay($mp3){
     musical_audio.src = $mp3;
     musical_audio.play();
 }
+
+/*로그인 후 텍스트*/
+
