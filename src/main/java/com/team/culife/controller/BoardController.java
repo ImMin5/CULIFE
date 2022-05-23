@@ -47,9 +47,16 @@ public class BoardController {
 
 	// 자유게시판 게시글 등록 폼
 	@GetMapping("freeBoardWrite")
-	public ModelAndView freeBoardWrite() {
+	public ModelAndView freeBoardWrite(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-
+		
+		Integer logNo=(Integer) session.getAttribute("logNo");
+		if(logNo==null) {
+			mav.addObject("msg","로그인 해야 이용할 수 있어요");
+			mav.setViewName("board/help/message");
+			return mav;
+		}
+		
 		mav.setViewName("board/freeBoardWrite");
 		return mav;
 	}
@@ -145,17 +152,21 @@ public class BoardController {
 	@GetMapping("/help/helpBoardList")
 	public ModelAndView helpboardList(PagingVO pVO, BoardVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-
-		vo.setMember_no((Integer) session.getAttribute("logNo"));
+		Integer logNo=(Integer) session.getAttribute("logNo");
+		if(logNo==null) {
+			mav.addObject("msg","로그인 해야 이용할 수 있어요");
+			mav.setViewName("board/help/message");
+			return mav;
+		}
+		vo.setMember_no(logNo);
 		List<BoardVO> list = service.helpselectList(pVO);
-		System.out.println("list -->" + list);
-		mav.addObject("list", list);
 		
 		// 문의사항 목록 페이징
 		int total = service.boardTotalRecord(pVO);
 
 		pVO.setTotalRecord(total);
 		mav.addObject("pVO", pVO);
+		mav.addObject("list", list);
 		
 		mav.setViewName("board/help/helpBoardList");
 		return mav;
@@ -174,9 +185,15 @@ public class BoardController {
 	@GetMapping("/help/helpBoardView")
 	public ModelAndView helpView(int no, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		int member_no = (Integer) session.getAttribute("logNo");
+		Integer member_no = (Integer) session.getAttribute("logNo");
+		if(member_no==null) {
+			mav.addObject("msg","로그인 해야 이용할 수 있어요");
+			mav.setViewName("board/help/message");
+			return mav;
+		}
+		
 		int grade = (Integer) session.getAttribute("grade");
-		BoardVO vo = service.selectView(no);
+		BoardVO vo = service.selectView(no);	
 		
 		if(vo.getMember_no() == member_no || grade == 2) {
 			// 상세페이지 보이기(뷰 보이기)
@@ -185,8 +202,8 @@ public class BoardController {
 			service.updateViews(no);
 		}
 		else {
-			String msg = "guest";
-			mav.addObject("msg", msg);
+			String msg ="guest";
+			mav.addObject("msg",msg);
 		}
 		mav.setViewName("board/help/helpBoardView");
 		
