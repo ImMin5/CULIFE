@@ -81,7 +81,7 @@
         			<a href="/board/freeBoardList?category=free&currentPage=1">커뮤니티</a>
         			<ul>
         				<li><a href="/board/freeBoardList?category=free&currentPage=1">자유게시판</a></li>
-        				<li><a href="/board/help/helpBoardList?category=help">문의사항</a></li>
+        				<li><a href="/board/help/helpBoardList?category=help&currentPage=1">문의사항</a></li>
         			</ul>
         		</li>
         	</ul>

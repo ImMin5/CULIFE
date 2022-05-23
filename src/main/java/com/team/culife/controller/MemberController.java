@@ -78,6 +78,9 @@ public class MemberController {
 	@Value("${prefix-path}")
 	private String prefixPath;
 	
+	@Value("${logout-path}")
+	private String logoutUri;
+	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
 	public ModelAndView mypage(HttpSession session) {
@@ -90,6 +93,7 @@ public class MemberController {
 				session.setAttribute("grade",mvo.getGrade());
 				mav.addObject("alertList",alertService.alertSelectByMemberNo(memberNo));
 				mav.addObject("mvo", mvo);
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/mypage");
 			}
 			else {
@@ -115,6 +119,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/my_fan");
 			}
 			
@@ -140,6 +145,7 @@ public class MemberController {
 				AuthorVO avo = authorService.authorNoSelect(mvo.getNo());
 				mav.addObject("mvo", mvo);
 				mav.addObject("avo", avo);
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/my_author");
 			}
 			
@@ -162,6 +168,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
 				mav.setViewName("mypage/my_movie");
 			}
@@ -184,6 +191,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
 				mav.setViewName("mypage/my_theater");
 			}
@@ -226,6 +234,7 @@ public class MemberController {
 					List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
 					mav.addObject("boardList", list);
 					mav.addObject("pvo", pvo);
+					mav.addObject("logoutUri",logoutUri);
 					mav.setViewName("mypage/my_board");
 					
 				}
@@ -267,6 +276,7 @@ public class MemberController {
 				List<ExhibitionReviewVO> list = exhibitionReviewService.exhibitionReviewSelectByMemberNo(pvo);
 				mav.addObject("reviewList", list);
 				mav.addObject("pvo", pvo);
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/my_review");
 			}
 			
@@ -717,5 +727,25 @@ public class MemberController {
 				e.printStackTrace();
 			}
 			return "ok";
+		}
+		
+		//나의 팔로워 숫자 
+		@GetMapping("api/authorfan/follow")
+		public ResponseEntity<HashMap<String,String>> getFollower(int author_no){
+			ResponseEntity<HashMap<String,String>> entity = null;
+			HashMap<String,String> result = new HashMap<String,String>();
+			try {
+				int count = memberService.authorFanSelectByAuthorNo(author_no);
+				result.put("status","200");
+				result.put("count",Integer.toString(count));
+				entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+			}catch(Exception e) {
+				e.printStackTrace();
+				result.put("status","200");
+				result.put("count","0");
+				entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+			}
+			
+			return entity;
 		}
 }

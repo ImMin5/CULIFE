@@ -8,6 +8,18 @@
 <script>
 $(function(){
 	mreviewListAll();
+	$(document).on("click","input[name=readspo]",function(){
+        var review_no = $(this).attr("data-review_no");
+        var spocontent_element = $("#spocontent"+review_no)
+        if(spocontent_element.css("display") == "block"){
+            spocontent_element.css("display","none");
+            $(this).val("리뷰보기");
+        }
+        else{
+            spocontent_element.css("display","block");
+            $(this).val("리뷰숨기기");
+        }
+	});
 });
 function editForm(idx){
 	$('#editDiv'+idx).show()
@@ -17,7 +29,7 @@ function editForm(idx){
 		var url = "/mreview/mreviewList";
 		var params = "movie_id=" + movieId;
 		var logNo = '${logNo}';
-		console.log(logNo);
+		//console.log(logNo);
 		$.ajax({
 			url:url,
 			data:params,
@@ -38,21 +50,23 @@ function editForm(idx){
 						tag+= "★";
 					}
 					tag += " ("+vo.score_star+")";
-					
+					if(logNo != "" && logNo !=vo.member_no){
+						tag += "<input class='warning' type='button' value='신고' onclick='warning(" + vo.no +")'/>";						
+					}	
 					if(vo.member_no=='${logNo}'){
 						tag += "<input type='button' value='수정' class='review_edit'/>"; 
 						tag += "<input type='button' value='삭제' class='review_delete' title='"+vo.no+"'/>";	
 					}
 					if(vo.spo_check==1){
-						tag+="<h2>스포일러</h2>"
-						tag+="<div class='spo'>"+ vo.content + "</div></div>"
+						tag+="<li style='margin-left: -20%; color:#e75959; font-size:23px; padding-bottom:5px;'>스포일러</li>"
+							tag+="<div id='spocontent"+vo.no+"' class='spo'>"+ vo.content +"</div>";
+						if(vo.spo_check==1){
+							tag+="<input id='more' class='more' type='button' value='리뷰보기' name='readspo' data-review_no='"+vo.no+"'/>";
+						}
 					}else{
 						tag += "<br/>" + vo.content + "</div>";
 					}
-					
-				if(logNo != "" && logNo !=vo.member_no){
-					tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";						
-				}					
+													
 				
 				if(vo.member_no=='${logNo}'){
 					
@@ -155,6 +169,7 @@ $(document).on('click','#mreviewList input[value=수정]', function(){
 });
 $(document).on('submit','#editFrm',function(){
 	event.preventDefault();
+	$("#score_star_edit").val($("input[name=score_star]:checked").val());
 	var params = $(this).serialize();
 	//alert(params)
 	var url = '/mreview/mreviewEditOk';
@@ -178,7 +193,7 @@ $(document).ready(function(){
 		var editStar = $(this).val();
 		$("input:radio[name='score_star']:radio[value='"+editStar+"']").prop("checked",true);
 		//alert(editStar)
-		console.log(editStar);			
+		//console.log(editStar);			
 		$('#score_star_edit').val(editStar)
 	});
 });	
@@ -201,7 +216,7 @@ $(document).on('click','#mreviewList input[value=삭제]', function(){
 			url:'/mreview/mreviewDel',
 			data:params,
 			success:function(result){
-				console.log(result);
+				//console.log(result);
 				mreviewListAll();
 			}, error:function(e){
 				console.log("리뷰삭제에러발생");
@@ -231,6 +246,7 @@ function warning(no){
 		});
 	}
 }
+
 </script>
 
 <body>

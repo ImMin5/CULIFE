@@ -247,3 +247,17 @@ a:visited{
 	font-size:2.8rem !important;
 	padding:0 !important;
 }
+
+/*리뷰*/
+#review_contatiner .card{
+	height:100%;
+}
+
+/*알림창*/
+#mypage_notification_ul{
+	width:18vw;	
+	margin : 0 auto;
+}
+#mypage_notification_ul > li{
+	width:91%;
+}

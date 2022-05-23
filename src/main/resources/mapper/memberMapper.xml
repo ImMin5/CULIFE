@@ -49,10 +49,11 @@
   		<id property="author_thumbnail" column="author_thumbnail"/>
   		<id property="debut_year" column="debut_year"/>
   		<id property="create_date" column="create_date"/>
+  		<id property="author_msg" column="author_msg"/>
   	</resultMap>
   	
   	<select id="authorFanSelectAll" resultMap="authorMap">
-  		select b.no no, b.member_no, b.author author, b.sns_link sns_link, b.author_thumbnail author_thumbnail, b.debut_year debut_year, b.create_date create_date
+  		select b.no no, b.member_no, b.author author, b.sns_link sns_link, b.author_thumbnail author_thumbnail, b.author_msg author_msg, b.debut_year debut_year, b.create_date create_date
   		from author_fan a
   		join author b
   		on a.member_no=${member_no} and a.author_no	= b.no  and b.author_status = 1
@@ -67,5 +68,9 @@
   		select no, member_no, start_date, end_date
   		from member_ban
   		where member_no=${param1}
+  	</select>
+  	<select id="authorFanSelectByAuthorNo" resultType="int">
+  		select count(member_no) cnt from author_fan
+  		where author_no=${param1}
   	</select>
   </mapper>

@@ -31,3 +31,4 @@ open-api :
 upload-path : /upload/**
 resource-path : file:///home/ubuntu/culife/upload/
 prefix-path : /home/ubuntu/culife/upload/
+logout-path : http://culife.ga

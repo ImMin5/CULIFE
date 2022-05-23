@@ -120,7 +120,7 @@ public class CultureController {
 		
 		while((returnLine = br.readLine())!=null) {
 			result.append(returnLine);
-			System.out.println(result);
+			//System.out.println(result);
 		}
 		urlConnection.disconnect();
 		br.close();

@@ -72,6 +72,10 @@ public class MemberServiceImpl implements MemberService {
 	public MemberBanVO memberBanSelectByMemberNo(int member_no) {
 		return dao.memberBanSelectByMemberNo(member_no);
 	}
+	@Override
+	public int authorFanSelectByAuthorNo(int author_no) {
+		return dao.authorFanSelectByAuthorNo(author_no);
+	}
 	
 	
 }

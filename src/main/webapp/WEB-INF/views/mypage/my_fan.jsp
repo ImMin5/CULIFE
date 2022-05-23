@@ -155,7 +155,11 @@ let is_paging= true;
 				  					<td onclick="location.href='/online_exhibition/onlineAuthorView?no=${'${element.no}'}'" style="width:20%; min-width:150px;"><img class="table_author_thumbnail" src="${url}/upload/${'${element.member_no}'}/author/${'${element.author_thumbnail}'}"/></td>
 				  					<td onClick="location.href='/online_exhibition/onlineAuthorView?no=${'${element.no}'}'" style="width:40%;">${'${element.author}'}</td>
 				  					<td style="width:20%;">${'${element.debut_year}'}</td>
-				  					<td style="width:20%; text-align:center;"><button type="button" name="unfollow" data-author="${'${element.author}'}" class="btn btn-secondary">팔로잉</button></td>
+				  					<td style="width:20%; text-align:center;">
+				  						<button type="button" name="unfollow" data-author="${'${element.author}'}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="${'${element.author_msg}'}">
+				  							팔로잉
+				  						</button>
+				  					</td>
 				  				</tr>
 						`);
 					});
@@ -211,7 +215,7 @@ let is_paging= true;
 								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
 								  </button>
-								  <ul style="width:15vw;" id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  <ul id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
 								  </ul>
 							</div>				
 						</div>
@@ -235,7 +239,7 @@ let is_paging= true;
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/member">내정보</a></li>
-					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
+					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=${logoutUri}/logout/kakao">로그아웃</a></li>
 					
 				</ul>
 			</div>
