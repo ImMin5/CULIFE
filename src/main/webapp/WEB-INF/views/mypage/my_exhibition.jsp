@@ -162,7 +162,7 @@
 				  <c:choose>
 				  	<c:when test="${pvo.currentPage>1}">
 					    <li class="page-item">
-					      <a class="page-link" href="${url}/mypage/exhibition?currentPage=${pvo.currentPage-1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Previous">
+					      <a class="page-link" href="${url}/mypage/exhibition?currentPage=${pvo.currentPage-1}<c:if test='${pvo.searchWord!=null}'>?searchWord=${pvo.searchWord}</c:if>" aria-label="Previous">
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
@@ -192,18 +192,18 @@
 						    	<c:choose>
 							    	<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
 								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
-								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/exhibition?currentPage=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/exhibition?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								    	</c:if>
 								    	<c:if test="${p!=pvo.currentPage && p<=pvo.totalPage}">	
-								    		<li class="page-item"><a class="page-link" href=${url}/mypage/exhibition?currentPage=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a class="page-link" href=${url}/mypage/exhibition?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>?searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								   		</c:if>
 								   	</c:when>
 							    	<c:otherwise>
 								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
-								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/exhibition?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								    	</c:if>
 								    	<c:if test="${p!=pvo.currentPage && p<= pvo.totalPage}">	
-								    		<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a class="page-link" href=${url}/mypage/exhibition?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								   		</c:if>
 								   	</c:otherwise>
 							   	</c:choose>
@@ -220,10 +220,10 @@
 				    		</c:choose>
 				    		<c:forEach var="p" begin="1" end="${endPage}">
 					    		<c:if test="${p==pvo.currentPage }">
-					    			<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/exhibition?currentPage=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+					    			<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/exhibition?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								</c:if>
 								<c:if test="${p!=pvo.currentPage }">	
-									<li class="page-item"><a class="page-link" href=${url}/mypage/exhibition?currentPage=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+									<li class="page-item"><a class="page-link" href=${url}/mypage/exhibition?currentPage=${p}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								</c:if>
 							</c:forEach>
 				    	</c:otherwise>
@@ -233,7 +233,7 @@
 					<c:choose>
 						<c:when test="${pvo.currentPage < pvo.totalPage }">
 							<li class="page-item">
-							      <a class="page-link" href="${url}/mypage/exhibition?currentPage=${pvo.currentPage+1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Next">
+							      <a class="page-link" href="${url}/mypage/exhibition?currentPage=${pvo.currentPage+1}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Next">
 							        <span aria-hidden="true">&raquo;</span>
 							      </a>
 							</li>

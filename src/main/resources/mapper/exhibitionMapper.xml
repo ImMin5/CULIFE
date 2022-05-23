@@ -120,9 +120,9 @@
   	</select>
   	
   	<select id="exhibitionTotalRecordAuthor" resultType="int">
-  		select count(e.no) cnt from exhibition e
+  		select count(e.no) from exhibition e
   		join author a
-  		on e.author_no = a.no and e.author_no=${member_no}
+  		on e.author_no = a.no and e.author_no=#{member_no}
   		<if test="searchWord != null">
   				and e.subject like '%${searchWord}%'
   		</if>

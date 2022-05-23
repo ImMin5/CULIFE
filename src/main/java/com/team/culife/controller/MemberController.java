@@ -299,13 +299,12 @@ public class MemberController {
 			if(memberNo != null) {
 				AuthorVO avo = authorService.authorNoSelect(memberNo);
 				PagingVO pvo = new PagingVO();
-				pvo.setRecordPerPage(6);
-				pvo.setMember_no(avo.getNo());
+				pvo.setRecordPerPage(100);
 				pvo.setCurrentPage(currentPage);
+				pvo.setMember_no(avo.getNo());
 				if(searchWord != null) pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(exhibitionService.exhibitionTotalRecordAuthor(pvo));
 				List<ExhibitionVO> exhibitionList = exhibitionService.exhibitionSelectByAuthorNo(pvo);
-			
 				mav.addObject("pvo", pvo);
 				mav.addObject("exhibitionList", exhibitionList);
 				mav.setViewName("mypage/my_exhibition");
