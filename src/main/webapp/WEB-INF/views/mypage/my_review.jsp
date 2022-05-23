@@ -145,7 +145,6 @@ $(function(){
 				  				<p scope="row">${vo.no}</td>
 				  				<p>${vo.subject}</td>
 				  				<p id="review_content${vo.no}">${vo.content}</p>
-				  				
 				  				<p>${logNickname}</p>
 				  				<p>${vo.write_date}</p>
 				  				<p>
@@ -284,6 +283,7 @@ $(function(){
 						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
+						<li><a href="${url}/mypage/exhibition">나의 전시회</a></li>
 						<li><a href="${url}/mypage/author">작가 정보</a></li>
 					</c:if>
 				</ul>

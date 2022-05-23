@@ -147,6 +147,7 @@ public class OnlineExhibitionController {
 			pvo.setTotalRecord(eService.exhibitionTotalRecord(pvo));
 			/* System.out.println("pvo offset--->" + pvo.getOffsetIndex()); */
 			List<ExhibitionVO> list = eService.exhibitionSelectAll(pvo);
+			System.out.println("pvo member_no  -->" +pvo.getMember_no());
 			
 			/* System.out.println("exhibition size --->" + pvo.getTotalRecord()); */
 			entity = new PageResponseBody<ExhibitionVO>();
