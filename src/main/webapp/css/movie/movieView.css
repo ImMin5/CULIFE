@@ -27,6 +27,15 @@ position: absolute;
   border: none;
   background-color: rgba(0, 0, 0, 0.2);
   color: #6e6e6e;
+  cursor: pointer;
+}
+
+.warning:hover {
+	letter-spacing: 2px;
+	transform: scale(1.1);
+	cursor: pointer;
+	background-color: #a3a1a1;
+    color: #e3dede;
 }
 
 body {
@@ -637,14 +646,6 @@ label[for="spo_check"]:before {
     color: #6e6e6e;
 }
 
-#reviewOne {
-	position: relative;
-	padding-top:5px;
-	position: relative;
-	font-size: 20px;
-	margin: 10px;
-}
-
 #spocontent{
 	font-size:20px;
 }
@@ -739,6 +740,16 @@ label[for="spo_check"]:before {
 	padding-bottom:15px;
 }
 
+
+#reviewOne {
+	margin: 10px;
+	padding-top:5px;
+	width: 80%;
+	font-size: 20px;
+	white-space :pre-wrap;
+	line-height: 23px;
+}
+
 #mreviewList>ul>li>input[type="button"] {
 	margin-top: 5px;
     position: absolute;
@@ -764,6 +775,7 @@ label[for="spo_check"]:before {
     color: #e3dede;
 }
 .more{	
+	margin-left: -20%;
     top: 0px;
     right: 0px;
     padding: 10px 20px;
@@ -780,4 +792,8 @@ label[for="spo_check"]:before {
 
 .spo{
 	 display:none;
+	 width: 80%;
+	 height: 100%;
+	 word-wrap: break-word;
+
 } 
