@@ -775,6 +775,7 @@ label[for="spo_check"]:before {
     color: #e3dede;
 }
 .more{	
+	margin-left: -20%;
     top: 0px;
     right: 0px;
     padding: 10px 20px;
@@ -791,4 +792,8 @@ label[for="spo_check"]:before {
 
 .spo{
 	 display:none;
+	 width: 80%;
+	 height: 100%;
+	 word-wrap: break-word;
+
 } 
