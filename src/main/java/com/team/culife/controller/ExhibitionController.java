@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,14 +20,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.AlertService;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.ExhibitionService;
+import com.team.culife.service.FileService;
 import com.team.culife.service.MemberService;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.ExhibitionVO;
@@ -43,6 +47,16 @@ public class ExhibitionController {
 	ExhibitionService exhibitionService;
 	@Inject
 	AuthorService authorService;
+	@Inject
+	FileService fileService;
+	@Inject
+	AlertService alertService;
+	
+	@Value("${prefix-path}")
+	private String prefixPath;
+	
+	@Value("${resource-path}")
+	private String resourcePath;
 	
 	@GetMapping("mypage/authorWrite")
 	public ModelAndView authorWrite(HttpSession session, HttpServletRequest request, AuthorVO vo, String author) {
@@ -62,10 +76,10 @@ public class ExhibitionController {
 		return mav;
 	}
 	// 작가등록
-	@PostMapping("/authorWriteOk")
+	@PostMapping("/upload/authorWriteOk")
 	@ResponseBody
-	public ResponseEntity<String> authorWriteOk(AuthorVO vo, HttpServletRequest request, HttpSession session, String author){
-		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
+	public ResponseEntity<String> authorWriteOk(AuthorVO vo, @RequestParam("file") MultipartFile newFile, HttpSession session, String author){
+		vo.setMember_no((Integer)session.getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
 		
@@ -73,7 +87,7 @@ public class ExhibitionController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html",Charset.forName("UTF-8")));
 		authorService.authorSelectByName(author);
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
+		String path = prefixPath+memberNo+"/author/";
 		System.out.println("path --> " +path);
 		
 		//System.out.println("Author_status()"+avo.getAuthor_status());
@@ -81,13 +95,13 @@ public class ExhibitionController {
 			AuthorVO avo = authorService.authorNoSelect(memberNo);
 			if(avo == null) {
 				System.out.println("처음신청");
-				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-				MultipartFile newFile = (MultipartFile) mr.getFile("file");
+				
+				
 				
 				if(newFile != null) { //새로업로드된 파일이 있으면
 					String newUploadFilename = newFile.getOriginalFilename();	
 						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-							File f = new File(path, newUploadFilename);
+							File f = new File(path);
 							//폴더가 존재하지 않을 경우 폴더 생성
 							if(!f.exists()) {
 								try {
@@ -99,11 +113,13 @@ public class ExhibitionController {
 							try {
 								//기존에 있던 썸네일 파일 삭제
 								if(vo.getAuthor_thumbnail() != null) {
-									File deleteFile = new File(path,vo.getAuthor_thumbnail());
-									deleteFile.delete();
+									fileService.deleteImageFile(vo.getAuthor_thumbnail(), path);
+									//File deleteFile = new File(path,vo.getAuthor_thumbnail());
+									//deleteFile.delete();
 								}
 								vo.setAuthor_thumbnail(newUploadFilename);
-								newFile.transferTo(f);
+								fileService.uploadImage(newFile, path);
+								//newFile.transferTo(f);
 								//작가 신청 등록 완료
 								authorService.authorWrite(vo);
 							} catch(Exception ee) {ee.printStackTrace();}
@@ -111,18 +127,17 @@ public class ExhibitionController {
 						}
 				} // if newFile != null end
 				String msg = "작가 신청되었습니다.";
+				alertService.alertInsert(memberNo, "작가 신청 심사중 입니다. 잠시만 기다려 주세요!");
 				entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 			} 
 			else if(avo.getAuthor_status() == 2) {
-				System.out.println("Author_status2() "+avo.getAuthor_status());
-				System.out.println("재신청");
-					MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-					MultipartFile newFile = (MultipartFile) mr.getFile("file");
+					//MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
+					//MultipartFile newFile = (MultipartFile) mr.getFile("file");
 					
 					if(newFile != null) { //새로업로드된 파일이 있으면
 						String newUploadFilename = newFile.getOriginalFilename();	
 							if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-								File f = new File(path, newUploadFilename);
+								File f = new File(path);
 								//폴더가 존재하지 않을 경우 폴더 생성
 								if(!f.exists()) {
 									try {
@@ -134,18 +149,21 @@ public class ExhibitionController {
 								try {
 									//기존에 있던 썸네일 파일 삭제
 									if(vo.getAuthor_thumbnail() != null) {
-										File deleteFile = new File(path,vo.getAuthor_thumbnail());
-										deleteFile.delete();
+										fileService.deleteImageFile(vo.getAuthor_thumbnail(), path);
+										//File deleteFile = new File(path,vo.getAuthor_thumbnail());
+										//deleteFile.delete();
 									}
 									vo.setAuthor_thumbnail(newUploadFilename);
-									newFile.transferTo(f);
+									fileService.uploadImage(newFile, path);
+									//newFile.transferTo(f);
 									//작가 재신청
-									authorService.authorReUpdate(vo);
+									System.out.println("신청 결과 -->"+ authorService.authorReUpdate(vo));
 								} catch(Exception ee) {ee.printStackTrace();}
 									
 							}
 					} // if newFile != null end
 					String msg = "작가 재신청되었습니다.";
+					alertService.alertInsert(memberNo, "작가 신청 심사중 입니다. 잠시만 기다려 주세요!");
 					entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 				}
 			else if(avo.getAuthor_status() == 0) {
@@ -212,14 +230,13 @@ public class ExhibitionController {
 		mav.setViewName("exhibition/workEdit");
 		return mav;
 	}
-	@PostMapping("exhibition/workCreateOk")
+	@PostMapping("/upload/exhibition/workCreateOk")
 	@ResponseBody
-	public ResponseEntity<String> workCreateOk(HttpServletRequest request, HttpSession session, WorkVO wvo) {
+	public ResponseEntity<String> workCreateOk(@RequestParam("filename") MultipartFile newFile, HttpSession session, WorkVO wvo) {
 		ModelAndView mav = new ModelAndView();
 		ResponseEntity<String> entity = null;
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author/exhibition/");
-		System.out.println("wvo no --->" + wvo.getNo());
+		String path = prefixPath+memberNo+"/author/exhibition/";
 		
 		try {
 			AuthorVO avo = authorService.authorNoSelect(memberNo);
@@ -229,7 +246,8 @@ public class ExhibitionController {
 				//작품 등록
 				if(evo != null) {
 					int workCount = exhibitionService.workSelectByExhibitionNo(evo.getNo()).size();
-					path = path+evo.getNo();
+					//전시회 no path에 붙이기
+					path = path+evo.getNo()+"/";
 					//작품이 5개 이상 등록이 되어있을때 
 					if(workCount >5) {
 						System.out.println("workCount ---> " + workCount);
@@ -238,18 +256,17 @@ public class ExhibitionController {
 						entity = new ResponseEntity<String>(msg, HttpStatus.OK);
 						return entity;
 					}
-					MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-					MultipartFile newFile = (MultipartFile) mr.getFile("filename");
+				
 					
 					wvo.setExhibition_no(evo.getNo());
 					if(newFile != null) { //새로업로드된 파일이 있으면
-						//String newUploadFilename = newFile.getOriginalFilename();
 						String newUploadFilename = newFile.getOriginalFilename();
 						System.out.println("ori-->" + newUploadFilename);
 					
 							if(newUploadFilename!=null && !newUploadFilename.equals("")) {
 								newUploadFilename = wvo.getWork_thumbnail();
-								File f = new File(path, newUploadFilename);
+								System.out.println("new file --->" + newUploadFilename);
+								File f = new File(path);
 								//폴더가 존재하지 않을 경우 폴더 생성
 								if(!f.exists()) {
 									try {
@@ -261,13 +278,11 @@ public class ExhibitionController {
 								try {
 									//기존에 있던 썸네일 파일 삭제
 									if(wvo.getWork_thumbnail() != null) {
-										File deleteFile = new File(path,wvo.getWork_thumbnail());
-										deleteFile.delete();
+										fileService.deleteImageFile(wvo.getWork_thumbnail(), path);
 									}
 									
 									
 									//insert 해야할 부분
-									//System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
 									if(wvo.getNo() != null)
 										exhibitionService.workUpdate(wvo);
 									else {
@@ -275,7 +290,7 @@ public class ExhibitionController {
 										exhibitionService.workInsert(wvo);
 									}
 									
-									newFile.transferTo(f);
+									fileService.uploadImageNewname(newFile, path, newUploadFilename);
 								} catch(Exception ee) {ee.printStackTrace();}
 									
 							}

@@ -10,14 +10,11 @@
 </style>
 <script>
 	$(function(){
-		
-		console.log("${pvo.totalPage}")
 		//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
 		//게시판 타입 선택
 		$("#select_container").on("change",function(){
-			console.log("select-->",$(this).val());
 			window.location.href="${url}/mypage/board?category="+$(this).val();
 		});
 		
@@ -191,10 +188,10 @@
 					<div class="row">
 						<div class="col-1">
 						</div>
-						<div class="col-7">
-							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${mvo.nickname}님 반갑습니다.</h1>
+						<div class="col-6">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${logNickname}님</h1>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="btn-group">
 								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
@@ -221,7 +218,7 @@
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/member">내정보</a></li>
-					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
+					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=${logoutUri}/logout/kakao">로그아웃</a></li>
 					
 				</ul>
 			</div>

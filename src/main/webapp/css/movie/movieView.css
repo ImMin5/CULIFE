@@ -14,6 +14,20 @@
    box-sizing: border-box;
 }
 
+.warning{
+position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 10px 50px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  font-size: 23px;
+  font-weight: 600;
+  transition: 0.25s;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #6e6e6e;
+}
 
 body {
    background: black;
@@ -625,8 +639,14 @@ label[for="spo_check"]:before {
 
 #reviewOne {
 	position: relative;
+	padding-top:5px;
+	position: relative;
 	font-size: 20px;
-	margin-top: 20px;
+	margin: 10px;
+}
+
+#spocontent{
+	font-size:20px;
 }
 
 .review_edit {
@@ -691,12 +711,6 @@ label[for="spo_check"]:before {
 	cursor: pointer;
 }
 
-
-
-.reviewOne {
-	margin-top: 15px;
-}
-
 .review_edit_edit:hover {
   letter-spacing: 2px;
   transform: scale(1.1);
@@ -719,6 +733,10 @@ label[for="spo_check"]:before {
 
 #mreviewList>ul>li {
     position: relative;
+}
+
+#mreviewFrm{
+	padding-bottom:15px;
 }
 
 #mreviewList>ul>li>input[type="button"] {
@@ -745,3 +763,21 @@ label[for="spo_check"]:before {
 	background-color: #a3a1a1;
     color: #e3dede;
 }
+.more{	
+    top: 0px;
+    right: 0px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.25s;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #6e6e6e;
+    cursor: pointer;
+}
+
+.spo{
+	 display:none;
+} 

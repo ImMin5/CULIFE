@@ -8,16 +8,40 @@
    font-weight: normal;
    font-style: normal;
 }
+
+body {
+   background: black;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   position: relative;
+}
+
+.warning{
+position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 10px 50px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  font-size: 23px;
+  font-weight: 600;
+  transition: 0.25s;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #6e6e6e;
+}
+
 .stars_edit{
    display:none;
 }
 
-
 #detail_container{
    text-align: center;
    background-color:black;
-   height:5000px;
-   background-image:url(/img/theater/theBack.jpg);
+   height:100%;  
+   background-image:url(/img/theater/theBack.jpg); 
    background-repeat: no-repeat;
    background-size:1200px;
    background-position:center center;
@@ -30,16 +54,16 @@
 }
 
 #detail{
-   margin:250px auto;
+   margin:250px auto 250px auto;
    background-color:black;
    width:1200px;
-
    padding:5px;
 /*    border: 1px solid white; */
    background-clip: content-box;
    border-radius: 40px;
    box-shadow: 0px 0px 170px -45px rgba(203, 39, 39, 0.753);
 }
+
 #detail>li{
    width:300px;
    float:left;
@@ -98,7 +122,7 @@
   position: relative;
   max-width: 1000px;
   text-align: center;
-  margin: 2% auto;
+  margin: 80px auto;
   padding: 30px 0;
   background: #111;
   color: #eee;
@@ -250,6 +274,24 @@ input[id="spo_check"]:focus + label[for="spo_check"]:before {
   outline: 1px solid #E74C3C;
 }
 
+.spo{
+	 display:none;
+} 
+.more{	
+    top: 0px;
+    right: 0px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.25s;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #6e6e6e;
+    cursor: pointer;
+}
+
 label[for="spo_check"] {
   position: absolute;
   left: 170px;
@@ -319,8 +361,14 @@ label[for="spo_check"]:before {
 
 #reviewOne {
     position: relative;
-    font-size: 20px;
-    margin-top: 20px;
+    padding-top:5px;
+	position: relative;
+	font-size: 20px;
+	margin: 10px;
+}
+
+#spocontent{
+	font-size:20px;
 }
 
 .review_edit {
@@ -408,11 +456,11 @@ label[for="spo_check"]:before {
     border-style: solid;
 }
 
-#mreviewList>ul>li {
+#reviewList>ul>li {
     position: relative;
 }
 
-#mreviewList>ul>li>input[type="button"] {
+#reviewList>ul>li>input[type="button"] {
    margin-top: 5px;
     position: absolute;
     top: 0px;
@@ -429,7 +477,7 @@ label[for="spo_check"]:before {
     cursor: pointer;
 }
 
-#mreviewList>ul>li>input[type="button"]:hover {
+#reviewList>ul>li>input[type="button"]:hover {
    letter-spacing: 2px;
    transform: scale(1.1);
    cursor: pointer;

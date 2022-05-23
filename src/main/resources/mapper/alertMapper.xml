@@ -6,7 +6,7 @@
   	<select id="alertSelectByMemberNo" resultType="com.team.culife.vo.AlertVO">
   		select no, content, member_no, datediff(now(), create_date) create_date from alert
   		where member_no=${param1} and 7 > datediff(now(),create_date) and  datediff(now(),create_date) >= 0
-  		limit 1
+  		limit 10
   	</select>
   	<insert id="alertInsert">
   		insert into alert(member_no, content) 

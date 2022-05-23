@@ -45,7 +45,7 @@ $(function(){
 	$("#submit_btn").on("click", function(){
 		var len = $("form[name=ex_work_form]").length;
         for(var i=1; i<=len;i++){
-            var url = "${url}/exhibition/workCreateOk";
+            var url = "${url}/upload/exhibition/workCreateOk";
             var data = new FormData($("form[name=ex_work_form]")[i-1]);
            /*  console.log(data)
 			console.log("i => " + i + " work_subject => "+$("#work_subject"+i).val())
@@ -162,7 +162,7 @@ $(function(){
 		$(document).on("click","p[name=get_exhibition]",function(){
 			var exhibition_no = $(this).attr("data-exhibition_no");
 			getExhibitionWork(exhibition_no);
-			select_ExhibitionReviewList(exhibition_no);
+			/* select_ExhibitionReviewList(exhibition_no); */
 		});
 		
 		// 댓글 리스트 선택
@@ -285,7 +285,7 @@ $(function(){
 </script>    
     <div id="online_exhibition_container">
     	<h2 class="hidden">온라인 전시회</h2>
-    	<audio controls="controls" loop id="audio_player" 
+    	<audio controls="controls" autoplay loop id="audio_player" 
     	src="/img/exhibition/audio/𝗖. 𝗗𝗲𝗯𝘂𝘀𝘀𝘆 - Suite Bergamasque, L.75 - Ⅲ. Clair de lune .mp3"
     	 onended="nextPlay()"></audio>
     	<a href="/online_exhibition/onlineAuthorList">작가 목록</a>

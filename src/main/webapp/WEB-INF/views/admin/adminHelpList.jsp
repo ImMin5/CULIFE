@@ -110,7 +110,7 @@ $(function () {
 		<c:forEach var="vo" items="${adminHelpList}">
 		<ul class="test">
 			<li>${vo.no }</li>
-			<li><a href='/board/help/helpBoardView?no=${vo.no}'>${vo.subject }</a></li>
+			<li><a href='/board/help/helpBoardView?no=${vo.no}' target="_blank">${vo.subject }</a></li>
 			<li>${vo.nickname }</li>
 			<li>${vo.write_date }</li>
 			<li>

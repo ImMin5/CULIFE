@@ -55,7 +55,7 @@ $(document).ready(function(){
 var workCount = $("form[name=ex_work_form]").length;
 var addWork = 
 	/* 임시 */
-`<form name="ex_work_form" id="ex_work_form${workCount+1}" method="post" action="/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
+`<form name="ex_work_form" id="ex_work_form${workCount+1}" method="post" action="/upload/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
 	<ul id="ex_work_box">
 		<li class="exhibitionWorkContent">
 			<ul>
@@ -95,7 +95,7 @@ $("#addWork").on("click", function() {
 	workCount++;
 	var addWork =
 		/* 임시 */
-		`<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
+		`<form name="ex_work_form" id="ex_work_form${workCount}" method="post" action="/upload/exhibition/workCreateOk" data-work_no="-1" enctype="multipart/form-data">
 			<ul id="ex_work_box">
 				<li class="exhibitionWorkContent">
 					<ul>
@@ -291,6 +291,7 @@ function getExhibitionWork(exhibition_no){
 				wList += "<li>전시 기간 : "+item.start_date+"-"+item.end_date+"</li>";
 				wList += "<li>작품 설명</li><li><p>"+i.work_content+"</p></li></ul></li></ul></li>"
 			});
+			
 			wList += '<li id="ex_review">';
 			wList += '<h4>&nbsp;&nbsp;감상평</h4><span id="review_close">▼</span><span id="review_open">▲</span>';
 			wList += '</li>';
@@ -306,6 +307,7 @@ function getExhibitionWork(exhibition_no){
 			wList += '</div></form></li>'
 			$('#ex_reg_detail_work').html(wList);
 			
+			
 			/* 감상평 열기/닫기 */
 			$(document).ready(function(){
 				$('#review_close').css({"display":"none"});
@@ -318,12 +320,54 @@ function getExhibitionWork(exhibition_no){
 					$('#review_open').css({"display":"block"});
 					$('#review_close').css({"display":"none"});
 					$('#ex_reviewList').css({"display":"block"});
-				})
-			})
+				});
+			});
+			select_ExhibitionReviewList(item.no);
 			},error: function(error){
 			
 		}
 	})
 	
 }
+
+// 댓글 리스트 선택
+		function select_ExhibitionReviewList(exhibition_no){
+			let url = "/ex_review/reviewList";
+			let data = "exhibition_no="+ exhibition_no;
+			console.log(data);
+			$.ajax({
+				url:url,
+				data:data,
+				success:function(result){
+					let sucResult = $(result);
+					console.log(result);
+					let body = "<ul>";
+					sucResult.each(function(idx,obj){
+						let member_no = obj.member_no;
+						let logNo = '${logNo}';
+						body += "<li class='ex_review_wrap'><div class='ex_reivew_coment'><p>"+obj.nickname+"</p><span>"+ obj.write_date + "</span>"
+						body += "<em>" +obj.content+ "</em>"
+						if(member_no == logNo){
+							body += "<div><input type='button' class='btn' value='수정'>";
+							body += "<input type='button' class='btn' value='삭제' title="+obj.no+","+ obj.member_no+">";
+						}
+						body += "<br/></div></div>"
+						
+						if(obj.nickname == "${logNickname}"){
+							body += "<div style='display:none' class='ex_edit'><form method='post'>";
+							body += "<input type='hidden' name='member_no' value="+obj.member_no+">";
+							body += "<input type='hidden' name='no' value="+obj.no+">";
+							body += "<textarea name='content' class='ex_edit_txt'>"+obj.content+"</textarea>";
+							body += "<input type='submit' class='ex_edit_btn' value='수정하기'></form></div>";
+						}
+						body += "<hr/></li>";
+					});
+					body += "</ul>"
+					$("#ex_reviewList").html(body);
+					
+				},error:function(){
+					console.log("리스트 보이기 실패!");
+				}
+			});
+		}
 

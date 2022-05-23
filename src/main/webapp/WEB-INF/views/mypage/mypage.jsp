@@ -53,9 +53,8 @@
 		
 		//프로필 이지미 바꾸기 요청
 		$("#memberForm_member_edit_btn").on("click",function(){
-			var url = "${url}/mypage/member/thumbnail";
+			var url = "/upload/mypage/member/thumbnail";
 			var data = new FormData($("#memberForm")[0]);
-			console.log(data.thumbnail);
 			$.ajax({
 				url : url,
 				processData: false,
@@ -64,6 +63,7 @@
 				data : data,
 				success:function(data){
 					console.log(data);
+					alert(data.msg);
 				},error : function(error){
 					alert(error);
 				}
@@ -84,9 +84,9 @@
 							<img id="thumbnail_member" src="${url}/img/member/default_thumbnail.png"/>
 						</c:if>
 						<c:if test="${mvo.thumbnail != Null}">
-							<img id="thumbnail_member" src="${url}/upload/${mvo.no}/thumbnail/${mvo.thumbnail}"/>
+							<img id="thumbnail_member" src="/upload/${mvo.no}/thumbnail/${mvo.thumbnail}"/>
 						</c:if>
-							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
+							<img class="thumbnail_btn" id="thumbnail_member_btn" src="/img/member/thumbnail_btn.png"/>
 						</div>
 						<div class="mb-3" style="display:none;">
 							<label for="formFile" class="form-label">회원 사진</label>
@@ -121,15 +121,15 @@
 					<div class="row">
 						<div class="col-1">
 						</div>
-						<div class="col-7">
-							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${mvo.nickname}님 반갑습니다.</h1>
+						<div class="col-6">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${logNickname}님</h1>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="btn-group">
 								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
 								  </button>
-								  <ul style="width:15vw;" id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  <ul style="width:18vw;" id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
 								  </ul>
 							</div>				
 						</div>
@@ -153,7 +153,7 @@
 				<hr/>
 				<ul>
 					<li><a class="selected_menu" href="${url}/mypage/member">내정보</a></li>
-					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>					
+					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=${logoutUri}/logout/kakao">로그아웃</a></li>					
 				</ul>
 			</div>
 			

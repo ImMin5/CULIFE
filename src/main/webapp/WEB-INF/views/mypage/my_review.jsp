@@ -149,18 +149,15 @@ $(function(){
 				  					<th scope="row">${vo.no}</td>
 				  					<td>${vo.subject}</td>
 				  					<td ><p id="review_content${vo.no}"  >${vo.content}</p></td>
-				  					
 				  					<td>${logNickname}</td>
 				  					<td>${vo.write_date}</td>
-				  					<td ><button class="btn" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button><button class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button></td>
+				  					<td ><button class="btn" style="font-size:1.6rem;" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button><button style="font-size:1.6rem;" class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button></td>
 				  				</tr>
-			  				</c:forEach>
-			  				
-			  				
+			  				</c:forEach> 		
 			  			</tbody>
 					</table>
 				</div>
-						<!-- 페이징 -->
+				<!-- 페이징 -->
 				<nav id="mypage_board_pagination" class="container">
 				  <ul class="pagination">
 				  <!-- 이전 페이지 -->
@@ -263,10 +260,10 @@ $(function(){
 					<div class="row">
 						<div class="col-1">
 						</div>
-						<div class="col-7">
-							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${mvo.nickname}님 반갑습니다.</h1>
+						<div class="col-6">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${logNickname}님</h1>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="btn-group">
 								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
@@ -293,7 +290,7 @@ $(function(){
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/member">내정보</a></li>
-					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
+					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=${logoutUri}/logout/kakao">로그아웃</a></li>
 					
 				</ul>
 			</div>

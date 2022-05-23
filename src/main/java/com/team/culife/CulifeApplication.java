@@ -26,9 +26,9 @@ public class CulifeApplication {
 	//매일 0시 0분 5초마다 실행
 	//@Scheduled(cron = "5 0 0 * * *")	
 	//발표용 3분마다 실행
-	/*@Scheduled(cron = "0 0/3 * * * *") public void run() {
+	@Scheduled(cron = "0 0/3 * * * *") public void run() {
 	System.out.println("현재시간은 "+ new Date()); 
 	System.out.println("스케줄러를 실행합니다.");
 	service.scheduleUpdate(); service.scheduleDelete();
-	}*/
+	}
 }

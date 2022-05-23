@@ -50,7 +50,7 @@
         	<ul id="nav_section1">
         		<li><a href="/">HOME</a></li>
         		<li>
-        			<a href="">문화생활</a>
+        			<a href="${url}/theater/theaterList">문화생활</a>
         			<ul>
         				<li id="gnb_movie">
         					<a href="${url}/movie/movieList">
