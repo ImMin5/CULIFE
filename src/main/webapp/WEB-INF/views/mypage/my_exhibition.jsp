@@ -127,7 +127,7 @@
 				</div>
 			</div> <!-- row end -->
 			<div id="mypage_board_contatiner" class="container">
-				<div class="table-responsive">
+				<div class="table-responsive" style="z-index:1;">
 			  		<table class="table table-striped table-hover">
 			  			<thead class="sticky-top" style="background-color:gray">
 			  				<tr>	
