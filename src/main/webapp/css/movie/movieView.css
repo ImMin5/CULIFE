@@ -626,7 +626,7 @@ label[for="spo_check"]:before {
 #reviewOne {
 	position: relative;
 	font-size: 20px;
-	margin-top: 20px;
+	margin: 20px;
 }
 
 .review_edit {

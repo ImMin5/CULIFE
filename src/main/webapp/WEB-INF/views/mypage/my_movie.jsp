@@ -136,10 +136,10 @@ let is_loading = false;
 					<div class="row">
 						<div class="col-1">
 						</div>
-						<div class="col-7">
-							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${mvo.nickname}님 반갑습니다.</h1>
+						<div class="col-6">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${logNickname}님</h1>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="btn-group">
 								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
