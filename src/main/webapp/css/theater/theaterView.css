@@ -289,6 +289,7 @@ input[id="spo_check"]:focus + label[for="spo_check"]:before {
 .more{	
     top: 0px;
     right: 0px;
+    margin-left: -20%;
     padding: 10px 20px;
     border-radius: 15px;
     box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
