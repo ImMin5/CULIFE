@@ -252,7 +252,9 @@ a:visited{
 #review_contatiner .card{
 	height:100%;
 }
-
+#select_container {
+	cursor:pointer
+}
 /*알림창*/
 #mypage_notification_ul{
 	width:18vw;	
