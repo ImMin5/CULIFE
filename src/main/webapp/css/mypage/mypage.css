@@ -163,4 +163,9 @@ a:visited{
 /*알림창*/
 #mypage_notification_ul{
 	width:18vw;	
+	margin : 0 auto;
+}
+#mypage_notification_ul > li{
+
+	width:90%;
 }

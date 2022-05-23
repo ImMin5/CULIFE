@@ -49,7 +49,7 @@
   		from author where no=#{param1}
 	</select>
 	<update id="authorUpdate">
-  		update author set author_thumbnail=#{author_thumbnail}, sns_link=#{sns_link}, debut_year=${debut_year},  author_msg=#{author_msg}
+  		update author set author_thumbnail=#{author_thumbnail}, sns_link=#{sns_link}, debut_year=${debut_year},  author_msg=#{author_msg} where no=${no}
   	</update>
  	<select id="authorSelectByNo" resultType="com.team.culife.vo.AuthorVO">
   		select  no, member_no, author, sns_link, author_thumbnail, debut_year, create_date, author_msg, author_status

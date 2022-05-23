@@ -15,8 +15,8 @@ function getAlert(){
 				console.log(element);
 				if(index > 0){
 					container.append(`
-					<li><hr class="dropdown-divider"></li>
-					<li style="width:15vw; margin-left:15px; margin-right:4px; font-size:1.4rem;">
+					<li style="margin:0 auto;"><hr class="dropdown-divider"></li>
+					<li style="margin-left:15px; margin-right:8px; font-size:1.4rem;">
 						${element.content}<small style="color:gray"> ${element.create_date} days ago</small>
 					</li>
 					`)
@@ -24,7 +24,7 @@ function getAlert(){
 				}
 				else{
 					container.append(`
-					<li style="width:15vw; margin-left:15px; margin-right:4px; font-size:1.4rem;">
+					<li style="margin-left:15px; margin-right:8px; font-size:1.4rem;">
 						${element.content} <small style="color:gray"> ${element.create_date} days ago</small>
 					</li>
 					`)
