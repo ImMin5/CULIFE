@@ -29,7 +29,7 @@ $(function(){
 			var review_content = $("#review_content"+no).text();
 			$(this).text("저장");
 			$(this).attr("data-type","save");
-			$("#review_content"+no).replaceWith("<p><textarea id='review_content"+no+"'>+review_content+</textarea></p>");
+			$("#review_content"+no).replaceWith("<p><textarea id='review_content"+no+"'>"+review_content+"</textarea></p>");
 		}else if(type == "save"){
 			var review_content = $("#review_content"+no).val();
 			var review_btn = $(this);
@@ -45,7 +45,7 @@ $(function(){
 					console.log(data);
 					review_btn.text("수정");
 					review_btn.attr("data-type","edit");
-					$("#review_content"+no).replaceWith("<p id='review_content"+no+"'>"+review_content +"</p>");
+					$("#review_content"+no).replaceWith("<p id='review_content"+no+"'>"+review_content+"</p>");
 					alert(data.msg);
 				},
 				error: function(error){
@@ -149,36 +149,13 @@ $(function(){
 				  				<p>${logNickname}</p>
 				  				<p>${vo.write_date}</p>
 				  				<p>
-				  					<button class="btn" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button>
-				  					<button class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button>
+				  					<button class="btn" style="font-size:1.4rem;" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button>
+				  					<button class="btn" style="font-size:1.4rem;" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button>
 				  				</p>
 				  			</li>
 			  			</c:forEach>
 			  		</ul>
-			  		<table class="table table-striped table-hover">
-			  			<thead class="sticky-top" style="background-color:gray; z-index:-10;">
-			  				<tr>	
-			  					<th style="width:5%">번호</th>
-			  					<th>전시명</th>
-			  					<th style="width:40%">내용</th>
-			  					<th>닉네임</th>
-			  					<th style="width:18%">작성일</th>
-			  					<th>비고</th>
-			  				</tr>
-			  			</thead>
-			  			<tbody>
-			  				<c:forEach var="vo" items="${reviewList}">
-				  				<tr class="tr_record">
-				  					<th scope="row">${vo.no}</td>
-				  					<td>${vo.subject}</td>
-				  					<td ><p id="review_content${vo.no}"  >${vo.content}</p></td>
-				  					<td>${logNickname}</td>
-				  					<td>${vo.write_date}</td>
-				  					<td ><button class="btn" style="font-size:1.6rem;" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button><button style="font-size:1.6rem;" class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button></td>
-				  				</tr>
-			  				</c:forEach> 		
-			  			</tbody>
-					</table>
+			
 				</div>
 				<!-- 페이징 -->
 				<nav id="mypage_board_pagination" class="container">
