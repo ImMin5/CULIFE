@@ -176,14 +176,14 @@ a:visited{
 .sticky-top > li:nth-child(6) {width:8%}
 
 .tr_record {
-	width:100%; height:50px;
+	width:100%; height:50px !important;
 	text-align:center; line-height:50px;
 	margin:0; padding:0;
 	transition:all 0.3s;
 }
 .tr_record:nth-child(odd) {background-color:rgba(0,0,0,0.2)}
 .tr_record:nth-child(even) {background-color:rgba(0,0,0,0.1)}
-.tr_record > p {
+.tr_record > p{
 	float:left; height:48px;
 	line-height:48px; margin-bottom:0;
 	margin:0 1%; 
