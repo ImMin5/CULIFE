@@ -66,6 +66,7 @@ h5{
 	text-align:center;	
 }
 .helpboardList li{
+	float:left;
 	height:40px;
 	line-height:40px;
 	border-bottom:1px solid #ddd;
