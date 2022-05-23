@@ -4,37 +4,116 @@
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage_board.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="/js/mypage/alert.js"></script>
+<script src="/js/modal.js"></script>
+<link rel="stylesheet" href="/css/exhibition/onlineList.css">
 <style>
 	footer {position:fixed; left:0; bottom:0; background-color:black;}
 	ul {margin-bottom: 0;}
 </style>
 <script>
 	$(function(){
+		//모달 띄우기 
+		/* 작품보기 - 모달 띄우기*/
+		function exhibition_modal(){
+			$("#ex_detail_review_bg").css({"display" : "block"});
+		};
+		
 		//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
-		//게시판 타입 선택
-		$("#select_container").on("change",function(){
-			window.location.href="${url}/mypage/board?category="+$(this).val();
-		});
-		
-		$(document).ready(function(){
-			var category = "${pvo.category}";
-			$("#select_container").val(category).prop("selected",true);
-		});
-		
 		//검색
-
 		 $("#search_word").on("keyup",function(key){
 	        if(key.keyCode==13) {
 	           var searchWord = $(this).val();
-	           window.location.href='${url}/mypage/board?category=${pvo.category}&searchWord='+searchWord;
+	           window.location.href='${url}/mypage/exhibition?searchWord='+searchWord;
 	            
 	        }
     	});
 
+		//전시회 정보 불러오기
+		$("button[name=exhibition_modal_btn]").on("click",function(){
+			var no = $(this).attr("data-no");
+			var review_no = $(this).attr("data-review_no");
+			var review_content = $("#review_content"+review_no).text();
+			var author = $(this).attr("data-author");
+			var url ="${url}/exhibitionwithwork/"+ no;
+			$.ajax({
+				url : url,
+				tpye : "GET",
+				dataType:"JSON",
+				success: function(data){
+					console.log(data.items[0].subject);
+					$("#modal_exhibition_subject").text(data.items[0].subject);
+					$("#modal_exhibition_content").text(data.items[0].content);
+					$("#modal_exhibition_review").text("내가 남긴 댓글 : " + review_content);
+					var modal_work_container = $("#modal_exhibition_workList");
+					modal_work_container.empty();
+					data.items[0].workList.forEach(function(element, index){
+						console.log(element);
+						modal_work_container.append(`
+								<li>
+				    			<ul>
+					    			<li><figure class="ex_detail_img"><img class="ex_work_thumbnail" src="${url}/upload/${'${data.items[0].member_no}'}/author/exhibition/${'${element.exhibition_no}'}/${'${element.work_thumbnail}'}"></figure></li>    		
+						    		<li class="ex_detail_info">
+						    			<ul>
+											<li>작가 : ${'${data.items[0].author}'}</li>
+											<li>작품명 : ${'${element.work_subject}'} </li>
+											<li>전시기간 : ${'${data.items[0].start_date}'} - ${'${data.items[0].end_date}'}</li>
+											<li>작품설명</li>
+											<li><p>${'${element.work_content}'}</p></li>
+										</ul>
+									</li>
+								</ul>
+				    		</li>
+						`);
+					});
+					get_exhibition_reply(no);
+					//var myReview = "<li id='modal_exhibition_review'><p>내가 남긴 감상평</p><span>"+review_content+"</span></li>";
+					//("#modal_exhibition_workList").append(myReview);
+				},error : function(){
+					
+				}
+			})
+		})
+		
+		function get_exhibition_reply(exhibition_no){
+			var url = "/ex_review/reviewList";
+			$.ajax({
+				url:url,
+				type : "GET",
+				datType : "JSON",
+				data:{
+					exhibition_no : exhibition_no,
+				},
+				success:function(data){
+					$("#modal_exhibition_workList").append(`
+							<li id="ex_review"><h4>&nbsp;&nbsp;감상평</h4></li>
+						`);
+					$(data).each(function(idx,element){
+						console.log(element);
+						$("#modal_exhibition_workList").append(`
+								<li id="ex_reviewList">
+									<ul>
+										<li class="ex_review_wrap">
+											<div class="ex_reivew_coment"><p>${'${element.nickname}'}</p><span>${'${element.write_date}'}</span><em>${'${element.content}'}</em><br></div><hr>
+										</li>
+									</ul>
+								</li>		
+						`)
+			
+					})
+					
+					exhibition_modal();
+					
+				},error:function(){
+					console.log("리스트 보이기 실패!");
+				}
+			});
+		}
 		
 	});
+	
+
 </script>
 <main id="mypage_member" class="container-fluid">
 	<div class="row" style="height:100%;">
@@ -44,10 +123,6 @@
 					<div class="input-group mb-3" id="search_container">
 						<img id="search_btn" src="${url}/img/member/search.png">
 				  		<input type="text" class="form-control" id="search_word" value="${pvo.searchWord}" placeholder="검색" style=" font-size:2.3rem;">
-				  		<select id="select_container">
-							<option value="free">자유게시판</option>
-						 	<option value="help">문의사항</option>
-						</select>
 					</div>
 				</div>
 			</div> <!-- row end -->
@@ -57,28 +132,22 @@
 			  			<thead class="sticky-top" style="background-color:gray">
 			  				<tr>	
 			  					<th style="width:5%">번호</td>
-			  					<th>제목</td>
-			  					<th>닉네임</td>
-			  					<th style="width:8%">조회수</td>
-			  					<th style="width:18%">작성일</td>
+			  					<th style="width:25%">제목</td>
+			  					<th style="width:30%">기간</td>
+			  					<th style="width:10%">작가명</td>
+			  					<th style="width:20%">전시등록일</td>
+			  					<th style="width:10%">비고</td>
 			  				</tr>
 			  			</thead>
 			  			<tbody>
-			  				<c:forEach var="vo" items="${boardList}">
-			  					<c:choose>
-			  						<c:when test ="${pvo.category == 'free' }">
-			  							<tr class="tr_record" onclick="location.href='${url}/board/freeBoardView?no=${vo.no}'">
-			  						</c:when>
-			  						<c:otherwise>
-			  							<tr class="tr_record" onclick="location.href='${url}/board/help/helpBoardView?no=${vo.no}'">
-			  						</c:otherwise>
-			  					</c:choose>
-				  			
+			  				<c:forEach var="vo" items="${exhibitionList}">
+			  					<tr class="tr_record">
 				  					<th scope="row">${vo.no}</td>
 				  					<td>${vo.subject}</td>
-				  					<td>${vo.nickname}</td>
-				  					<td>${vo.view}</td>
-				  					<td>${vo.write_date}</td>
+				  					<td>${vo.start_date} ~ ${vo.end_date }</td>
+				  					<td>${logNickname}</td>
+				  					<td>${vo.create_date}</td>
+				  					<td><button style="font-size:1.7rem;"class="btn" data-no="${vo.no}" data-exhibition_no="${vo.no}" name="exhibition_modal_btn">보기</button></td>
 				  				</tr>
 			  				</c:forEach>
 			  				
@@ -93,7 +162,7 @@
 				  <c:choose>
 				  	<c:when test="${pvo.currentPage>1}">
 					    <li class="page-item">
-					      <a class="page-link" href="${url}/mypage/board?pageNo=${pvo.currentPage-1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Previous">
+					      <a class="page-link" href="${url}/mypage/exhibition?currentPage=${pvo.currentPage-1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Previous">
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
@@ -123,10 +192,10 @@
 						    	<c:choose>
 							    	<c:when test ="${pvo.totalPage <= pvo.onePageCount}">
 								    	<c:if test="${p==pvo.currentPage && p<= pvo.totalPage}">
-								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/exhibition?currentPage=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								    	</c:if>
 								    	<c:if test="${p!=pvo.currentPage && p<=pvo.totalPage}">	
-								    		<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+								    		<li class="page-item"><a class="page-link" href=${url}/mypage/exhibition?currentPage=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								   		</c:if>
 								   	</c:when>
 							    	<c:otherwise>
@@ -151,10 +220,10 @@
 				    		</c:choose>
 				    		<c:forEach var="p" begin="1" end="${endPage}">
 					    		<c:if test="${p==pvo.currentPage }">
-					    			<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+					    			<li class="page-item"><a style="color:#9DC3E6"class="page-link" href=${url}/mypage/exhibition?currentPage=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								</c:if>
 								<c:if test="${p!=pvo.currentPage }">	
-									<li class="page-item"><a class="page-link" href=${url}/mypage/board?pageNo=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
+									<li class="page-item"><a class="page-link" href=${url}/mypage/exhibition?currentPage=${p}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>>${p}</a></li>
 								</c:if>
 							</c:forEach>
 				    	</c:otherwise>
@@ -164,7 +233,7 @@
 					<c:choose>
 						<c:when test="${pvo.currentPage < pvo.totalPage }">
 							<li class="page-item">
-							      <a class="page-link" href="${url}/mypage/board?pageNo=${pvo.currentPage+1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Next">
+							      <a class="page-link" href="${url}/mypage/exhibition?currentPage=${pvo.currentPage+1}&category=${pvo.category}<c:if test='${pvo.searchWord!=null}'>&searchWord=${pvo.searchWord}</c:if>" aria-label="Next">
 							        <span aria-hidden="true">&raquo;</span>
 							      </a>
 							</li>
@@ -206,14 +275,14 @@
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
 					<li><a href="${url}/mypage/review">감상평</a></li>
-					<li><a class="selected_menu" href="${url}/mypage/board">작성글</a></li>
+					<li><a href="${url}/mypage/board">작성글</a></li>
 					<li><a href="${url}/mypage/fan">팔로잉 작가</a></li>
 					<c:if test="${grade == 0}">
 						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
-						<li><a href="${url}/mypage/exhibition">나의 전시회</a></li>
-						<li><a href="${url}/mypage/author">작가 정보</a></li>		
+						<li><a class="selected_menu" href="${url}/mypage/exhibition">나의 전시회</a></li>
+						<li><a href="${url}/mypage/author">작가 정보</a></li>
 					</c:if>
 				</ul>
 				<hr/>
@@ -229,3 +298,18 @@
 		
 	</div>
 </main>
+
+<!-- 작품 상세 페이지 모달 -->
+	<div id="ex_detail_review_bg" class="modal" style="z-index:1500;">
+    	<div id="ex_detail_wrap" class="modal_wrap">
+    		<h3>작품 상세</h3>
+    		<div id="ex_reg_detail">
+    			<h4 id="modal_exhibition_subject"></h4>
+    			<p id="modal_exhibition_content"></p>
+    		</div>
+    		<ul id="modal_exhibition_workList">
+    		</ul>
+	    	<i class="fa-solid fa-xmark"></i>
+    	</div>
+    </div>
+

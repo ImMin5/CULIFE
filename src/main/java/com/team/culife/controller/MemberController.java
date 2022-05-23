@@ -30,6 +30,7 @@ import com.team.culife.service.AlertService;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.BoardService;
 import com.team.culife.service.ExhibitionReviewService;
+import com.team.culife.service.ExhibitionService;
 import com.team.culife.service.FileService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
@@ -40,6 +41,7 @@ import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
 import com.team.culife.vo.ExhibitionReviewVO;
+import com.team.culife.vo.ExhibitionVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.MovieVO;
 import com.team.culife.vo.PageResponseBody;
@@ -68,12 +70,15 @@ public class MemberController {
 	
 	@Inject
 	AlertService alertService;
-	
+
 	@Inject
 	ExhibitionReviewService exhibitionReviewService;
 	
 	@Inject
 	FileService fileService;
+	
+	@Inject
+	ExhibitionService exhibitionService;
 	
 	@Value("${prefix-path}")
 	private String prefixPath;
@@ -267,7 +272,6 @@ public class MemberController {
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
-				System.out.println("total recprd -->" + pvo.getTotalRecord());
 				if(pvo.getTotalPage() >0  &&  pvo.getTotalPage() < currentPage) {
 					pvo.setCurrentPage(pvo.getTotalPage());
 					pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
@@ -282,6 +286,36 @@ public class MemberController {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+		}
+		return mav;
+	}
+	//마이페이지 - 나의 전시회
+	@GetMapping("/mypage/exhibition")
+	public ModelAndView myExhibition(HttpSession session, @RequestParam(value="currentPage",required = false, defaultValue = "1")int currentPage,
+			@RequestParam(value="searchWord",required = false)String searchWord) {
+		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
+		try {
+			if(memberNo != null) {
+				AuthorVO avo = authorService.authorNoSelect(memberNo);
+				PagingVO pvo = new PagingVO();
+				pvo.setRecordPerPage(6);
+				pvo.setMember_no(avo.getNo());
+				pvo.setCurrentPage(currentPage);
+				if(searchWord != null) pvo.setSearchWord(searchWord);
+				pvo.setTotalRecord(exhibitionService.exhibitionTotalRecordAuthor(pvo));
+				List<ExhibitionVO> exhibitionList = exhibitionService.exhibitionSelectByAuthorNo(pvo);
+			
+				mav.addObject("pvo", pvo);
+				mav.addObject("exhibitionList", exhibitionList);
+				mav.setViewName("mypage/my_exhibition");
+			}
+			else {
+				mav.setViewName("redirect:/");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
@@ -312,10 +346,7 @@ public class MemberController {
 		String path = prefixPath + memberNo+"/thumbnail/";
 		try {
 			result.put("status", "200");
-			System.out.println("first path --->" + path);
 			if(memberNo != null) {
-				System.out.println("th "+ mvo.getThumbnail());
-				
 				if(newFile != null) { //새로업로드된 파일이 있으면
 					String newUploadFilename = newFile.getOriginalFilename();	
 						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
@@ -346,7 +377,7 @@ public class MemberController {
 								memberService.memberUpdate(mvo);
 								//파일 업로드
 								result.put("msg", "프로필 수정 완료.");
-								System.out.println("path--->"+fileService.uploadImage(newFile, path));
+								System.out.println("파일 업록드 결과 "+fileService.uploadImage(newFile, path));
 							} catch(Exception ee) {
 								result.put("msg" , "파일 업로드 오류 " + path);
 								ee.printStackTrace();
@@ -412,7 +443,6 @@ public class MemberController {
 		HashMap<String,String> result = new HashMap<String,String>();
 				
 		try {
-			System.out.println("sss");
 			memberService.memberInsert(mvo);
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
 		}catch(Exception e) {
@@ -432,7 +462,6 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		try {
 			result.put("status", "200");
-			System.out.println("MemberNo --->" + memberNo);
 			//로그인 확인
 			if(memberNo == null) {
 				result.put("status","201");
@@ -451,8 +480,6 @@ public class MemberController {
 					}
 					else {
 						//팔로잉
-						System.out.println("author ---> " + author);
-						System.out.println("member no " + memberNo);
 						AuthorFanVO afvo = new AuthorFanVO();
 						afvo.setAuthor_no(avo.getNo());
 						afvo.setMember_no(memberNo);
@@ -486,7 +513,6 @@ public class MemberController {
 		
 		try {
 			result.put("status", "200");
-			System.out.println("MemberNo --->" + memberNo);
 			//로그인 확인
 			if(memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요.");
@@ -523,7 +549,6 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		PageResponseBody<AuthorVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
-		System.out.println("search --> " + searchWord);
 		try {
 			if (memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요");
@@ -559,13 +584,10 @@ public class MemberController {
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		String path =prefixPath+memberNo+"/author/";
-		System.out.println("path --> " +path);
 		
 		try {
 			result.put("status", "200");
 			if(memberNo != null) {
-				System.out.println("th "+ avo.getAuthor_thumbnail());
-				
 				if(newFile != null) { //새로업로드된 파일이 있으면
 					String newUploadFilename = newFile.getOriginalFilename();	
 						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
@@ -620,7 +642,7 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		PageResponseBody<MovieVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
-		System.out.println("search --> " + searchWord);
+		
 		try {
 			if (memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요");
@@ -628,11 +650,8 @@ public class MemberController {
 			} else {
 				PagingVO pvo = new PagingVO();
 				// 전체 리스트 업데이트
-				System.out.println("member_ no --->" + memberNo);
-				System.out.println("pageCount --->" + pageCount);
 				pvo.setRecordPerPage(pageCount);
 				pvo.setCurrentPage(pageNo);
-				System.out.println("pvo offset -->" + pvo.getOffsetIndex());
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(movieService.movieReviewTotalRecord(pvo));
@@ -659,7 +678,7 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		PageResponseBody<ReviewVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
-		System.out.println("search --> " + searchWord);
+		
 		try {
 			if (memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요");

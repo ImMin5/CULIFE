@@ -33,4 +33,6 @@ public interface ExhibitionDAO {
 	public WorkVO exhibitionWorkSelect(int exhibition_no);
 	public ExhibitionWorkVO exhibitionWorkSelectAll(int no);
     public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo);
+    public int exhibitionTotalRecordAuthor(PagingVO pVO);
+    public List<ExhibitionVO> exhibitionSelectByAuthorNo(PagingVO vo);
 }

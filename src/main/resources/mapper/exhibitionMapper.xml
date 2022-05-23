@@ -74,7 +74,6 @@
 			and a.author like '%${searchWord}%'
 		</if>
 		where date_format(now(), '%Y-%m-%d') >= e.start_date and e.end_date >= date_format(now(), '%Y-%m-%d')
-		
 	</select>
 	
 	<resultMap id="exhibitionResult" type="com.team.culife.vo.ExhibitionWorkVO">
@@ -98,7 +97,7 @@
 	</resultMap>
 	
 	<select id="exhibitionWorkSelectAll" resultMap="exhibitionResult">
-		select e.no eno, e.author_no author_no, e.subject subject, e.content content, e.start_date start_date, e.end_date end_date,
+		select e.no eno, e.author_no author_no, e.subject subject, e.content content, e.start_date start_date, e.end_date end_date, 
 		 w.no wno, w.exhibition_no exhibition_no, w.work_subject work_subject, w.work_thumbnail work_thumbnail, w.work_content work_content
 		from exhibition e
 		join work w
@@ -106,7 +105,7 @@
 	</select>
   
     <select id="exhibitionSelectAll" resultType="com.team.culife.vo.ExhibitionVO">
-  		select e.no, e.subject, e.content, a.author, e.start_date, e.end_date, e.type from exhibition e
+  		select e.no, e.subject, e.content, a.author, e.start_date, e.end_date, e.type ,  e.create_date create_date from exhibition e
   		join author a
   		on e.author_no = a.no 
   		<if test="category == 'exhibition_subject' and searchWord != null">
@@ -115,7 +114,28 @@
   		<if test="category == 'author' and searchWord != null">
   				and a.author like '%${searchWord}%'
   		</if>
-  		where date_format(now(),'%Y-%m-%d') >= e.start_date and e.end_date >= date_format(now(),'%Y-%m-%d')  
+  		where date_format(now(),'%Y-%m-%d') >= e.start_date and e.end_date >= date_format(now(),'%Y-%m-%d')
+  		order by a.author 
+  		limit ${recordPerPage} offset ${offsetIndex}
+  	</select>
+  	
+  	<select id="exhibitionTotalRecordAuthor" resultType="int">
+  		select count(e.no) cnt from exhibition e
+  		join author a
+  		on e.author_no = a.no and e.author_no=${member_no}
+  		<if test="searchWord != null">
+  				and e.subject like '%${searchWord}%'
+  		</if>
+  	</select>
+  	
+  	 <select id="exhibitionSelectByAuthorNo" resultType="com.team.culife.vo.ExhibitionVO">
+  		select e.no, e.subject, e.content, a.author, e.start_date, e.end_date, e.type ,  e.create_date create_date from exhibition e
+  		join author a
+  		on e.author_no = a.no and e.author_no=${member_no}
+
+  		<if test="searchWord != null">
+  				and e.subject like '%${searchWord}%'
+  		</if>
   		order by a.author 
   		limit ${recordPerPage} offset ${offsetIndex}
   	</select>

@@ -99,5 +99,15 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	public List<ExhibitionVO> exhibitionSelectAll(PagingVO vo) {
 		return dao.exhibitionSelectAll(vo);
 	}
+  
+  @Override
+  public int exhibitionTotalRecordAuthor(PagingVO pVO) {
+	return dao.exhibitionTotalRecord(pVO);
+  }
+
+	@Override
+	public List<ExhibitionVO> exhibitionSelectByAuthorNo(PagingVO vo) {
+		return dao.exhibitionSelectByAuthorNo(vo);
+	}
 
 }

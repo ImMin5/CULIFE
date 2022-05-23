@@ -38,9 +38,10 @@ public class LoginController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		String nickname = (String)session.getAttribute("logNickname");
 		try {
-			System.out.println("nickname : " + nickname + " " + memberNo);
-			if(memberNo == null)
+			if(memberNo == null) {
 				mav.setViewName("login/login");
+				System.out.println("[INFO] nickname : " + nickname + " " + memberNo +" 로그인");
+			}
 			else
 				mav.setViewName("redirect:/");
 		}catch(Exception e) {
@@ -54,7 +55,6 @@ public class LoginController {
 	@GetMapping("/login/oauth")
 	public void loginOauth(@RequestParam(value = "code", required = false) String code) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println("code --->"+code);
 		loginService.getKakaoToken(code);
 		mav.setViewName("redirect:/");
 	}

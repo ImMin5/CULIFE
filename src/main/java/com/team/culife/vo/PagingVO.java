@@ -15,7 +15,7 @@ public class PagingVO {
 	private int totalPage;		//총 페이지수
 	private int offsetIndex = 0;	
 	
-	private int member_no;
+	private Integer member_no;
 	private String searchKey;
 	private String searchWord;
 	private String category;

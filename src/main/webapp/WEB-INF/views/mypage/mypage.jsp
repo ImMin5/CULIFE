@@ -40,14 +40,12 @@
 
 		//프로필 이미지 미리보기
 		$("#formFile_member").change(function(){
-			console.log(this.files[0]);
 			//fileReader
 			var reader = new FileReader();
     		reader.onload = function(e) {
       			document.getElementById('thumbnail_member').src = e.target.result;
     		};
     		reader.readAsDataURL(this.files[0]);
-    		console.log(this.files[0].name)
     		$("[name=thumbnail]").val(this.files[0].name);
 		});
 		
@@ -62,7 +60,6 @@
 				type : "POST",
 				data : data,
 				success:function(data){
-					console.log(data);
 					alert(data.msg);
 				},error : function(error){
 					alert(error);
@@ -147,6 +144,7 @@
 						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
+						<li><a href="${url}/mypage/exhibition">나의 전시회</a></li>
 						<li><a href="${url}/mypage/author">작가 정보</a></li>
 					</c:if>					
 				</ul>
