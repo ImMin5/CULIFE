@@ -101,13 +101,16 @@ audio::-webkit-media-controls-panel {
 	float:left
 }
 #table_container > table > tbody > tr > th:nth-child(1) {
-	width:230px;
+	width:40px;
 }
 #table_container > table > tbody > tr > th:nth-child(2) {
-	width:180px;
+	width:210px;
 }
 #table_container > table > tbody > tr > th:nth-child(3) {
-	width:230px;
+	width:150px;
+}
+#table_container > table > tbody > tr > th:nth-child(4) {
+	width:220px;
 }
 #modal_search {
 	height:45vh; 
@@ -128,9 +131,10 @@ audio::-webkit-media-controls-panel {
 	white-space:nowrap;
 	height:30px
 }
-#modal_search > tr > td:nth-child(1) {width:230px}
-#modal_search > tr > td:nth-child(2) {width:180px}
-#modal_search > tr > td:nth-child(3) {width:230px}
+#modal_search > tr > td:nth-child(1) {width:40px}
+#modal_search > tr > td:nth-child(2) {width:210px}
+#modal_search > tr > td:nth-child(3) {width:150px}
+#modal_search > tr > td:nth-child(4) {width:220px}
 
 /* 전시 작품 검색 - end */
 

@@ -309,6 +309,7 @@ $(function(){
 			    <table>
 			    	<tbody>
 				    	<tr>
+				    		<th>타입</th>
 					    	<th>전시이름</th>
 					    	<th>작가명</th>
 					    	<th>전시기간</th>

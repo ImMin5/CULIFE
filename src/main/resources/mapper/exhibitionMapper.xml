@@ -106,7 +106,7 @@
 	</select>
   
     <select id="exhibitionSelectAll" resultType="com.team.culife.vo.ExhibitionVO">
-  		select e.no, e.subject, e.content, a.author, e.start_date, e.end_date from exhibition e
+  		select e.no, e.subject, e.content, a.author, e.start_date, e.end_date, e.type from exhibition e
   		join author a
   		on e.author_no = a.no 
   		<if test="category == 'exhibition_subject' and searchWord != null">

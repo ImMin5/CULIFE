@@ -49,12 +49,12 @@
 	<main id="home_main_container">
 		<h1 class="hidden">본문보기</h1>
 		<section id="home_visual">
-			<c:if test="${grade == null }">
+			<c:if test="${grade == null}">
 				<h2 class="hidden">share your cultural life</h2>
 				<div id="three-container"></div>
 				<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
 	        </c:if>
-	        <c:if test="${grade == '0' || grade == '1' || grade == '2'}">
+	        <c:if test="${grade != null}">
 	        	<div class="text-effect">
 			        <span>W</span>
 					<span>E</span>
