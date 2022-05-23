@@ -126,8 +126,8 @@ $(function(){
 		var month = ('0' + (today.getMonth() + 1)).slice(-2);
 		var day = ('0' + today.getDate()).slice(-2);
 		var dateString = year + '-' + month  + '-' + day;
-		if(dateString >= $("#startDate").val() == true){
-			alert("전시 시작일은 내일부터 가능합니다.");
+		if(dateString > $("#startDate").val() == true){
+			alert("전시 시작일은 오늘부터 가능합니다.");
 			return false;
 		}
 		if($("#startDate").val() > $("#endDate").val() == true){
