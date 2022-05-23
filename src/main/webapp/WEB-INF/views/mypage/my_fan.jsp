@@ -103,7 +103,7 @@ let is_paging= true;
 			})
 		});
 		//스크롤 위치 파악
-		$(".table-responsive").scroll(function(){
+		$(window).scroll(function(){
 			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
 	        var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
 	        var contentH = $(".table").height(); //문서 전체 내용을 갖는 div의 높이
