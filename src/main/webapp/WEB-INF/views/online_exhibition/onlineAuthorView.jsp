@@ -30,6 +30,7 @@
 				<ul>
 					<li>작가명 : ${vo.author}</li>
 					<li>데뷔년도 : ${vo.debut_year}</li>
+					<li>SNS : <a href="${vo.sns_link}">${vo.sns_link}</a></li>
 					<li id="author_fan_count">팔로워 : </li>
 					<li>작가소개</li>
 					<li>${vo.author_msg}</li>
