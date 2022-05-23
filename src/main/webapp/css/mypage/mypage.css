@@ -155,6 +155,99 @@ a:visited{
 	line-height:25px
 }
 
+/*          감상평           */
+.table-responsive {position:relative; z-index:1}
+.sticky-top {
+	width:100%; height:50px;
+	text-align:center; line-height:50px;
+	background-color:gray;
+	margin:0; padding:0;
+	font-weight:bold
+}
+.sticky-bottom {margin:0; padding:0;}
+.sticky-top > li {
+	float:left; margin:0 1%; 
+}
+.sticky-top > li:nth-child(1) {width:5%}
+.sticky-top > li:nth-child(2) {width:18%}
+.sticky-top > li:nth-child(3) {width:28%}
+.sticky-top > li:nth-child(4) {width:14%}
+.sticky-top > li:nth-child(5) {width:15%}
+.sticky-top > li:nth-child(6) {width:8%}
+
+.tr_record {
+	width:100%; height:50px !important;
+	text-align:center; line-height:50px;
+	margin:0; padding:0;
+	transition:all 0.3s;
+}
+.tr_record:nth-child(odd) {background-color:rgba(0,0,0,0.2)}
+.tr_record:nth-child(even) {background-color:rgba(0,0,0,0.1)}
+.tr_record > p{
+	float:left; height:48px;
+	line-height:48px; margin-bottom:0;
+	margin:0 1%; 
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	overflow:hidden;
+	font-size:1.8rem
+}
+
+.tr_record > p:nth-child(1) {width:5%}
+.tr_record > p:nth-child(2) {width:18%}
+.tr_record > p:nth-child(3) {width:28%}
+.tr_record > p:nth-child(4) {width:14%}
+.tr_record > p:nth-child(5) {width:15%}
+.tr_record > p:nth-child(6) {width:8%}
+.tr_record > p:nth-child(6) button{margin-top:-10px}
+
+.tr_record:hover {background-color:rgba(0,0,0,0.3)}
+
+.tr_record > p:nth-child(3) textarea {
+	width:100%; height:48px; 
+	line-height:25px;
+	resize:none;
+}
+
+#ex_detail_review_bg ul {padding-left:0}
+
+#modal_exhibition_workList .ex_detail_info {
+	width:400px;
+	padding:75px 0;
+}
+#modal_exhibition_review {
+	height:300px !important;
+	padding:0 30px;
+	display:block;
+}
+#modal_exhibition_review p {
+	font-size:2rem; line-height:80px;
+	font-weight:bold; margin-left:50px
+}
+#modal_exhibition_review span {
+	width:90%; height:150px;
+	overflow-y:auto;
+	background-color:rgba(255,255,255,0.5);
+	border:1px solid #c0c0c0;
+	border-radius:10px;
+	font-size:1.8rem;
+	line-height:30px;
+	display:block;
+	margin:0 auto;
+	padding:0 20px
+}
+
+#modal_exhibition_review span::-webkit-scrollbar{width:10px}
+#modal_exhibition_review span::-webkit-scrollbar-track {background-color: #f9f5d2;}
+#modal_exhibition_review span::-webkit-scrollbar-thumb {
+	background-color: #f2e10d;
+	border-radius:5px;	
+}
+#modal_exhibition_subject {
+	font-size:2.8rem !important;
+	padding:0 !important;
+}
+
 /*리뷰*/
 #review_contatiner .card{
 	height:100%;
@@ -163,4 +256,8 @@ a:visited{
 /*알림창*/
 #mypage_notification_ul{
 	width:18vw;	
+	margin : 0 auto;
+}
+#mypage_notification_ul > li{
+	width:91%;
 }

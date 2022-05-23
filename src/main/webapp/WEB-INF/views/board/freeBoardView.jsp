@@ -55,7 +55,7 @@ function selectReplyList(){
 					body += "<textarea name='content' id='content'>"+obj.content+"</textarea>";
 					body += "<div><input type='submit' class='btn' value='수정하기'></div></form></div>";
 				}
-				body += "<hr/></li>";
+				body += "</li>";
 			});
 			body += "</ul>"
 			$("#replyList").html(body);
@@ -117,36 +117,32 @@ $(function(){
 
 </script>
 
-<div class="container">
+<div class="f_view_container">
 	<!-- 글내용 -->
-	<br>
+	<h1>제목 : ${viewVo.subject}</h1>
+	<hr />
 	<ul>
-		<div class="parent">
+		<li><a href="/board/freeBoardList" style="color:white; float:right; margin-top:-50px">목록으로 돌아가기</a></li>
+		<li class="parent">
 			<div class="child1">작성자 : ${viewVo.nickname}</div>
-			<div class="child2">
-				<h1>제목 : ${viewVo.subject}</h1>
-			</div>
 			<div class="child1">조회수 : ${viewVo.view}</div>
-		</div>
-		<hr />
+		</li>
+		
 		<c:if test="${logNo==viewVo.member_no}">
-			<div class="edel">
-				<a href="/board/freeBoardEdit?no=${viewVo.no}" class="btn"
-					id="freeBoardEdit">수정</a> <span id="btnSpace"></span> <input
-					type="button" class="btn" id="freeBoardDel" value="삭제" />
-			</div>
+			<li class="edel">
+				<a href="/board/freeBoardEdit?no=${viewVo.no}" class="btn" id="freeBoardEdit">수정</a>
+				<input type="button" class="btn" id="freeBoardDel" value="삭제" />
+			</li>
 		</c:if>
-		<br>
-		<li>글 내용</li>
-		<br>
-		<div class="freeContent">
+		<li style="font-size:2.4rem">글 내용</li>
+		<li class="freeContent">
 			<div>${viewVo.content}</div>
-		</div>
+		</li>
 	</ul>
 	<!-- 댓글 -->
 	<hr />
 	<div id="replyLine">
-		<br> <i class="fa fa-comment fa-lg"></i><span class="iconValue">댓글</span>
+		<i class="fa fa-comment fa-lg"></i><span class="iconValue">댓글</span>
 	</div>
 	<form method="post" id="replyForm" action="test"
 		onsubmit="return replySend()">
@@ -168,4 +164,5 @@ $(function(){
 	<!-- 댓글 목록 표시 -->
 	<div id="replyList"></div>
 </div>
-<br>
+<br/>
+<hr/>

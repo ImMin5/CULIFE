@@ -38,7 +38,7 @@ $(function(){
 						body += "<textarea name='content' id='content'>"+obj.content+"</textarea>";
 						body += "<div id='editBtn'><input type='submit' class='btn' value='수정하기'></div></form></div>";
 					}
-					body += "<hr/></li>";
+					body += "</li>";
 				});
 				body += "</ul>"
 				$("#replyList").html(body);
@@ -117,31 +117,28 @@ $(function(){
 });
 </script>
 
-<div class="container">
+<div class="h_view_container">
 	<!-- 글내용 -->
-	<br>
-	<ul>
-	<div class="parent">
-		<div class="child1">작성자 : ${viewVo.nickname}</div>
-		<div class="child2"><h1>제목 : ${viewVo.subject}</h1></div>
-		<div class="child1">조회수 : ${viewVo.view}</div>
-	</div>
+	<h1>제목 : ${viewVo.subject}</h1>
 	<hr/>
-	<div class="edel">
-	<a href="/board/help/helpBoardEdit?no=${viewVo.no}" class="btn" id="helpBoardEdit">수정</a>
-	<span id="btnSpace"></span><input type="button" class="btn" id="helpBoardDel" value="삭제"/>
-	</div>
-		<br>
-		<li>글 내용</li>
-		<br>
-		<div class="helpContent">
-		<div>${viewVo.content}</div>
-		</div>
+	<ul>
+		<li><a href="/board/helpBoardList" style="color:white; float:right; margin-top:-50px">목록으로 돌아가기</a></li>
+		<li class="parent">
+			<div class="child1">작성자 : ${viewVo.nickname}</div>
+			<div class="child1">조회수 : ${viewVo.view}</div>
+		</li>
+		<li class="edel">
+			<a href="/board/help/helpBoardEdit?no=${viewVo.no}" class="btn" id="helpBoardEdit">수정</a>
+			<input type="button" class="btn" id="helpBoardDel" value="삭제"/>
+		</li>
+		<li style="font-size:2.4rem">글 내용</li>
+		<li class="helpContent">
+			<div>${viewVo.content}</div>
+		</li>
 	</ul>
 	<!-- 댓글 -->
 	<hr />
 	<div id="replyLine">
-	<br>
 		<i class="fa fa-comment fa-lg"></i><span class="iconValue">댓글</span>
 	</div>
 	<form method="post" id="replyForm">
@@ -156,4 +153,5 @@ $(function(){
 	<!-- 댓글 목록 표시 -->
 	<div id="replyList"></div>
 </div>
-<br />
+<br/>
+<hr/>

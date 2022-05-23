@@ -86,7 +86,7 @@
         		</li>
         	</ul>
         	<div id="rnb">
-	            <c:if test="${grade != '' }">
+	            <c:if test="${grade == null }">
 	            </c:if>
 	            <c:if test="${grade == '0' || grade == '1'}"> <!-- 일반회원 : 0, 작가 : 1 -->
 	            	<p><a href="${url}/mypage/review/movie">mypage</a></p>

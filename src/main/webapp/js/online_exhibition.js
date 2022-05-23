@@ -154,6 +154,7 @@ $(document).ready(function(){
 
 //작품 검색 카테고리 변경 시 
 $(document).on("change","select[name=ex_search]",function(){
+	is_paging = false;
 	currentPage = 1;
 	search();
 })
@@ -185,14 +186,20 @@ function search(){
 			searchWord : searchWord,
 		},
 		success : function(data){
+			console.log(data);
 			if(!is_paging){
 				container.empty();	
 			}
 			if(data.items == null) return;
 			/*console.log(data);*/
 			data.items.forEach(function(element, index){
+				var Type=element.type;
+				if(Type==1){var Type = "그림";}
+				if(Type==2){var Type = "글";}
+				
 				container.append(`
 					<tr>
+						<td class="work_type">${Type}</td>
 						<td>${element.subject}</td>
 						<td>${element.author}</td>
 						<td>${element.start_date} ~ ${element.end_date}</td>
@@ -208,7 +215,7 @@ function search(){
 				totalPage = data.vo.totalPage;
 			}
 			is_loading = false;
-			
+						
 		},error : function(error){
 			console.log(error);
 			is_loading = false;
@@ -322,6 +329,25 @@ function getExhibitionWork(exhibition_no){
 					$('#ex_reviewList').css({"display":"block"});
 				});
 			});
+			
+			/* 작품보기 이미지 줌인 */
+			$(document).ready(function(){
+				$(".ex_detail_img").on('click', (function(){
+					var a = $(this).children().attr("src");
+					$(".pop").replaceWith("<img class='pop' src='" + a + "'/>");
+					$("#imgPopup").css({"display":"block"});
+					setTimeout(function(){
+						$(".pop").css({
+						"transform" : "translate(-50%,-50%) scale(1)",
+						})
+					})		
+				}))	
+				$("#imgPopup > .fa-xmark").click(function(){
+					$("#ex_detail_bg").css({"display" : "block"});
+					$('footer').css({"display" : "none"});
+					$("#imgPopup").css({"display":"none"});
+				});	
+			})
 			select_ExhibitionReviewList(item.no);
 			},error: function(error){
 			

@@ -7,6 +7,14 @@
 <style>
 	footer {position:fixed; left:0; bottom:0; background-color:black;}
 	ul {margin-bottom: 0;}
+	#max_text_length {
+		background-color:white;
+		height:40px; width:117%;
+		line-height:30px;
+		margin-top:5px;
+		opacity: 1 !important;
+		color:#888
+	}
 </style>
 <script>
 	$(function(){
@@ -62,6 +70,7 @@
 					<div class="col" id="my_page_col">
 						<!-- 작가 대표 사진 -->
 						<div id="mypage_member_thumbnail_container">
+							<input type="hidden" name="no" value="${avo.no}"/>
 							<img id="thumbnail_member" src="${url}/upload/${logNo}/author/${avo.author_thumbnail}"/>
 							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
 						</div>
@@ -116,7 +125,7 @@
 								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
 								  </button>
-								  <ul style="width:15vw;" id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  <ul id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
 								  </ul>
 							</div>				
 						</div>

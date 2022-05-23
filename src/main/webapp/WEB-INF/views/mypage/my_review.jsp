@@ -9,7 +9,6 @@
 <script src="/js/mypage/alert.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <style>
-	.tr_record{height:2vh;}
 	footer {position:fixed; left:0; bottom:0; background-color:black;}
 	ul {margin-bottom: 0;}
 </style>
@@ -17,8 +16,7 @@
 //모달 띄우기 
 /* 작품보기 - 모달 띄우기*/
 function exhibition_modal(){
-	$("#ex_detail_bg").css({"display" : "block"});
-	$('footer').css({"display" : "none"});
+	$("#ex_detail_review_bg").css({"display" : "block"});
 };
 
 $(function(){
@@ -27,12 +25,11 @@ $(function(){
 	$("button[name=review_edit_btn]").on("click",function(){
 		var type = $(this).attr("data-type");
 		var no = $(this).attr("data-no");
-		
 		if(type =="edit"){
 			var review_content = $("#review_content"+no).text();
 			$(this).text("저장");
 			$(this).attr("data-type","save");
-			$("#review_content"+no).replaceWith("<input id='review_content"+no+"' value='"+review_content +"'/>");
+			$("#review_content"+no).replaceWith("<p><textarea id='review_content"+no+"'>"+review_content+"</textarea></p>");
 		}else if(type == "save"){
 			var review_content = $("#review_content"+no).val();
 			var review_btn = $(this);
@@ -48,7 +45,7 @@ $(function(){
 					console.log(data);
 					review_btn.text("수정");
 					review_btn.attr("data-type","edit");
-					$("#review_content"+no).replaceWith("<p id='review_content"+no+"'>"+review_content +"</p>");
+					$("#review_content"+no).replaceWith("<p id='review_content"+no+"'>"+review_content+"</p>");
 					alert(data.msg);
 				},
 				error: function(error){
@@ -109,7 +106,9 @@ $(function(){
 				    		</li>
 						`);
 					});
+					var myReview = "<li id='modal_exhibition_review'><p>내가 남긴 감상평</p><span>"+review_content+"</span></li>";
 					exhibition_modal();
+					$("#modal_exhibition_workList").append(myReview);
 				},error : function(){
 					
 				}
@@ -132,30 +131,31 @@ $(function(){
 			</div> <!-- row end -->
 			<div id="mypage_board_contatiner" class="container">
 				<div class="table-responsive">
-			  		<table class="table table-striped table-hover">
-			  			<thead class="sticky-top" style="background-color:gray; z-index:-10;">
-			  				<tr>	
-			  					<th style="width:5%">번호</th>
-			  					<th>전시명</th>
-			  					<th style="width:40%">내용</th>
-			  					<th>닉네임</th>
-			  					<th style="width:18%">작성일</th>
-			  					<th>비고</th>
-			  				</tr>
-			  			</thead>
-			  			<tbody>
-			  				<c:forEach var="vo" items="${reviewList}">
-				  				<tr class="tr_record">
-				  					<th scope="row">${vo.no}</td>
-				  					<td>${vo.subject}</td>
-				  					<td ><p id="review_content${vo.no}"  >${vo.content}</p></td>
-				  					<td>${logNickname}</td>
-				  					<td>${vo.write_date}</td>
-				  					<td ><button class="btn" style="font-size:1.6rem;" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button><button style="font-size:1.6rem;" class="btn" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button></td>
-				  				</tr>
-			  				</c:forEach> 		
-			  			</tbody>
-					</table>
+			  		<ul class="sticky-top">
+			  			<li>번호</li>
+			  			<li>전시명</li>
+			  			<li>내용</li>
+			  			<li>닉네임</li>
+			  			<li>작성일</li>
+			  			<li>비고</li>
+			  		</ul>
+			  		<ul class="sticky-bottom">
+			  			<c:forEach var="vo" items="${reviewList}">
+				  			<li class="tr_record">
+				  				<p scope="row">${vo.no}</td>
+				  				<p>${vo.subject}</td>
+				  				<p id="review_content${vo.no}">${vo.content}</p>
+				  				
+				  				<p>${logNickname}</p>
+				  				<p>${vo.write_date}</p>
+				  				<p>
+				  					<button class="btn" style="font-size:1.4rem;" id="review_save_btn${vo.no}" name="review_edit_btn" data-no="${vo.no}" data-type="edit">수정</button>
+				  					<button class="btn" style="font-size:1.4rem;" name="exhibition_modal_btn" data-no="${vo.exhibition_no}" data-review_no="${vo.no}">보기</button>
+				  				</p>
+				  			</li>
+			  			</c:forEach>
+			  		</ul>
+			
 				</div>
 				<!-- 페이징 -->
 				<nav id="mypage_board_pagination" class="container">
@@ -268,7 +268,7 @@ $(function(){
 								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
 								  </button>
-								  <ul style="width:15vw;" id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  <ul id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
 								  </ul>
 							</div>				
 						</div>
@@ -302,16 +302,16 @@ $(function(){
 </main>
 
  <!-- 작품 상세 페이지 모달 -->
-	<div id="ex_detail_bg" class="modal" style="z-index:1500;">
+	<div id="ex_detail_review_bg" class="modal" style="z-index:1500;">
     	<div id="ex_detail_wrap" class="modal_wrap">
     		<h3>작품 상세</h3>
     		<div id="ex_reg_detail">
     			<h4 id="modal_exhibition_subject"></h4>
     			<p id="modal_exhibition_content"></p>
-    			<p id="modal_exhibition_review"></p>
     		</div>
     		<ul id="modal_exhibition_workList">
-	    	</ul>
+    		
+    		</ul>
 	    	<i class="fa-solid fa-xmark"></i>
     	</div>
     </div>

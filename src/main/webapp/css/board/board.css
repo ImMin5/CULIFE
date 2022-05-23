@@ -42,6 +42,9 @@ h5{
 	white-space:nowrap;
 	text-overflow:ellipsis;
 }
+.freeboardList li:nth-child(-n+5){
+	background-color:rgba(255,255,255,0.3)	
+}
 .freeboardList>li:nth-child(5n+1), .freeboardList>li:nth-child(5n+4){
 	width:8%;
 }
@@ -77,6 +80,9 @@ h5{
 	white-space:nowrap;
 	text-overflow:ellipsis;
 }
+.helpboardList li:nth-child(-n+5){
+	background-color:rgba(255,255,255,0.3)	
+}
 .helpboardList>li:nth-child(5n+1), .helpboardList>li:nth-child(5n+4){
 	width:8%;
 }
@@ -107,9 +113,7 @@ h5{
 body{
 	background-color: black;
 }
-ul{
-	list-style:none;
-}
+ul{list-style:none;}
 
 #searchFrm{
 	padding-top:3%;
