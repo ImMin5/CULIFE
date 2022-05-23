@@ -285,6 +285,7 @@ input[id="spo_check"]:focus + label[for="spo_check"]:before {
 
 .spo{
 	 display:none;
+	 margin-left: -20%;
 } 
 .more{	
     top: 0px;
