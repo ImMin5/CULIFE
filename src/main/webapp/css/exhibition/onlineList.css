@@ -52,7 +52,7 @@ audio::-webkit-media-controls-panel {
 	background-color:#fff;
 	z-index:5;
 	transition:all 2s;
-	position:absolute; right:50%; top:100px;
+	position:absolute; right:20%; top:100px;
 	overflow:hidden;
 	transform:translateX(400%);
 }
