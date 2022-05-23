@@ -30,12 +30,12 @@ html::-webkit-scrollbar-thumb {
 }
 #author_profile > ul {
 	width:700px; height:380px;
-	margin-right:50px; padding-top:20px;
+	margin-right:50px;
 	float:right;
 	font-size:2rem;
 	line-height:50px;
 }
-#author_profile > ul > li:nth-child(4) {
+#author_profile > ul > li:nth-child(5) {
 	width:85%; height:160px;
 	overflow-y:auto;
 	text-overflow:ellipsis;
@@ -44,7 +44,7 @@ html::-webkit-scrollbar-thumb {
 	border:1px solid #c0c0c0;
 	font-size:1.8rem; color:#666;
 	line-height:30px;
-	padding:20px;
+	padding:0px;
 }
 #author_profile > ul > li:nth-child(4)::-webkit-scrollbar{width:10px}
 #author_profile > ul > li:nth-child(4)::-webkit-scrollbar-track {
@@ -54,7 +54,7 @@ html::-webkit-scrollbar-thumb {
 	background-color: #f2e10d;
 	border-radius:5px;	
 }
-#author_profile > ul > li:nth-child(6) a {/* 목록으로 돌아가기 */
+#author_profile > ul > li:nth-child(7) a {/* 목록으로 돌아가기 */
 	color:#222;
 	position:absolute;
 	right:0; top:0;
@@ -73,7 +73,7 @@ html::-webkit-scrollbar-thumb {
   	cursor: pointer;
   	transition: all 0.3s ease;
   	position: absolute;
-  	right:120px; top:150px;
+  	right:150px; top:190px;
   	display: inline-block;
   	box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
    	7px 7px 20px 0px rgba(0,0,0,.1),
@@ -128,7 +128,7 @@ html::-webkit-scrollbar-thumb {
 	cursor: pointer;
   	transition: all 0.3s ease;
   	position: absolute;
-  	right:120px; top:150px;
+  	right:150px; top:190px;
   	display: inline-block;
   	box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
    	7px 7px 20px 0px rgba(0,0,0,.1),
