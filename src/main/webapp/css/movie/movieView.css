@@ -700,7 +700,7 @@ label[for="spo_check"]:before {
     padding: 10px 20px;
     border-radius: 15px;
     box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
-    font-size: 2rem
+    font-size: 2rem;
     font-weight: 600;
     transition: 0.25s;
     border: none;
@@ -717,8 +717,8 @@ label[for="spo_check"]:before {
   color: #e3dede;
   
 }
-
-
+.star {cursor:pointer}
+label[for='checkbox']{cursor:pointer}
 .hr_style {
 	margin-top: 10px;
 	width: 97%;
