@@ -9,10 +9,8 @@ function getAlert(){
 		type: "GET",
 		success:function(data){
 			container.empty();
-			console.log(data.items.length);
 			$("#mypage_notification_count").text("("+data.items.length+")");
 			data.items.forEach(function(element, index){
-				console.log(element);
 				if(index > 0){
 					container.append(`
 					<li style="margin:0 auto;"><hr class="dropdown-divider"></li>
