@@ -50,9 +50,10 @@ $(function(){
 	}
 
 	// 댓글 등록하기
+	
 	$(document).on('submit',"#replyForm", function(){
+		
 		//event.preventDefault();
-
 		if($("#coment").val()==""){ // 댓글 입력 안함
 			alert("댓글을 입력 후에 등록해주세요");
 		}else{ // 댓글 입력
@@ -71,7 +72,7 @@ $(function(){
 		}
 		return false;
 	});
-		
+
 
 	// 수정버튼 누르면 수정폼 보이게 하기
 	$(document).on('click','#replyList input[value=수정]',function(){ // 수정버튼을 누르면      
@@ -146,8 +147,13 @@ $(function(){
 		<div id="commentLine">
 			<textarea name="content" id="coment" class="helpBoardComent" rows="4"
 				cols="80" placeholder="내용을 입력하세요"></textarea>
-			<span id="replyBtn"><input type="submit"
-				id="replyInsert" value="댓글 등록"/></span>
+				<c:if test="${grade == 2 }">
+					<input type="submit" id="replyInsert" value="댓글 등록" />
+				</c:if>
+			<c:if test="${grade == 0 }">
+					<input type="button" id="replyInsert" value="댓글 등록"
+						onclick="alert('관리자만 답변이 가능합니다.')" />
+				</c:if>
 		</div>
 	</form>
 	<!-- 댓글 목록 표시 -->
