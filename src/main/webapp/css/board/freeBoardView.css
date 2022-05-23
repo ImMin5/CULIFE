@@ -100,7 +100,8 @@ hr{width:1400px;}
 	resize:none;
 	font-size: 16px;
 	background-color:black;
-	color:white
+	color:white;
+	line-height:30px;
 }
 .iconValue{
 	margin-left:10px;

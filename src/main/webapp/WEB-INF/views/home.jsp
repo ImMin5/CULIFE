@@ -15,9 +15,9 @@
 	html {-ms-overflow-style: none;}
 	html::-webkit-scrollbar{display:none}
 </style>
+
 <script>
 	/*스크롤 무빙*/
-
 	var html = $('html');
 	var page = 1;
 	html.animate({scrollTop:0}, 10);
@@ -118,7 +118,12 @@
 				</div>
 				<div id="home_help">
 					<p><img src="/img/logo_w.png" alt="로고"></p>
-					<button onclick="location.href='/board/help/helpBoardWrite'">문의하기</button>
+					<c:if test="${grade == null}">
+						<button onclick="alert('로그인이 필요한 서비스 입니다.');">문의하기</button>
+					</c:if>
+					<c:if test="${grade != null }">
+						<button onclick="location.href='/board/help/helpBoardWrite'">문의하기</button>
+					</c:if>
 				</div>
 			</div>
 		</section>

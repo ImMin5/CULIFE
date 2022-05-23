@@ -52,7 +52,7 @@ public class BoardController {
 		
 		Integer logNo=(Integer) session.getAttribute("logNo");
 		if(logNo==null) {
-			mav.addObject("msg","로그인 해야 이용할 수 있어요");
+			mav.addObject("msg","로그인이 필요한 서비스 입니다.");
 			mav.setViewName("board/help/message");
 			return mav;
 		}
@@ -154,7 +154,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		Integer logNo=(Integer) session.getAttribute("logNo");
 		if(logNo==null) {
-			mav.addObject("msg","로그인 해야 이용할 수 있어요");
+			mav.addObject("msg","로그인이 필요한 서비스 입니다.");
 			mav.setViewName("board/help/message");
 			return mav;
 		}
@@ -187,7 +187,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		Integer member_no = (Integer) session.getAttribute("logNo");
 		if(member_no==null) {
-			mav.addObject("msg","로그인 해야 이용할 수 있어요");
+			mav.addObject("msg","로그인이 필요한 서비스 입니다.");
 			mav.setViewName("board/help/message");
 			return mav;
 		}
