@@ -130,7 +130,7 @@ $(function(){
 				</div>
 			</div> <!-- row end -->
 			<div id="mypage_board_contatiner" class="container">
-				<div class="table-responsive">
+				<div class="table-responsive" style="z-index:1;">
 			  		<ul class="sticky-top">
 			  			<li>번호</li>
 			  			<li>전시명</li>
