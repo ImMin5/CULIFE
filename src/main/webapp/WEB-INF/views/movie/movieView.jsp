@@ -58,8 +58,9 @@ function editForm(idx){
 						tag += "<input type='button' value='삭제' class='review_delete' title='"+vo.no+"'/>";	
 					}
 					if(vo.spo_check==1){
-						tag+="<li style='margin-left: -20%; color:#e75959; font-size:23px; padding-bottom:5px;'>스포일러</li>"
-							tag+="<div id='spocontent"+vo.no+"' class='spo'>"+ vo.content +"</div>";
+						tag+="<p class='spoiler'>스포일러</p>";
+/* 						tag+="<li style='margin-left: -20%; color:#e75959; font-size:23px; padding-bottom:5px;'>스포일러</li>" */
+							tag+="<div id='spocontent"+vo.no+"' class='spo'>"+ vo.content +"</div></div>";
 						if(vo.spo_check==1){
 							tag+="<input id='more' class='more' type='button' value='리뷰보기' name='readspo' data-review_no='"+vo.no+"'/>";
 						}

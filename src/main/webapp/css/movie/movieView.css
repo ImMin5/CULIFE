@@ -9,10 +9,7 @@
    font-style: normal;
 }
 
-
-* {
-   box-sizing: border-box;
-}
+* {box-sizing: border-box;}
 
 .warning{
 position: absolute;
@@ -21,7 +18,7 @@ position: absolute;
   padding: 10px 50px;
   border-radius: 15px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  font-size: 23px;
+  font-size: 2rem;
   font-weight: 600;
   transition: 0.25s;
   border: none;
@@ -606,7 +603,7 @@ label[for="spo_check"]:before {
   padding: 10px 20px;
   border-radius: 15px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  font-size: 23px;
+  font-size: 2rem;
   font-weight: 600;
   transition: 0.25s;
   border: none;
@@ -657,7 +654,7 @@ label[for="spo_check"]:before {
     padding: 10px 20px;
     border-radius: 15px;
     box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
-    font-size: 23px;
+    font-size: 2rem;
     font-weight: 600;
     transition: 0.25s;
     border: none;
@@ -669,7 +666,7 @@ label[for="spo_check"]:before {
 .review_edit:hover,
 .review_delete:hover {
   letter-spacing: 2px;
-  transform: scale(1.2);
+  transform: scale(1.1);
   cursor: pointer;
 /*   background-color: #a3a1a1; */
   color: #e3dede;
@@ -683,7 +680,7 @@ label[for="spo_check"]:before {
     padding: 10px 20px;
     border-radius: 15px;
     box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
-    font-size: 23px;
+    font-size: 2rem;
     font-weight: 600;
     transition: 0.25s;
     border: none;
@@ -703,7 +700,7 @@ label[for="spo_check"]:before {
     padding: 10px 20px;
     border-radius: 15px;
     box-shadow: 0 15px 35px rgb(0 0 0 / 20%);
-    font-size: 23px;
+    font-size: 2rem
     font-weight: 600;
     transition: 0.25s;
     border: none;
@@ -742,15 +739,16 @@ label[for="spo_check"]:before {
 
 
 #reviewOne {
-	margin: 10px;
+	margin: 10px auto;
 	padding-top:5px;
 	width: 80%;
 	font-size: 20px;
 	white-space :pre-wrap;
-	line-height: 23px;
+	line-height: 30px;
+	position:relative;
 }
 
-#mreviewList>ul>li>input[type="button"] {
+#mreviewList>ul>li>input[type="button"]:not(.more) {
 	margin-top: 5px;
     position: absolute;
     top: 0px;
@@ -775,7 +773,7 @@ label[for="spo_check"]:before {
     color: #e3dede;
 }
 .more{	
-	margin-left: -20%;
+	margin:0 auto;
     top: 0px;
     right: 0px;
     padding: 10px 20px;
@@ -792,8 +790,16 @@ label[for="spo_check"]:before {
 
 .spo{
 	 display:none;
-	 width: 80%;
 	 height: 100%;
 	 word-wrap: break-word;
-
+	 text-align:center
 } 
+
+.spoiler {
+	width:100px; height:30px;
+	position:absolute; left:50px; top:5px;
+	display:block;
+	background-color:red;
+	border-radius:10px;
+	line-height:30px;
+}
