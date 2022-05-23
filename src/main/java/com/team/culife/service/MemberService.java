@@ -23,6 +23,7 @@ public interface MemberService {
 	public AuthorFanVO authorFanCheck(int author_no, int member_no);
 	public int authorFanDelete(int author_no, int member_no);
 	public List<AuthorVO> authorFanSelectAll(PagingVO vo);
+	public int authorFanSelectByAuthorNo(int author_no);
 	
 	public MemberBanVO memberBanSelectByMemberNo(int member_no);
 }

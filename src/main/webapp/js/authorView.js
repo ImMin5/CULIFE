@@ -21,6 +21,7 @@ $(document).ready(function(){
 			var author = $(this).attr("data-author");
 			var url ="/author/follow";
 			var button = $(this);
+			var author_no =$(this).attr("data-author_no");
 			
 			$.ajax({
 				url : url,
@@ -36,6 +37,7 @@ $(document).ready(function(){
 						button.attr("class", "a_follow_btn");
 						button.html("<span>FOLLOW</span>");
 					}
+					get_author_fan(author_no);
 					
 				},
 				error : function(error){
@@ -48,6 +50,8 @@ $(document).ready(function(){
 			var author = $(this).attr("data-author");
 			var url ="/author/follow";
 			var button = $(this);
+			var author_no =$(this).attr("data-author_no");
+			
 			$.ajax({
 				url : url,
 				type : "POST",
@@ -61,6 +65,7 @@ $(document).ready(function(){
 						button.attr("name","unfollow");
 						button.attr("class", "a_following_btn");
 						button.html("<span>FOLLWING</span>");
+						get_author_fan(author_no);
 					}
 					else{
 						alert(data.msg);
@@ -68,7 +73,7 @@ $(document).ready(function(){
 					
 				},
 				error : function(error){
-					alert(error);
+					console.log(error);
 				}
 			})
 		});
@@ -91,5 +96,26 @@ $(document).ready(function(){
 		$("#imgZoom").css({"display":"none"});
 	});	
 })
+
+function get_author_fan(author_no){
+	var url = "/api/authorfan/follow";
+		$.ajax({
+			url : url,
+			type: "GET",
+			dataType :"JSON",
+			data : {
+				author_no : author_no,
+			},
+			success : function(data){
+				$("#author_fan_count").text("팔로워 : " + data.count);
+			},
+			error : function(error){
+				alert(error);
+			}
+			
+		})
+}
+
+
 
 		

@@ -728,4 +728,24 @@ public class MemberController {
 			}
 			return "ok";
 		}
+		
+		//나의 팔로워 숫자 
+		@GetMapping("api/authorfan/follow")
+		public ResponseEntity<HashMap<String,String>> getFollower(int author_no){
+			ResponseEntity<HashMap<String,String>> entity = null;
+			HashMap<String,String> result = new HashMap<String,String>();
+			try {
+				int count = memberService.authorFanSelectByAuthorNo(author_no);
+				result.put("status","200");
+				result.put("count",Integer.toString(count));
+				entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+			}catch(Exception e) {
+				e.printStackTrace();
+				result.put("status","200");
+				result.put("count","0");
+				entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+			}
+			
+			return entity;
+		}
 }
