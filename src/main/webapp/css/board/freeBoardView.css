@@ -4,44 +4,68 @@ body{
 	background:black;
 	color:white;
 }
+.f_view_container >  h1 {
+	text-align:center;
+	font-size:3rem !important;
+	font-weight:bold;
+	line-height:100px
+}
+.f_view_container > ul {
+	width:1200px; margin:0 auto;
+	min-height:300px;
+	position:relative
+}
 .parent{
-	display:flex;
+	width:1200px;
+	margin:0 auto 30px auto;
+	line-height:30px;
+	text-align:left;
+}
+hr{width:1400px;}
+.edel{
+	width:140px; height:50px;
+	position:absolute;
+	right:0; top:10px;
 	text-align:center;
 }
-.child1{
-	flex:11;
+#replyList {
+	width:1200px;
+	margin:0 auto;
+	min-height:200px;
 }
-.child2{
-	flex:12;
+#replyList > ul > li {
+	margin:10px 0;
 }
-hr{
-	width:1400px;
+#replyLine{
+	width:1200px; height:30px;
+	margin:20px auto 0 auto;
 }
-.edel{
-	float:right;
-	padding-right:14%;
+#replyForm {
+	width:1000px;
+	margin:0 auto;
 }
 /*버튼*/
 #freeBoardEdit{
+	width:50px; height:40px;
 	border-radius:10px;
 	background-color: gray;
 	color:white;
-	padding:10px 10px;
+	font-size:1.6rem;
+	line-height:40px;
+	display:inline-block;
+	margin-right:30px
 }
-
 #freeBoardDel{
+	width:50px; height:40px;
 	border-radius:10px;
 	background-color: gray;
 	color:white;
-	padding:10px 10px;
+	border:none;
+	font-size:1.6rem;
+	line-height:40px;
+	cursor:pointer
 }
 
-#btnSpace{
-	margin:20px;
-}
-.pb{
-	margin:20px;
-}
 .container li{
 	width:1200px;
 	text-align:left;
@@ -51,36 +75,44 @@ hr{
 	font-size:2.5rem;
 }
 .freeContent{
+	margin-top:20px;
 	font-size:1.3em;
 	font-weight:700px;
-	width:1200px;
+	width:1180px;
 	text-align:left;
-	padding-left:18.75%;
-}
-#commentLine, #replyLine{
-	padding-left:13.75%;
+	display:block;
+	border:2px solid #222;
+	min-height:130px;
+	padding:10px;
+	background-color:white;
+	color:#222
 }
 #commentLine{
 	height:130px;
 }
 .freeBoardComent{
+	width:840px;
 	float:left;
-	padding: 12px;
-	border: none;
+	padding: 10px;
+	border:1px solid #FAF6F3;
 	border-radius:10px;
 	outline:none;
 	resize:none;
 	font-size: 16px;
-	background-color:#FAF6F3;
-	margin:20px 20px 0 0;
+	background-color:black;
+	color:white
 }
 .iconValue{
 	margin-left:10px;
 }
 #replyInsert{
-	margin-top:18px;
 	border-radius:10px;
-    height: 100px;
+    height: 95px; width:90px;
+    margin:-2px 0 0 10px;
+    background-color:black;
+    border:1px solid #FAF6F3;
+    color:white;
+    cursor:pointer
 }
 .btn{
 	border-radius:10px;
