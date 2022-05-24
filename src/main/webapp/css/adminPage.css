@@ -176,13 +176,6 @@ li{
 	width: 20%;
 	white-space: nowrap;
 }
-.authorList ul li:nth-child(8n+5){
-	overflow: hidden;
-	text-overflow: ellipsis;
-	width: 20%;
-	text-align: left;
-	white-space: nowrap;
-}
 .authorList li:nth-child(8n) input{
 	text-align: center;
 	margin-top: 7px;
@@ -274,11 +267,7 @@ li{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 50%;
-	text-align: left;
 	white-space: nowrap;
-}
-.adminBoardList li:nth-child(2){
-	text-align: center;
 }
 
 /* 문의사항게시판 목록*/
@@ -298,11 +287,7 @@ li{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 45%;
-	text-align: left;
 	white-space: nowrap;
-}
-.adminHelpList li:nth-child(2){
-	text-align: center;
 }
 .adminHelpList li:nth-child(6n+3){
 	width: 15%;
@@ -333,14 +318,9 @@ li{
 	text-overflow: ellipsis;
 	width: 35%;
 	white-space: nowrap;
-	text-align: left;
-}
-.adminReviewList li:nth-child(3){
-	text-align: center;
 }
 .adminReviewList li:nth-child(7n+5), .adminReviewList li:nth-child(7n){
 	width: 10%;
-
 }
 .adminReviewList li:nth-child(7n+6){
 	width: 5%;
@@ -403,10 +383,6 @@ li{
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 40%;
-	text-align: left;
-}
-.adminExReplyList li:nth-child(3){
-	text-align: center;
 }
 
 /* 페이징 */
