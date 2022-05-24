@@ -22,7 +22,7 @@
 			<c:when test="${!empty list}">
 				<c:forEach var="vo" items="${list}">
 					<li>${vo.no }</li>
-					<li><a href="/board/freeBoardView?no=${vo.no}">${vo.subject}</a></li>
+					<li><a href="/board/freeBoardView?no=${vo.no}">${vo.subject}<c:if test="${vo.reply_count>0}"><b style="color:red;">&nbsp[${vo.reply_count}]</b></c:if></a></li>
 					<li>${vo.nickname }</li>
 					<li>${vo.view }</li>
 					<li>${vo.write_date }</li>

@@ -11,7 +11,8 @@ public class BoardVO {
 	private int view;
 	private int member_no;
 	private String category;
-	private String nickname;	
+	private String nickname;
+	private int reply_count;
 
 	private List<Integer> noList;
 	//문의사항(help)불러올때 댓글 카운트
@@ -79,4 +80,11 @@ public class BoardVO {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}	
+	
+	public int getReply_count() {
+		return reply_count;
+	}
+	public void setReply_count(int reply_count) {
+		this.reply_count = reply_count;
+	}
 }
