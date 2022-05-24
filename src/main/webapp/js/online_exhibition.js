@@ -198,7 +198,7 @@ function search(){
 				if(Type==2){var Type = "글";}
 				
 				container.append(`
-					<tr>
+					<tr name="exhibition_search_result" data-exhibition_no="${element.no}">
 						<td class="work_type">${Type}</td>
 						<td>${element.subject}</td>
 						<td>${element.author}</td>

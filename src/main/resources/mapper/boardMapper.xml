@@ -9,11 +9,17 @@
 	</insert>
 	
 	<select id='freeselectList' resultType="BoardVO">
-		select b.no, b.subject, b.member_no,m.nickname,b.view,date_format(b.write_date,'%y-%m-%d %H:%i') write_date 
-		from board b join member m on b.member_no = m.no where category='free' 
+		select b.no, b.subject, b.member_no,m.nickname,b.view,date_format(b.write_date,'%y-%m-%d %H:%i') write_date , count(br.reply_no) reply_count
+		from board b 
+		left join member m 
+		on b.member_no = m.no
+		left join board_reply br
+		on b.no = br.no 
+		where category='free'
 		<if test="searchWord != null" >
 			and ${searchKey} like '%${searchWord}%' 
 		</if>
+		group by b.no
 		order by no desc limit #{recordPerPage} offset #{offsetIndex}
 	</select>
 	

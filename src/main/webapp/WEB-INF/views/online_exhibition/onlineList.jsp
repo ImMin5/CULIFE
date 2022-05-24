@@ -152,6 +152,7 @@ $(function(){
 		}
 	return true;
   })
+  
 })
 </script>
 <script>
@@ -283,6 +284,12 @@ $(function(){
 		$(document).on("click", "#online_ex_next",function(){
 			onlineListPaging(1,total_page);
 		});	
+		
+		 //검색결과 클릭시 view 바꾸기
+		 $(document).on("click","tr[name=exhibition_search_result]",function(){
+			  var exhibition_no = $(this).attr("data-exhibition_no");
+			  getExhibitionWork(exhibition_no);
+		  });
 	});
 </script>    
     <div id="online_exhibition_container">

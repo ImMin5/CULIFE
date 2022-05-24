@@ -123,7 +123,7 @@ $(function(){
 	<h1>제목 : ${viewVo.subject}</h1>
 	<hr/>
 	<ul>
-		<li><a href="/board/helpBoardList" style="color:white; float:right; margin-top:-50px">목록으로 돌아가기</a></li>
+		<li><a href="/board/help/helpBoardList" style="color:white; float:right; margin-top:-50px">목록으로 돌아가기</a></li>
 		<li class="parent">
 			<div class="child1">작성자 : ${viewVo.nickname}</div>
 			<div class="child1">조회수 : ${viewVo.view}</div>
@@ -143,6 +143,8 @@ $(function(){
 		<i class="fa fa-comment fa-lg"></i><span class="iconValue">댓글</span>
 	</div>
 	<form method="post" id="replyForm">
+		<input type="hidden" name="category"  value="help">
+		<input type="hidden" name="subject" value="${viewVo.subject}">
 		<input type="hidden" name="no" id="no" value="${viewVo.no}">
 		<div id="commentLine">
 			<textarea name="content" id="coment" class="helpBoardComent" rows="4"

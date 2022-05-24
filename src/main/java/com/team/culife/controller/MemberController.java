@@ -766,4 +766,21 @@ public class MemberController {
 			
 			return entity;
 		}
+		
+		@DeleteMapping("/api/alert")
+		public String deleteAlert(HttpSession session, int no) {
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			String msg = null;
+			try {
+				if(memberNo != null) {
+					alertService.alertDeleteByNo(no);
+				}else {
+					msg ="fail";
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return msg;
+		}
 }

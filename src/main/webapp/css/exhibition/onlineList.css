@@ -52,7 +52,7 @@ audio::-webkit-media-controls-panel {
 	background-color:#fff;
 	z-index:5;
 	transition:all 2s;
-	position:absolute; right:50%; top:100px;
+	position:absolute; right:20%; top:100px;
 	overflow:hidden;
 	transform:translateX(400%);
 }
@@ -116,11 +116,12 @@ audio::-webkit-media-controls-panel {
 	height:45vh; 
 	overflow-y:auto; 
 	overflow-x:hidden;
-	display:block
+	display:block;
 }
 #modal_search > tr {
 	width:700px; display:block;
 	margin-top:20px; height:30px;
+	cursor:pointer;
 }
 #modal_search > tr > td {
 	margin:0 10px; float:left;
