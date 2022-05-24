@@ -349,12 +349,8 @@ li{
 .adminWarningList ul li:nth-child(7n+3), .adminWarningList li:nth-child(7n+3){
 	overflow: hidden;
 	text-overflow: ellipsis;
-	text-align: left;
 	white-space: nowrap;
 	width: 30%;
-}
-.adminWarningList li:nth-child(3){
-	text-align: center;
 }
 .adminWarningList ul li:nth-child(7n+5), .adminWarningList ul li:nth-child(7n+6), .adminWarningList ul li:nth-child(7n),.adminWarningList li:nth-child(7n+5), .adminWarningList li:nth-child(7n+6), .adminWarningList li:nth-child(7n){
 	width: 10%;
