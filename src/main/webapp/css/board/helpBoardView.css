@@ -95,6 +95,7 @@ hr{width:1400px;}
 	background-color:white;
 	color:#222
 }
+.helpContent > div > p{line-height:30px;}
 #commentLine{
 	height:130px;
 }
