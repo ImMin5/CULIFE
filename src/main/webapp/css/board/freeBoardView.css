@@ -86,8 +86,10 @@ hr{width:1400px;}
 	min-height:130px;
 	padding:10px;
 	background-color:white;
-	color:#222
+	color:#222;
+	line-height:30px !important
 }
+.freeContent > div > p{line-height:30px;}
 #commentLine{
 	height:130px;
 }
